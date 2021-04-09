@@ -1,0 +1,116 @@
+<ion-header class="ion-no-border">
+
+  <app-tab-header titulo="Solicitudes" backgroundColor="var(--ion-color-orange)"></app-tab-header>
+
+  <ion-segment  class="segment"
+                (ionChange)="segmentChanged($event)"
+                value="chat"
+                #segment>
+    
+    <ion-segment-button class="segment_btn" value="chat">
+      <ion-label>Chat</ion-label>
+    </ion-segment-button>
+    
+    <ion-segment-button class="segment_btn" value="detalles">
+      <ion-label>Detalles</ion-label>
+    </ion-segment-button>
+  
+  </ion-segment>
+
+</ion-header>
+
+<ion-content>
+    
+  <div *ngIf="(segment.value === 'chat')" class="flex_column" style="height: 100%; width: 100%;">
+    
+    <div class="flex_row pres_container">
+
+      <div class="flex_row div_presupuesto">
+        <ion-label class="label_presupuesto">PRESUPUESTO: {{ presupuesto }}€</ion-label>
+      </div>
+
+      <div class="flex_centered" style="width: 70px;">
+        <ion-icon name="checkbox-outline" style="height: 25px; width: 25px;"></ion-icon>
+      </div>
+
+      <div style="width: 70px; display: flex; align-items: center; justify-content: flex-start;">
+        <ion-icon name="close-circle-outline" style="height: 25px; width: 25px;"></ion-icon>
+      </div>
+
+    </div>
+
+    <ion-row style="width: 100%; height: 100%;">
+
+      <ion-col size="1"></ion-col>
+
+      <ion-col size="10" class="ion-no-padding">
+
+        <ion-row  class="chat_bubble"
+                  [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'" 
+                  *ngFor="let chat of chats" 
+                  lines="none">
+          <ng-container *ngIf="(chat.userID === 'Me'); else elseTemplate">
+
+            <div  style="width: auto; height: auto; max-width: 80%;"
+                  [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'">
+
+              {{ chat.message }}  
+
+            </div>
+
+          </ng-container>
+          <ng-template #elseTemplate>
+            
+            <div  style="width: auto; height: auto; max-width: 80%;"
+                  [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'">
+
+              {{ chat.message }}  
+
+            </div>
+
+          </ng-template>
+          
+        </ion-row>
+
+      </ion-col>
+      
+      <ion-col size="1"></ion-col>
+      
+    </ion-row>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div style="display: flex; justify-content: center;">
+
+    <div class="flex_row chat_container">
+      
+      <ion-textarea class="text_area" 
+                    auto-grow 
+                    cols="1" 
+                    rows="1"
+                    inputmode="text"
+                    placeholder="Escriba un mensaje..."
+                    autofocus
+                    [(ngModel)]="newMessage">
+      </ion-textarea>
+
+      <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+        <ion-button fill="clear" class="attach_btn">
+          <ion-icon name="attach" style="min-width: 30px; min-height: 30px;"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+        <ion-button fill="clear" class="send_btn" (click)="pushToChat()">
+          <ion-icon name="send" style="min-width: 25px; min-height: 30px;"></ion-icon>
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-footer>

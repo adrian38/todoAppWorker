@@ -1,0 +1,7 @@
+{
+  "name": "GremioApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

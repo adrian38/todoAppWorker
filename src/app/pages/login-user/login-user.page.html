@@ -1,0 +1,49 @@
+<ion-content class="ion-no-padding">
+
+  <div class="flex_column" style="height: 100%;">
+    <div class="container">
+      <div class="logo_principal">
+        <ion-img src="/assets/icons/logo_header.svg" style="width: 100px;"></ion-img>
+      </div>
+      <div style="display: flex; justify-content: flex-start; padding: 15px 0;">
+        <ion-label class="welcome">Bienvenido</ion-label>
+      </div>
+
+      <form #formulario="ngForm" (ngSubmit)="onSubmit()">
+        <div class="div">
+          <ion-input  class="custom_input" 
+                      type="email" 
+                      name="user"
+                      [(ngModel)]="usuario.email"
+                      placeholder="USUARIO"
+                      pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                      required>
+          </ion-input>
+        </div>
+        <div class="div">
+          <ion-input  class="custom_input" 
+                      type="password"
+                      name="password" 
+                      [(ngModel)]="usuario.password"
+                      placeholder="CONTRASEÑA"
+                      required>
+          </ion-input>
+        </div>
+        <div class="div">
+          <ion-button   class="btn_init_section" 
+                        type="submit"
+                        color="orange" 
+                        expand="block"
+                        [disabled]="formulario.invalid">
+            INICIAR SESIÓN
+          </ion-button>
+        </div>
+      </form>
+
+      <div class="flex_centered forgotten_pass_div">
+        <a href="#" class="forgotten_pass">¿Has olvidado tu contraseña?</a>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

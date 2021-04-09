@@ -1,0 +1,79 @@
+.container{
+    padding: 15px 25px 0 25px !important;
+}
+.module{
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid var(--ion-color-orange) !important;
+    margin-top: 8px !important;
+}
+.icon_calendar{
+    height: 13px !important;
+    width: 13px !important;
+}
+.icon_schedule{
+    height: 15px !important;
+    width: 15px !important;
+}
+.icon_direction{
+    height: 15px !important;
+    width: 15px !important;
+}
+.icon_price{
+    height: 15px !important;
+    width: 15px !important;
+}
+.icon_photo{
+    height: 16px !important;
+    width: 16px !important;
+}
+.icon_contact{
+    height: 16px !important;
+    width: 16px !important;
+}
+.h3_title {
+    font: normal 12px 'Helvetica-Roman', sans-serif !important;
+    margin: 8px 5px 8px 10px !important;
+    text-align: left;
+    width: 100%;
+}
+.h6_title {
+    font: normal 10px 'Helvetica-Roman', sans-serif !important;
+    text-align: left;
+    width: 100%;
+    padding: 5px 20px 5px 2px !important;
+    min-width: 100px !important;
+}
+.img_location{
+    display: block;
+    height: 20px;
+    width: 20px;
+}
+.h6_direction{
+    padding-right: 20px !important;
+}
+ion-item{
+    --ion-safe-area-right: 0 !important;
+}
+.btn{
+    font: normal 8px 'Helvetica-Roman', sans-serif;
+    margin-left: 10px !important;
+    min-width: 60px !important;
+}
+.add_img {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+}
+ion-button{
+    text-transform: none;
+}
+.next_button_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px !important;
+}
+.btn_finish{
+    font: bold 10px 'Helvetica-Roman', sans-serif;
+    height: 20px !important;
+}

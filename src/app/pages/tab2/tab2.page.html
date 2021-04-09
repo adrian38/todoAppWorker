@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border">
+
+  <app-tab-header titulo="Servicios"></app-tab-header>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list class="container">
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
+          <ion-label class="h3_title">Fecha</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap">{{ fecha }}</ion-label>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_schedule" src="/assets/icons/hora.svg"></ion-img>
+          <ion-label class="h3_title">Horario</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap">{{ horario }}</ion-label>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_direction" src="/assets/icons/direccion.svg"></ion-img>
+          <ion-label class="h3_title">Dirección</ion-label>
+        </div>
+        <div class="flex_row">
+          <ion-label class="h6_title ion-text-wrap">{{ direccion }}</ion-label>
+          <div class="flex_centered">
+            <img class="img_location" src="/assets/icons/ubicacion.svg" (click)="onClickUbicacion( $event)">
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_price" src="/assets/icons/bolsa.png"></ion-img>
+          <ion-label class="h3_title">Precio</ion-label>
+        </div>
+        <div class="flex_row">
+          <ion-label class="h6_title ion-text-wrap">{{ precio }} € </ion-label>
+          <ion-button class="btn" color="orange" (click)="onClickFactura( $event )">
+            Ver factura
+          </ion-button>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_photo" src="/assets/icons/camara.svg"></ion-img>
+          <ion-label class="h3_title">Fotos</ion-label>
+        </div>
+        <div class="flex_column">
+          <ion-label class="h6_title">Antes</ion-label>
+          <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+          </div>
+          <ion-label class="h6_title">Después</ion-label>
+          <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_contact" src="/assets/icons/contacto.svg"></ion-img>
+          <ion-label class="h3_title">Trabajador</ion-label>
+        </div>
+        <div class="flex_row">
+          <ion-label class="h6_title ion-text-wrap">{{ nombreTrabajador }}</ion-label>
+          <ion-button class="btn" color="orange" (click)="onClickCalificar( $event )">
+            Calificar
+          </ion-button>
+          <ion-button class="btn" color="orange" (click)="onClickDenunciar( $event )">
+            Denunciar
+          </ion-button>
+        </div>
+      </div>
+    </ion-item>
+
+    <div class="next_button_div">
+      <ion-button class="btn_finish" color="orange" (click)="onClickFinalizar( $event )">
+        FINALIZAR TAREA
+      </ion-button>
+  </div>
+
+  </ion-list>
+
+</ion-content>

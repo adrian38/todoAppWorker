@@ -1,0 +1,39 @@
+ion-tabs {
+  background: transparent;
+  border: 0px none transparent;
+  width: 100% !important;
+}
+
+ion-tab-bar {
+  height: 80px;
+  background-color: transparent !important;
+  border: 0px none transparent;
+}
+
+ion-tab-button {
+  background: var(--ion-color-orange);
+  color: var(--ion-color-black);
+  height: 70px;
+  margin-top: 10px;
+  font-weight: bold;
+  min-width: unset !important;
+}
+
+svg {
+  fill: #ffffff !important;
+}
+
+.icon-image {
+  width: 35px;
+  height: 35px;
+}
+
+.tab-selected {
+  color: rgb(246, 183, 118);
+  background: rgb(49, 49, 57);
+
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 90px;
+  width: 100% !important;
+}

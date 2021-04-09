@@ -1,0 +1,29 @@
+.logo_principal {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 50%;
+    padding-bottom: 80px;
+}
+
+.init_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.btn {
+    font: normal 14px 'Helvetica-Roman', sans-serif !important;
+    height: 28px !important;
+    min-width: 160px;
+}
+
+.create_div {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    min-width: 160px;
+}

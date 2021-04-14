@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component, OnInit,NgZone } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { AuthOdooService } from 'src/app/services/auth-odoo.service';
+import { ChatOdooService } from 'src/app/services/chat-odoo.service';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { AlertController, LoadingController, NavController,Platform } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login-user',
@@ -8,34 +14,126 @@ import { ToastController } from '@ionic/angular';
 })
 export class LoginUserPage implements OnInit {
 
-  usuario = {
-    email: '',
-    password: ''
-  };
+  usuario:UsuarioModel;
+  usuario$:Observable<UsuarioModel>
 
-  constructor(private toastCtrl: ToastController) { }
+  user:string;
+  pass:string;
+  islog:boolean
 
-  ngOnInit() {
+  loading:HTMLIonLoadingElement = null;
+
+  subscriptionUsuario: Subscription;
+
+  constructor(private ngZone: NgZone,
+    private _authOdoo:AuthOdooService,
+    private _taskOdoo:TaskOdooService,
+    private _chatOdoo:ChatOdooService,
+    public loadingController: LoadingController,
+    public alertController: AlertController,
+    public navController:NavController,
+    private platform: Platform,
+    private _location: Location) {
+
+this.usuario = new UsuarioModel;
+
+this.platform.backButton.subscribeWithPriority(10, () => {
+  if (this._location.isCurrentPathEqualTo('/login')) {
+    
+    this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+    
   }
+  
+  });
 
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create(
-      {
-        message,
-        duration: 2000
+}
+
+ngOnInit() {
+
+  this.usuario$ = this._authOdoo.getUser$();
+  
+  this.subscriptionUsuario = this.usuario$.subscribe(user => {
+    this.ngZone.run( () => {
+      this.usuario = user;
+          if(this.loading){
+        this.loading.dismiss();
       }
-    );
+      this.checkUser();
+    });
+  });
+}
 
-    toast.present();
-  }
+ngOnDestroy(): void {
+  //Called once, before the instance is destroyed.
+  //Add 'implements OnDestroy' to the class.
+  this.subscriptionUsuario.unsubscribe();
+  
+}
 
-  onSubmit(event) {
-    if (this.usuario.password.length < 5) {
-      this.presentToast('La contraseña debe tener al menos 5 caracteres');
+checkUser(){
+  if(this.usuario.connected){
+    this._taskOdoo.setUser(this.usuario);
+    this._chatOdoo.setUser(this.usuario);
+    
+    if(!this._taskOdoo.getInit()){
+    this._taskOdoo.setInit();
+    this._taskOdoo.notificationPull();
     }
-    else {
-      console.log("Inicio sesion clicked");
-    }
+        
+    this.navController.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'forward' }) ;   
   }
+  else{
+    
+    this.loading.dismiss();
+    this.presentAlertConfirm(); 
+  }
+}
+
+
+async  onSubmit(event) {
+  await this.presentLoading();
+   this._authOdoo.loginClientApk(this.usuario);
+}
+  
+
+
+
+async presentLoading() {
+  this.loading = await this.loadingController.create({
+    cssClass: 'my-custom-class',
+    message: 'Espere...',
+    //duration: 2000
+  });
+  
+  return  this.loading.present();
+}
+
+async presentAlertConfirm() {
+  const alert = await this.alertController.create({
+    cssClass: 'my-custom-class',
+    header: 'Problema de conexión',
+    message: 'Intente de nuevo',
+    buttons: [
+      
+     
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+        
+        
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
+cambiarpass(){
+  this.navController.navigateRoot('/contrasolvida', {animated: true, animationDirection: 'forward' }) ;   
+ 
+}
 
 }

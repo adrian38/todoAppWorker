@@ -119,12 +119,10 @@ export class TaskOdooService {
 		user = usuario;
 	}
 
-	setTab1Out(){
-		rutaActual = false;
-	}
+	
 
-	setTab1In(){
-		rutaActual = true;
+	setTab1In(temp:boolean){
+		rutaActual = temp;
 	}
 
 	getNotificationError$(): Observable<boolean> {
@@ -302,115 +300,6 @@ export class TaskOdooService {
 
 	getRequestedNotificationPoCancelled$(): Observable<number[]> {
 		return notificationPoCancelled$.asObservable();
-	}
-
-	
-
-	
-
-	editTask(desc: string) {}
-
-	
-
-
-
-	requestTaskPoUpdate(id_po: number[]) {
-		let tasksList: TaskModel[] = [];
-
-		let get_po_by_id = function() {
-			//console.log(id_po);
-			let inParams = [];
-			inParams.push([ [ 'id', 'in', id_po ] ]);
-			inParams.push([
-				'partner_id',
-				'amount_total',
-				'user_id',
-				'origin',
-				'title',
-				'note',
-				'commitment_date',
-				'product_id',
-				'address_street',
-				'state',
-				'invoice_status',
-				'name',
-				'date_order'
-			]);
-			let params = [];
-			params.push(inParams);
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error get_po_by_id');
-				} else {
-					for (let task of value) {
-						let temp = new TaskModel();
-						temp.offer_send = task['state'];
-						temp.budget = task['amount_total'];
-						temp.type = task['product_id'][1];
-						temp.description = task['note'];
-						temp.client_id = task['user_id'][0];
-						temp.client_name = task['user_id'][1];
-						temp.provider_id = task['partner_id'][0];
-						temp.provider_name = task['partner_id'][1];
-						temp.id = task['id'];
-						temp.state = task['invoice_status'];
-						temp.id_string = task['name'];
-						temp.date = task['date_order'];
-						temp.date_planned = String(task['commitment_date']).slice(0, 10);
-						temp.time = String(task['commitment_date']).slice(10, String(task['commitment_date']).length);
-						temp.title = task['title'];
-						temp.address = new Address(
-							task['address_street'],
-							task['address_number'],
-							task['address_portal'],
-							task['address_stairs'],
-							task['address_floor'],
-							task['address_door'],
-							task['address_zip_code'],
-							task['address_latitude'],
-							task['address_longitude']
-						);
-
-						tasksList.push(temp);
-					}
-					//      console.log(tasksList, "reques por notifications");
-					tasksList$.next(tasksList);
-				}
-			});
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error  requestTaskPoUpdate');
-				} else {
-					get_po_by_id();
-				}
-			}
-		);
 	}
 
 	requestTask(id: number) {

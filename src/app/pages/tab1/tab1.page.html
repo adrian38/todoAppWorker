@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Tab 1
@@ -13,4 +13,52 @@
     </ion-toolbar>
   </ion-header>
 
+</ion-content> -->
+
+<ion-header class="ion-no-border">
+
+<!--   <app-tab-header titulo="Solicitudes"></app-tab-header> -->
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <div class="flex_centered" style="width: 100%; padding-top: 20px; padding-bottom: 20px;">
+
+    <ion-list style="width: 80% !important;">
+      
+      <ion-item class="item" *ngFor="let solicitud of solicitudesList" lines="none">
+        
+        <div class="flex_row" style="width: 100%;">
+
+          <img class="image"
+               src="../../../assets/fontaneria.png">
+
+          <div class="flex_column" style="width: 100%; margin-left: 20px;">
+            <ion-label class="cat_title">{{ solicitud.title}}</ion-label>
+            <div class="flex_row">
+              <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
+              <ion-label class="h5_label">{{ solicitud.date_planned | date: "EEE d MMM y" | lowercase }}</ion-label>
+            </div>
+            <div class="flex_row">
+              <ion-img class="icon_horario" src="/assets/icons/hora.svg"></ion-img>
+              <ion-label class="h5_label">{{ solicitud.time | date: "h:mm a" }}</ion-label>
+            </div>
+          </div>
+
+        </div>
+
+      </ion-item>
+
+    </ion-list>
+
+</div>
+
 </ion-content>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="orange" style="margin-right: 20px;" (click)="onFabClick( $event )">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+

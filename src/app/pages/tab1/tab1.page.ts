@@ -17,6 +17,7 @@ export class Tab1Page {
 
   cant;
 	id_string: string;
+	titulo:string="";
 	task: TaskModel;
 	solicitudesList: TaskModel[];
 	tab: String;
@@ -43,7 +44,18 @@ export class Tab1Page {
   ngOnInit(): void {
     this.subscriptions();
     this.init();
-		this._taskOdoo.setTab1In(true);
+	this._taskOdoo.setTab1In(true);
+
+
+
+ 	/* if( this.task.title.length < 11){
+		this.titulo=this.task.title;
+		console.log("if",this.titulo);
+	}
+	   else{
+		this.titulo=this.task.title.slice(0,10) + " " + " . . .";
+		console.log("else",this.titulo);
+	   }  */
   }
 
   ngOnDestroy(): void {
@@ -125,6 +137,7 @@ export class Tab1Page {
 
         this.solicitudesList = tasksList;
         console.log(this.solicitudesList);
+		
 				//this.solicitudEmpty();
 				//this.loading.dismiss();
 			});
@@ -137,6 +150,19 @@ export class Tab1Page {
 		} else {
 			this.solicitudVacia = true;
 		}
+	}
+
+
+	in(i) {
+		
+	
+		this.task = this.solicitudesList[i]; 
+		 this._taskOdoo.setTaskCesar(this.task);
+		/* this.subServ.setSolicitudeList(this.solicitudesList);  */
+		 console.log("entre a la solicitud",this.task);
+		
+		
+		 this.navCtrl.navigateRoot('/presupuestar', { animated: true, animationDirection: 'forward' }); 
 	}
 
 }

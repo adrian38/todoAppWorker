@@ -1,0 +1,47 @@
+.segment {
+    --background: var(--ion-color-orange);
+    height: 44px !important;
+  
+  }
+  
+  .segment_btn {
+    font: normal 16px 'Helvetica-Roman', sans-serif;
+    color: var(--ion-color-black);
+    --color-checked: var(--ion-color-black);
+    --indicator-height: 4px;
+    min-height: 44px !important;
+    z-index: 500 !important;
+  }
+
+  .item {
+    width: 100% !important;
+    border-bottom: 1px solid var(--ion-color-orange);
+    padding: 5px 0 !important;
+    --padding-start: 0
+  }
+
+  
+  ion-input{
+    border: 1px   transparent;
+    background-color: rgb(245, 245, 245);
+    fill: round($number: 7);
+   
+    border-radius: 5px 5px 5px 5px ;
+    margin-top: 5px;
+
+  
+   
+}
+
+ion-button{
+  margin-top: 70px;
+  width: 80%;
+}
+
+
+ .item {
+  width: 100% !important;
+  border-bottom: 1px solid var(--ion-color-orange);
+  padding: 5px 0 !important;
+  --padding-start: 0
+} 

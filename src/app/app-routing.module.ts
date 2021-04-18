@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'solicitudes-chat-detalles',
     loadChildren: () => import('./pages/solicitudes-chat-detalles/solicitudes-chat-detalles.module').then( m => m.SolicitudesChatDetallesPageModule), canActivate: [ AuthGuardService ]
+  },  {
+    path: 'presupuestar',
+    loadChildren: () => import('./pages/presupuestar/presupuestar.module').then( m => m.PresupuestarPageModule)
   }
+
 
 
 ];

@@ -17,7 +17,7 @@
 
 <ion-header class="ion-no-border">
 
-<!--   <app-tab-header titulo="Solicitudes"></app-tab-header> -->
+  <app-tab-header titulo="Solicitudes"></app-tab-header> 
 
 </ion-header>
 
@@ -27,9 +27,10 @@
 
     <ion-list style="width: 80% !important;">
       
-      <ion-item class="item" *ngFor="let solicitud of solicitudesList" lines="none">
+      <ion-item class="item" *ngFor="let solicitud of solicitudesList,let i = index"  lines="none">
         
-        <div class="flex_row" style="width: 100%;">
+        <div class="flex_row" style="width: 100%;"
+             (click)="in(i)"  >
 
           <img class="image"
                src="../../../assets/fontaneria.png">

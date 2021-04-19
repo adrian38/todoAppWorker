@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { textChangeRangeIsUnchanged } from 'typescript';
 
 @Component({
   selector: 'app-presupuestar',
@@ -13,6 +14,7 @@ export class PresupuestarPage implements OnInit {
   materiales:number;
   total:number=0;
 
+  requieremateriales:boolean
   verpresupuestar: boolean = true;
 	verdetalles: boolean = false;
 	valorSegment: string = '';
@@ -25,8 +27,8 @@ export class PresupuestarPage implements OnInit {
   ngOnInit() {
  
     this.task=this._taskOdoo.getTaskCesar();
-    console.log(" estoy Presupuestado",this.task);
-
+    console.log(" estoy Presupuestado",this.task.require_materials);
+    //this.requieremateriales=this.task.require_materials;
    
   }
 

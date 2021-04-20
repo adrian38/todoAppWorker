@@ -1,0 +1,30 @@
+.page_subheader {
+    background: var(--ion-color-orange) !important;
+    height: 45px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1 !important;
+    width: 100% !important;
+  }
+  
+  .page_subheader_title {
+    font: normal 16px 'Helvetica-Md', sans-serif !important;
+    text-transform: uppercase;
+  }
+
+  .address{
+    border-bottom: 1px solid var(--ion-color-orange); 
+    width: 80% !important; 
+    padding-top: 8px !important; 
+    padding-bottom: 8px !important;
+    margin-top: 20px;
+}
+.image{
+    min-height: 30px !important; 
+    min-width: 30px !important; 
+    height: 30px !important; 
+    width: 30px !important; 
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}

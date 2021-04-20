@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PresupuestarPageRoutingModule } from './presupuestar-routing.module';
+import { NewRequestPageRoutingModule } from './new-request-routing.module';
 
-import { PresupuestarPage } from './presupuestar.page';
+import { NewRequestPage } from './new-request.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    PresupuestarPageRoutingModule,
+    NewRequestPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [PresupuestarPage]
+  declarations: [NewRequestPage]
 })
-export class PresupuestarPageModule {}
+export class NewRequestPageModule {}

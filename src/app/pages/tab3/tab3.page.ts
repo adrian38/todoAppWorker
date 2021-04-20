@@ -22,5 +22,9 @@ export class Tab3Page implements OnInit {
   datos(){
     this.navCtrl.navigateRoot('/contrase', {animated: true, animationDirection: 'forward' }) ;      
      
-  } 
+  }
+  
+  direccion() {
+    this.navCtrl.navigateRoot('/direccion', {animated: true, animationDirection: 'forward' }) ;  
+  }
 }

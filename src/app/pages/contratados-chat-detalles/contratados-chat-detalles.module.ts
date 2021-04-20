@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PresupuestarPageRoutingModule } from './presupuestar-routing.module';
+import { ContratadosChatDetallesPageRoutingModule } from './contratados-chat-detalles-routing.module';
 
-import { PresupuestarPage } from './presupuestar.page';
+import { ContratadosChatDetallesPage } from './contratados-chat-detalles.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    PresupuestarPageRoutingModule,
+    ContratadosChatDetallesPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [PresupuestarPage]
+  declarations: [ContratadosChatDetallesPage]
 })
-export class PresupuestarPageModule {}
+export class ContratadosChatDetallesPageModule {}

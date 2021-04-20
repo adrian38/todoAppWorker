@@ -1,55 +1,67 @@
 .page_subheader {
-    background: var(--ion-color-orange) !important;
-    height: 50px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    z-index: 1 !important;
-    width: 100% !important;
-  }
+  background: var(--ion-color-orange) !important;
+  height: 44px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  text-transform: uppercase;
+}
 
-  .page_subheader_title {
-    font: normal 18px 'Helvetica-Md', sans-serif !important;
-  }
+.page_subheader_title {
+  font: normal 15px 'Helvetica-Md', sans-serif !important;
+}
 
-  
+
 img {
-    width: 120px;
+  width: 120px;
 
 }
-#item{
-        
-    border-bottom: 1px solid  rgb(246, 183, 118);
-    margin-top: 2px;
-}
-#imgGPS{
-    width: 39px;
-    height: 39px;
+
+#imgGPS {
+  width: 30px;
+  height: 30px;
 }
 
-ion-button{
-    margin-top: 45px;
-    width: 100px;
-    height: 35px;
-    border-radius: 5px 5px 5px 5px ;
-    font-family: 'HelveticaNeueLTStd-Bd';
-    background-color: rgb(246, 183, 118);
-    color: rgb(49 ,49 ,57);
+ion-button {
+  margin-top: 45px;
+  width: 100px;
+  height: 35px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: 'HelveticaNeueLTStd-Bd';
+  background-color: var(--ion-color-orange);
+  color: var(--ion-color-black);
 }
 
-ion-card{
-    border: 0.5px solid  rgb(49 ,49 ,57);
-    width:110px;
-    height: 110px;
-    border-radius: 15px 15px 15px 15px;
-  
-    }
+ion-card {
+  border: 0.5px solid var(--ion-color-black);
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+}
 
-    #selecf{
-        width: 109px;
-        height: 109px; 
-        object-fit: cover; 
-    }
-    #link{
-        color: rgb(101,173,172);
-    }
+#selecf {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+#link {
+  color: var(--ion-color-greenblue);
+}
+
+.custom_input {
+  border: none;
+  width: 100% !important;
+  --padding-top: 5px;
+  --padding-end: 15px;
+  --padding-bottom: 5px;
+  --padding-start: 15px;
+  text-align: left;
+  font-family: 'Helvetica-Roman', sans-serif !important;
+  font-size: 16px !important;
+  outline: none !important;
+}
+
+

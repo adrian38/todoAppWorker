@@ -1,27 +1,24 @@
-
+import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
-import { ChatDetails } from 'src/app/Interfaces/interfaces';
-import { TaskModel } from 'src/app/models/task.model';
-import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
-  selector: 'app-solicitudes-chat-detalles',
-  templateUrl: './solicitudes-chat-detalles.page.html',
-  styleUrls: ['./solicitudes-chat-detalles.page.scss'],
+  selector: 'app-contratados-chat-detalles',
+  templateUrl: './contratados-chat-detalles.page.html',
+  styleUrls: ['./contratados-chat-detalles.page.scss'],
 })
+export class ContratadosChatDetallesPage implements OnInit {
 
-export class SolicitudesChatDetallesPage implements OnInit {
-
-  categoria: string;
   presupuesto: number;
   descripcion: string;
   fecha: string;
   horario: string;
   direccion: string;
+  precio: number;
   materiales: number;
   manoObra: number;
   fotos: string [];
+  nombreTrabajador: string;
 
   total: number;
 
@@ -29,22 +26,19 @@ export class SolicitudesChatDetallesPage implements OnInit {
   chats: ChatDetails[] = [];
   newMessage: string;
 
-  task: TaskModel;
-
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor(private _taskOdoo: TaskOdooService) { }
+  constructor() { }
 
   ngOnInit() {
-
-    this.task=this._taskOdoo.getTaskCesar();
-
-
-    this.presupuesto = this.task.budget;
-    this.categoria = 'FONTANERIA';
-    this.descripcion = this.task.title;
-   
+    this.presupuesto = 20;
+    this.descripcion = 'Arreglar un grifo de agua';
+    this.fecha = 'Miércoles, 9 de Septiembre de 2020';
+    this.horario = 'De 09:00am a 10:00am';
+    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa';
+    this.precio = 20;
+    this.nombreTrabajador = 'Lisniel Sanchez'
     this.materiales = 28;
     this.manoObra = 54;
     this.total = this.materiales + this.manoObra;
@@ -129,8 +123,32 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.chats.unshift(chat);
   }
 
+  onClickUbicacion( event ) {
+    console.log('Ubicacion clicked');
+  }
+
+  onClickCostoEntrada( event ) {
+    console.log('Costo de entrada clicked');
+  }
+
+  onClickFactura( event ) {
+    console.log('Factura clicked');
+  }
+
+  onClickDenunciar( event ) {
+    console.log('Denunciar clicked');
+  }
+
+  onClickFinalizar( event ) {
+    console.log('Finalizar clicked');
+  }
+
   onClose() {
-    console.log("Close clicked");
+    console.log('Close clicked');
+  }
+
+  onClickEnviar() {
+    console.log("Enviar clicked");
   }
 
 }

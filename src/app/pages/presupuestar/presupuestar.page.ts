@@ -11,9 +11,9 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 })
 export class PresupuestarPage implements OnInit {
 
-  manoobra:number;
-  materiales:number;
-  total:number=101;
+  manoobra:string="";
+  materiales:string="";
+  total:number=0;
 
   requieremateriales:boolean
   verpresupuestar: boolean = true;
@@ -54,17 +54,83 @@ export class PresupuestarPage implements OnInit {
 		
 		}
 	}
-/* 
+
   obra(event){
-    this.total=this.manoobra + this.materiales;
+    console.log("ob",this.materiales);
+    if(this.materiales == "" && this.manoobra == ""){
+      this.total=0;
+      
+    }
+    else{
+      if(this.materiales == ""){
+        this.total=parseInt(this.manoobra);
+        console.log("materiales vacio");
+        console.log("materiales vacio",this.total);
+        }
+        else{
+          if(this.manoobra == ""){
+            this.total=parseInt(this.materiales);
+          }
+          else{
+            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            console.log("campos llenos");
+            console.log("lleno estoy en obras",this.total);
+          }
+         
+        }
+    }
+
+    
+  
+ 
+
 
   }
 
   material(event){
-    this.total=this.manoobra + this.materiales;
-  } */
-  enviar(){
-    this.presentAlert();
+    console.log("a",this.manoobra);
+    if(this.materiales == "" && this.manoobra == ""){
+      this.total=0;
+      
+    }
+    else{
+      if(this.manoobra == ""){
+        this.total=parseInt(this.materiales);
+        console.log("materiales vacio");
+        console.log("materiales vacio",this.total);
+        }
+        else{
+          if(this.materiales == ""){
+            this.total=parseInt(this.manoobra);
+          }
+          else{
+            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            console.log("campos llenos");
+            console.log("lleno estoy en obras",this.total);
+          }
+        }
+    }
+
+  /*   console.log("b",this.manoobra);
+    if(this.manoobra == ""){
+      this.total=parseInt(this.materiales);
+      console.log("bra vacio");
+      console.log("mano vacio",this.total);
+    }
+    else{
+      this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+      console.log("campos llenos");
+      console.log("lleno estoy en materiales",this.total);
+    } */
+
+  } 
+  enviar(){ 
+    if(this.total > 0){
+      this.presentAlert();
+    }
+    else
+    console.log("campo obligatorio")
+  
   }
 
   async presentAlert() {

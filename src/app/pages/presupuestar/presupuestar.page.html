@@ -80,7 +80,10 @@
           </ion-col>
           <ion-col size=4></ion-col>
           <ion-col size=4 style="text-align: end; ">
-            <h5 style="margin-right:10px ;"(ngModel)="total"></h5>
+            <div class="cuadrado">
+              <h5 style="margin-right:10px ;">{{total}}</h5>
+            </div>
+            
           </ion-col>
         </ion-row>
       </ion-col>
@@ -172,14 +175,14 @@
             </ion-col>
           </ion-row>
           <ion-row *ngIf="task.require_materials">
-            <p style="margin: 5px 0px;font-size: medium; ">Materiales: {{ task.budget }} €</p>
+            <p style="margin: 5px 0px;font-size: medium; ">Materiales: {{ materiales }} €</p>
           </ion-row>
           <ion-row >
            <ion-col size=8 style="padding-left: 0px;">
-            <p style="margin: 5px 0px;font-size: medium; ">Mano de obra: {{ task.budget }} €</p>
+            <p style="margin: 5px 0px;font-size: medium; ">Mano de obra: {{ manoobra }} €</p>
            </ion-col>
            <ion-col size=4>
-            <p style="margin: 5px 0px;font-size: medium; ">Total: {{ task.budget }} €</p>
+            <p style="margin: 5px 0px;font-size: medium; ">Total: {{ total }} €</p>
            </ion-col>
           </ion-row>
           <div class="item"></div>

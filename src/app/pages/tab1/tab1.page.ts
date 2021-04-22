@@ -15,7 +15,7 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 })
 export class Tab1Page {
 
-  cant;
+    cant;
 	id_string: string;
 	titulo:string="";
 	task: TaskModel;

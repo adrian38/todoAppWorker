@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -23,9 +23,10 @@ export class PresupuestarPage implements OnInit {
 
   task: TaskModel;
 
-  constructor(private _taskOdoo: TaskOdooService,
-              private alertCtrl: AlertController,
-              private navCtrl: NavController) { }
+  constructor(private _taskOdoo       :TaskOdooService,
+              private alertCtrl       :AlertController,
+              private navCtrl         :NavController,
+              private toastController :ToastController) { }
 
   ngOnInit() {
  
@@ -129,7 +130,7 @@ export class PresupuestarPage implements OnInit {
       this.presentAlert();
     }
     else
-    console.log("campo obligatorio")
+    this.toast_campos_vacio();
   
   }
 
@@ -161,5 +162,13 @@ export class PresupuestarPage implements OnInit {
     });
     await actionSheet.present();
   }
+
+  async toast_campos_vacio() {
+		const toast = await this.toastController.create({
+			message: 'Rellene los campos necesarios',
+			duration: 2000
+		});
+		toast.present();
+	}
 
 }

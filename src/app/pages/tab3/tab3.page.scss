@@ -1,17 +1,24 @@
-.page_subheader{
-    background: var(--ion-color-orange) !important;
-    height: 44px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    z-index: 1 !important;
-    width: 100% !important;
+.page_subheader {
+  background: var(--ion-color-orange) !important;
+  height: 44px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 1 !important;
+  width: 100% !important;
 }
-.page_subheader_title{
-    font: bold 16px 'Helvetica-Roman', sans-serif !important;
+
+.page_subheader_title {
+  font: bold 16px 'Helvetica-Roman', sans-serif !important;
 }
-#item{
-        
-    border-bottom: 1px solid  rgb(246, 183, 118);
+
+#item {
+
+  border-bottom: 1px solid var(--ion-color-orange);
   margin-top: 10px;
+}
+
+.img {
+  margin: 5px auto;
+  color: var(--ion-color-orange)
 }

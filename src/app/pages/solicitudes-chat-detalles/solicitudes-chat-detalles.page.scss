@@ -25,6 +25,8 @@ ion-segment .segment-button-checked {
   background-color: var(--ion-color-gray);
   height: 44px;
   width: 100%;
+  z-index: 50;
+  margin-bottom: 5px !important;
 }
 
 .div_presupuesto {
@@ -79,6 +81,14 @@ ion-segment .segment-button-checked {
   margin-bottom: 8px !important;
   font: normal 14px 'Helvetica-Roman', sans-serif;
   text-align: left;
+}
+
+.div_chat {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: auto !important;
 }
 
 .bubble_chat_me_old {
@@ -148,6 +158,7 @@ ion-segment .segment-button-checked {
   --inner-padding-end: 0;
   margin-top: 10px !important;
   margin-bottom: 10px !important;
+  box-sizing: border-box !important;
 }
 
 .no_border {
@@ -156,8 +167,81 @@ ion-segment .segment-button-checked {
 
 .align_right {
   justify-content: flex-end;
+  padding-right: 15px;
 }
 
 .align_left {
   justify-content: flex-start;
+  padding-left: 15px;
+}
+
+.time {
+  margin-top: 5px;
+  text-align: right;
+  font: normal 12px 'Helvetica_Roman', sans-serif;
+}
+
+.module {
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid var(--ion-color-orange) !important;
+  margin-top: 10px !important;
+}
+
+.icon_calendar {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+.icon_schedule {
+  height: 19px !important;
+  width: 19px !important;
+}
+
+.icon_direction {
+  height: 19px !important;
+  width: 19px !important;
+}
+
+.icon_price {
+  height: 19px !important;
+  width: 19px !important;
+}
+
+.icon_photo {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.h3_title {
+  font: normal 14px 'Helvetica-Md', sans-serif !important;
+  margin: 8px 5px 8px 10px !important;
+  text-align: left;
+  width: 100%;
+}
+
+.h6_title {
+  font: normal 12px 'Helvetica-Roman', sans-serif !important;
+  text-align: left;
+  width: 100%;
+  padding: 5px 20px 5px 2px !important;
+  min-width: 100px !important;
+}
+
+ion-item {
+  --ion-safe-area-right: 0 !important;
+}
+
+.add_img {
+  width: 85px !important;
+  height: 85px !important;
+  min-width: 85px !important;
+  border: 0.5px solid  rgb(49 ,49 ,57); 
+  border-radius: 5px 5px 5px 5px;
+}
+
+.h2_title {
+  font: normal 16px 'Helvetica-Bd', sans-serif !important;
+  padding: 8px 5px 8px 0 !important;
+  text-align: left;
+  width: 100%;
 }

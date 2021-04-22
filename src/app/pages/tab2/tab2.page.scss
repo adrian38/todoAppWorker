@@ -1,79 +1,112 @@
-.container{
-    padding: 15px 25px 0 25px !important;
+.segment {
+  --background: var(--ion-color-orange);
+  height: 44px !important;
 }
-.module{
-    padding-bottom: 5px !important;
-    border-bottom: 1px solid var(--ion-color-orange) !important;
-    margin-top: 8px !important;
+
+.segment_btn {
+  font: normal 15px 'Helvetica-Roman', sans-serif;
+  color: var(--ion-color-black);
+  --color-checked: var(--ion-color-black);
+  --indicator-height: 4px;
+  min-height: 44px !important;
+  z-index: 500 !important;
 }
-.icon_calendar{
-    height: 13px !important;
-    width: 13px !important;
+
+.font_bold {
+  font-weight: bold;
 }
-.icon_schedule{
-    height: 15px !important;
-    width: 15px !important;
+
+ion-segment .segment-button-checked {
+  font: normal 15px 'Helvetica-Bd', sans-serif;
 }
-.icon_direction{
-    height: 15px !important;
-    width: 15px !important;
+
+ion-segment-button {
+  width: 50%;
 }
-.icon_price{
-    height: 15px !important;
-    width: 15px !important;
+
+.image {
+  height:            93px !important;
+  width:             91px !important;
+  min-height:        93px;
+  min-width:         91px;
+  border-radius:     20px 0 0 0;
+  background-repeat: no-repeat;
+  background-size:   100%;
 }
-.icon_photo{
-    height: 16px !important;
-    width: 16px !important;
+
+.cat_title {
+ /*  width: 50%;
+  text-transform: uppercase;
+  font: normal 16px 'Helvetica-Bd', sans-serif;
+  text-align: left;
+  margin: 5px 0 12px 0;
+  min-width: 110px; */
+
+  text-transform: uppercase;
+  font: normal 16px 'Helvetica-Bd', sans-serif;
+  text-align: left;
+  margin: 5px 0 12px 0;
 }
-.icon_contact{
-    height: 16px !important;
-    width: 16px !important;
+
+.ordenNumber {
+  width: 30%;
+  font: normal 16px 'Helvetica-Roman', sans-serif;
+  text-align: center;
+  margin-top: 5px; 
+
+/*   font: normal 16px 'Helvetica-Roman', sans-serif;
+  text-align: left;
+  margin: 4px 8px; */
 }
-.h3_title {
-    font: normal 12px 'Helvetica-Roman', sans-serif !important;
-    margin: 8px 5px 8px 10px !important;
-    text-align: left;
-    width: 100%;
+
+.start_date {
+  width: 30%;
+  text-align: right;
+  font: normal 6px 'Helvetica-Roman', sans-serif;
+  margin-top: 5px;
 }
-.h6_title {
-    font: normal 10px 'Helvetica-Roman', sans-serif !important;
-    text-align: left;
-    width: 100%;
-    padding: 5px 20px 5px 2px !important;
-    min-width: 100px !important;
+
+.icon_calendar {
+  height: 16px !important;
+  width : 16px !important;
+  margin: 5px 0;
 }
-.img_location{
-    display: block;
-    height: 20px;
-    width: 20px;
+
+.icon_horario {
+  height: 16px !important;
+  width : 16px !important;
+  margin: 5px 0;
 }
-.h6_direction{
-    padding-right: 20px !important;
+
+.fecha_fin {
+  font: normal 16px 'Helvetica-Roman', sans-serif;
+  text-align: left;
+  margin: 5px 8px;
 }
-ion-item{
-    --ion-safe-area-right: 0 !important;
+
+.horario {
+  font: normal 16px 'Helvetica-Roman', sans-serif;
+  text-align: left;
+  margin: 5px 8px;
+ /*  width: 100%; */
 }
-.btn{
-    font: normal 8px 'Helvetica-Roman', sans-serif;
-    margin-left: 10px !important;
-    min-width: 60px !important;
+
+ion-item {
+  --ion-safe-area-right: 0 !important;
 }
-.add_img {
-    width: 60px !important;
-    height: 60px !important;
-    min-width: 60px !important;
+
+.item {
+  width: 100% !important;
+  border-bottom: 1px solid var(--ion-color-orange);
+  padding: 8px 0 !important;
+  --padding-start: 0
 }
-ion-button{
-    text-transform: none;
-}
-.next_button_div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px !important;
-}
-.btn_finish{
-    font: bold 10px 'Helvetica-Roman', sans-serif;
-    height: 20px !important;
+
+.precio {
+  font: normal 18px 'Helvetica-Md', sans-serif;
+  text-align: end;
+  color: var(--ion-color-orange);
+  width: 33%;
+  margin-top: 3px;
+  min-width: 45px;
 }

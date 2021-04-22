@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -10,8 +11,8 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 })
 export class PresupuestarPage implements OnInit {
 
-  manoobra:number;
-  materiales:number;
+  manoobra:string="";
+  materiales:string="";
   total:number=0;
 
   requieremateriales:boolean
@@ -22,7 +23,10 @@ export class PresupuestarPage implements OnInit {
 
   task: TaskModel;
 
-  constructor(private _taskOdoo: TaskOdooService) { }
+  constructor(private _taskOdoo       :TaskOdooService,
+              private alertCtrl       :AlertController,
+              private navCtrl         :NavController,
+              private toastController :ToastController) { }
 
   ngOnInit() {
  
@@ -53,12 +57,118 @@ export class PresupuestarPage implements OnInit {
 	}
 
   obra(event){
-    this.total=this.manoobra + this.materiales;
+    console.log("ob",this.materiales);
+    if(this.materiales == "" && this.manoobra == ""){
+      this.total=0;
+      
+    }
+    else{
+      if(this.materiales == ""){
+        this.total=parseInt(this.manoobra);
+        console.log("materiales vacio");
+        console.log("materiales vacio",this.total);
+        }
+        else{
+          if(this.manoobra == ""){
+            this.total=parseInt(this.materiales);
+          }
+          else{
+            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            console.log("campos llenos");
+            console.log("lleno estoy en obras",this.total);
+          }
+         
+        }
+    }
+
+    
+  
+ 
+
 
   }
 
   material(event){
-    this.total=this.manoobra + this.materiales;
+    console.log("a",this.manoobra);
+    if(this.materiales == "" && this.manoobra == ""){
+      this.total=0;
+      
+    }
+    else{
+      if(this.manoobra == ""){
+        this.total=parseInt(this.materiales);
+        console.log("materiales vacio");
+        console.log("materiales vacio",this.total);
+        }
+        else{
+          if(this.materiales == ""){
+            this.total=parseInt(this.manoobra);
+          }
+          else{
+            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            console.log("campos llenos");
+            console.log("lleno estoy en obras",this.total);
+          }
+        }
+    }
+
+  /*   console.log("b",this.manoobra);
+    if(this.manoobra == ""){
+      this.total=parseInt(this.materiales);
+      console.log("bra vacio");
+      console.log("mano vacio",this.total);
+    }
+    else{
+      this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+      console.log("campos llenos");
+      console.log("lleno estoy en materiales",this.total);
+    } */
+
+  } 
+  enviar(){ 
+    if(this.total > 0){
+      this.presentAlert();
+    }
+    else
+    this.toast_campos_vacio();
+  
   }
+
+  async presentAlert() {
+    const actionSheet = await this.alertCtrl.create({
+      header: '¿Desea interactuar con el cliente?',
+      message: 'Selecione "Si" para ir al chat ',
+      buttons: [
+        {
+          text: 'Si',
+          handler: () => {
+            this.task.budget=this.total;
+            this._taskOdoo.setTaskCesar(this.task);
+            this.navCtrl.navigateRoot('/solicitudes-chat-detalles', { animated: true, animationDirection: 'forward' }); 
+          }
+        },
+       
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            this.task.budget=this.total;
+            this._taskOdoo.setTaskCesar(this.task);
+            this.navCtrl.navigateRoot('/tabs/tab1', { animated: true, animationDirection: 'back' }); 
+            
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  async toast_campos_vacio() {
+		const toast = await this.toastController.create({
+			message: 'Rellene los campos necesarios',
+			duration: 2000
+		});
+		toast.present();
+	}
 
 }

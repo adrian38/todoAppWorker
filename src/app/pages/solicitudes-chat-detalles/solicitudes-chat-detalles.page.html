@@ -1,10 +1,14 @@
 <ion-header class="ion-no-border">
 
-  <app-tab-header titulo="Solicitudes" backgroundColor="var(--ion-color-orange)"></app-tab-header>
+  <div style="background: var(--ion-color-orange);">
+
+    <app-tab-header titulo="Solicitudes"></app-tab-header>
+
+  </div>
 
   <ion-segment  class="segment"
-                (ionChange)="segmentChanged($event)"
                 value="chat"
+                mode="md" 
                 #segment>
     
     <ion-segment-button class="segment_btn" value="chat">
@@ -17,33 +21,29 @@
   
   </ion-segment>
 
+  <div *ngIf="(segment.value === 'chat')" class="flex_row pres_container"> 
+
+    <div class="flex_row div_presupuesto">
+      <ion-label class="label_presupuesto">PRESUPUESTO: {{ presupuesto }} €</ion-label>
+    </div>
+
+    <div style="width: 70px; display: flex; align-items: center; justify-content: flex-start;">
+      <ion-icon name="close-circle-outline" style="height: 25px; width: 25px;" (click)="onClose()"></ion-icon>
+    </div>
+
+  </div>
+
 </ion-header>
 
 <ion-content>
     
   <div *ngIf="(segment.value === 'chat')" class="flex_column" style="height: 100%; width: 100%;">
-    
-    <div class="flex_row pres_container">
 
-      <div class="flex_row div_presupuesto">
-        <ion-label class="label_presupuesto">PRESUPUESTO: {{ presupuesto }}€</ion-label>
-      </div>
+    <div style="width: 100%; height: 100%; display: flex; flex-direction: row;">
 
-      <div class="flex_centered" style="width: 70px;">
-        <ion-icon name="checkbox-outline" style="height: 25px; width: 25px;"></ion-icon>
-      </div>
+      <div style="height: 100%; width: 5%;"></div>
 
-      <div style="width: 70px; display: flex; align-items: center; justify-content: flex-start;">
-        <ion-icon name="close-circle-outline" style="height: 25px; width: 25px;"></ion-icon>
-      </div>
-
-    </div>
-
-    <ion-row style="width: 100%; height: 100%;">
-
-      <ion-col size="1"></ion-col>
-
-      <ion-col size="10" class="ion-no-padding">
+      <div class="div_chat">
 
         <ion-row  class="chat_bubble"
                   [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'" 
@@ -53,10 +53,12 @@
 
             <div  style="width: auto; height: auto; max-width: 80%;"
                   [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'">
+            
+              <div>{{ chat.message }}</div>
 
-              {{ chat.message }}  
+              <!-- <div class="time"> {{ chat.date }} </div> -->
 
-            </div>
+          </div>
 
           </ng-container>
           <ng-template #elseTemplate>
@@ -64,7 +66,9 @@
             <div  style="width: auto; height: auto; max-width: 80%;"
                   [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'">
 
-              {{ chat.message }}  
+              <div>{{ chat.message }}</div>
+                    
+              <!-- <div class="time"> {{ chat.date }} </div> -->
 
             </div>
 
@@ -72,17 +76,100 @@
           
         </ion-row>
 
-      </ion-col>
+      </div>
       
-      <ion-col size="1"></ion-col>
+      <div style="height: 100%; width: 5%;"></div>
       
-    </ion-row>
+    </div>
+
+  </div>
+
+  <div *ngIf="(segment.value === 'detalles')" class="flex_column" style="height: 100%; width: 100%;">
+  
+    <ion-list style="padding: 15px 25px 0 25px !important">
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <ion-label class="h2_title">{{ categoria }}</ion-label>
+          <ion-label class="h6_title ion-text-wrap">{{ descripcion }}</ion-label>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
+            <ion-label class="h3_title">Fecha</ion-label>
+          </div>
+          <ion-label class="h6_title ion-text-wrap">{{  task.date_planned |date:'EEEE d.MMMM yyyy' | lowercase }}</ion-label>
+        </div>
+      </ion-item>
+  
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_schedule" src="/assets/icons/hora.svg"></ion-img>
+            <ion-label class="h3_title">Horario</ion-label>
+          </div>
+          <ion-label class="h6_title ion-text-wrap">{{ task.time |date: 'h:mm a' }}</ion-label>
+        </div>
+      </ion-item>
+  
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_direction" src="/assets/icons/direccion.svg"></ion-img>
+            <ion-label class="h3_title">Dirección</ion-label>
+          </div>
+         <!--  <ion-label class="h6_title ion-text-wrap">{{ direccion }}</ion-label> -->
+         <ion-row>
+          <ion-label class="h6_title ion-text-wrap">{{task.address.street}}, Numero: {{task.address.number}}, </ion-label>
+          <ion-label *ngIf="task.address.door" class="h6_title ion-text-wrap">Piso: {{task.address.floor}}, </ion-label>
+          <ion-label *ngIf="task.address.stair" class="h6_title ion-text-wrap">Escalera: {{task.address.stair}}, </ion-label>
+          <ion-label *ngIf="task.address.portal" class="h6_title ion-text-wrap">Portal: {{task.address.portal}}  </ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-label *ngIf="task.address.cp" class="h6_title ion-text-wrap"> Codigo_postal: {{task.address.cp}} </ion-label>
+        </ion-row>
+       
+        </div>
+      </ion-item>
+  
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_price" src="/assets/icons/bolsa.png"></ion-img>
+            <ion-label class="h3_title">Precio</ion-label>
+          </div>
+          <ion-label class="h6_title">Materiales: {{ materiales }}€ </ion-label>
+          <div class="flex_row">
+            <ion-label class="h6_title" style="width: 50% !important;">Mano de obra: {{ manoObra }}€ </ion-label>
+            <ion-label class="h6_title" style="width: 50% !important;">TOTAL: {{ total }}€ </ion-label>
+          </div>
+        </div>
+      </ion-item>
+  
+      <ion-item class="module ion-no-padding" lines="none" style="border-bottom: none !important; margin-bottom: 50px;">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_photo" src="/assets/icons/camara.svg"></ion-img>
+            <ion-label class="h3_title">Fotos</ion-label>
+          </div>
+          <div class="flex_row flex_space_between" style="margin-bottom: 8px !important; margin-top: 12px;">
+            <ion-img class="add_img" src="/assets/icons/noImage.svg"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+          </div>
+        </div>
+      </ion-item>
+  
+    </ion-list>
 
   </div>
 
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
   <div style="display: flex; justify-content: center;">
 
     <div class="flex_row chat_container">
@@ -97,15 +184,15 @@
                     [(ngModel)]="newMessage">
       </ion-textarea>
 
-      <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+     <!--  <div style="display: flex; flex-direction: column; justify-content: flex-end;">
         <ion-button fill="clear" class="attach_btn">
-          <ion-icon name="attach" style="min-width: 30px; min-height: 30px;"></ion-icon>
+          <ion-icon name="attach" color="greenblue" style="min-width: 30px; min-height: 30px;"></ion-icon>
         </ion-button>
-      </div>
+      </div> -->
 
       <div style="display: flex; flex-direction: column; justify-content: flex-end;">
         <ion-button fill="clear" class="send_btn" (click)="pushToChat()">
-          <ion-icon name="send" style="min-width: 25px; min-height: 30px;"></ion-icon>
+          <ion-icon name="send" color="greenblue" style="min-width: 25px; min-height: 30px;"></ion-icon>
         </ion-button>
       </div>
 

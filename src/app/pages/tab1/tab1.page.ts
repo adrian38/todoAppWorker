@@ -15,7 +15,7 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 })
 export class Tab1Page {
 
-  cant;
+    cant;
 	id_string: string;
 	titulo:string="";
 	task: TaskModel;
@@ -45,6 +45,13 @@ export class Tab1Page {
     this.subscriptions();
     this.init();
 	this._taskOdoo.setTab1In(true);
+
+/* 	if( this.task.title.length < 11){
+		this.titulo=this.task.title;
+	   }
+	   else{
+		this.titulo=this.task.title.slice(0,10) + " " + " . . .";
+	   } */
 
 
 
@@ -137,6 +144,7 @@ export class Tab1Page {
 
         this.solicitudesList = tasksList;
         console.log(this.solicitudesList);
+		//this.reducir(this.solicitudesList[0].title)
 		
 				//this.solicitudEmpty();
 				//this.loading.dismiss();
@@ -164,5 +172,14 @@ export class Tab1Page {
 		
 		 this.navCtrl.navigateRoot('/presupuestar', { animated: true, animationDirection: 'forward' }); 
 	}
+
+/* 	reducir(title){
+		if( title.length < 11){
+			this.titulo=title;
+		   }
+		   else{
+			this.titulo=title.slice(0,10) + " " + " . . .";
+		   }
+	} */
 
 }

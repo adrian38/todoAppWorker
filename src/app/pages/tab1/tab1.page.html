@@ -1,19 +1,4 @@
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-</ion-content> -->
 
 <ion-header class="ion-no-border">
 
@@ -25,9 +10,10 @@
   
   <div class="flex_centered" style="width: 100%; padding-top: 20px; padding-bottom: 20px;">
 
-    <ion-list style="width: 80% !important;">
+    <ion-list style="width: 90% !important;">
       
-      <ion-item class="item" *ngFor="let solicitud of solicitudesList,let i = index"  lines="none">
+      <ion-item class="item" *ngFor="let solicitud of solicitudesList,let i = index"  lines="none"
+                               >
         
         <div class="flex_row" style="width: 100%;"
              (click)="in(i)"  >
@@ -36,7 +22,7 @@
                src="../../../assets/fontaneria.png">
 
           <div class="flex_column" style="width: 100%; margin-left: 20px;">
-            <ion-label class="cat_title">{{ solicitud.title}}</ion-label>
+            <ion-label class="cat_title">{{solicitud.title.slice(0,12) + " . . "}}</ion-label>
             <div class="flex_row">
               <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
               <ion-label class="h5_label">{{ solicitud.date_planned | date: "EEE d MMM y" | lowercase }}</ion-label>
@@ -46,6 +32,12 @@
               <ion-label class="h5_label">{{ solicitud.time | date: "h:mm a" }}</ion-label>
             </div>
           </div>
+         <!--  <div class="flex_column" >
+            <div class="flex_row"  style="margin-top: 20px;">
+              <ion-img class="icon_noti_chat" style="text-align: end;"  src="/assets/icons/noti_chat.svg"></ion-img>
+            </div>
+
+          </div> -->
 
         </div>
 

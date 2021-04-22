@@ -16,8 +16,10 @@ ion-tab-button {
   height: 70px;
   margin-top: 10px;
   font-weight: bold;
-  min-width: unset !important;
+  min-width: 33.33% !important;
 }
+
+
 
 svg {
   fill: #ffffff !important;
@@ -29,8 +31,8 @@ svg {
 }
 
 .tab-selected {
-  color: rgb(246, 183, 118);
-  background: rgb(49, 49, 57);
+  color: var(--ion-color-orange);
+  background: var(--ion-color-black);
 
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;

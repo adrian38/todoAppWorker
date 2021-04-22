@@ -1,0 +1,242 @@
+<ion-header class="ion-no-border">
+
+  <app-tab-header titulo="Contratados" backgroundColor="var(--ion-color-orange)"></app-tab-header>
+
+  <ion-segment mode="md" class="segment" value="chat" #segment>
+
+    <ion-segment-button class="segment_btn" value="chat">
+      <ion-label>Chat</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button class="segment_btn" value="detalles">
+      <ion-label>Detalles</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <div *ngIf="(segment.value === 'chat')" class="flex_row pres_container">
+
+    <div class="flex_row div_presupuesto">
+      <ion-label class="label_presupuesto">PRESUPUESTO: {{ presupuesto }}€</ion-label>
+    </div>
+
+    <div style="width: 70px; display: flex; align-items: center; justify-content: flex-start;">
+      <ion-icon name="close-circle-outline" style="height: 25px; width: 25px;" (click)="onClose()"></ion-icon>
+    </div>
+
+  </div>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div *ngIf="(segment.value === 'chat')" class="flex_column" style="height: 100%; width: 100%;">
+
+    <div style="width: 100%; height: 100%; display: flex; flex-direction: row;">
+
+      <div style="height: 100%; width: 5%;"></div>
+
+      <div class="div_chat">
+
+        <ion-row class="chat_bubble" [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'"
+          *ngFor="let chat of chats" lines="none">
+          <ng-container *ngIf="(chat.userID === 'Me'); else elseTemplate">
+
+            <div  style="width: auto; height: auto; max-width: 80%;"
+                  [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'">
+
+              <div>{{ chat.message }}</div>
+
+              <div class="time"> {{ chat.date }} </div>
+
+            </div>
+
+          </ng-container>
+          <ng-template #elseTemplate>
+
+            <div style="width: auto; height: auto; max-width: 80%;"
+              [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'">
+
+              <div>{{ chat.message }}</div>
+
+              <div class="time"> {{ chat.date }} </div>
+
+            </div>
+
+          </ng-template>
+
+        </ion-row>
+
+      </div>
+
+      <div style="height: 100%; width: 5%;"></div>
+
+    </div>
+
+    <!-- Se agrega el menu lateral -->
+    <ion-menu contentId="principal" menuId="menu-content" side="start" type="overlay" style="margin-top: 145px !important; --width: 60%">
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title class="menu_title">Menú de cambios</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="flex_row" style="width: 100%;">
+          <div style="width: 10%;"></div>
+          <div class="flex_row" style="width: 80%; margin: 20px 0;">
+            <ion-label style="font: normal 14px 'Helvetica-Roman', sans-serif; text-align: left; width: 60%;">Presupuesto</ion-label>
+            <ion-input class="pres_input ion-tappable" type="text" placeholder="Presupuesto" [(ngModel)]="presupuesto"></ion-input>
+          </div>
+          <div style="width: 10%;"></div>
+        </div>
+
+        <div style="display: flex; justify-content: center; width: 100%; padding-top: 60px;">
+          <ion-button color="orange" (click)="onClickEnviar()" style="font: bold 15px 'Helvetica-Roman', sans-serif; height: 30px !important; text-transform: uppercase;">
+            Enviar
+          </ion-button>
+        </div>
+
+      </ion-content>
+    </ion-menu>
+
+  </div>
+
+  <div *ngIf="(segment.value === 'detalles')" class="flex_column" style="height: 100%; width: 100%;">
+
+    <ion-list style="padding: 15px 25px 90px 25px !important">
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
+            <ion-label class="h3_title">Fecha</ion-label>
+          </div>
+          <ion-label class="h6_title ion-text-wrap">{{ fecha }}</ion-label>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_schedule" src="/assets/icons/hora.svg"></ion-img>
+            <ion-label class="h3_title">Horario</ion-label>
+          </div>
+          <ion-label class="h6_title ion-text-wrap">{{ horario }}</ion-label>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_direction" src="/assets/icons/direccion.svg"></ion-img>
+            <ion-label class="h3_title">Dirección</ion-label>
+          </div>
+          <div class="flex_row">
+            <ion-label class="h6_title ion-text-wrap">{{ direccion }}</ion-label>
+            <div class="flex_centered">
+              <img class="img_location" src="/assets/icons/ubicacion.svg" (click)="onClickUbicacion( $event)">
+            </div>
+          </div>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_price" src="/assets/icons/bolsa.png"></ion-img>
+            <ion-label class="h3_title">Precio</ion-label>
+            <ion-button class="btn" style="min-width: 105px !important;" color="orange" (click)="onClickCostoEntrada( $event )">
+              Costo de entrada
+            </ion-button>
+          </div>
+          <div class="flex_row">
+            <ion-label class="h6_title ion-text-wrap">{{ precio }}€ </ion-label>
+            <ion-button class="btn" style="min-width: 105px !important;" color="orange" (click)="onClickFactura( $event )">
+              Ver factura
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_photo" src="/assets/icons/camara.svg"></ion-img>
+            <ion-label class="h3_title">Fotos</ion-label>
+          </div>
+          <div class="flex_column">
+            <ion-label class="h6_title">Antes</ion-label>
+            <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            </div>
+            <ion-label class="h6_title">Después</ion-label>
+            <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+              <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+
+      <ion-item class="module ion-no-padding" style="border: none !important;" lines="none">
+        <div class="flex_column">
+          <div class="flex_row flex_centered">
+            <ion-img class="icon_contact" src="/assets/icons/contacto.svg"></ion-img>
+            <ion-label class="h3_title">Cliente</ion-label>
+          </div>
+          <div class="flex_row">
+            <ion-label class="h6_title ion-text-wrap">{{ nombreTrabajador }}</ion-label>
+            <ion-button class="btn" color="orange" (click)="onClickDenunciar( $event )">
+              Denunciar
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+
+      <div class="next_button_div">
+        <ion-button class="btn_finish" color="orange" (click)="onClickFinalizar( $event )">
+          FINALIZAR TAREA
+        </ion-button>
+      </div>
+
+    </ion-list>
+
+  </div>
+
+</ion-content>
+
+<ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
+  <div style="display: flex; justify-content: center;">
+
+    <div class="flex_row chat_container">
+      
+      <ion-textarea class="text_area" 
+                    auto-grow 
+                    cols="1" 
+                    rows="1"
+                    inputmode="text"
+                    placeholder="Escriba un mensaje..."
+                    autofocus
+                    [(ngModel)]="newMessage">
+      </ion-textarea>
+
+      <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+        <ion-button fill="clear" class="attach_btn">
+          <ion-icon name="attach" color="greenblue" style="min-width: 30px; min-height: 30px;"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; justify-content: flex-end;">
+        <ion-button fill="clear" class="send_btn" (click)="pushToChat()">
+          <ion-icon name="send" color="greenblue" style="min-width: 25px; min-height: 30px;"></ion-icon>
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-footer>

@@ -1,0 +1,89 @@
+<ion-header>
+  
+  <app-tab-header titulo="Servicios" backgroundColor="var(--ion-color-orange)"></app-tab-header>
+
+  <div class="flex_row">
+    <div class="page_subheader">
+      <span class="page_subheader_title">Historial</span>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list style="padding: 15px 25px 90px 25px !important">
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
+          <ion-label class="h3_title">Fecha</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap">{{ fecha }}</ion-label>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_schedule" src="/assets/icons/hora.svg"></ion-img>
+          <ion-label class="h3_title">Horario</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap">{{ horario }}</ion-label>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_direction" src="/assets/icons/direccion.svg"></ion-img>
+          <ion-label class="h3_title">Dirección</ion-label>
+        </div>
+        <div class="flex_row">
+          <ion-label class="h6_title ion-text-wrap">{{ direccion }}</ion-label>
+          <div class="flex_centered">
+            <img class="img_location" src="/assets/icons/ubicacion.svg" (click)="onClickUbicacion( $event)">
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_contact" src="/assets/icons/contacto.svg"></ion-img>
+          <ion-label class="h3_title">Cliente</ion-label>
+        </div>
+        <div class="flex_row">
+          <ion-label class="h6_title ion-text-wrap">{{ nombreCliente }}</ion-label>
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" style="border: none !important;" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img class="icon_photo" src="/assets/icons/camara.svg"></ion-img>
+          <ion-label class="h3_title">Fotos</ion-label>
+        </div>
+        <div class="flex_column">
+          <ion-label class="h6_title">Antes</ion-label>
+          <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+          </div>
+          <ion-label class="h6_title">Después</ion-label>
+          <div class="flex_row flex_space_between" style="margin-bottom: 8px !important;">
+            <ion-img class="add_img" src="../../../assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+            <ion-img class="add_img" src="/assets/icons/fotoadd.png"></ion-img>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

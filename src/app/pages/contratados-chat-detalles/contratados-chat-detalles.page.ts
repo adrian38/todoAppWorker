@@ -1,6 +1,8 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
+import { TaskModel } from 'src/app/models/task.model';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
   selector: 'app-contratados-chat-detalles',
@@ -26,12 +28,19 @@ export class ContratadosChatDetallesPage implements OnInit {
   chats: ChatDetails[] = [];
   newMessage: string;
 
+  task: TaskModel;
+
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor() { }
+  constructor(private _taskOdoo :TaskOdooService) { }
 
   ngOnInit() {
+    
+    this.task=this._taskOdoo.getTaskCesar();
+    console.log(" estoy ",this.task);
+
+
     this.presupuesto = 20;
     this.descripcion = 'Arreglar un grifo de agua';
     this.fecha = 'Miércoles, 9 de Septiembre de 2020';

@@ -144,6 +144,7 @@ export class Tab1Page {
 
         this.solicitudesList = tasksList;
         console.log(this.solicitudesList);
+		this._taskOdoo.setContratados(this.solicitudesList);
 		//this.reducir(this.solicitudesList[0].title)
 		
 				//this.solicitudEmpty();
@@ -168,9 +169,7 @@ export class Tab1Page {
 		 this._taskOdoo.setTaskCesar(this.task);
 		/* this.subServ.setSolicitudeList(this.solicitudesList);  */
 		 console.log("entre a la solicitud",this.task);
-		
-		
-		 this.navCtrl.navigateRoot('/presupuestar', { animated: true, animationDirection: 'forward' }); 
+        this.navCtrl.navigateRoot('/presupuestar', { animated: true, animationDirection: 'forward' }); 
 	}
 
 /* 	reducir(title){

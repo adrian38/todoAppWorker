@@ -24,8 +24,12 @@ let task$ = new Subject<TaskModel[]>();
 let tasksList$ = new Subject<TaskModel[]>();
 
 let tasksList:TaskModel [];
+let contratadosList: TaskModel [];
 
 let notificationPoCancelled$ = new Subject<number[]>(); ////Proveedor
+
+//////**********************bprrar */******************************************************************************** */
+
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -651,5 +655,17 @@ export class TaskOdooService {
 		return tasksList$.asObservable();
 	}
 
+
+
+	//----------------------------------Temporal y se puede borrar cuando se determine-----------
+ setContratados(c)
+ {
+ contratadosList=c;
+		}
+
+getContratados(){
+	return contratadosList;
+}
+//---------------------------------fin-------------------------------------------------------
 	
 }

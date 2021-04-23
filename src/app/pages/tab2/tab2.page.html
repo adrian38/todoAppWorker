@@ -1,7 +1,5 @@
 <ion-header class="ion-no-border">
 
-<!--   <app-tab-header titulo="Servicios" backgroundColor="var(--ion-color-orange)"></app-tab-header> -->
-
 
 <div style="background: var(--ion-color-orange);">
 
@@ -32,31 +30,32 @@
 
       <ion-list style="width: 90% !important;">
 
-        <ion-item class="item" *ngFor="let contratado of contratados" lines="none" (click)="onClickItemContratados()">
+        <ion-item class="item" *ngFor="let contratado of contratadosList,let i = index" lines="none" (click)="onClickItemContratados(i)">
 
           <div class="flex_row" style="width: 100%;">
 
-            <img class="image" [src]="contratado.foto">
+            <img class="image"
+            src="../../../assets/fontaneria.png">
 
             <div class="flex_column" style="width: 100%; margin-left: 20px;">
 
               <div class="flex_row" style="width: 100%;">
-                <ion-label class="cat_title">{{ contratado.titulo }}</ion-label>
+                <ion-label class="cat_title">{{ contratado.title.slice(0,12) + " . . " }}</ion-label>
               <!--   <ion-label class="ordenNumber">{{ contratado.numeroOrden }}</ion-label> -->
             <!--     <ion-label class="start_date">{{ contratado.fechaInicio }}</ion-label> -->
               </div>
 
               <div class="flex_row">
                 <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
-                <ion-label class="fecha_fin">{{ contratado.fechaFin }}</ion-label>
+                <ion-label class="fecha_fin">{{ contratado.date_planned | date: "EEE d MMM y" | lowercase }}</ion-label>
               </div>
               <div class="flex_row">
                 <ion-img class="icon_horario" src="/assets/icons/hora.svg"></ion-img>
-                <ion-label class="horario">{{ contratado.horario }}</ion-label>
+                <ion-label class="horario">{{ contratado.time | date: "h:mm a"  }}</ion-label>
                 <div  style="min-width: 43px;">
                   
                 </div>
-                <ion-label class="precio">{{ contratado.precio }}</ion-label>
+                <ion-label class="precio"> 35 € </ion-label>
               </div>
             </div>
 

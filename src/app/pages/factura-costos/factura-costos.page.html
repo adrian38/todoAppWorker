@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border">
+
+  <div style="background: var(--ion-color-orange);">
+    <app-tab-header titulo="Factura"></app-tab-header>
+  </div>
+
+  <div class="flex_row">
+    <div class="page_subheader">
+      <ion-label style="min-width: 45%; text-align: left; font: normal 16px 'Helvetica-Md', sans-serif; padding-left: 15px;">Costos extras</ion-label>
+      <ion-label style="min-width: 45%; text-align: right; font: normal 16px 'Helvetica-Md', sans-serif; padding-right: 15px;">Precio</ion-label>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content>
+  
+  <div class="flex_column" style="align-items: center; padding-top: 6px; height: 100%;">
+  
+    <div class="flex_row div">
+      <ion-label  class="label_text">Mano de obra</ion-label>
+      <ion-input  class="custom_input" 
+                  type="number" 
+                  placeholder="000"
+                  [(ngModel)]="manoObra">
+      </ion-input>
+    </div>
+
+    <div class="flex_row div">
+      <ion-label  class="label_text">Materiales</ion-label>
+      <ion-input  class="custom_input" 
+                  type="number" 
+                  placeholder="000"
+                  [(ngModel)]="materiales">
+      </ion-input>
+    </div>
+
+    <div class="flex_row div">
+      <ion-label  class="label_text">TOTAL</ion-label>
+      <ion-label  class="label_right">{{ total }}</ion-label>
+    </div>
+
+    <div class="flex_centered" style="width: 100%; height: 100%;">
+      <ion-button class="btn_close" color="orange" (click)="onClose()">
+        Cerrar
+      </ion-button>
+    </div>
+  
+  </div>
+
+</ion-content>

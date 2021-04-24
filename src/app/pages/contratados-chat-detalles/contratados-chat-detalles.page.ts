@@ -1,6 +1,6 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
@@ -33,7 +33,8 @@ export class ContratadosChatDetallesPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor(private _taskOdoo :TaskOdooService) { }
+  constructor(private _taskOdoo :TaskOdooService,
+              private navCtrl   :NavController) { }
 
   ngOnInit() {
     
@@ -42,15 +43,15 @@ export class ContratadosChatDetallesPage implements OnInit {
 
 
     this.presupuesto = 20;
-    this.descripcion = 'Arreglar un grifo de agua';
+   /*  this.descripcion = 'Arreglar un grifo de agua';
     this.fecha = 'Miércoles, 9 de Septiembre de 2020';
     this.horario = 'De 09:00am a 10:00am';
-    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa';
+    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa'; */
     this.precio = 20;
-    this.nombreTrabajador = 'Lisniel Sanchez'
-    this.materiales = 28;
+    /* this.nombreTrabajador = 'Lisniel Sanchez' */
+  /*   this.materiales = 28;
     this.manoObra = 54;
-    this.total = this.materiales + this.manoObra;
+    this.total = this.materiales + this.manoObra; */
 
     setTimeout(() => {
       let simulatedChat: ChatDetails = 
@@ -141,7 +142,8 @@ export class ContratadosChatDetallesPage implements OnInit {
   }
 
   onClickFactura( event ) {
-    console.log('Factura clicked');
+    
+    this.navCtrl.navigateRoot('/factura-servicios', { animated: true, animationDirection: 'forward' }); 
   }
 
   onClickDenunciar( event ) {

@@ -40,20 +40,38 @@
 </ion-row>
   
   <ion-row >
+     <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
+     <ion-col size="10">
+       
+       <div *ngIf ="error_actual ">
+          <ion-input name="contraseña_actual"
+                     type="text"
+                     required
+                     [(ngModel)]="actual"
+                     #nom_apell="ngModel"
+                     ></ion-input>
+            <div id="link">
+                <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
+                       class="text-danger">No es su contraseña actual</small>
+            </div>
+
+         </div>
+
+         <div *ngIf =" !error_actual ">
+          <ion-input style=" border: 2px solid rgb(101,173,172) !important;"
+                     name="contraseña_actual"
+                     type="text"
+                     [(ngModel)]="actual"
+                     ></ion-input>
+            <div id="link">
+                <small  class="text-danger">No es su contraseña actual</small>
+            </div>
+
+         </div>
+
+     
+    </ion-col >
     <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-    <ion-col size="10">
-      <ion-input name="contraseña_actual"
-                  type="text"
-                  required
-                  [(ngModel)]="actual"
-                  #nom_apell="ngModel"
-                  ></ion-input>
-                  <div id="link">
-                   <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                   class="text-danger">Debe escribir su nombre completo</small>
-                  </div>
-                </ion-col >
-                <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
   </ion-row>
 
 
@@ -71,7 +89,8 @@
     <ion-row >
       <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
       <ion-col size="10">
-        <ion-input name="contraseña_cambiar"
+        <ion-input 
+                    name="contraseña_cambiar"
                     type="text"
                     required
                     [(ngModel)]="cambiada"
@@ -79,7 +98,7 @@
                     ></ion-input>
                     <div id="link">
                      <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                     class="text-danger">Debe escribir su nombre completo</small>
+                     class="text-danger">Debe escribir una contraseña segura</small>
                     </div>
                   </ion-col >
                   <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
@@ -97,16 +116,31 @@
   <ion-row >
     <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
     <ion-col size="10">
-      <ion-input name="contraseña"
-                  type="text"
-                  required
-                  [(ngModel)]="confirmada"
-                  #nom_apell="ngModel"
-                  ></ion-input>
-                  <div id="link">
-                   <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                   class="text-danger">Debe escribir su nombre completo</small>
-                  </div>
+
+      <div *ngIf ="error_confirmacion ">
+                <ion-input name="contraseña"
+                           type="text"
+                           required
+                           [(ngModel)]="confirmada"
+                            #nom_apell="ngModel"
+                            ></ion-input>
+           <div id="link">
+               <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
+                       class="text-danger">Debe escribir contraeña valida</small>
+            </div>
+      </div>
+
+      <div *ngIf =" !error_confirmacion ">
+        <ion-input style=" border: 2px solid rgb(101,173,172) !important;"
+                   name="contraseña"
+                   type="text"
+                   [(ngModel)]="confirmada"
+                    ></ion-input>
+   <div id="link">
+       <small class="text-danger">No coinciden las contraseñas</small>
+    </div>
+</div>
+     
                 </ion-col >
                 <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
   </ion-row>
@@ -116,7 +150,7 @@
     <ion-col style="text-align: center;margin-top: 65px;">
       <ion-button color="orange" type="submit"
                   
-                 (click)="iniciar()"
+                 (click)="guardar()"
                  >
     GUARDAR
       </ion-button>

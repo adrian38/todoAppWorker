@@ -11,8 +11,9 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 })
 export class Tab2Page implements OnInit {
 
-  task: TaskModel;
+  task           : TaskModel;
   contratadosList: TaskModel[];
+  historialList  :TaskModel[];
 
   /* contratados: Servicio[] = [
     {
@@ -52,7 +53,7 @@ export class Tab2Page implements OnInit {
       precio: '20€'
     } */
   /* ]; */
-
+/* 
   historial: Servicio[] = [
     {
       titulo: 'Fontaneria',
@@ -90,14 +91,15 @@ export class Tab2Page implements OnInit {
       numeroOrden: "XX",
       precio: '35€'
     }
-  ];
+  ]; */
 
   constructor( private _taskOdoo: TaskOdooService,
                private navCtrl: NavController) { }
 
   ngOnInit() {
     this.contratadosList = this._taskOdoo.getContratados();
-    console.log("falso contratado",this.contratadosList);
+    this.historialList   = this._taskOdoo.getContratados();
+    console.log("falso contratado",this.historialList);
 
   }
 

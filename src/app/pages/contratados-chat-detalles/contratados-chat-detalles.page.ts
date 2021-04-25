@@ -1,6 +1,8 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
+import { TaskModel } from 'src/app/models/task.model';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
   selector: 'app-contratados-chat-detalles',
@@ -22,26 +24,36 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   total: number;
 
+  display:boolean=false;
+
 
   chats: ChatDetails[] = [];
   newMessage: string;
 
+  task: TaskModel;
+
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor() { }
+  constructor(private _taskOdoo :TaskOdooService,
+              private navCtrl   :NavController) { }
 
   ngOnInit() {
+    
+    this.task=this._taskOdoo.getTaskCesar();
+    console.log(" estoy ",this.task);
+
+
     this.presupuesto = 20;
-    this.descripcion = 'Arreglar un grifo de agua';
+   /*  this.descripcion = 'Arreglar un grifo de agua';
     this.fecha = 'Miércoles, 9 de Septiembre de 2020';
     this.horario = 'De 09:00am a 10:00am';
-    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa';
+    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa'; */
     this.precio = 20;
-    this.nombreTrabajador = 'Lisniel Sanchez'
-    this.materiales = 28;
+    /* this.nombreTrabajador = 'Lisniel Sanchez' */
+  /*   this.materiales = 28;
     this.manoObra = 54;
-    this.total = this.materiales + this.manoObra;
+    this.total = this.materiales + this.manoObra; */
 
     setTimeout(() => {
       let simulatedChat: ChatDetails = 
@@ -127,16 +139,19 @@ export class ContratadosChatDetallesPage implements OnInit {
     console.log('Ubicacion clicked');
   }
 
-  onClickCostoEntrada( event ) {
-    console.log('Costo de entrada clicked');
+  onClickCostoEntrada(  ) {
+    this.navCtrl.navigateRoot('/costo-extra', { animated: true, animationDirection: 'forward' }); 
+
   }
 
   onClickFactura( event ) {
-    console.log('Factura clicked');
+    
+    this.navCtrl.navigateRoot('/factura-servicios', { animated: true, animationDirection: 'forward' }); 
   }
 
   onClickDenunciar( event ) {
     console.log('Denunciar clicked');
+   this.display=true;
   }
 
   onClickFinalizar( event ) {

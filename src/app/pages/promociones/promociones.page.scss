@@ -1,0 +1,39 @@
+.page_subheader {
+    background     : var(--ion-color-orange);
+    height         : 45px;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    z-index        : 1;
+    width          : 100%;
+}
+
+.page_subheader_title {
+    font          : normal 16px 'Helvetica-Md', sans-serif;
+    text-transform: uppercase;
+}
+
+.item {
+    width          : 100%;
+    border-bottom  : 1px solid var(--ion-color-orange);
+    padding        : 12px 0 !important;
+    --padding-start: 0;
+}
+
+.prom_title {
+    font         : normal 14px 'Helvetica-Roman', sans-serif;
+    margin-bottom: 2px;
+}
+
+.prom_text {
+    font: normal 14px 'Helvetica-Roman', sans-serif;
+}
+
+ion-fab ion-fab-button ion-icon {
+    color: white;
+}
+
+ion-fab-button {
+    width : 45px;
+    height: 45px;
+}

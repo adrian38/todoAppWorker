@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Servicio } from 'src/app/Interfaces/interfaces';
 import { TaskModel } from 'src/app/models/task.model';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
   selector: 'app-tab2',
@@ -9,10 +11,11 @@ import { TaskModel } from 'src/app/models/task.model';
 })
 export class Tab2Page implements OnInit {
 
-  task: TaskModel;
+  task           : TaskModel;
   contratadosList: TaskModel[];
+  historialList  :TaskModel[];
 
-  contratados: Servicio[] = [
+  /* contratados: Servicio[] = [
     {
       titulo: 'Fontaneria',
       fechaInicio: "08.09.2020",
@@ -21,7 +24,7 @@ export class Tab2Page implements OnInit {
       foto: '/assets/fontaneria.png',
       numeroOrden: "XX",
       precio: '1010 €'
-    }
+    } */
    /*  {
       titulo: 'Fontaneria',
       fechaInicio: "08.09.2020",
@@ -49,8 +52,8 @@ export class Tab2Page implements OnInit {
       numeroOrden: "XX",
       precio: '20€'
     } */
-  ];
-
+  /* ]; */
+/* 
   historial: Servicio[] = [
     {
       titulo: 'Fontaneria',
@@ -88,16 +91,23 @@ export class Tab2Page implements OnInit {
       numeroOrden: "XX",
       precio: '35€'
     }
-  ];
+  ]; */
 
-  constructor() { }
+  constructor( private _taskOdoo: TaskOdooService,
+               private navCtrl: NavController) { }
 
   ngOnInit() {
+    this.contratadosList = this._taskOdoo.getContratados();
+    this.historialList   = this._taskOdoo.getContratados();
+    console.log("falso contratado",this.historialList);
 
   }
 
-  onClickItemContratados() {
-    console.log("Item contratados clicked");
+  onClickItemContratados(i) {
+    this.task = this.contratadosList[i]; 
+    this._taskOdoo.setTaskCesar(this.task);
+    
+    this.navCtrl.navigateRoot('/contratados-chat-detalles', { animated: true, animationDirection: 'forward' }); 
   }
 
   onClickItemHistorial() {

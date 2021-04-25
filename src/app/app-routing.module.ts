@@ -57,7 +57,31 @@ const routes: Routes = [
   {
     path: 'direccion',
     loadChildren: () => import('./pages/direccion/direccion.module').then( m => m.DireccionPageModule)
+  },
+  {
+    path: 'promociones',
+    loadChildren: () => import('./pages/promociones/promociones.module').then( m => m.PromocionesPageModule)
+  },
+  {
+    path: 'documentos',
+    loadChildren: () => import('./pages/documentos/documentos.module').then( m => m.DocumentosPageModule)
+  },
+  {
+    path: 'factura-servicios',
+    loadChildren: () => import('./pages/factura-servicios/factura-servicios.module').then( m => m.FacturaServiciosPageModule)
+  },
+  {
+    path: 'factura-costos',
+    loadChildren: () => import('./pages/factura-costos/factura-costos.module').then( m => m.FacturaCostosPageModule)
+  },  {
+    path: 'recuperarcontrase',
+    loadChildren: () => import('./pages/recuperarcontrase/recuperarcontrase.module').then( m => m.RecuperarcontrasePageModule)
+  },
+  {
+    path: 'costo-extra',
+    loadChildren: () => import('./pages/costo-extra/costo-extra.module').then( m => m.CostoExtraPageModule)
   }
+
 
 
 

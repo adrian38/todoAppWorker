@@ -131,8 +131,8 @@ async presentAlertConfirm() {
   await alert.present();
 }
 
-cambiarpass(){
-  this.navController.navigateRoot('/contrasolvida', {animated: true, animationDirection: 'forward' }) ;   
+recuperar(){
+  this.navController.navigateRoot('/recuperarcontrase', {animated: true, animationDirection: 'forward' }) ;   
  
 }
 

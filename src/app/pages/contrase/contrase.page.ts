@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
   selector: 'app-contrase',
@@ -7,9 +9,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContrasePage implements OnInit {
 
-  constructor() { }
+  actual    :string="";
+  cambiada  :string="";
+  confirmada:string="";
+
+  error_actual:boolean=true;
+  error_confirmacion:boolean=true;
+
+  usuario:UsuarioModel;
+
+  constructor(private _taskOdoo:TaskOdooService) { }
 
   ngOnInit() {
+
+    this.usuario= this._taskOdoo.getUser();
+    console.log("usuario",this.usuario);
+    console.log(" contraseña del usuario ",this.usuario.password);
+   
+  }
+
+
+  guardar(){
+
+    if( this.usuario.password == this.actual ) {
+
+            console.log("contraseña actual bien");
+            this.error_actual=true;
+    }
+            else{
+               this.error_actual=false;
+              console.log("contraseña actual mal");
+    }
+
+    if(this.cambiada == this.confirmada){
+             
+             this.error_confirmacion=true;
+            
+            }
+            else{
+              this.error_confirmacion=false;
+            }
+
+
+
   }
 
 }

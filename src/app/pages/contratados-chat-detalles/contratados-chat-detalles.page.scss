@@ -4,7 +4,7 @@
 }
 
 .segment_btn {
-  font: normal 15px 'Helvetica-Roman', sans-serif;
+  font: normal 15px "Helvetica-Roman", sans-serif;
   color: var(--ion-color-black);
   --color-checked: var(--ion-color-black);
   --indicator-height: 4px;
@@ -18,7 +18,7 @@
 }
 
 ion-segment .segment-button-checked {
-  font: normal 15px 'Helvetica-Bd', sans-serif;
+  font: normal 15px "Helvetica-Bd", sans-serif;
 }
 
 .pres_container {
@@ -39,7 +39,7 @@ ion-segment .segment-button-checked {
 }
 
 .label_presupuesto {
-  font: normal 15px 'Helvetica-Bd', sans-serif;
+  font: normal 15px "Helvetica-Bd", sans-serif;
 }
 
 .chat_container {
@@ -79,7 +79,7 @@ ion-segment .segment-button-checked {
   margin-left: 10px !important;
   margin-top: 8px !important;
   margin-bottom: 8px !important;
-  font: normal 14px 'Helvetica-Roman', sans-serif;
+  font: normal 14px "Helvetica-Roman", sans-serif;
   text-align: left;
   z-index: 0 !important;
 }
@@ -95,7 +95,7 @@ ion-segment .segment-button-checked {
 .bubble_chat_me_old {
   background-color: var(--ion-color-gray);
   border-radius: 10px !important;
-  font: normal 14px 'Helvetica-Roman', sans-serif;
+  font: normal 14px "Helvetica-Roman", sans-serif;
   text-align: left;
   padding: 15px !important;
 }
@@ -103,7 +103,7 @@ ion-segment .segment-button-checked {
 .bubble_chat_me {
   background-color: var(--ion-color-gray);
   border-radius: 10px !important;
-  font: normal 14px 'Helvetica-Roman', sans-serif;
+  font: normal 14px "Helvetica-Roman", sans-serif;
   text-align: left;
   padding: 15px !important;
   display: inline-block;
@@ -111,7 +111,7 @@ ion-segment .segment-button-checked {
 }
 
 .bubble_chat_me::after {
-  content: ' ';
+  content: " ";
   position: absolute;
   width: 0;
   height: 0;
@@ -126,7 +126,7 @@ ion-segment .segment-button-checked {
 .bubble_chat_others_old {
   background-color: var(--ion-color-orange);
   border-radius: 10px;
-  font: normal 14px 'Helvetica-Roman', sans-serif;
+  font: normal 14px "Helvetica-Roman", sans-serif;
   text-align: left;
   padding: 15px !important;
 }
@@ -134,7 +134,7 @@ ion-segment .segment-button-checked {
 .bubble_chat_others {
   background-color: var(--ion-color-orange);
   border-radius: 10px;
-  font: normal 14px 'Helvetica-Roman', sans-serif;
+  font: normal 14px "Helvetica-Roman", sans-serif;
   text-align: left;
   padding: 15px !important;
   display: inline-block;
@@ -142,7 +142,7 @@ ion-segment .segment-button-checked {
 }
 
 .bubble_chat_others::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   width: 0;
   height: 0;
@@ -179,7 +179,7 @@ ion-segment .segment-button-checked {
 .time {
   margin-top: 5px;
   text-align: right;
-  font: normal 10px 'Helvetica_Bd', sans-serif;
+  font: normal 10px "Helvetica_Bd", sans-serif;
 }
 
 .module {
@@ -229,14 +229,14 @@ ion-segment .segment-button-checked {
 }
 
 .h3_title {
-  font: normal 14px 'Helvetica-Md', sans-serif !important;
+  font: normal 14px "Helvetica-Md", sans-serif !important;
   margin: 8px 5px 8px 10px !important;
   text-align: left;
   width: 100%;
 }
 
 .h6_title {
-  font: normal 12px 'Helvetica-Roman', sans-serif !important;
+  font: normal 12px "Helvetica-Roman", sans-serif !important;
   text-align: left;
   width: 100%;
   padding: 5px 20px 5px 2px !important;
@@ -251,21 +251,21 @@ ion-item {
   width: 85px !important;
   height: 85px !important;
   min-width: 85px !important;
-  }
+}
 
-.img{
-    width: 55px !important;
-    height: 55px !important;
-    min-width: 55px !important;
-  }
-  .imgtocar{
-    width: 70px !important;
-    height: 70px !important;
-    min-width: 70px !important;
-  }
+.img {
+  width: 55px !important;
+  height: 55px !important;
+  min-width: 55px !important;
+}
+.imgtocar {
+  width: 70px !important;
+  height: 70px !important;
+  min-width: 70px !important;
+}
 
 .h2_title {
-  font: normal 16px 'Helvetica-Bd', sans-serif !important;
+  font: normal 16px "Helvetica-Bd", sans-serif !important;
   padding: 8px 5px 8px 0 !important;
   text-align: left;
   width: 100%;
@@ -276,7 +276,7 @@ ion-button {
 }
 
 .btn {
-  font: bold 10px 'Helvetica-Roman', sans-serif;
+  font: bold 10px "Helvetica-Roman", sans-serif;
   height: 20px !important;
 }
 
@@ -288,13 +288,13 @@ ion-button {
 }
 
 .btn_finish {
-  font: bold 15px 'Helvetica-Roman', sans-serif;
+  font: bold 15px "Helvetica-Roman", sans-serif;
   height: 30px !important;
 }
 
 .menu_title {
   color: var(--ion-color-orange);
-  font: normal 16px 'Helvetica-Md', sans-serif;
+  font: normal 16px "Helvetica-Md", sans-serif;
   text-align: center;
   padding: 0 10px;
 }
@@ -309,49 +309,44 @@ ion-button {
   --padding-bottom: 5px;
   --padding-start: 6px;
   text-align: left;
-  font-family: 'Helvetica-Roman', sans-serif !important;
+  font-family: "Helvetica-Roman", sans-serif !important;
   font-size: 11px !important;
   outline: none !important;
   height: 25px;
 }
 
 :host ::ng-deep .p-dialog {
-  
-  
   .p-dialog-content {
-      border-radius: 0px 0px 15px 15px;
-      background-color: rgb(245, 245, 245) !important;
-    
+    border-radius: 0px 0px 15px 15px;
+    background-color: rgb(250, 250, 250) !important;
   }
-.p-dialog-header {
-  background-color:rgb(245, 245, 245) !important;;
-  color: black;
-  border-radius: 15px 15px 0px 0px;
-  padding: 0.5rem;
+  .p-dialog-header {
+   /*  background-color: rgb(245, 245, 245) !important; */
+    background-color: rgb(250, 250, 250) !important;
+    color: black;
+     border-radius: 15px 15px 0px 0px; 
+   
+    padding: 0.5rem;
   }
 }
 
-textarea{
-  /*  border: 1px solid  rgb(246, 183, 118);  */
-  border: 1px solid var(--ion-color-orange) !important; 
-  height: 150px; 
-  border-radius: 5px 5px 5px 5px ;
+textarea {
+  border: 1px solid var(--ion-color-orange) !important;
+  height: 150px;
+  border-radius: 5px 5px 5px 5px;
   margin-top: 10px;
   box-sizing: border-box;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(250, 250, 250) !important;
   padding: 0px;
- 
-  
 }
- textarea:focus-within{
+textarea:focus-within {
   border: 2px solid var(--ion-color-orange) !important;
-  
-  height: 150px; 
-  border-radius: 5px 5px 5px 5px ;
+
+  height: 150px;
+  border-radius: 5px 5px 5px 5px;
   margin-top: 10px;
   box-sizing: border-box;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(250, 250, 250) !important;
   padding: 0px;
   outline: none;
-  
-} 
+}

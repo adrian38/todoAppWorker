@@ -346,51 +346,77 @@
     </ion-list>
   </div>
 
+
   <p-dialog
+    header=""
+    [closeIcon]="send"
+    [closable]="true"
     [(visible)]="display"
     [modal]="true"
     [style]="{ width: '90vw' }"
     [baseZIndex]="1000"
-    [draggable]="false"
-    [resizable]="false"
+    [draggable]="true"
+    [resizable]="true"
     position="bottom"
-    >
-    <div class="flex_row" style="margin-top: 25px;">
-     
-    </div>
+  >
+    <div class="flex_row" ></div>
     <div class="flex_row" style="justify-content: space-evenly">
       <div class="flex_col">
         <ion-img class="img" src="/assets/icons/noImage.svg"></ion-img>
       </div>
       <div class="flex_col" style="justify-content: start">
-      <div style="display: flex;">
-        <ion-label style="font-family: 'Helvetica-Roman', sans-serif !important;font-size: larger;">{{task.client_name}}</ion-label>
+        <div style="display: flex">
+          <ion-label
+            style="
+              font-family: 'Helvetica-Roman', sans-serif !important;
+              font-size: larger;
+            "
+            >{{task.client_name}}</ion-label
+          >
+        </div>
+        <div style="display: flex; margin-top: 5px">
+          <ion-label style="font-size: large">{{task.type}}</ion-label>
+        </div>
       </div>
-      <div style="display: flex;margin-top: 5px;">
-        <ion-label style="font-size: large;">{{task.type}}</ion-label>
+    </div>
+    <div class="flex_row" style="justify-content: stretch; margin-top: 20px">
+      <div style="display: flex">
+        <ion-label
+          style="
+            font-family: 'Helvetica-Roman', sans-serif !important;
+            font-size: x-large;
+            margin-left: 30px;
+          "
+          >{{task.title}}</ion-label
+        >
+      </div>
+    </div>
 
-      </div>
-       
-      </div>
-    </div>
-    <div class="flex_row" style="justify-content: stretch;margin-top: 20px;">
-      <div style="display: flex;">
-        <ion-label style="font-family: 'Helvetica-Roman', sans-serif !important;font-size: x-large;margin-left: 30px;">{{task.title}}</ion-label>
-      </div>
-    </div>
-    
-    <div class="flex_row" style="justify-content: stretch;margin-top: 25px;">
-      <div style="display: flex;">
-        <ion-label style="font-family: 'Helvetica-Roman', sans-serif !important;font-size: medium;margin-left: 30px;">Evidencia</ion-label>
+    <div class="flex_row" style="justify-content: stretch; margin-top: 25px">
+      <div style="display: flex">
+        <ion-label
+          style="
+            font-family: 'Helvetica-Roman', sans-serif !important;
+            font-size: medium;
+            margin-left: 30px;
+          "
+          >Evidencia</ion-label
+        >
       </div>
     </div>
 
-    <div class="flex_row" style="justify-content: space-evenly;margin-top:8px">
+    <div
+      class="flex_row"
+      style="justify-content: space-evenly; margin-top: 8px"
+    >
       <ion-img class="imgtocar" src="/assets/icons/noImage.svg"></ion-img>
       <ion-img class="imgtocar" src="/assets/icons/noImage.svg"></ion-img>
       <ion-img class="imgtocar" src="/assets/icons/noImage.svg"></ion-img>
     </div>
-    <div class="flex_row" style="justify-content: space-evenly;margin-top:20px">
+    <div
+      class="flex_row"
+      style="justify-content: space-evenly; margin-top: 20px"
+    >
       <textarea
         name="Text1"
         cols="10"
@@ -400,9 +426,7 @@
         style="max-width: 85%; width: 85%; flex: display"
       ></textarea>
     </div>
-    <div class="flex_row" style="margin-bottom: 25px;">
-     
-    </div>
+    <div class="flex_row" style="margin-bottom: 25px"></div>
   </p-dialog>
 </ion-content>
 

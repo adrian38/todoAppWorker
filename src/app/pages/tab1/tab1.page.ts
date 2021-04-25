@@ -72,7 +72,7 @@ export class Tab1Page {
 
   init() {
 		if (!this._taskOdoo.getInitTab()) {
-			this._taskOdoo.setInitTab();
+			this._taskOdoo.setInitTab(true);
 			this._taskOdoo.requestTaskListProvider();
 			//this.presentLoadingCargado();
 		} else {

@@ -112,17 +112,7 @@ export class PresupuestarPage implements OnInit {
         }
     }
 
-  /*   console.log("b",this.manoobra);
-    if(this.manoobra == ""){
-      this.total=parseInt(this.materiales);
-      console.log("bra vacio");
-      console.log("mano vacio",this.total);
-    }
-    else{
-      this.total=parseInt(this.manoobra) + parseInt(this.materiales);
-      console.log("campos llenos");
-      console.log("lleno estoy en materiales",this.total);
-    } */
+
 
   } 
   enviar(){ 

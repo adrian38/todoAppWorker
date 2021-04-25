@@ -76,6 +76,10 @@ const routes: Routes = [
   },  {
     path: 'recuperarcontrase',
     loadChildren: () => import('./pages/recuperarcontrase/recuperarcontrase.module').then( m => m.RecuperarcontrasePageModule)
+  },
+  {
+    path: 'costo-extra',
+    loadChildren: () => import('./pages/costo-extra/costo-extra.module').then( m => m.CostoExtraPageModule)
   }
 
 

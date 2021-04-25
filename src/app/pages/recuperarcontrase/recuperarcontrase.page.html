@@ -1,60 +1,47 @@
-
-
 <ion-content>
+  <ion-row style="margin-top: 40px">
+    <ion-col size="2" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="8"> <h3>Recupera tu cuenta</h3></ion-col>
+    <ion-col size="2" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
 
-  <ion-row style="margin-top: 40px;">
-    <ion-col size="2" style="background: rgb(255, 255, 255);"></ion-col>
-    <ion-col size="8"> <h3 >Recupera  tu cuenta</h3></ion-col>
-    <ion-col size="2" style="background: rgb(255, 255, 255);"></ion-col>
+  <ion-row style="margin-top: 45px; padding: 0px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10" style="padding-bottom: 0px">
+      <ion-label style="font-size: small"
+        >Ingrese tu correo electronico</ion-label
+      ></ion-col
+    >
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
-  
-  
-  
-  <ion-row style="margin-top: 45px; padding: 0px;">
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-    <ion-col size="10" style="padding-bottom: 0px;"> <ion-label style="font-size: small;" >Ingrese tu correo electronico</ion-label></ion-col>
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
+
+  <ion-row ion-row style="margin-top: 10px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10">
+      <ion-input
+        name="contraseña_actual"
+        type="email"
+        required
+        [(ngModel)]="actual"
+        placeholder="CORREO"
+        #nombre="ngModel"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+      ></ion-input>
+      <div id="link">
+        <small *ngIf="nombre.invalid && nombre.touched" class="text-danger"
+          >Su usuario debe insertado correctamente</small
+        >
+      </div>
+    </ion-col>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
-    
-    <ion-row ion-row style="margin-top: 10px;">
-      <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-      <ion-col size="10">
-       
-                    <ion-input name="contraseña_actual"
-                                 type="email"
-                                 required
-                                 [(ngModel)]="actual"
-                                 placeholder="CORREO"                     
-                                 #nombre="ngModel"
-                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                                 ></ion-input>
-                                 <div id="link">
-                                  <small *ngIf= "nombre.invalid && nombre.touched"   
-                                  class="text-danger">Su usuario debe insertado correctamente</small>
-                                 </div>
-                     
-                  </ion-col >
-                  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-    </ion-row>
-  
-  
-  
-  
-  
-  
-  
-    
-  
-    <ion-row >
-      <ion-col style="text-align: center;">
-        <ion-button   class="btn_init_section" 
-        type="submit"
-        color="orange" 
-        
-       >
-aceptar
-</ion-button>
-      </ion-col>
-    </ion-row>
+
+  <ion-row>
+    <ion-col style="text-align: center">
+      <ion-button class="btn_init_section" type="submit" color="orange">
+        aceptar
+      </ion-button>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

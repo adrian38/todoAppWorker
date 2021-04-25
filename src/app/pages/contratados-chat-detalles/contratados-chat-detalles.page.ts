@@ -24,6 +24,8 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   total: number;
 
+  display:boolean=false;
+
 
   chats: ChatDetails[] = [];
   newMessage: string;
@@ -137,8 +139,9 @@ export class ContratadosChatDetallesPage implements OnInit {
     console.log('Ubicacion clicked');
   }
 
-  onClickCostoEntrada( event ) {
-    console.log('Costo de entrada clicked');
+  onClickCostoEntrada(  ) {
+    this.navCtrl.navigateRoot('/costo-extra', { animated: true, animationDirection: 'forward' }); 
+
   }
 
   onClickFactura( event ) {
@@ -148,6 +151,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   onClickDenunciar( event ) {
     console.log('Denunciar clicked');
+   this.display=true;
   }
 
   onClickFinalizar( event ) {

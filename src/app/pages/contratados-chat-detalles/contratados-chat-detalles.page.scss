@@ -251,9 +251,18 @@ ion-item {
   width: 85px !important;
   height: 85px !important;
   min-width: 85px !important;
-  
- 
-}
+  }
+
+.img{
+    width: 55px !important;
+    height: 55px !important;
+    min-width: 55px !important;
+  }
+  .imgtocar{
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px !important;
+  }
 
 .h2_title {
   font: normal 16px 'Helvetica-Bd', sans-serif !important;
@@ -305,3 +314,44 @@ ion-button {
   outline: none !important;
   height: 25px;
 }
+
+:host ::ng-deep .p-dialog {
+  
+  
+  .p-dialog-content {
+      border-radius: 0px 0px 15px 15px;
+      background-color: rgb(245, 245, 245) !important;
+    
+  }
+.p-dialog-header {
+  background-color:rgb(245, 245, 245) !important;;
+  color: black;
+  border-radius: 15px 15px 0px 0px;
+  padding: 0.5rem;
+  }
+}
+
+textarea{
+  /*  border: 1px solid  rgb(246, 183, 118);  */
+  border: 1px solid var(--ion-color-orange) !important; 
+  height: 150px; 
+  border-radius: 5px 5px 5px 5px ;
+  margin-top: 10px;
+  box-sizing: border-box;
+  background-color: rgb(245, 245, 245);
+  padding: 0px;
+ 
+  
+}
+ textarea:focus-within{
+  border: 2px solid var(--ion-color-orange) !important;
+  
+  height: 150px; 
+  border-radius: 5px 5px 5px 5px ;
+  margin-top: 10px;
+  box-sizing: border-box;
+  background-color: rgb(245, 245, 245);
+  padding: 0px;
+  outline: none;
+  
+} 

@@ -1,0 +1,82 @@
+<ion-header class="ion-no-border">
+  <div style="background: var(--ion-color-orange)">
+    <app-tab-header titulo="Contratados"></app-tab-header>
+  </div>
+
+  <div class="page_subheader">
+    <span class="page_subheader_title">Costo extra</span>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+      <ion-row class="item">
+        <ion-col size="4">
+          <h5 class="cat_title">Servicio</h5>
+        </ion-col>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4" style="text-align: end">
+          <h5 class="cat_title">Precio</h5>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="item">
+        <ion-col size="6">
+          <h5 style="margin-left: 10px">Mano de obra</h5>
+        </ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="3" style="text-align: end">
+          <ion-input
+            name="mano_obra"
+            type="text"
+            required
+            [(ngModel)]="manoobra"
+            (ionChange)="obra($event)"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="item">
+        <ion-col size="6">
+          <h5 style="margin-left: 10px">Materiales</h5>
+        </ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="3" style="text-align: end">
+          <ion-input
+            name="materiales"
+            type="text"
+            required
+            [(ngModel)]="materiales"
+            (ionChange)="material($event)"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="item" style="margin-top: 80px">
+        <ion-col size="6">
+          <h5 style="margin-left: 10px">TOTAL</h5>
+        </ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="3" style="text-align: end">
+          <div class="cuadrado">
+            <ion-label style="margin-top: 16px; padding: 5px 6px; width: 100%"
+              >{{total}}</ion-label
+            >
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+  </ion-row>
+
+
+  <ion-row style="margin-top: 50px;">
+    <ion-col size="3"></ion-col>
+    <ion-col size="6" style="text-align: center">
+      <ion-button color="orange" (click)="enviar()"> Enviar </ion-button>
+    </ion-col>
+    <ion-col size="3"></ion-col>
+  </ion-row>
+</ion-content>

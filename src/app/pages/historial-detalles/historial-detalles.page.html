@@ -1,0 +1,161 @@
+<ion-header class="ion-no-border">
+
+  <div style="background: var(--ion-color-orange);">
+
+    <app-tab-header titulo="Historial"></app-tab-header>
+
+  </div>
+
+  <div class="page_subheader">
+    <span class="page_subheader_title">Detalles</span>
+  </div>
+
+</ion-header>
+
+<ion-content>
+  <ion-list style="padding: 15px 25px 90px 25px !important">
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img
+            class="icon_calendar"
+            src="/assets/icons/calendario.svg"
+          ></ion-img>
+          <ion-label class="h3_title">Fecha</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap"
+          >{{ task.date_planned |date:'EEEE d.MMMM yyyy' | lowercase
+          }}</ion-label
+        >
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img
+            class="icon_schedule"
+            src="/assets/icons/hora.svg"
+          ></ion-img>
+          <ion-label class="h3_title">Horario</ion-label>
+        </div>
+        <ion-label class="h6_title ion-text-wrap"
+          >{{ task.time |date: 'h:mm a' }}</ion-label
+        >
+      </div>
+    </ion-item>
+
+    <ion-item class="module ion-no-padding" lines="none">
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img
+            class="icon_direction"
+            src="/assets/icons/direccion.svg"
+          ></ion-img>
+          <ion-label class="h3_title">Dirección</ion-label>
+        </div>
+        <div class="flex_row">
+          <div class="flex_column">
+            <ion-label class="h6_title ion-text-wrap"
+              >{{ task.address.street}}, Numero: {{ task.address.number
+              }},</ion-label
+            >
+            <div class="flex_row">
+              <ion-label
+                class="h6_title ion-text-wrap"
+                *ngIf=" task.address.portal"
+               
+                >Portal: {{ task.address.portal }},
+              </ion-label>
+              <ion-label
+                class="h6_title ion-text-wrap"
+                *ngIf=" task.address.stair"
+               
+                >Escalera: {{ task.address.stair }},
+              </ion-label>
+              <ion-label
+                class="h6_title ion-text-wrap"
+                *ngIf=" task.address.floor"
+               
+                >Piso: {{ task.address.floor }},
+              </ion-label>
+              <ion-label
+                class="h6_title ion-text-wrap"
+                *ngIf=" task.address.door"
+                
+                >Puerta: {{ task.address.door }},
+              </ion-label>
+            </div>
+            <ion-label class="h6_title ion-text-wrap" *ngIf=" task.address.cp"
+              >Codigo_Postal: {{ task.address.cp }},
+            </ion-label>
+          </div>
+
+          <div class="flex_centered">
+            <img
+              class="img_location"
+              src="/assets/icons/ubicacion.svg"
+              (click)="onClickUbicacion( $event)"
+            />
+          </div>
+        </div>
+      </div>
+    </ion-item>
+
+   
+
+    
+      <div class="flex_column">
+        <div class="flex_row flex_centered">
+          <ion-img
+            class="icon_photo"
+            src="/assets/icons/camara.svg"
+          ></ion-img>
+          <ion-label class="h3_title">Fotos</ion-label>
+        </div>
+        <div class="flex_column">
+          <ion-label class="h6_title">Antes</ion-label>
+          <div
+            class="flex_row flex_space_between"
+            style="margin-bottom: 8px !important"
+          >
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+          </div>
+          <ion-label class="h6_title">Después</ion-label>
+          <div
+            class="flex_row flex_space_between"
+            style="margin-bottom: 8px !important"
+          >
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+            <ion-img
+              class="add_img"
+              src="/assets/icons/noImage.svg"
+            ></ion-img>
+          </div>
+        </div>
+      </div>
+   
+
+    
+
+    
+  </ion-list>
+</ion-content>

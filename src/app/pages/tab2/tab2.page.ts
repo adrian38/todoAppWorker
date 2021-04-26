@@ -110,8 +110,11 @@ export class Tab2Page implements OnInit {
     this.navCtrl.navigateRoot('/contratados-chat-detalles', { animated: true, animationDirection: 'forward' }); 
   }
 
-  onClickItemHistorial() {
-    console.log("Item historial clicked");
+  onClickItemHistorial(i) {
+    this.task = this.contratadosList[i]; 
+    this._taskOdoo.setTaskCesar(this.task);
+    
+    this.navCtrl.navigateRoot('/historial-detalles', { animated: true, animationDirection: 'forward' }); 
   }
 
 }

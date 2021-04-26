@@ -136,7 +136,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   }
 
   onClickUbicacion( event ) {
-    console.log('Ubicacion clicked');
+    this.navCtrl.navigateRoot('/mapa', { animated: true, animationDirection: 'forward' }); 
   }
 
   onClickCostoEntrada(  ) {

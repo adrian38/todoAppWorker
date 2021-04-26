@@ -7,6 +7,7 @@
   z-index: 1 !important;
   width: 100% !important;
   text-transform: uppercase;
+  font: normal 17px 'Helvetica-Md', sans-serif;
 }
 
 .item {
@@ -37,4 +38,9 @@ ion-input {
   background: var(--ion-color-gray);
   border-radius: 5px;
   margin-right: 0px;
+}
+
+ion-button {
+  font: normal 16px 'Helvetica-Md', sans-serif;
+  
 }

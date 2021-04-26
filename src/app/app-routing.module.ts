@@ -73,14 +73,23 @@ const routes: Routes = [
   {
     path: 'factura-costos',
     loadChildren: () => import('./pages/factura-costos/factura-costos.module').then( m => m.FacturaCostosPageModule)
-  },  {
+  },
+  {
     path: 'recuperarcontrase',
     loadChildren: () => import('./pages/recuperarcontrase/recuperarcontrase.module').then( m => m.RecuperarcontrasePageModule)
   },
   {
+    path: 'mapa',
+    loadChildren: () => import('./pages/mapa/mapa.module').then( m => m.MapaPageModule), canActivate: [ AuthGuardService ]
+  },
+  {
     path: 'costo-extra',
     loadChildren: () => import('./pages/costo-extra/costo-extra.module').then( m => m.CostoExtraPageModule)
+  },  {
+    path: 'historial-detalles',
+    loadChildren: () => import('./pages/historial-detalles/historial-detalles.module').then( m => m.HistorialDetallesPageModule)
   }
+
 
 
 

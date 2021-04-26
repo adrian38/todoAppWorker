@@ -1,160 +1,155 @@
 <ion-header class="ion-no-border">
-
-  <div style="background: var(--ion-color-orange);">
-
+  <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
-
   </div>
 
-  
- 
-  
   <div class="flex_row">
-    <div style="width: 20px; background: var(--ion-color-orange);"></div>
+    <div style=" background: var(--ion-color-orange)"></div>
 
     <div class="page_subheader">
       <span class="page_subheader_title">CONTRASEÑA</span>
     </div>
-
-   
-
   </div>
-
 </ion-header>
 
 <ion-content>
-
-
-<ion-row style="margin-top: 30px;">
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-  <ion-col size="10"> <h5 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Cambiar contraseña</h5></ion-col>
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-</ion-row>
-
-
-
-<ion-row style="margin-top: 5px; padding: 0px;">
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-  <ion-col size="10" style="padding-bottom: 0px;"> <ion-label style="font-size: small;" >Contraseña actual</ion-label></ion-col>
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-</ion-row>
-  
-  <ion-row >
-     <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-     <ion-col size="10">
-       
-       <div *ngIf ="error_actual ">
-          <ion-input name="contraseña_actual"
-                     type="text"
-                     required
-                     [(ngModel)]="actual"
-                     #nom_apell="ngModel"
-                     ></ion-input>
-            <div id="link">
-                <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                       class="text-danger">No es su contraseña actual</small>
-            </div>
-
-         </div>
-
-         <div *ngIf =" !error_actual ">
-          <ion-input style=" border: 2px solid rgb(101,173,172) !important;"
-                     name="contraseña_actual"
-                     type="text"
-                     [(ngModel)]="actual"
-                     ></ion-input>
-            <div id="link">
-                <small  class="text-danger">No es su contraseña actual</small>
-            </div>
-
-         </div>
-
-     
-    </ion-col >
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-  </ion-row>
-
-
-
-
-
-
-
-  <ion-row style="margin-top: 5px; padding: 0px;">
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-    <ion-col size="10" style="padding-bottom: 0px;"> <ion-label style="font-size: small;" >Contraseña nueva</ion-label></ion-col>
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-  </ion-row>
-    
-    <ion-row >
-      <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-      <ion-col size="10">
-        <ion-input 
-                    name="contraseña_cambiar"
-                    type="text"
-                    required
-                    [(ngModel)]="cambiada"
-                    #nom_apell="ngModel"
-                    ></ion-input>
-                    <div id="link">
-                     <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                     class="text-danger">Debe escribir una contraseña segura</small>
-                    </div>
-                  </ion-col >
-                  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-    </ion-row>
-
-
-
-    
-<ion-row style="margin-top: 5px; padding: 0px;">
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-  <ion-col size="10" style="padding-bottom: 0px;"> <ion-label style="font-size: small;" >Confirmar contraseña</ion-label></ion-col>
-  <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
-</ion-row>
-  
-  <ion-row >
-    <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
+  <ion-row style="margin-top: 30px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10">
-
-      <div *ngIf ="error_confirmacion ">
-                <ion-input name="contraseña"
-                           type="text"
-                           required
-                           [(ngModel)]="confirmada"
-                            #nom_apell="ngModel"
-                            ></ion-input>
-           <div id="link">
-               <small *ngIf= "nom_apell.invalid && nom_apell.touched"   
-                       class="text-danger">Debe escribir contraeña valida</small>
-            </div>
-      </div>
-
-      <div *ngIf =" !error_confirmacion ">
-        <ion-input style=" border: 2px solid rgb(101,173,172) !important;"
-                   name="contraseña"
-                   type="text"
-                   [(ngModel)]="confirmada"
-                    ></ion-input>
-   <div id="link">
-       <small class="text-danger">No coinciden las contraseñas</small>
-    </div>
-</div>
-     
-                </ion-col >
-                <ion-col size="1" style="background: rgb(255, 255, 255);"></ion-col>
+      <h5
+        style="
+          font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+            sans-serif;
+        "
+      >
+        Cambiar contraseña
+      </h5></ion-col
+    >
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
 
+  <ion-row style="margin-top: 5px; padding: 0px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10" style="padding-bottom: 0px">
+      <ion-label style="font-size: small">Contraseña actual</ion-label></ion-col
+    >
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
 
   <ion-row>
-    <ion-col style="text-align: center;margin-top: 65px;">
-      <ion-button color="orange" type="submit"
-                  
-                 (click)="guardar()"
-                 >
-    GUARDAR
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10">
+      <div *ngIf="error_actual ">
+        <ion-input
+          name="contraseña_actual"
+          type="text"
+          required
+          [(ngModel)]="actual"
+          #nom_apell="ngModel"
+        ></ion-input>
+        <div id="link">
+          <small
+            *ngIf="nom_apell.invalid && nom_apell.touched"
+            class="text-danger"
+            >No es su contraseña actual</small
+          >
+        </div>
+      </div>
+
+      <div *ngIf=" !error_actual ">
+        <ion-input
+          style="border: 2px solid rgb(101, 173, 172) !important"
+          name="contraseña_actual"
+          type="text"
+          [(ngModel)]="actual"
+        ></ion-input>
+        <div id="link">
+          <small class="text-danger">No es su contraseña actual</small>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
+
+  <ion-row style="margin-top: 5px; padding: 0px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10" style="padding-bottom: 0px">
+      <ion-label style="font-size: small">Contraseña nueva</ion-label></ion-col
+    >
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10">
+      <ion-input
+        name="contraseña_cambiar"
+        type="text"
+        required
+        [(ngModel)]="cambiada"
+        #nom_apell="ngModel"
+      ></ion-input>
+      <div id="link">
+        <small
+          *ngIf="nom_apell.invalid && nom_apell.touched"
+          class="text-danger"
+          >Debe escribir una contraseña segura</small
+        >
+      </div>
+    </ion-col>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
+
+  <ion-row style="margin-top: 5px; padding: 0px">
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10" style="padding-bottom: 0px">
+      <ion-label style="font-size: small"
+        >Confirmar contraseña</ion-label
+      ></ion-col
+    >
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+    <ion-col size="10">
+      <div *ngIf="error_confirmacion ">
+        <ion-input
+          name="contraseña"
+          type="text"
+          required
+          [(ngModel)]="confirmada"
+          #nom_apell="ngModel"
+        ></ion-input>
+        <div id="link">
+          <small
+            *ngIf="nom_apell.invalid && nom_apell.touched"
+            class="text-danger"
+            >Debe escribir contraeña valida</small
+          >
+        </div>
+      </div>
+
+      <div *ngIf=" !error_confirmacion ">
+        <ion-input
+          style="border: 2px solid rgb(101, 173, 172) !important"
+          name="contraseña"
+          type="text"
+          [(ngModel)]="confirmada"
+        ></ion-input>
+        <div id="link">
+          <small class="text-danger">No coinciden las contraseñas</small>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col style="text-align: center; margin-top: 65px">
+      <ion-button color="orange" type="submit" (click)="guardar()">
+        GUARDAR
       </ion-button>
     </ion-col>
   </ion-row>
-
 </ion-content>

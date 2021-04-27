@@ -35,20 +35,27 @@ export class LoginUserPage implements OnInit {
     private platform: Platform,
     private _location: Location) {
 
-this.usuario = new UsuarioModel;
 
-this.platform.backButton.subscribeWithPriority(10, () => {
-  if (this._location.isCurrentPathEqualTo('/login')) {
-    
-    this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
-    
-  }
-  
-  });
 
 }
 
 ngOnInit() {
+
+  this._taskOdoo.setInitTab(false);
+  this.usuario = new UsuarioModel;
+  this.subscriptions();
+  
+}
+
+
+ngOnDestroy(): void {
+  //Called once, before the instance is destroyed.
+  //Add 'implements OnDestroy' to the class.
+  this.subscriptionUsuario.unsubscribe();
+  
+}
+
+subscriptions() {
 
   this.usuario$ = this._authOdoo.getUser$();
   
@@ -61,14 +68,18 @@ ngOnInit() {
       this.checkUser();
     });
   });
-}
-
-ngOnDestroy(): void {
-  //Called once, before the instance is destroyed.
-  //Add 'implements OnDestroy' to the class.
-  this.subscriptionUsuario.unsubscribe();
   
-}
+  
+  this.platform.backButton.subscribeWithPriority(10, () => {
+    if (this._location.isCurrentPathEqualTo('/login')) {
+      
+      this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+      
+    }
+    
+    });
+  
+  }
 
 checkUser(){
   if(this.usuario.connected){

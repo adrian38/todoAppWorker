@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
-import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 
 @Component({
   selector: 'app-contrase',
@@ -18,11 +18,11 @@ export class ContrasePage implements OnInit {
 
   usuario:UsuarioModel;
 
-  constructor(private _taskOdoo:TaskOdooService) { }
+  constructor(private _authOdoo:AuthOdooService) { }
 
   ngOnInit() {
 
-    this.usuario= this._taskOdoo.getUser();
+    this.usuario= this._authOdoo.getUser();
     console.log("usuario",this.usuario);
     console.log(" contraseña del usuario ",this.usuario.password);
    

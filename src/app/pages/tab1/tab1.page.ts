@@ -275,13 +275,17 @@ export class Tab1Page {
 
   in(i) {
     this.task = this.solicitudesList[i];
+    console.log(this.task.offer_send);
     this._taskOdoo.setTaskCesar(this.task);
-    /* this.subServ.setSolicitudeList(this.solicitudesList);  */
-    console.log('entre a la solicitud', this.task);
-    this.navCtrl.navigateRoot('/presupuestar', {
-      animated: true,
-      animationDirection: 'forward',
-    });
+
+    if (this.task.offer_send == 'send' ){
+      console.log("ya esta presupuestado");
+      this.navCtrl.navigateRoot('/solicitudes-chat-detalles', { animated: true,animationDirection: 'forward',});
+    }
+    else{
+      this.navCtrl.navigateRoot('/presupuestar', { animated: true,animationDirection: 'forward',});
+    }
+    
   }
 }
 

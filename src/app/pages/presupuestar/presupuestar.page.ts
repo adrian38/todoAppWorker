@@ -30,8 +30,10 @@ export class PresupuestarPage implements OnInit {
 
   ngOnInit() {
  
+    
     this.task=this._taskOdoo.getTaskCesar();
-    console.log(" estoy Presupuestado",this.task.require_materials);
+    this._taskOdoo.solicitudeListEdit(this.task.id,2);
+    console.log("estoy Presupuestado",this.task.require_materials);
     //this.requieremateriales=this.task.require_materials;
    
   }

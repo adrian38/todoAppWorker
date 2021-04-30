@@ -8,7 +8,13 @@
     </div>
    
     <div class="flex_centered" style="min-width: 35px;">
-      <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>
+     <!--  <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img> -->
+      <ion-button icon-only fill="clear"
+      (click)="onLocationClick( $event )">
+      <!-- <ion-img  src="/assets/icons/ubicacion.svg"></ion-img> -->
+       <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>  
+    <!--   <ion-icon name="home"></ion-icon> -->
+</ion-button>
     </div>
     <div class="flex_centered" style="min-width: 29px;">
       <ion-img class="notificaciones_campana" src="/assets/icons/campana.svg"></ion-img>

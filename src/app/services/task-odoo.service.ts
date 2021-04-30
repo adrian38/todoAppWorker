@@ -1031,6 +1031,145 @@ export class TaskOdooService {
 		return historialList;
 	}
 
+	sendOffer(offer: TaskModel) {
+		let POlineMaterials = {
+			name: 'Materiales',
+			product_id: 41,
+			product_uom: 1,
+			product_qty: 1,
+			price_unit: offer.materials,
+			date_planned: offer.date_planned,
+			order_id: offer.id
+		};
+
+
+		let POline = {
+			name: 'Mano de Obra',
+			product_id: 40,
+			product_uom: 1,
+			product_qty: 1,
+			price_unit: offer.work_force,
+			date_planned: offer.date_planned,
+			order_id: offer.id
+		};
+
+		let acept_PO = function() {
+			let inParams = [];
+			let params = [];
+			inParams.push(offer.id);
+			params.push(inParams);
+
+			let fparams = [];
+			fparams.push(jaysonServer.db);
+			fparams.push(user.id);
+			fparams.push(jaysonServer.password);
+			fparams.push('purchase.order'); //model
+			fparams.push('set_state_sent'); //method
+
+			for (let i = 0; i < params.length; i++) {
+				fparams.push(params[i]);
+			}
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+				err,
+				error,
+				value
+			) {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log(value);
+					notificationSendOffertOk$.next(offer.id);
+				}
+			});
+		};
+
+		let addLinePOMaterials = function() {
+			
+			let inParams = [];
+			inParams.push(POlineMaterials);
+			let params = [];
+			params.push(inParams);
+			let fparams = [];
+			fparams.push(jaysonServer.db);
+			fparams.push(user.id);
+			fparams.push(jaysonServer.password);
+			fparams.push('purchase.order.line'); //model
+			fparams.push('create'); //method
+
+			for (let i = 0; i < params.length; i++) {
+				fparams.push(params[i]);
+			}
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+				err,
+				error,
+				value
+			) {
+				if (err || !value) {
+					console.log(err, 'Error addPOlineMaterials');
+				} else {
+
+					console.log("añadiendo materiales");
+					acept_PO();
+				}
+			});
+		};
+		
+		let addLinePO = function() {
+			console.log(POline);
+
+			let inParams = [];
+			inParams.push(POline);
+			let params = [];
+			params.push(inParams);
+			let fparams = [];
+			fparams.push(jaysonServer.db);
+			fparams.push(user.id);
+			fparams.push(jaysonServer.password);
+			fparams.push('purchase.order.line'); //model
+			fparams.push('create'); //method
+
+			for (let i = 0; i < params.length; i++) {
+				fparams.push(params[i]);
+			}
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+				err,
+				error,
+				value
+			) {
+				if (err || !value) {
+					console.log(err, 'Error addLinePO');
+				} else {
+					if(offer.materials){
+
+						addLinePOMaterials();
+					}else{
+					acept_PO();
+				}
+				}
+			});
+		};
+
+		
+
+		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+		client.request(
+			'call',
+			{
+				service: 'common',
+				method: 'login',
+				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
+			},
+			function(err, error, value) {
+				if (err || !value) {
+					console.log(err, 'Error sendOffer');
+				} else {
+					console.log(value);
+					addLinePO();
+				}
+			}
+		);
+	}
+
 	
 
 }

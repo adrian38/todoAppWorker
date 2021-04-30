@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -23,19 +24,50 @@ export class PresupuestarPage implements OnInit {
 
   task: TaskModel;
 
+  notificationSendOffertOk$ = new Observable<number>();
+
+  subscriptioSendOffertOk: Subscription;
+
   constructor(private _taskOdoo       :TaskOdooService,
               private alertCtrl       :AlertController,
               private navCtrl         :NavController,
-              private toastController :ToastController) { }
+              private toastController :ToastController,
+              private ngZone: NgZone,) { }
 
   ngOnInit() {
  
     
     this.task=this._taskOdoo.getTaskCesar();
     this._taskOdoo.solicitudeListEdit(this.task.id,2);
-    console.log("estoy Presupuestado",this.task.require_materials);
-    //this.requieremateriales=this.task.require_materials;
+    this.requieremateriales=this.task.require_materials;
+
+    this.subscriptions();
    
+  }
+
+
+  subscriptions() {
+    /* 	this.platform.backButton.subscribeWithPriority(10, () => {
+			this.loading.dismiss();
+			this.presentAlert();
+		}); */
+
+    this.notificationSendOffertOk$ = this._taskOdoo.getnotificationSendOffertOk$();
+    this.subscriptioSendOffertOk = this.notificationSendOffertOk$.subscribe((PoId) => {
+      this.ngZone.run(() => {
+        console.log('Se envio la oferta correctamente');
+        this.presentAlert();///////////
+             
+      });
+    });
+
+
+  }
+
+ 
+
+  ngOnDestroy() {
+    this.subscriptioSendOffertOk.unsubscribe();
   }
 
   segmentChanged(event){
@@ -67,17 +99,14 @@ export class PresupuestarPage implements OnInit {
     else{
       if(this.materiales == ""){
         this.total=parseInt(this.manoobra);
-        console.log("materiales vacio");
-        console.log("materiales vacio",this.total);
-        }
+      }
         else{
           if(this.manoobra == ""){
             this.total=parseInt(this.materiales);
           }
           else{
             this.total=parseInt(this.manoobra) + parseInt(this.materiales);
-            console.log("campos llenos");
-            console.log("lleno estoy en obras",this.total);
+           
           }
          
         }
@@ -91,7 +120,7 @@ export class PresupuestarPage implements OnInit {
   }
 
   material(event){
-    console.log("a",this.manoobra);
+    
     if(this.materiales == "" && this.manoobra == ""){
       this.total=0;
       
@@ -99,8 +128,7 @@ export class PresupuestarPage implements OnInit {
     else{
       if(this.manoobra == ""){
         this.total=parseInt(this.materiales);
-        console.log("materiales vacio");
-        console.log("materiales vacio",this.total);
+        
         }
         else{
           if(this.materiales == ""){
@@ -108,8 +136,7 @@ export class PresupuestarPage implements OnInit {
           }
           else{
             this.total=parseInt(this.manoobra) + parseInt(this.materiales);
-            console.log("campos llenos");
-            console.log("lleno estoy en obras",this.total);
+           
           }
         }
     }
@@ -119,7 +146,15 @@ export class PresupuestarPage implements OnInit {
   } 
   enviar(){ 
     if(this.total > 0){
-      this.presentAlert();
+      if(this.materiales !== ""){
+        this.task.materials = parseInt(this.materiales);
+        this.task.work_force = parseInt(this.manoobra);
+      }else{
+        this.task.work_force = parseInt(this.manoobra);
+      }
+      this._taskOdoo.sendOffer(this.task);
+
+     ////////////////////////////Poner cargando en espera de respuesta
     }
     else
     this.toast_campos_vacio();

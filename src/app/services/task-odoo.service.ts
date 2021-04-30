@@ -977,9 +977,6 @@ export class TaskOdooService {
 		);
 	}
 
-
-
-
 	getRequestedTaskList$(): Observable<boolean> {
 		return tasksList$.asObservable();
 	}
@@ -1032,6 +1029,9 @@ export class TaskOdooService {
 	}
 
 	sendOffer(offer: TaskModel) {
+
+		console.log(offer)
+
 		let POlineMaterials = {
 			name: 'Materiales',
 			product_id: 41,
@@ -1043,15 +1043,17 @@ export class TaskOdooService {
 		};
 
 
-		let POline = {
-			name: 'Mano de Obra',
-			product_id: 40,
+		 let POline = {
+			/* name: 'Mano de Obra',
+			product_id: 40, */
+			name: 'Presupuesto',
+			product_id: 16,
 			product_uom: 1,
 			product_qty: 1,
 			price_unit: offer.work_force,
 			date_planned: offer.date_planned,
 			order_id: offer.id
-		};
+		}; 
 
 		let acept_PO = function() {
 			let inParams = [];
@@ -1168,6 +1170,10 @@ export class TaskOdooService {
 				}
 			}
 		);
+	}
+
+	getnotificationSendOffertOk$(): Observable<number> {
+		return notificationSendOffertOk$.asObservable();
 	}
 
 	

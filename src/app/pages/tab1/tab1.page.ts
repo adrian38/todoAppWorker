@@ -275,11 +275,9 @@ export class Tab1Page {
 
   in(i) {
     this.task = this.solicitudesList[i];
-    console.log(this.task.offer_send);
     this._taskOdoo.setTaskCesar(this.task);
 
-    if (this.task.offer_send == 'send' ){
-      console.log("ya esta presupuestado");
+    if (this.task.offer_send == 'sent' ){
       this.navCtrl.navigateRoot('/solicitudes-chat-detalles', { animated: true,animationDirection: 'forward',});
     }
     else{

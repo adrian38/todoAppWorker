@@ -8,13 +8,13 @@
     style="width: 100%; padding-top: 20px; padding-bottom: 20px;"
   >
 
-    <ion-list style="width: 85% !important">
-      <ion-item-sliding *ngFor="let solicitud of solicitudesList,let i = index">
+    <ion-list style="width: 85% !important; ">
+      <ion-item-sliding *ngFor="let solicitud of solicitudesList,let i = index" >
         <ion-item class="item"
          lines="none"
       >
   
-        <div class="flex_row" style="width: 100%" (click)="in(i)">
+        <div class="flex_row" style="width: 100%;" (click)="in(i)">
           <img class="image" src="../../../assets/fontaneria.png" />
 
           <div class="flex_column" style="width: 100%; margin-left: 20px">

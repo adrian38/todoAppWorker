@@ -1,10 +1,11 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { AlertController, NavController, ToastController,ModalController } from '@ionic/angular';
+import { AlertController, NavController, ToastController,ModalController,Platform } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
+
 
 @Component({
   selector: 'app-presupuestar',
@@ -36,7 +37,8 @@ export class PresupuestarPage implements OnInit {
               private navCtrl         :NavController,
               private toastController :ToastController,
               private modalCtrl       :ModalController,
-              private ngZone: NgZone,) { }
+              private ngZone          :NgZone,
+              private platform        :Platform) { }
 
   ngOnInit() {
  
@@ -46,6 +48,10 @@ export class PresupuestarPage implements OnInit {
     this.requieremateriales=this.task.require_materials;
 
     this.subscriptions();
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'back' }) ;
+ });
    
   }
 

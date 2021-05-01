@@ -25,9 +25,7 @@ export class MapaPage implements OnInit {
 	calle: string = '';
 	localizar: boolean = false;
 	zoom = 2;
-/* 
-	 pos_1 = new google.maps.LatLng(41.97837956414176,2.77969550981652);
-	 pos_2 = new google.maps.LatLng(41.97608249594034,2.8631229390157387); */
+
 
 	constructor(
 		private Serv: ObtSubSService,
@@ -39,57 +37,44 @@ export class MapaPage implements OnInit {
 		public ngZone: NgZone,
 		private locationService: LocationService
 	) {
+
 		this.calle = this.datos.getcalle().trim();
+		console.log("Calle de la solicitud",this.calle);
 
 		if (this.calle) {
 			this.numero = this.datos.getnumero();
+			console.log("Calle de la solicitud",this.calle);
+			console.log("numero de la solicitud",this.numero);
 			this.getLocaleDirection();
 		} else {
-			this.getMyLocation(false);
+			this.getMyLocation(false); 
+			console.log("no tiene una ubicacion");
 		}
 
-		/*  this.calle= this.datos.getcalle().trim(),"calle";
-              this.numero=this.datos.getnumero(); */
+/* 		 this.calle= this.datos.getcalle().trim(),"calle";
+              this.numero=this.datos.getnumero();  */
 	}
 	ngOnInit() {
 		setTimeout(() => {
 			document.getElementById('map-parent').style.width = '100%';
 		}, 50);
 
-		/* var directionsService = new google.maps.DirectionsService();
-		var start=new google.maps.LatLng(50.995093,-16.417091);
-		var end=new google.maps.LatLng(50.997698,-16.41788);
-	  
-		var request = {
-		  origin:start,
-		  destination:end,
-		  travelMode: google.maps.TravelMode.DRIVING
-		};
-	  
-		directionsService.route(request, function(result, status) {
-		  if (status == google.maps.DirectionsStatus.OK) {
-			alert("todo bien");
-		  }
-		}); */
-			
-				/* google.maps.geometry.spherical.computeDistanceBetween (this.pos_1, this.pos_2)); */
-				/* const distance= new google.maps.DistanceMatrixService();
-				console.log('obteniendo con Google la distancia:'+ distance); */
-				
+
       
 
 		this.ruta = this.datos.getruta();
+		console.log('ruta',this.ruta);
 
-/* 		this.platform.backButton.subscribeWithPriority(10, () => {
-			if (this.ruta == 'datospersonales') {
-				this.navCtrl.navigateRoot('/datospersonales', { animated: true, animationDirection: 'back' });
-			} else {
-				this.navCtrl.navigateRoot('/registro', { animated: true, animationDirection: 'back' });
-			}
-		}); */
+
 
 		 this.platform.backButton.subscribeWithPriority(10, () => {
-            this.navCtrl.navigateRoot('/direccion', {animated: true, animationDirection: 'back' }) ;
+			 if(this.ruta == 'contratados-chat-detalles'){
+				   this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+				}
+				else {
+				 this.navCtrl.navigateRoot('/historial-detalles', {animated: true, animationDirection: 'back' }) ;
+
+			 }
             
             }); 
 	}
@@ -165,7 +150,7 @@ export class MapaPage implements OnInit {
 		}
 	}
 	
-
+ 
 	async postGPSPermission(canUseGPS: boolean) {
 		if (canUseGPS) {
 			this.watchPosition();
@@ -174,9 +159,9 @@ export class MapaPage implements OnInit {
 				text: 'Please turn on GPS to get location'
 			});
 		}
-	}
+	} 
 
-	async watchPosition() {
+	 async watchPosition() {
 		try {
 			this.watchId = Geolocation.watchPosition({}, (position, err) => {
 				this.ngZone.run(() => {
@@ -205,8 +190,8 @@ export class MapaPage implements OnInit {
 		} catch (err) {
 			console.log('err', err);
 		}
-	}
-
+	} 
+ 
 	clearWatch() {
 		if (this.watchId != null) {
 			Geolocation.clearWatch({ id: this.watchId });

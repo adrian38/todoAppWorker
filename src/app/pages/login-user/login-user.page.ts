@@ -33,7 +33,8 @@ export class LoginUserPage implements OnInit {
     public alertController: AlertController,
     public navController:NavController,
     private platform: Platform,
-    private _location: Location) {
+    private _location: Location,
+    ) {
 
 
 
@@ -44,6 +45,10 @@ ngOnInit() {
   this._taskOdoo.setInitTab(false);
   this.usuario = new UsuarioModel;
   this.subscriptions();
+
+  this.platform.backButton.subscribeWithPriority(10, () => {
+       this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+  }); 
   
 }
 

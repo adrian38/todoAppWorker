@@ -1,9 +1,10 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController,ModalController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
+import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
 
 @Component({
   selector: 'app-presupuestar',
@@ -12,15 +13,17 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 })
 export class PresupuestarPage implements OnInit {
 
-  manoobra:string="";
-  materiales:string="";
+/*   manoobra:string="";
+  materiales:string=""; */
+  manoobra   :number;
+  materiales :number;
   total:number=0;
 
   requieremateriales:boolean
   verpresupuestar: boolean = true;
 	verdetalles: boolean = false;
 	valorSegment: string = '';
-
+  imagen:string="../../../assets/icons/noImage.svg "
 
   task: TaskModel;
 
@@ -32,6 +35,7 @@ export class PresupuestarPage implements OnInit {
               private alertCtrl       :AlertController,
               private navCtrl         :NavController,
               private toastController :ToastController,
+              private modalCtrl       :ModalController,
               private ngZone: NgZone,) { }
 
   ngOnInit() {
@@ -92,20 +96,20 @@ export class PresupuestarPage implements OnInit {
 
   obra(event){
     console.log("ob",this.materiales);
-    if(this.materiales == "" && this.manoobra == ""){
+    if(this.materiales == 0 && this.manoobra == 0 || this.materiales == undefined  && this.manoobra == undefined){
       this.total=0;
       
     }
     else{
-      if(this.materiales == ""){
-        this.total=parseInt(this.manoobra);
+      if(this.materiales == null){
+        this.total=this.manoobra;
       }
         else{
-          if(this.manoobra == ""){
-            this.total=parseInt(this.materiales);
+          if(this.manoobra == null){
+            this.total=this.materiales;
           }
           else{
-            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            this.total=this.manoobra + this.materiales;
            
           }
          
@@ -121,21 +125,21 @@ export class PresupuestarPage implements OnInit {
 
   material(event){
     
-    if(this.materiales == "" && this.manoobra == ""){
+    if(this.materiales == 0 && this.manoobra == 0  || this.materiales == undefined  && this.manoobra == undefined){
       this.total=0;
       
     }
     else{
-      if(this.manoobra == ""){
-        this.total=parseInt(this.materiales);
+      if(this.manoobra == null){
+        this.total=this.materiales;
         
         }
         else{
-          if(this.materiales == ""){
-            this.total=parseInt(this.manoobra);
+          if(this.materiales == null){
+            this.total=this.manoobra;
           }
           else{
-            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
+            this.total=this.manoobra + this.materiales;
            
           }
         }
@@ -146,11 +150,11 @@ export class PresupuestarPage implements OnInit {
   } 
   enviar(){ 
     if(this.total > 0){
-      if(this.materiales !== ""){
-        this.task.materials = parseInt(this.materiales);
-        this.task.work_force = parseInt(this.manoobra);
+      if(this.materiales !== null){
+        this.task.materials = this.materiales;
+        this.task.work_force = this.manoobra;
       }else{
-        this.task.work_force = parseInt(this.manoobra);
+        this.task.work_force = this.manoobra;
       }
       this._taskOdoo.sendOffer(this.task);
 
@@ -196,6 +200,18 @@ export class PresupuestarPage implements OnInit {
 			duration: 2000
 		});
 		toast.present();
+	}
+
+  imageClick(imagen) {
+		this.modalCtrl
+			.create({
+				component: ImagenmodalPage,
+				componentProps: {
+					imagen: imagen
+				}
+			})
+			.then((modal) => modal.present()); 
+
 	}
 
 }

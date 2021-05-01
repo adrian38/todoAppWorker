@@ -287,6 +287,9 @@ export class Tab1Page {
   }
   cancelar(i){
     console.log("j")
+    this.task = this.solicitudesList[i];
+    this._taskOdoo.cancelPOsuplier(this.task.id);
+
   }
 }
 

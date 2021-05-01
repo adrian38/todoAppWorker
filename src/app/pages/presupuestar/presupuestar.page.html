@@ -42,7 +42,7 @@
           <ion-col size="3" style="text-align: end">
             <ion-input
               name="mano_obra"
-              type="text"
+              type="number"
               required
               [(ngModel)]="manoobra"
               (ionChange)="obra($event)"
@@ -58,7 +58,7 @@
           <ion-col size="3" style="text-align: end">
             <ion-input
               name="materiales"
-              type="text"
+              type="number"
               required
               [(ngModel)]="materiales"
               (ionChange)="material($event)"
@@ -227,8 +227,8 @@
                 border-radius: 5px 5px 5px 5px;
                 margin: 10px 0px;
               "
-            >
-              <img src="src=../../../assets/icons/noImage.svg " />
+               (click)="imageClick()">
+              <img src="src={{imagen}}" />
             </ion-card>
           </ion-col>
           <ion-col size="4" style="padding-top: 0px">

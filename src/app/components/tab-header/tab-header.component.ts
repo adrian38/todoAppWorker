@@ -19,4 +19,7 @@ export class TabHeaderComponent implements OnInit {
       elemento.style.backgroundColor = this.backgroundColor;
     }
   }
+  on_Click(){
+    console.log("click nuevament");
+  }
 }

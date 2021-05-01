@@ -196,4 +196,7 @@ export class Tab1Page {
 			this.titulo=title.slice(0,10) + " " + " . . .";
 		   }
 	} */
+  cancelar(i){
+    console.log("borro",i);
+  }
 }

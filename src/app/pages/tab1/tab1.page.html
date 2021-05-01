@@ -9,12 +9,11 @@
   >
 
     <ion-list style="width: 85% !important">
-      <ion-item
-        class="item"
-        *ngFor="let solicitud of solicitudesList,let i = index"
-        lines="none"
+      <ion-item-sliding *ngFor="let solicitud of solicitudesList,let i = index">
+        <ion-item class="item"
+         lines="none"
       >
-     
+  
         <div class="flex_row" style="width: 100%" (click)="in(i)">
           <img class="image" src="../../../assets/fontaneria.png" />
 
@@ -58,10 +57,22 @@
             </div>
           </div>
         </div>
+
+        
+  
+     
+      
      
         
 
       </ion-item>
+      <ion-item-options side="end" style="padding: 8.6px;">
+        <ion-item-option  class="color_fondo"
+                          (click)="cancelar(i)"
+                           >cancelar</ion-item-option>
+      </ion-item-options> 
+      </ion-item-sliding>
+     
     </ion-list>
   </div>
 </ion-content>

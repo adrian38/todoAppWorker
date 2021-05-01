@@ -86,7 +86,12 @@ const routes: Routes = [
   {
     path: 'historial-detalles',
     loadChildren: () => import('./pages/historial-detalles/historial-detalles.module').then( m => m.HistorialDetallesPageModule),  canActivate: [ AuthGuardService ] 
+  },
+  {
+    path: 'imagenmodal',
+    loadChildren: () => import('./pages/imagenmodal/imagenmodal.module').then( m => m.ImagenmodalPageModule)
   }
+
 
 
 

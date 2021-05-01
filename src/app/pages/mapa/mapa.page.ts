@@ -56,9 +56,21 @@ export class MapaPage implements OnInit {
 			document.getElementById('map-parent').style.width = '100%';
 		}, 50);
 
-
-		
-
+		/* var directionsService = new google.maps.DirectionsService();
+		var start=new google.maps.LatLng(50.995093,-16.417091);
+		var end=new google.maps.LatLng(50.997698,-16.41788);
+	  
+		var request = {
+		  origin:start,
+		  destination:end,
+		  travelMode: google.maps.TravelMode.DRIVING
+		};
+	  
+		directionsService.route(request, function(result, status) {
+		  if (status == google.maps.DirectionsStatus.OK) {
+			alert("todo bien");
+		  }
+		}); */
 			
 				/* google.maps.geometry.spherical.computeDistanceBetween (this.pos_1, this.pos_2)); */
 				/* const distance= new google.maps.DistanceMatrixService();

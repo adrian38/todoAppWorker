@@ -285,11 +285,9 @@ export class Tab1Page {
     }
     
   }
-
   cancelar(i){
-    console.log("borro",i);
+    console.log("j")
   }
-
 }
 
 /* 	reducir(title){
@@ -300,5 +298,5 @@ export class Tab1Page {
 			this.titulo=title.slice(0,10) + " " + " . . .";
 		   }
 	} */
-  
 
+  

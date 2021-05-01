@@ -1044,10 +1044,8 @@ export class TaskOdooService {
 
 
 		 let POline = {
-			/* name: 'Mano de Obra',
-			product_id: 40, */
-			name: 'Presupuesto',
-			product_id: 16,
+			name: 'Mano de Obra',
+			product_id: 40, 
 			product_uom: 1,
 			product_qty: 1,
 			price_unit: offer.work_force,

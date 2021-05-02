@@ -87,8 +87,10 @@ export class CreateAccountPage implements OnInit {
     this.presentAlert();
   }
 
-  onLocationClick(event) {
-    this.coordenadas = true;
+  onLocationClick() {
+    //this.coordenadas = true;
+   
+    this.navController.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
     console.log('Location clicked');
   }
 

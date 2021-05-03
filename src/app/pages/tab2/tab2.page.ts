@@ -15,6 +15,9 @@ export class Tab2Page implements OnInit {
   contratadosList: TaskModel[];
   historialList  :TaskModel[];
 
+  contratado_vacio :boolean=false;
+  historial_vacio  :boolean=false;
+
 
 
   constructor( private _taskOdoo: TaskOdooService,
@@ -23,7 +26,11 @@ export class Tab2Page implements OnInit {
   ngOnInit() {
     this.contratadosList = this._taskOdoo.getContratadosList();
     this.historialList   = this._taskOdoo.getHistorialList();
-    console.log("falso contratado",this.contratadosList);
+    console.log("contratado",this.contratadosList.length);
+
+   this.cantidad_contratados_historial();
+
+    
 
   }
 
@@ -36,6 +43,23 @@ export class Tab2Page implements OnInit {
     this._taskOdoo.setTaskCesar(this.task);
     
     this.navCtrl.navigateRoot('/contratados-chat-detalles', { animated: true, animationDirection: 'forward' }); 
+  }
+
+  cantidad_contratados_historial(){
+     
+    if (this.contratadosList.length < 1) {
+      this.contratado_vacio=true;
+      }
+      else{
+        this.contratado_vacio=false;
+      }
+
+      if (this.historialList.length < 1) {
+        this.historial_vacio=true;
+        }
+        else{
+          this.historial_vacio=false;
+        }
   }
 
   onClickItemHistorial(i) {

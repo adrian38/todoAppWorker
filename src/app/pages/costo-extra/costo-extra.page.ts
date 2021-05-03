@@ -8,8 +8,10 @@ import { NavController, Platform } from '@ionic/angular';
 })
 export class CostoExtraPage implements OnInit {
 
-  manoobra:string="";
-  materiales:string="";
+/*   manoobra:string="";
+  materiales:string=""; */
+  manoobra   :number;
+  materiales :number;
   total:number=0;
 
   constructor(private platform: Platform,
@@ -26,63 +28,46 @@ export class CostoExtraPage implements OnInit {
 
     
   }
-
   obra(event){
     console.log("ob",this.materiales);
-    if(this.materiales == "" && this.manoobra == ""){
-      this.total=0;
-      
+    if(this.materiales == 0 && this.manoobra == 0 || this.materiales == undefined  && this.manoobra == undefined){
+      this.total=0;  
     }
     else{
-      if(this.materiales == ""){
-        this.total=parseInt(this.manoobra);
-        console.log("materiales vacio");
-        console.log("materiales vacio",this.total);
-        }
+      if(this.materiales == null){
+        this.total=this.manoobra;
+      }
         else{
-          if(this.manoobra == ""){
-            this.total=parseInt(this.materiales);
+          if(this.manoobra == null){
+            this.total=this.materiales;
           }
           else{
-            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
-            console.log("campos llenos");
-            console.log("lleno estoy en obras",this.total);
-          }
-         
-        }
+            this.total=this.manoobra + this.materiales;  
+        } 
+      }
     }
-
-    
-  
- 
-
-
   }
 
   material(event){
-    console.log("a",this.manoobra);
-    if(this.materiales == "" && this.manoobra == ""){
+    
+    if(this.materiales == 0 && this.manoobra == 0  || this.materiales == undefined  && this.manoobra == undefined){
       this.total=0;
-      
-    }
+      }
     else{
-      if(this.manoobra == ""){
-        this.total=parseInt(this.materiales);
-        console.log("materiales vacio");
-        console.log("materiales vacio",this.total);
+      if(this.manoobra == null){
+        this.total=this.materiales;
         }
         else{
-          if(this.materiales == ""){
-            this.total=parseInt(this.manoobra);
+          if(this.materiales == null){
+            this.total=this.manoobra;
           }
           else{
-            this.total=parseInt(this.manoobra) + parseInt(this.materiales);
-            console.log("campos llenos");
-            console.log("lleno estoy en obras",this.total);
+            this.total=this.manoobra + this.materiales;
+           
           }
         }
-    }
-  }
+       }
+      }
 
 
 }

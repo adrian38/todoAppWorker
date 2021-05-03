@@ -19,7 +19,7 @@ export class FacturaServiciosPage implements OnInit {
   task: TaskModel;
 
   constructor(private _taskOdoo :TaskOdooService,
-    private platform: Platform,
+              private platform: Platform,
 		          public navCtrl: NavController) { }
 
   ngOnInit() {

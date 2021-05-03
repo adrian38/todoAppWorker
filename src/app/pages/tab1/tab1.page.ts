@@ -203,7 +203,7 @@ export class Tab1Page {
       (notificationPoCancelled) => {
         this.ngZone.run(() => {
           for (let Po_id of notificationPoCancelled) {
-            console.log('PO Cancelled por notificacion');
+            console.log(notificationPoCancelled,'PO Cancelled por notificacion');
             let temp = this.solicitudesList.findIndex(
               (element) => element.id === Po_id
             );
@@ -222,7 +222,7 @@ export class Tab1Page {
       (notificationOffertCancelled) => {
         this.ngZone.run(() => {
           for (let Po_id of notificationOffertCancelled) {
-            console.log('PO Cancelled por notificacionOffert');
+            console.log(notificationOffertCancelled,'PO Cancelled por notificacionOffert');
             let temp = this.solicitudesList.findIndex(
               (element) => element.id === Po_id
             );
@@ -287,7 +287,9 @@ export class Tab1Page {
   }
 
   cancelar(i){
-    console.log("borro",i);
+    
+    this._taskOdoo.cancelPOsuplier(this.solicitudesList[i].id);
+    /////////////////////////////////////////////////poner cargado;
   }
 
 }

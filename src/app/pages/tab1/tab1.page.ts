@@ -285,13 +285,16 @@ export class Tab1Page {
     }
     
   }
+  cancelar(i){
+    console.log("j")
+    this.task = this.solicitudesList[i];
+    this._taskOdoo.cancelPOsuplier(this.task.id);
 
   cancelar(i){
     
     this._taskOdoo.cancelPOsuplier(this.solicitudesList[i].id);
     /////////////////////////////////////////////////poner cargado;
   }
-
 }
 
 /* 	reducir(title){
@@ -302,5 +305,5 @@ export class Tab1Page {
 			this.titulo=title.slice(0,10) + " " + " . . .";
 		   }
 	} */
-  
 
+  

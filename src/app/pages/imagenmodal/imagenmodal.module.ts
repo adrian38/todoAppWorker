@@ -8,6 +8,7 @@ import { ImagenmodalPageRoutingModule } from './imagenmodal-routing.module';
 
 import { ImagenmodalPage } from './imagenmodal.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-factura-servicios',
@@ -17,7 +18,9 @@ export class FacturaServiciosPage implements OnInit {
 
   task: TaskModel;
 
-  constructor(private _taskOdoo :TaskOdooService) { }
+  constructor(private _taskOdoo :TaskOdooService,
+              private platform: Platform,
+		          public navCtrl: NavController) { }
 
   ngOnInit() {
    
@@ -29,6 +32,13 @@ export class FacturaServiciosPage implements OnInit {
     this.impuesto = 24.13;
     this.impuestoPlataforma = 35.89;
     this.total = this.manoObra + this.materiales + this.impuesto + this.impuestoPlataforma;
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+    
+      this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+  
+       
+       }); 
   }
 
   onClose() {

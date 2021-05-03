@@ -187,13 +187,13 @@
           <ion-col size="8" style="padding-left: 0px">
             <p
               style="margin: 5px 0px; font-size: medium"
-              *ngIf=" manoobra != '' "
+              *ngIf=" manoobra != null "
             >
               Mano de obra: {{ manoobra }} €
             </p>
             <p
               style="margin: 5px 0px; font-size: medium"
-              *ngIf=" manoobra == '' "
+              *ngIf=" manoobra == null "
             >
               Mano de obra: 0 €
             </p>

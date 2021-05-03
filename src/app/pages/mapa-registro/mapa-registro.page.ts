@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Marcador } from 'src/app/models/marcador.class';
@@ -9,12 +11,13 @@ import { MapsAPILoader } from '@agm/core';
 const { Geolocation, Toast } = Plugins;
 
 @Component({
-	selector: 'app-mapa',
-	templateUrl: './mapa.page.html',
-	styleUrls: [ './mapa.page.scss' ]
+  selector: 'app-mapa-registro',
+  templateUrl: './mapa-registro.page.html',
+  styleUrls: ['./mapa-registro.page.scss'],
 })
-export class MapaPage implements OnInit {
-	marcadores: Marcador[] = [];
+export class MapaRegistroPage implements OnInit {
+
+  marcadores: Marcador[] = [];
 	lat = 19.29095;
 	lng = -99.653015;
 
@@ -24,23 +27,19 @@ export class MapaPage implements OnInit {
 	numero: string = '';
 	calle: string = '';
 	localizar: boolean = false;
-	//mostrar_boton :boolean = false;
+
 
 	zoom = 2;
+  constructor(private Serv: ObtSubSService,
+		          private platform: Platform,
+		          public navCtrl: NavController,
+		          private datos: ObtSubSService,
+		          public toastController: ToastController,
+		          private mapsAPILoader: MapsAPILoader,
+		          public ngZone: NgZone,
+		          private locationService: LocationService) { 
 
-
-	constructor(
-		private Serv: ObtSubSService,
-		public toastController: ToastController,
-		private platform: Platform,
-		public navCtrl: NavController,
-		private datos: ObtSubSService,
-		private mapsAPILoader: MapsAPILoader,
-		public ngZone: NgZone,
-		private locationService: LocationService
-	) {
-
-		this.calle = this.datos.getcalle().trim();
+                this.calle = this.datos.getcalle().trim();
 		console.log("Calle de la solicitud",this.calle);
 
 		if (this.calle) {
@@ -52,36 +51,32 @@ export class MapaPage implements OnInit {
 			this.getMyLocation(false); 
 			console.log("no tiene una ubicacion");
 		}
+              }
 
-/* 		 this.calle= this.datos.getcalle().trim(),"calle";
-              this.numero=this.datos.getnumero();  */
-	}
-	ngOnInit() {
-		setTimeout(() => {
+  ngOnInit() {
+
+    setTimeout(() => {
 			document.getElementById('map-parent').style.width = '100%';
 		}, 50);
 
 
       
-
+/* 
 		this.ruta = this.datos.getruta();
-		console.log('ruta',this.ruta);
+		console.log('ruta',this.ruta); */
 
         /* this.mostrarBoton(); */
 
 		 this.platform.backButton.subscribeWithPriority(10, () => {
-			 if(this.ruta == 'contratados-chat-detalles'){
-				   this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
-				}
-				else {
-				 this.navCtrl.navigateRoot('/historial-detalles', {animated: true, animationDirection: 'back' }) ;
-
-			 }
+			
+				   this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
+				
+			 
             
             }); 
-	}
 
-	getLocaleDirection() {
+  }
+  getLocaleDirection() {
 
 		
 		this.mapsAPILoader.load().then(() => {
@@ -198,15 +193,6 @@ export class MapaPage implements OnInit {
 		if (this.watchId != null) {
 			Geolocation.clearWatch({ id: this.watchId });
 		}
-	}
-
-/* 	mostrarBoton(){
-		if(this.ruta=='create-account'){
-			this.mostrar_boton=true;
-		}
-		else{
-			this.mostrar_boton=false;
-		}
-	} */
+  }
 
 }

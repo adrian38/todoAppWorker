@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController , NavController,Platform} from '@ionic/angular';
+
 
 @Component({
   selector: 'app-create-account',
@@ -31,9 +32,14 @@ export class CreateAccountPage implements OnInit {
   noBorder = 'none';
 
   constructor(private toastCtrl: ToastController,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController,
+    public navController:NavController,
+    private platform: Platform) { }
 
   ngOnInit() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+ }); 
   }
 
   async presentAlert() {
@@ -81,8 +87,10 @@ export class CreateAccountPage implements OnInit {
     this.presentAlert();
   }
 
-  onLocationClick(event) {
-    this.coordenadas = true;
+  onLocationClick() {
+    //this.coordenadas = true;
+   
+    this.navController.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
     console.log('Location clicked');
   }
 

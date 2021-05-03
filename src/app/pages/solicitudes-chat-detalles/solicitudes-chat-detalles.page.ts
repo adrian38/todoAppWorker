@@ -1,6 +1,7 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent } from '@ionic/angular';
+import { NavController,Platform ,IonContent} from '@ionic/angular';
+
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
@@ -34,9 +35,16 @@ export class SolicitudesChatDetallesPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor(private _taskOdoo: TaskOdooService) { }
+  constructor(private _taskOdoo    : TaskOdooService,
+             private navCtrl : NavController,
+             private platform      : Platform) { }
 
   ngOnInit() {
+
+    
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'back' }) ;
+ });
 
     this.task=this._taskOdoo.getTaskCesar();
 

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, NavController } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-contratados-chat-detalles',
@@ -36,7 +37,8 @@ export class ContratadosChatDetallesPage implements OnInit {
 
 
   constructor(private _taskOdoo :TaskOdooService,
-              private navCtrl   :NavController) { }
+              private navCtrl   :NavController,
+              private datos: ObtSubSService) { }
 
   ngOnInit() {
     
@@ -135,7 +137,10 @@ export class ContratadosChatDetallesPage implements OnInit {
     this.chats.unshift(chat);
   }
 
-  onClickUbicacion( event ) {
+  onClickUbicacion(  ) {
+    this.datos.setcalle(this.task.address.street);
+    this.datos.setnumero(this.task.address.number);
+    this.datos.setruta('contratados-chat-detalles');
     this.navCtrl.navigateRoot('/mapa', { animated: true, animationDirection: 'forward' }); 
   }
 

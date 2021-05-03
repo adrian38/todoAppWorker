@@ -1021,11 +1021,13 @@ export class TaskOdooService {
 	}
 
 	getContratadosList() {
-		return contratadosList;
+		/* return contratadosList; */  //esto esta bien
+		return solicitudesList;  //temporal se puede borrar es para que se vea los contratados
 	}
 
 	getHistorialList() {
-		return historialList;
+		//return historialList;  esto esta bien
+		return solicitudesList;  //temporal se puede borrar es para que se vea los contratados
 	}
 
 	sendOffer(offer: TaskModel) {

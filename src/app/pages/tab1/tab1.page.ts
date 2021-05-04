@@ -181,7 +181,7 @@ export class Tab1Page {
         this.ngZone.run(() => {
           if (typeof this.solicitudesList !== 'undefined' && this.solicitudesList.length > 0) {
 
-		            for (let Po_id of notificationNewPoSuplier) {
+		        for (let Po_id of notificationNewPoSuplier) {
               let temp = this.solicitudesList.findIndex(
                 (element) => element.id === Po_id
               );
@@ -189,7 +189,7 @@ export class Tab1Page {
                 notificationNewPoSuplier.splice(temp, 1);
               }
 			}
-		
+              
             	this._taskOdoo.requestTaskPoUpdate(notificationNewPoSuplier);
           }
         });
@@ -256,6 +256,7 @@ export class Tab1Page {
         this.ngZone.run(() => {
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
+            
           }
         });
       }
@@ -285,10 +286,7 @@ export class Tab1Page {
     }
     
   }
-  cancelar(i){
-    console.log("j")
-    this.task = this.solicitudesList[i];
-    this._taskOdoo.cancelPOsuplier(this.task.id);
+  
 
   cancelar(i){
     

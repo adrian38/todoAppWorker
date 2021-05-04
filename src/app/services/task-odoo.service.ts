@@ -924,6 +924,9 @@ export class TaskOdooService {
 				if (err || !value) {
 					console.log(err, 'get_po_list');
 				} else {
+
+					console.log(value, 'todas las tareas');
+
 					tasksList = [];
 					SO_origin = [];
 					for (let task of value) {

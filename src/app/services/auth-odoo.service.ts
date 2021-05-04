@@ -4,8 +4,8 @@ import { Observable, Subject } from 'rxjs';
 let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
-	host: '192.168.0.106',
-	//host: 'todoenunapp.com',
+	//host: '192.168.0.106',
+	host: 'todoenunapp.com',
 	//host: '192.168.1.2',
 
 	
@@ -124,8 +124,7 @@ export class AuthOdooService {
 					console.log(err, 'Error get_user');
 
 				} else {
-
-					
+			
 					if (value[0].classification === 'vendor') {
 						if (knownTypes[value[0].image_1920[0]]) {
 							usuario.avatar = knownTypes[value[0].image_1920[0]] + value[0].image_1920;

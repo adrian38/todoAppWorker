@@ -748,7 +748,7 @@ export class TaskOdooService {
 		return task$.asObservable();
 	}
 
-	requestTaskListProvider() {
+ 	requestTaskListProvider() {
 		let SO_origin = [];
 		let SO_id = [];
 
@@ -900,7 +900,9 @@ export class TaskOdooService {
 				'address_latitude',
 				'address_longitude',
 				'origin',
-				'state'
+				'state',
+				'order_line'
+
 			]);
 			let params = [];
 			params.push(inParams);
@@ -988,7 +990,9 @@ export class TaskOdooService {
 				}
 			}
 		);
-	}
+	} 
+
+	
 
 	getRequestedTaskList$(): Observable<boolean> {
 		return tasksList$.asObservable();

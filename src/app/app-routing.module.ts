@@ -93,6 +93,10 @@ const routes: Routes = [
   },  {
     path: 'mapa-registro',
     loadChildren: () => import('./pages/mapa-registro/mapa-registro.module').then( m => m.MapaRegistroPageModule)
+  },
+  {
+    path: 'notificaciones',
+    loadChildren: () => import('./pages/notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
   }
 
 

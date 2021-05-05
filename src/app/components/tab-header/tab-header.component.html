@@ -1,29 +1,32 @@
 <div class="container" mode="md">
   <div class="flex_row page_header">
-    <div class="flex_centered" style="min-width: 60px;">
+    <div class="flex_centered" style="min-width: 60px">
       <ion-img class="logo_tabs" src="/assets/icons/logo_header.svg"></ion-img>
     </div>
-    <div class="flex_centered" style="width: 100%;">
+    <div class="flex_centered" style="width: 100%">
       <ion-label class="page_title">{{ titulo }}</ion-label>
     </div>
-   
-    <div class="flex_centered" style="min-width: 35px;">
-     <!--  <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img> -->
-      <ion-button icon-only fill="clear"
-      (click)="on_Click(  )">
-      <!-- <ion-img  src="/assets/icons/ubicacion.svg"></ion-img> -->
-       <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>  
-    <!--   <ion-icon name="home"></ion-icon> -->
-</ion-button>
+
+    <div class="flex_centered" style="min-width: 35px">
+      <ion-button icon-only fill="clear" (click)="on_Click()">
+        <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>
+      </ion-button>
     </div>
-    <div class="flex_centered" style="min-width: 29px;">
-      <ion-img class="notificaciones_campana" src="/assets/icons/campana.svg"></ion-img>
+    <div class="flex_centered" style="min-width: 29px">
+      <ion-button icon-only fill="clear" (click)="OnClickNotificaciones()">
+        <ion-img
+          class="notificaciones_campana"
+          src="/assets/icons/campana.svg"
+        ></ion-img>
+      </ion-button>
     </div>
-    <div  style="min-width: 10px;">
-      <ion-img class="notificaciones_punto" src="/assets/icons/punto_noti.svg"></ion-img>
+    <div style="min-width: 10px">
+      <ion-img
+        class="notificaciones_punto"
+        src="/assets/icons/punto_noti.svg"
+      ></ion-img>
     </div>
-   <div style="min-width: 8px;"></div>  
+    <div style="min-width: 8px"></div>
   </div>
 </div>
 <div id="div_back" mode="md"></div>
-

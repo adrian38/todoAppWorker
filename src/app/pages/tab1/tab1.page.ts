@@ -27,6 +27,8 @@ export class Tab1Page {
   tab: String;
   loading: any;
   solicitudVacia: boolean = true;
+  solicitud_vacia: boolean = true;
+  
 
   tasksList$: Observable<boolean>; // servicio comunicacion
   notificationNewMessg$: Observable<number[]>;
@@ -62,21 +64,9 @@ export class Tab1Page {
     this.init();
     this._taskOdoo.setTab1In(true);
 
-    /* 	if( this.task.title.length < 11){
-		this.titulo=this.task.title;
-	   }
-	   else{
-		this.titulo=this.task.title.slice(0,10) + " " + " . . .";
-	   } */
+   /*  this.cantidad_solicitudes(); */
 
-    /* if( this.task.title.length < 11){
-		this.titulo=this.task.title;
-		console.log("if",this.titulo);
-	}
-	   else{
-		this.titulo=this.task.title.slice(0,10) + " " + " . . .";
-		console.log("else",this.titulo);
-	   }  */
+
   }
 
   ngOnDestroy(): void {
@@ -268,8 +258,10 @@ export class Tab1Page {
       this.solicitudesList.length > 0
     ) {
       this.solicitudVacia = false;
+      console.log('hay solcitud')
     } else {
       this.solicitudVacia = true;
+      console.log(' no hay solcitud')
     }
   }
 
@@ -291,15 +283,20 @@ export class Tab1Page {
     this._taskOdoo.cancelPOsuplier(this.task.id);
 
   }
+
+   cantidad_solicitudes(){
+     
+    if (this.solicitudesList.length < 1) {
+      this.solicitud_vacia=true;
+      }
+      else{
+        this.solicitud_vacia=false;
+      } 
+    }
+      
+  
 }
 
-/* 	reducir(title){
-		if( title.length < 11){
-			this.titulo=title;
-		   }
-		   else{
-			this.titulo=title.slice(0,10) + " " + " . . .";
-		   }
-	} */
+
 
   

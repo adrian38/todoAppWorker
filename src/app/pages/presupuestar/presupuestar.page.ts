@@ -104,8 +104,7 @@ export class PresupuestarPage implements OnInit {
   obra(event){
     console.log("ob",this.materiales);
     if(this.materiales == 0 && this.manoobra == 0 || this.materiales == undefined  && this.manoobra == undefined){
-      this.total=0;
-      
+      this.total=0;  
     }
     else{
       if(this.materiales == null){
@@ -116,30 +115,20 @@ export class PresupuestarPage implements OnInit {
             this.total=this.materiales;
           }
           else{
-            this.total=this.manoobra + this.materiales;
-           
-          }
-         
-        }
+            this.total=this.manoobra + this.materiales;  
+        } 
+      }
     }
-
-    
-  
- 
-
-
   }
 
   material(event){
     
     if(this.materiales == 0 && this.manoobra == 0  || this.materiales == undefined  && this.manoobra == undefined){
       this.total=0;
-      
-    }
+      }
     else{
       if(this.manoobra == null){
         this.total=this.materiales;
-        
         }
         else{
           if(this.materiales == null){
@@ -150,11 +139,9 @@ export class PresupuestarPage implements OnInit {
            
           }
         }
-    }
+       }
+      }
 
-
-
-  } 
   enviar(){ 
     if(this.total > 0){
       if(this.materiales !== null){

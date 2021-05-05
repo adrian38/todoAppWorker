@@ -4,76 +4,82 @@
 
 <ion-content [fullscreen]="true">
   <div
+    *ngIf=" solicitud_vacia"
     class="flex_centered"
     style="width: 100%; padding-top: 20px; padding-bottom: 20px;"
   >
-
-    <ion-list style="width: 85% !important; ">
-      <ion-item-sliding *ngFor="let solicitud of solicitudesList,let i = index" >
-        <ion-item class="item"
-         lines="none"
-      >
+    <ion-list style="width: 85% !important;">
+      <ion-item-sliding *ngFor="let solicitud of solicitudesList,let i = index">
+        <ion-item class="item" lines="none">
+          
+            <div class="flex_row" style="width: 100%;" (click)="in(i)">
+              <img class="image" src="../../../assets/fontaneria.png" />
   
-        <div class="flex_row" style="width: 100%;" (click)="in(i)">
-          <img class="image" src="../../../assets/fontaneria.png" />
-
-          <div class="flex_column" style="width: 100%; margin-left: 20px">
-            <ion-label class="cat_title"
-              >{{solicitud.title.slice(0,15) + " ... "}}</ion-label
-            >
-            <div class="flex_row">
-              <ion-img
-                class="icon_calendar"
-                src="/assets/icons/calendario.svg"
-              ></ion-img>
-              <ion-label class="h5_label"
-                >{{ solicitud.date_planned | date: "EEE d MMM y" | lowercase
-                }}</ion-label
+              <div class="flex_column" style="width: 100%; margin-left: 20px">
+                <ion-label class="cat_title"
+                  >{{solicitud.title.slice(0,15) + " ... "}}</ion-label
+                >
+                <div class="flex_row">
+                  <ion-img
+                    class="icon_calendar"
+                    src="/assets/icons/calendario.svg"
+                  ></ion-img>
+                  <ion-label class="h5_label"
+                    >{{ solicitud.date_planned | date: "EEE d MMM y" | lowercase
+                    }}</ion-label
+                  >
+                </div>
+                <div class="flex_row">
+                  <ion-img
+                    class="icon_horario"
+                    src="/assets/icons/hora.svg"
+                  ></ion-img>
+                  <ion-label class="h5_label"
+                    >{{ solicitud.time | date: "h:mm a" }}</ion-label
+                  >
+                </div>
+              </div>
+              <div
+                class="flex_column"
+                style="
+                  min-height: 100% !important;
+                  width: 20px !important;
+                  justify-content: flex-end;
+                "
               >
+                <div
+                  style="display: flex; margin-bottom: 5px"
+                  *ngIf="solicitud.notificationChat"
+                >
+                  <ion-img
+                    class="icon_noti_chat"
+                    src="/assets/icons/noti_chat.svg"
+                  ></ion-img>
+                </div>
+              </div>
             </div>
-            <div class="flex_row">
-              <ion-img
-                class="icon_horario"
-                src="/assets/icons/hora.svg"
-              ></ion-img>
-              <ion-label class="h5_label"
-                >{{ solicitud.time | date: "h:mm a" }}</ion-label
-              >
-            </div>
-          </div>
-          <div
-            class="flex_column"
-            style="
-              min-height: 100% !important;
-              width: 20px !important;
-              justify-content: flex-end;
-            "
+         
+         
+        </ion-item>
+        <ion-item-options side="end" style="padding: 8.6px">
+          <ion-item-option class="color_fondo" (click)="cancelar(i)"
+            >cancelar</ion-item-option
           >
-            <div style="display: flex; margin-bottom: 5px" *ngIf="solicitud.notificationChat">
-              <ion-img
-                class="icon_noti_chat"
-                src="/assets/icons/noti_chat.svg"
-              ></ion-img>
-            </div>
-          </div>
-        </div>
-
-        
-  
-     
-      
-     
-        
-
-      </ion-item>
-      <ion-item-options side="end" style="padding: 8.6px;">
-        <ion-item-option  class="color_fondo"
-                          (click)="cancelar(i)"
-                           >cancelar</ion-item-option>
-      </ion-item-options> 
+        </ion-item-options>
       </ion-item-sliding>
-     
     </ion-list>
+  </div>
+
+  <div *ngIf="!solicitud_vacia">
+    <div class="flex_row" class="flex_centered" style="margin-top: 60px">
+      <img
+        style="width: 35%; height: 35%"
+        src="../../../assets/icons/vacio.svg"
+      />
+    </div>
+    <div class="flex_row" class="flex_centered" style="margin-top: 10px">
+      <h4 style="color: lightgray">Ninguna Solicitud</h4>
+    </div>
   </div>
 </ion-content>
 

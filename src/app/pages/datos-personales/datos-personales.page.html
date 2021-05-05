@@ -33,7 +33,7 @@
                     type="text" 
                     name="nombre" 
                     [(ngModel)]="nombre" 
-                    placeholder="Nombre y Apellidos" 
+                    placeholder={{this.placeholderNombre}} 
                     required
                     #nom_apell="ngModel">
         </ion-input>
@@ -53,7 +53,7 @@
                       cancelText="Cancelar" 
                       doneText="Cambiar"
                       [(ngModel)]="fecha" 
-                      placeholder="Fecha de nacimiento" 
+                      placeholder={{this.placeholderFecha}}
                       #fech="ngModel" 
                       required
                       style="margin-left: 15px; padding-left: 0px; padding-bottom: 3px;">
@@ -72,7 +72,7 @@
                     type="text" 
                     name="correo" 
                     [(ngModel)]="correo" 
-                    placeholder="Usuario" 
+                    placeholder={{this.placeholderUser}} 
                     #corr="ngModel"
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" 
                     required>
@@ -94,7 +94,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="calle" 
-                        placeholder=Calle 
+                        placeholder={{this.placeholderCalle}} 
                         #call="ngModel" 
                         required>
             </ion-input>
@@ -113,7 +113,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="piso" 
-                        placeholder=Piso 
+                        placeholder={{this.placeholderPiso}}
                         #pis="ngModel" 
                         required>
             </ion-input>
@@ -133,7 +133,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="numero" 
-                        placeholder=Numero 
+                        placeholder={{this.placeholderNumero}}
                         #num="ngModel" 
                         required>
             </ion-input>
@@ -150,7 +150,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="puerta" 
-                        placeholder=Puerta 
+                        placeholder={{this.placeholderPuerta}} 
                         #pue="ngModel" 
                         required>
             </ion-input>
@@ -170,7 +170,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="portal" 
-                        placeholder=Portal 
+                        placeholder={{this.placeholderPortal}} 
                         #port="ngModel" 
                         required>
             </ion-input>
@@ -187,7 +187,7 @@
                         type="text" 
                         name="nombre" 
                         [(ngModel)]="cpostal" 
-                        placeholder="Codigo Postal" 
+                        placeholder={{this.placeholderCp}} 
                         #c_post="ngModel"
                         required>
             </ion-input>
@@ -207,7 +207,7 @@
                         type="text" 
                         name="escalera" 
                         [(ngModel)]="escalera" 
-                        placeholder=Escalera 
+                        placeholder={{this.placeholderEscalera}} 
                         #esc="ngModel" 
                         required>
             </ion-input>

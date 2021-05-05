@@ -1,15 +1,9 @@
 <ion-header class="ion-no-border">
-
-
-<div style="background: var(--ion-color-orange);">
-
-  <app-tab-header titulo="Servicios"></app-tab-header>
-
-</div>
-
+  <div style="background: var(--ion-color-orange)">
+    <app-tab-header titulo="Servicios"></app-tab-header>
+  </div>
 
   <ion-segment class="segment" value="contratados" mode="md" #segment>
-
     <ion-segment-button class="segment_btn" value="contratados">
       <ion-label>Contratados</ion-label>
     </ion-segment-button>
@@ -17,60 +11,85 @@
     <ion-segment-button class="segment_btn" value="historial">
       <ion-label>Historial</ion-label>
     </ion-segment-button>
-
   </ion-segment>
-
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div
+    *ngIf="(segment.value === 'contratados')"
+    class="flex_column"
+    style="height: 100%; width: 100%"
+  >
+    <div
+      *ngIf="!contratado_vacio"
+      class="flex_centered"
+      style="width: 100%; padding-top: 10px; padding-bottom: 100px"
+    >
+      <ion-list style="width: 90% !important">
+        <ion-item
+          class="item"
+          *ngFor="let contratado of contratadosList,let i = index"
+          lines="none"
+          (click)="onClickItemContratados(i)"
+        >
+          <div class="flex_row" style="width: 100%">
+            <img class="image" src="../../../assets/fontaneria.png" />
 
-  <div *ngIf="(segment.value === 'contratados')" class="flex_column" style="height: 100%; width: 100%;">
-
-    <div class="flex_centered" style="width: 100%; padding-top: 10px; padding-bottom: 100px;">
-
-      <ion-list style="width: 90% !important;">
-
-        <ion-item class="item" *ngFor="let contratado of contratadosList,let i = index" lines="none" (click)="onClickItemContratados(i)">
-
-          <div class="flex_row" style="width: 100%;">
-
-            <img class="image"
-            src="../../../assets/fontaneria.png">
-
-            <div class="flex_column" style="width: 100%; margin-left: 20px;">
-
-              <div class="flex_row" style="width: 100%;">
-                <ion-label class="cat_title">{{ contratado.title.slice(0,12) + " . . " }}</ion-label>
-              <!--   <ion-label class="ordenNumber">{{ contratado.numeroOrden }}</ion-label> -->
-            <!--     <ion-label class="start_date">{{ contratado.fechaInicio }}</ion-label> -->
+            <div class="flex_column" style="width: 100%; margin-left: 20px">
+              <div class="flex_row" style="width: 100%">
+                <ion-label class="cat_title"
+                  >{{ contratado.title.slice(0,12) + " . . " }}</ion-label
+                >
+                <!--   <ion-label class="ordenNumber">{{ contratado.numeroOrden }}</ion-label> -->
+                <!--     <ion-label class="start_date">{{ contratado.fechaInicio }}</ion-label> -->
               </div>
 
               <div class="flex_row">
-                <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
-                <ion-label class="fecha_fin">{{ contratado.date_planned | date: "EEE d MMM y" | lowercase }}</ion-label>
+                <ion-img
+                  class="icon_calendar"
+                  src="/assets/icons/calendario.svg"
+                ></ion-img>
+                <ion-label class="fecha_fin"
+                  >{{ contratado.date_planned | date: "EEE d MMM y" | lowercase
+                  }}</ion-label
+                >
               </div>
               <div class="flex_row">
-                <ion-img class="icon_horario" src="/assets/icons/hora.svg"></ion-img>
-                <ion-label class="horario">{{ contratado.time | date: "h:mm a"  }}</ion-label>
-                <div  style="min-width: 43px;">
-                  
-                </div>
+                <ion-img
+                  class="icon_horario"
+                  src="/assets/icons/hora.svg"
+                ></ion-img>
+                <ion-label class="horario"
+                  >{{ contratado.time | date: "h:mm a" }}</ion-label
+                >
+                <div style="min-width: 43px"></div>
                 <ion-label class="precio"> 35 € </ion-label>
               </div>
             </div>
-
           </div>
-
         </ion-item>
-
       </ion-list>
-
     </div>
+    <!-- //********************************************************************************* -->
 
+    <div *ngIf=" contratado_vacio">
+      <div class="flex_row" class="flex_centered" style="margin-top: 60px">
+        <img
+          style="width: 35%; height: 35%"
+          src="../../../assets/icons/vacio.svg"
+        />
+      </div>
+      <div class="flex_row" class="flex_centered" style="margin-top: 10px">
+        <h4 style="color: lightgray">Ningun Contratado</h4>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="(segment.value === 'historial')" class="flex_column" style="height: 100%; width: 100%;">
-
+  <div
+    *ngIf="(segment.value === 'historial')"
+    class="flex_column"
+    style="height: 100%; width: 100%"
+  >
     <!-- <div class="flex_centered" style="width: 100%; padding-top: 10px; padding-bottom: 20px;">
 
       <ion-list style="width: 80% !important;">
@@ -110,45 +129,65 @@
     
  -->
 
- <div class="flex_centered" style="width: 100%; padding-top: 10px; padding-bottom: 100px;">
+    <div
+      *ngIf=" !historial_vacio"
+      class="flex_centered"
+      style="width: 100%; padding-top: 10px; padding-bottom: 100px"
+    >
+      <ion-list style="width: 90% !important">
+        <ion-item
+          class="item"
+          *ngFor="let historial of historialList,let i = index"
+          lines="none"
+          (click)="onClickItemHistorial(i)"
+        >
+          <div class="flex_row" style="width: 100%">
+            <img class="image" src="../../../assets/fontaneria.png" />
 
-  <ion-list style="width: 90% !important;">
+            <div class="flex_column" style="width: 100%; margin-left: 20px">
+              <div class="flex_row" style="width: 100%">
+                <ion-label class="cat_title"
+                  >{{ historial.title.slice(0,12) + " . . " }}</ion-label
+                >
+              </div>
 
-    <ion-item class="item" *ngFor="let historial of historialList,let i = index" lines="none" (click)="onClickItemHistorial(i)">
-
-      <div class="flex_row" style="width: 100%;">
-
-        <img class="image"
-        src="../../../assets/fontaneria.png">
-
-        <div class="flex_column" style="width: 100%; margin-left: 20px;">
-
-          <div class="flex_row" style="width: 100%;">
-            <ion-label class="cat_title">{{ historial.title.slice(0,12) + " . . " }}</ion-label>
-     
-          </div>
-
-          <div class="flex_row">
-            <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
-            <ion-label class="fecha_fin">{{ historial.date_planned | date: "EEE d MMM y" | lowercase }}</ion-label>
-          </div>
-          <div class="flex_row">
-            <ion-img class="icon_horario" src="/assets/icons/hora.svg"></ion-img>
-            <ion-label class="horario">{{ historial.time | date: "h:mm a"  }}</ion-label>
-            <div  style="min-width: 43px;">
-              
+              <div class="flex_row">
+                <ion-img
+                  class="icon_calendar"
+                  src="/assets/icons/calendario.svg"
+                ></ion-img>
+                <ion-label class="fecha_fin"
+                  >{{ historial.date_planned | date: "EEE d MMM y" | lowercase
+                  }}</ion-label
+                >
+              </div>
+              <div class="flex_row">
+                <ion-img
+                  class="icon_horario"
+                  src="/assets/icons/hora.svg"
+                ></ion-img>
+                <ion-label class="horario"
+                  >{{ historial.time | date: "h:mm a" }}</ion-label
+                >
+                <div style="min-width: 43px"></div>
+                <ion-label class="precio"> 35 € </ion-label>
+              </div>
             </div>
-            <ion-label class="precio"> 35 € </ion-label>
           </div>
-        </div>
+        </ion-item>
+      </ion-list>
+    </div>
 
+    <div *ngIf="historial_vacio">
+      <div class="flex_row" class="flex_centered" style="margin-top: 60px">
+        <img
+          style="width: 35%; height: 35%"
+          src="../../../assets/icons/vacio.svg"
+        />
       </div>
-
-    </ion-item>
-
-  </ion-list>
-
-</div>
+      <div class="flex_row" class="flex_centered" style="margin-top: 10px">
+        <h4 style="color: lightgray">Ningun Historial</h4>
+      </div>
+    </div>
   </div>
-
 </ion-content>

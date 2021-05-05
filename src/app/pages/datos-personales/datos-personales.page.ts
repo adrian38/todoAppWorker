@@ -136,6 +136,10 @@ console.log("nuevo",this.usuario.address.cp); */
 		this.placeholderEscalera = this.usuario.address.stair;
 	} 
 }
+
+ubicacion(){
+	this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
+}
 }
 
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Plugins, CameraResultType, Capacitor, FilesystemDirectory, CameraPhoto, CameraSource } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { Photo } from '../interfaces/photo';
+import { Photo } from 'src/app/interfaces/interfaces';
 const { Camera, Filesystem, Storage } = Plugins;
 @Injectable({
 	providedIn: 'root'

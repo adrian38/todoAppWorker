@@ -8,16 +8,53 @@
       </div>
 
       <div class="image_div" style="height: 160px !important;">
-        <ion-card id="card_pic"
-                  [ngClass]="(selectFoto == true) ? 'no_border':'green_border_bold'">
-          <ion-img  [src]="avatarUsuario" 
-                    (click)="onPictureClick( $event )">
+        <ion-card id="card_pic" [ngClass]="(selectFoto == true) ? 'no_border':'green_border_bold'">
+          <ion-img  [src]="avatarUsuario" (click)="onPictureClick( $event )">
           </ion-img>
         </ion-card>
       </div>
 
       <form #formulario="ngForm" >
-        <div style="position: relative;">
+
+        <ion-item class="select" 
+                  lines=none 
+                  [ngClass]="(categoriaSelected == '' && isCatTouched === true) ? 'green_border':'no_border'">
+          <ion-label style="margin-top: 0 !important; margin-bottom: 0 !important;">Categoría de trabajador</ion-label>
+          <ion-select placeholder="Categoría" 
+                      [(ngModel)]="categoriaSelected"
+                      name="categoria" 
+                      cancelText="CANCELAR" 
+                      okText="ACEPTAR"
+                      (ionChange)="onCatChange()"
+                      (ionCancel)="onCatCancel()">
+            <ion-select-option *ngFor="let categoria of categorias" [value] = "categoria">{{ categoria }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-label *ngIf="categoriaSelected == '' && isCatTouched === true" class="mandatory">
+          Campo obligatorio
+        </ion-label>
+
+        <div class="div_1">
+          <ion-item class="select" 
+                  lines=none 
+                  [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'">
+          <ion-label style="margin-top: 0 !important; margin-bottom: 0 !important;">Entidad jurídica</ion-label>
+          <ion-select placeholder="Entidad" 
+                      [(ngModel)]="entJuridicaSelected"
+                      name="entidad" 
+                      cancelText="CANCELAR" 
+                      okText="ACEPTAR"
+                      (ionChange)="onEntChange()"
+                      (ionCancel)="onEntCancel()">
+            <ion-select-option *ngFor="let entidad of entJuridica" [value] = "entidad">{{ entidad }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-label *ngIf="entJuridicaSelected == '' && isEntTouched === true" class="mandatory">
+          Campo obligatorio
+        </ion-label>
+        </div>
+          
+        <div class="div_1">
           <ion-input  class="custom_input" 
                       [ngClass]="(nombre1.invalid && nombre1.touched) ? 'green_border':'no_border'"
                       type="text" 
@@ -32,6 +69,7 @@
             Campo obligatorio
           </ion-label>
         </div>
+
         <div class="div_1">
           <ion-datetime   class="date" 
                           [ngClass]="((fecha_nac.invalid && fecha_nac.touched) || esMayorEdad===false) ? 'green_border':'no_border'"
@@ -39,10 +77,10 @@
                           min="1900" 
                           max="2030" 
                           placeholder="FECHA DE NACIMIENTO"
-                          [(ngModel)]="birthday"
-                          name = 'birthday'
+                          [(ngModel)]="date"
+                          name = 'date'
                           required
-                          (ionChange)="validarMayorDeEdad(birthday)"
+                          (ionChange)="validarMayorDeEdad(date)"
                           #fecha_nac="ngModel">
           </ion-datetime>
           <ion-label *ngIf="fecha_nac.invalid && fecha_nac.touched" class="mandatory">
@@ -52,6 +90,7 @@
             Para registrarse debe ser mayor de 18 años
           </ion-label>
         </div>
+
         <div class="div_1">
           <ion-input  class="custom_input" 
                       [ngClass]="(usuario.invalid && usuario.touched) ? 'green_border':'no_border'"
@@ -67,6 +106,7 @@
             Debe escribir su correo correctamente
           </ion-label>
         </div>
+
         <div class="div_1">
           <ion-input  class="custom_input" 
                       [ngClass]="(pass.invalid && pass.touched) ? 'green_border':'no_border'"
@@ -81,6 +121,7 @@
             Campo obligatorio
           </ion-label>
         </div>
+
         <div class="div_1">
           <ion-input  class="custom_input" 
                       [ngClass]="(confirm_pass.invalid && confirm_pass.touched) ? 'green_border':'no_border'"
@@ -95,6 +136,85 @@
             Campo obligatorio
           </ion-label>
         </div>
+
+        <div class="div_1">
+          <ion-input  class="custom_input"
+                      [ngClass]="(nif.invalid && nif.touched) ? 'green_border':'no_border'" 
+                      type="text" 
+                      [(ngModel)]="cifNif" 
+                      name = 'cifNif'
+                      pattern="[a-zA-Z][0-9]{7}[a-zA-Z0-9]"
+                      required 
+                      placeholder="CIF/NIF"
+                      #nif="ngModel">
+          </ion-input>
+          <ion-label *ngIf="nif.invalid && nif.touched" class="mandatory">
+            Debe escribir el CIF/NIF correctamente
+          </ion-label>
+        </div>
+
+        <div class="div_1">
+          <ion-input  class="custom_input"
+                      [ngClass]="(segSocial.invalid && segSocial.touched) ? 'green_border':'no_border'" 
+                      type="text" 
+                      [(ngModel)]="segSocialNumber" 
+                      name = 'segSocialNumber'
+                      required 
+                      placeholder="NÚMERO DE SEGURIDAD SOCIAL"
+                      #segSocial="ngModel">
+          </ion-input>
+          <ion-label *ngIf="segSocial.invalid && segSocial.touched" class="mandatory">
+            Campo obligatorio
+          </ion-label>
+        </div>
+
+        
+        <div class="div_1">
+          <ion-input  class="custom_input"
+                      [ngClass]="(iae.invalid && iae.touched) ? 'green_border':'no_border'" 
+                      type="text" 
+                      [(ngModel)]="IAE" 
+                      name = 'IAE'
+                      required 
+                      placeholder="IAE"
+                      #iae="ngModel">
+          </ion-input>
+          <ion-label *ngIf="iae.invalid && iae.touched" class="mandatory">
+            Campo obligatorio
+          </ion-label>
+        </div>
+
+        <div class="div_1">
+          <ion-input  class="custom_input"
+                      [ngClass]="(dni.invalid && dni.touched) ? 'green_border':'no_border'" 
+                      type="text" 
+                      [(ngModel)]="DNI" 
+                      name = 'DNI'
+                      pattern="[0-9]{8}[a-zA-Z]"
+                      required 
+                      placeholder="DNI"
+                      #dni="ngModel">
+          </ion-input>
+          <ion-label *ngIf="dni.invalid && dni.touched" class="mandatory">
+            Debe escribir el DNI correctamente
+          </ion-label>
+        </div>
+
+        <div class="div_1">
+          <ion-input  class="custom_input" 
+                      [ngClass]="(cBancaria.invalid && cBancaria.touched) ? 'green_border':'no_border'"
+                      type="text" 
+                      [(ngModel)]="cuentaBancaria" 
+                      name = 'cuentaBancaria'
+                      placeholder="CUENTA BANCARIA" 
+                      required
+                      #cBancaria="ngModel">
+          </ion-input>
+          <ion-label *ngIf="cBancaria.invalid && cBancaria.touched" class="mandatory">
+            Campo obligatorio
+          </ion-label>
+        </div>
+
         <div class="div_1">
           <ion-input  class="custom_input" 
                       [ngClass]="(telefono.invalid && telefono.touched) ? 'green_border':'no_border'"
@@ -109,6 +229,7 @@
             Campo obligatorio
           </ion-label>
         </div>
+
         <div class="div_1">
           <ion-input  class="custom_input"
                       [ngClass]="(num_calle.invalid && num_calle.touched) ? 'green_border':'no_border'" 
@@ -123,6 +244,7 @@
             Campo obligatorio
           </ion-label>
         </div>
+
         <div class="flex_row flex_space_between">
           <div class="data_flex">
             <div class="div_1">
@@ -139,6 +261,7 @@
                 Campo obligatorio
               </ion-label>
             </div>
+
             <div class="div_1">
               <ion-input  class="custom_input" 
                           type="text" 
@@ -147,14 +270,16 @@
                           placeholder="PORTAL">
               </ion-input>
             </div>
+
             <div class="div_1">
               <ion-input  class="custom_input" 
                           type="text" 
-                          [(ngModel)]="staircase" 
+                          [(ngModel)]="stair" 
                           name = 'staircase'
                           placeholder="ESCALERA">
               </ion-input>
             </div>
+
             <div class="div_1" style="display: flex; flex-direction: column; justify-content: flex-start;">
               <ion-button   class="location_btn"
                             [ngClass]="(coordenadas == true) ? 'no_border':'green_border_bold'"
@@ -164,6 +289,7 @@
               </ion-button>
             </div>
           </div>
+
           <div class="data_flex">
             <div class="div_1">
               <ion-input  class="custom_input" 
@@ -173,6 +299,7 @@
                           placeholder="PISO">
               </ion-input>
             </div>
+
             <div class="div_1">
               <ion-input  class="custom_input" 
                           type="text" 
@@ -181,6 +308,7 @@
                           placeholder="PUERTA">
               </ion-input>
             </div>
+
             <div class="div_1">
               <ion-input  class="custom_input" 
                           type="text" 
@@ -196,7 +324,7 @@
           <ion-button   type="submit"
                         class="next_btn" 
                         color="orange"
-                        [disabled]="formulario.invalid || !coordenadas || !selectFoto" 
+                        [disabled]="formulario.invalid || !coordenadas || !selectFoto || entJuridicaSelected == '' || categoriaSelected == ''" 
                         (click)="onNextClick( $event )">
             CREAR
           </ion-button>

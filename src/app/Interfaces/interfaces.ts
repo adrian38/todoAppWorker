@@ -23,3 +23,9 @@ export interface Servicio {
     numeroOrden: string;
     precio: string;
 }
+
+export interface Photo {
+    filepath: string;
+    webviewPath: string;
+} 
+

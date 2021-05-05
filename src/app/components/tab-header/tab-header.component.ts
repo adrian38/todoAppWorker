@@ -6,20 +6,21 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./tab-header.component.scss'],
 })
 export class TabHeaderComponent implements OnInit {
-
   @Input() titulo: string;
   @Input() backgroundColor: string = '';
 
-  constructor() { }
+  notification: boolean = false;
+
+  constructor() {}
 
   ngOnInit() {
     const elemento = document.getElementById('div_back');
 
-    if(this.backgroundColor !== ''){
+    if (this.backgroundColor !== '') {
       elemento.style.backgroundColor = this.backgroundColor;
     }
   }
-  on_Click(){
-    console.log("click nuevament");
+  on_Click() {
+    console.log('click nuevament');
   }
 }

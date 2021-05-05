@@ -26,6 +26,8 @@ let tasksList$ = new Subject<boolean>();
 
 let tasksList:TaskModel [];
 
+let pilaNotificaciones:any[];
+
 
 
 let solicitudesList: TaskModel[];
@@ -61,6 +63,8 @@ let notificationPoAcepted$ = new Subject<any[]>();
 
 let notificationOffertCancelled$ = new Subject<number[]>();
 
+let notifications$ = new Subject<boolean>();
+
 let rutaActual:boolean = true ;
 let rutaChat: boolean = false;
 
@@ -87,6 +91,7 @@ export class TaskOdooService {
 	constructor(private _authOdoo: AuthOdooService, private router: Router,) {
 		jaysonServer = this._authOdoo.OdooInfoJayson;
 		pilaSolicitudes = new PilaSolicitudes<TaskModel>();
+		pilaNotificaciones = [];
 		
 	}
 
@@ -139,6 +144,10 @@ export class TaskOdooService {
 
 	setTab1In(temp:boolean){
 		rutaActual = temp;
+	}
+
+	getNotifications$(): Observable<boolean> {
+		return notificationError$.asObservable();
 	}
 
 	getNotificationError$(): Observable<boolean> {
@@ -260,6 +269,7 @@ export class TaskOdooService {
 							if (typeof id_po !== 'undefined' && id_po.length > 0) {
 								
 								if (rutaActual) {
+									
 								notificationNewPoSuplier$.next(id_po);}
 								else {
 
@@ -914,6 +924,9 @@ export class TaskOdooService {
 				if (err || !value) {
 					console.log(err, 'get_po_list');
 				} else {
+
+					console.log(value, 'todas las tareas');
+
 					tasksList = [];
 					SO_origin = [];
 					for (let task of value) {
@@ -1018,6 +1031,21 @@ export class TaskOdooService {
 
 				break;
 		}
+	}
+
+	solicitudeListEditBudget(taskEdit:TaskModel) {
+	
+	temp = solicitudesList.findIndex((element) => element.id === taskEdit.id);
+				if (temp != -1) {
+					if(!taskEdit.require_materials){
+					solicitudesList[temp].work_force = taskEdit.work_force;
+					solicitudesList[temp].materials = taskEdit.materials;}
+					else{
+						solicitudesList[temp].work_force = taskEdit.work_force;
+					}
+					
+				}
+		
 	}
 
 	getContratadosList() {

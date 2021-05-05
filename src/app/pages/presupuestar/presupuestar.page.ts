@@ -66,6 +66,7 @@ export class PresupuestarPage implements OnInit {
     this.subscriptioSendOffertOk = this.notificationSendOffertOk$.subscribe((PoId) => {
       this.ngZone.run(() => {
         console.log('Se envio la oferta correctamente');
+        this._taskOdoo.solicitudeListEditBudget(this.task);
         this.presentAlert();///////////
              
       });

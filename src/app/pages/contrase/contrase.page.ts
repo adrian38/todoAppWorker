@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
+import { NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-contrase',
@@ -18,13 +19,23 @@ export class ContrasePage implements OnInit {
 
   usuario:UsuarioModel;
 
-  constructor(private _authOdoo:AuthOdooService) { }
+  constructor(private _authOdoo:AuthOdooService,
+    private platform: Platform,
+              public navCtrl: NavController) { }
 
   ngOnInit() {
 
     this.usuario= this._authOdoo.getUser();
     console.log("usuario",this.usuario);
     console.log(" contraseña del usuario ",this.usuario.password);
+
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+    
+      this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+  
+       
+       }); 
    
   }
 

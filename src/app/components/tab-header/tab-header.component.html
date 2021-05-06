@@ -20,11 +20,8 @@
         ></ion-img>
       </ion-button>
     </div>
-    <div style="min-width: 10px">
-      <ion-img
-        class="notificaciones_punto"
-        src="/assets/icons/punto_noti.svg"
-      ></ion-img>
+    <div  style="min-width: 10px;" *ngIf="notification ">
+      <ion-img class="notificaciones_punto" src="/assets/icons/punto_noti.svg"></ion-img>
     </div>
     <div style="min-width: 8px"></div>
   </div>

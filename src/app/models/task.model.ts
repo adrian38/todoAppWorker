@@ -65,6 +65,7 @@ export class TaskModel {
 	notificationOffert:boolean;
 	notificationChat:boolean;
 	notificationNewSo:boolean;
+	order_line: Array<any>;
 
 	constructor(
 		product_id: number = 0,
@@ -127,5 +128,6 @@ export class TaskModel {
 		this.notificationChat = notificationChat;
 		this.work_force = work_force;
 		this.materials =materials;
+		this.order_line = [];
 	}
 }

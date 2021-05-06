@@ -46,12 +46,12 @@ export class ContratadosChatDetallesPage implements OnInit {
     console.log(" estoy ",this.task);
 
 
-    this.presupuesto = 20;
+    this.presupuesto = this.task.budget;
    /*  this.descripcion = 'Arreglar un grifo de agua';
     this.fecha = 'Miércoles, 9 de Septiembre de 2020';
     this.horario = 'De 09:00am a 10:00am';
     this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa'; */
-    this.precio = 20;
+   // this.precio = 20;
     /* this.nombreTrabajador = 'Lisniel Sanchez' */
   /*   this.materiales = 28;
     this.manoObra = 54;

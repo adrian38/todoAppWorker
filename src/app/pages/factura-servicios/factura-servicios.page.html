@@ -19,23 +19,13 @@
   
     <div class="flex_row div">
       <ion-label  class="label_text">Mano de obra</ion-label>
-      <ion-input  class="custom_input" 
-                  type="number" 
-                  placeholder="000"
-                  [(ngModel)]="manoObra"
-                  style="color: black;">
-      </ion-input>
+      <ion-label  class="custom_costo">{{ manoObra }}</ion-label>
     </div>
 
-    <div class="flex_row div">
+    <!-- <div class="flex_row div" *ngIf="requiereMateriales"> -->
+    <div class="flex_row div" *ngIf="task.require_materials">
       <ion-label  class="label_text">Materiales</ion-label>
-      <ion-input  class="custom_input" 
-                  type="number" 
-                  placeholder="000"
-                  disabled=true
-                  [(ngModel)]="materiales"
-                  style="color: black;">
-      </ion-input>
+      <ion-label  class="custom_costo">{{ materiales }}</ion-label>
     </div>
 
     <div class="flex_row div">
@@ -50,7 +40,7 @@
 
     <div class="flex_row div">
       <ion-label  class="label_text">TOTAL</ion-label>
-      <ion-label  class="label_right">{{ total }}</ion-label>
+      <ion-label  class="custom_costo">{{ total }}</ion-label>
     </div>
 
     <div class="flex_centered" style="width: 100%; height: 100%;">

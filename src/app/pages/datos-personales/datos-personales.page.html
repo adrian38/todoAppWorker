@@ -86,7 +86,7 @@
 
       <!-- Direccion -->
 
-      <ion-row>
+<!--       <ion-row>
         <ion-col style="padding: 0; margin-right: 10px;">
           <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
 
@@ -124,8 +124,8 @@
           </div>
 
         </ion-col>
-      </ion-row>
-
+      </ion-row> -->
+<!-- 
       <ion-row>
         <ion-col style="padding: 0; margin-right: 10px;">
           <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
@@ -161,9 +161,9 @@
             <small *ngIf="pue.invalid && pue.touched" class="text-danger">Campo obligatorio</small>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <ion-row>
+    <!--   <ion-row>
         <ion-col style="padding: 0; margin-right: 10px;">
           <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
             <ion-input  class="custom_input" 
@@ -198,9 +198,9 @@
             <small *ngIf="c_post.invalid && c_post.touched" class="text-danger">Campo obligatorio</small>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <ion-row>
+     <!--  <ion-row>
         <ion-col style="padding: 0; margin-right: 10px;">
           <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
             <ion-input  class="custom_input" 
@@ -224,12 +224,12 @@
           </div>
         </ion-col>
 
-      </ion-row>
+      </ion-row> -->
 
       <ion-row style="margin-bottom: 50px;">
         <ion-col></ion-col>
         <ion-col>
-          <ion-button [disabled]="esc.invalid || c_post.invalid || port.invalid || pue.invalid || num.invalid || pis.invalid || call.invalid || corr.invalid || fech.invalid || nom_apell.invalid || !this.datos.getcoordenada()"
+          <ion-button [disabled]=" corr.invalid || fech.invalid || nom_apell.invalid "
                       type="submit" 
                       color="orange"
                       style="min-width: 150px; height: 30px !important; font: normal 16px 'Helvetica-Roman', sans-serif; --border-radius: 7px"

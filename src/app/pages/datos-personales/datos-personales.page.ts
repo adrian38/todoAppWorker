@@ -13,18 +13,18 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 export class DatosPersonalesPage implements OnInit {
 	
 
-  avatarusuario:string =""; 
+   avatarusuario:string =""; 
     nombre: string = '';
 	fecha: string = '';
 	correo: string = '';
-	pass: string = '';
+	/* pass: string = '';
 	calle: string = '';
 	piso: string = '';
 	numero: string = '';
 	puerta: string = '';
 	portal: string = '';
 	cpostal: string = '';
-	escalera: string = '';
+	escalera: string = ''; */
 	placeholderNombre: string = '';
 	placeholderFecha: string = '';
 	placeholderUser: string = '';
@@ -65,8 +65,7 @@ export class DatosPersonalesPage implements OnInit {
 }
 
 placeholder() {
-	/* console.log("nuevo",this.usuario.address.stair.length);
-console.log("nuevo",this.usuario.address.cp); */
+	
 
 	if (this.usuario.avatar.length == 0) {
 		this.avatarusuario =  '../../../assets/registro.svg'
@@ -92,7 +91,7 @@ console.log("nuevo",this.usuario.address.cp); */
 		this.placeholderUser = this.usuario.username;
 	}
 
-	if (this.usuario.address.street.length == 0) {
+	/* if (this.usuario.address.street.length == 0) {
 		this.placeholderCalle = 'Calle';
 		console.log('sin calle', this.calle);
 	} else {
@@ -134,12 +133,12 @@ console.log("nuevo",this.usuario.address.cp); */
 		this.placeholderEscalera = 'Escalera';
 	} else {
 		this.placeholderEscalera = this.usuario.address.stair;
-	} 
+	}  */
 }
 
-ubicacion(){
+/* ubicacion(){
 	this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
-}
+} */
 }
 
 

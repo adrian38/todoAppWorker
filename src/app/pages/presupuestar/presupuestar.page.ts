@@ -20,11 +20,16 @@ export class PresupuestarPage implements OnInit {
   materiales :number;
   total:number=0;
 
+  habilitar_0:boolean;
+  habilitar_1:boolean;
+  habilitar_2:boolean;
   requieremateriales:boolean
   verpresupuestar: boolean = true;
 	verdetalles: boolean = false;
 	valorSegment: string = '';
-  imagen:string="../../../assets/icons/noImage.svg "
+  imagen_0:string="";
+  imagen_1:string="";
+  imagen_2:string="";
 
   task: TaskModel;
 
@@ -44,6 +49,7 @@ export class PresupuestarPage implements OnInit {
  
     
     this.task=this._taskOdoo.getTaskCesar();
+    console.log('tarea actual',this.task);
     this._taskOdoo.solicitudeListEdit(this.task.id,2);
     this.requieremateriales=this.task.require_materials;
 
@@ -52,6 +58,11 @@ export class PresupuestarPage implements OnInit {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'back' }) ;
  });
+
+
+ this.ver_imagenes();
+
+
    
   }
 
@@ -207,5 +218,58 @@ export class PresupuestarPage implements OnInit {
 			.then((modal) => modal.present()); 
 
 	}
+
+  ver_imagenes(){
+    console.log('ver imagen !!!!',this.task.photoNewTaskArray);
+
+    if (
+      typeof this.task.photoNewTaskArray !== 'undefined' && this.task.photoNewTaskArray.length == 0) 
+      {
+        this.imagen_0="../../../assets/icons/noImage.svg ";
+        this.imagen_1="../../../assets/icons/noImage.svg ";
+        this.imagen_2="../../../assets/icons/noImage.svg ";
+        this.habilitar_0=true;
+        this.habilitar_1=true;
+        this.habilitar_2=true;
+      }
+    /*    if (this.task.photoNewTaskArray.length == 0)
+        {
+          this.imagen_0="../../../assets/icons/noImage.svg ";
+          this.imagen_1="../../../assets/icons/noImage.svg ";
+          this.imagen_2="../../../assets/icons/noImage.svg ";
+          this.habilitar_0=true;
+          this.habilitar_1=true;
+          this.habilitar_2=true;
+        } */
+        if (this.task.photoNewTaskArray.length == 1)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1="../../../assets/icons/noImage.svg ";
+          this.imagen_2="../../../assets/icons/noImage.svg ";
+          this.habilitar_0=false;
+          this.habilitar_1=true;
+          this.habilitar_2=true;
+        }
+        if (this.task.photoNewTaskArray.length == 2)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1= this.task.photoNewTaskArray[1];
+          this.imagen_0="../../../assets/icons/noImage.svg ";
+          this.imagen_1="../../../assets/icons/noImage.svg ";
+         
+          this.habilitar_0=false;
+          this.habilitar_1=false;
+          this.habilitar_2=true;
+        }
+        if (this.task.photoNewTaskArray.length == 3)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1= this.task.photoNewTaskArray[1];
+          this.imagen_2= this.task.photoNewTaskArray[2];
+          this.habilitar_0=false;
+          this.habilitar_1=false;
+          this.habilitar_2=false;
+        }
+  }
 
 }

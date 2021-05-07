@@ -1,6 +1,7 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent, NavController } from '@ionic/angular';
+import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
+import { IonContent, ModalController, NavController } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -33,18 +34,26 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   task: TaskModel;
 
+  habilitar_0:boolean;
+  habilitar_1:boolean;
+  habilitar_2:boolean;
+  imagen_0:string="";
+  imagen_1:string="";
+  imagen_2:string="";
+
   @ViewChild(IonContent) content: IonContent;
 
 
   constructor(private _taskOdoo :TaskOdooService,
               private navCtrl   :NavController,
-              private datos: ObtSubSService) { }
+              private datos: ObtSubSService,
+              private modalCtrl   :ModalController) { }
 
   ngOnInit() {
     
     this.task=this._taskOdoo.getTaskCesar();
     console.log(" estoy ",this.task);
-
+    this.ver_imagenes();
 
     this.presupuesto = this.task.budget;
    /*  this.descripcion = 'Arreglar un grifo de agua';
@@ -170,5 +179,68 @@ export class ContratadosChatDetallesPage implements OnInit {
   onClickEnviar() {
     console.log("Enviar clicked");
   }
+
+  ver_imagenes(){
+    console.log('ver imagen !!!!',this.task.photoNewTaskArray);
+
+    if (
+      typeof this.task.photoNewTaskArray !== 'undefined' && this.task.photoNewTaskArray.length == 0) 
+      {
+        this.imagen_0="../../../assets/icons/noImage.svg ";
+        this.imagen_1="../../../assets/icons/noImage.svg ";
+        this.imagen_2="../../../assets/icons/noImage.svg ";
+        this.habilitar_0=true;
+        this.habilitar_1=true;
+        this.habilitar_2=true;
+      }
+    /*    if (this.task.photoNewTaskArray.length == 0)
+        {
+          this.imagen_0="../../../assets/icons/noImage.svg ";
+          this.imagen_1="../../../assets/icons/noImage.svg ";
+          this.imagen_2="../../../assets/icons/noImage.svg ";
+          this.habilitar_0=true;
+          this.habilitar_1=true;
+          this.habilitar_2=true;
+        } */
+        if (this.task.photoNewTaskArray.length == 1)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1="../../../assets/icons/noImage.svg ";
+          this.imagen_2="../../../assets/icons/noImage.svg ";
+          this.habilitar_0=false;
+          this.habilitar_1=true;
+          this.habilitar_2=true;
+        }
+        if (this.task.photoNewTaskArray.length == 2)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1= this.task.photoNewTaskArray[1];
+          this.imagen_2="../../../assets/icons/noImage.svg ";
+          this.habilitar_0=false;
+          this.habilitar_1=false;
+          this.habilitar_2=true;
+        }
+        if (this.task.photoNewTaskArray.length == 3)
+        {
+          this.imagen_0= this.task.photoNewTaskArray[0];
+          this.imagen_1= this.task.photoNewTaskArray[1];
+          this.imagen_2= this.task.photoNewTaskArray[2];
+          this.habilitar_0=false;
+          this.habilitar_1=false;
+          this.habilitar_2=false;
+        }
+  }
+
+  imageClick(imagen) {
+		this.modalCtrl
+			.create({
+				component: ImagenmodalPage,
+				componentProps: {
+					imagen: imagen
+				}
+			})
+			.then((modal) => modal.present()); 
+
+	}
 
 }

@@ -6,6 +6,8 @@ import { ChatOdooService } from 'src/app/services/chat-odoo.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { AlertController, LoadingController, NavController,Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { domainToASCII } from 'node:url';
+
 
 @Component({
   selector: 'app-login-user',
@@ -118,6 +120,7 @@ async presentLoading() {
   this.loading = await this.loadingController.create({
     cssClass: 'my-custom-class',
     message: 'Espere...',
+    spinner: 'circles',
     //duration: 2000
   });
   
@@ -127,9 +130,10 @@ async presentLoading() {
 async presentAlertConfirm() {
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
-    header: 'Problema de conexión',
-    message: 'Intente de nuevo',
-    buttons: [
+    
+    header  : 'Problema de conexión',
+    message : 'Intente de nuevo',
+    buttons : [
       
      
       {

@@ -47,21 +47,39 @@
       <div style="height: 100%; width: 5%"></div>
 
       <div class="div_chat">
-        <ion-row
+        <div *ngFor="let message of messagesList"
+              class="chat_bubble"
+              lines="none"
+              [ngClass]="(this.yo == true) ? 'align_right' : 'align_left'" >
+          <ng-container *ngIf="(user.partner_id ==  message.author_id ); else elseTemplate">
+             <div
+              style="width: auto; height: auto; max-width: 80%"
+              [ngClass]="(isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
+            > 
+              <div>{{  message.message }}</div>
+            </div>
+          </ng-container>
+          <ng-template #elseTemplate>
+             <div
+              style="width: auto; height: auto; max-width: 80%"
+              [ngClass]="(isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
+            > 
+              <div>{{  message.message }}</div>
+            </div>
+          </ng-template>
+        </div>
+        <!-- <ion-row
           class="chat_bubble"
           [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'"
           *ngFor="let chat of chats"
           lines="none"
         >
-        
           <ng-container *ngIf="(chat.userID === 'Me'); else elseTemplate">
             <div
               style="width: auto; height: auto; max-width: 80%"
               [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
             >
               <div>{{ chat.message }}</div>
-
-            
             </div>
           </ng-container>
           <ng-template #elseTemplate>
@@ -70,11 +88,9 @@
               [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
             >
               <div>{{ chat.message }}</div>
-
-            
             </div>
           </ng-template>
-        </ion-row>
+        </ion-row> -->
       </div>
 
       <div style="height: 100%; width: 5%"></div>
@@ -201,9 +217,9 @@
             <ion-img class="add_img" src="/assets/icons/noImage.svg"></ion-img>
           </div> -->
           <div class="flex_row">
-            <div class="flex_column"> 
+            <div class="flex_column">
               <ion-card
-              [disabled]="habilitar_0"
+                [disabled]="habilitar_0"
                 style="
                   border: 0.5px solid rgb(49, 49, 57);
                   width: 80px;
@@ -211,13 +227,14 @@
                   border-radius: 5px 5px 5px 5px;
                   margin: 10px 0px;
                 "
-                 (click)="imageClick(imagen_0)">
+                (click)="imageClick(imagen_0)"
+              >
                 <img class="selecf" src="{{imagen_0}}" />
               </ion-card>
             </div>
             <div class="flex_column">
               <ion-card
-              [disabled]="habilitar_1"
+                [disabled]="habilitar_1"
                 style="
                   border: 0.5px solid rgb(49, 49, 57);
                   width: 80px;
@@ -225,13 +242,14 @@
                   border-radius: 5px 5px 5px 5px;
                   margin: 10px 0px;
                 "
-              (click)="imageClick(imagen_1)">
-              <img class="selecf" src="{{imagen_1}}" />
+                (click)="imageClick(imagen_1)"
+              >
+                <img class="selecf" src="{{imagen_1}}" />
               </ion-card>
             </div>
             <div class="flex_column">
               <ion-card
-              [disabled]="habilitar_2"
+                [disabled]="habilitar_2"
                 style="
                   border: 0.5px solid rgb(49, 49, 57);
                   width: 80px;
@@ -239,12 +257,12 @@
                   border-radius: 5px 5px 5px 5px;
                   margin: 10px 0px;
                 "
-              (click)="imageClick(imagen_2)">
-              <img class="selecf" src="{{imagen_2}}" />
+                (click)="imageClick(imagen_2)"
+              >
+                <img class="selecf" src="{{imagen_2}}" />
               </ion-card>
             </div>
           </div>
-          
         </div>
       </ion-item>
     </ion-list>
@@ -262,7 +280,7 @@
         inputmode="text"
         placeholder="Escriba un mensaje..."
         autofocus
-        [(ngModel)]="newMessage"
+        [(ngModel)]="message.message"
       >
       </ion-textarea>
 

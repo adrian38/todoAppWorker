@@ -269,6 +269,7 @@ export class Tab1Page {
   in(i) {
     this.task = this.solicitudesList[i];
     this._taskOdoo.setTaskCesar(this.task);
+    this._chatOdoo.setIdPo(this.task.id);
 
     if (this.task.offer_send == 'sent' ){
       this.navCtrl.navigateRoot('/solicitudes-chat-detalles', { animated: true,animationDirection: 'forward',});

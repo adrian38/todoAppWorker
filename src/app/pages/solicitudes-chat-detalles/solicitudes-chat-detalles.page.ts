@@ -46,6 +46,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   imagen_2:string="";
 
   //-------------------------------------------------------
+yo:boolean=false;
 
   categoria: string;
   presupuesto: number;
@@ -63,7 +64,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   chats: ChatDetails[] = [];
   newMessage: string;
 
-
+  isLastMessage:boolean=false;
 
   @ViewChild(IonContent) content: IonContent;
 
@@ -78,15 +79,18 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
             this.task = new TaskModel();
 
-		//this.task = this._taskOdoo.getTaskCesar();
-
-/* 		this.user = this._authOdoo.getUser();
+		this.task = this._taskOdoo.getTaskCesar();
+    console.log('tarea',this.task);
+    
+		this.user = this._authOdoo.getUser();
+    console.log('usuario',this.user);
 		this.message = new MessageModel();
 		this.messagesList = [];
-
+    
 		this.purchaseOrderID = this._chatOdoo.getIdPo();
+    console.log('purchaseOrderID',this.purchaseOrderID);
 		this._taskOdoo.requestTask(this.purchaseOrderID);
-		this._chatOdoo.requestAllMessages(this.purchaseOrderID); */
+		this._chatOdoo.requestAllMessages(this.purchaseOrderID); 
               }
 
   ngOnInit() {
@@ -96,11 +100,10 @@ export class SolicitudesChatDetallesPage implements OnInit {
       this.navCtrl.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'back' }) ;
  });
 
-    this.task=this._taskOdoo.getTaskCesar();
+    
 
-    console.log('task ',this.task);
-    console.log('cliente',this.task.client_id);
-    console.log('sms',this.messagesList);
+   
+   // console.log('sms',this.messagesList);
     
 
     this.presupuesto = this.task.budget;
@@ -149,7 +152,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
     }, 8000); */
 
-/* 
+ 
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();
 		this.subscriptionNewMsg = this.messageSendOk$.subscribe((messageSendOk) => {
 			this.ngZone.run(() => {
@@ -179,65 +182,79 @@ export class SolicitudesChatDetallesPage implements OnInit {
 					if (this.purchaseOrderID === temp.offer_id) {
 						if (typeof this.messagesList !== 'undefined' && this.messagesList.length > 0) {
 							Array.prototype.push.apply(this.messagesList, messagesList);
-						} else {
+              console.log('sms if',this.messagesList);						
+            } else {
 							this.messagesList = messagesList;
+              console.log('sms else',this.messagesList);
               
 						}
 					}
 				}
 			});
-		}); */
+		}); 
   }
 
   pushToChat() {
 
-    if(this.newMessage.length === 0)
+    /* if(this.newMessage.length === 0)
     {
       return;
-    }
+    } */
     
-    /* const newChat: ChatDetails =
+ /*     const newChat: ChatDetails =
     {
       userID: "Me",
       timeStamp: Date.now(),
       isLastMessage: true,
       message: this.newMessage,
       date: ""
-    }; */
+    };  */
 
     //Se limpian las banderas de ultimo mensaje
-    for(let i = 0; i < this.chats.length; i++) {
+    /*  for(let i = 0; i < this.messagesList.length; i++) {
       if(this.chats[i].userID ===this.purchaseOrderID.toString() ) {
         this.chats[i].isLastMessage = false;
       }
 
-    this.message.offer_id = this.purchaseOrderID;
-    console.log(this.message);
-    this._chatOdoo.sendMessageClient(this.message);
-    this.message = new MessageModel();
+   
+
+ 
 
 
-    }
+    }  */
 
     //this.unshiftChat(this.messages);
+
+    if (this.message.message.length > 0) {
+        this.message.offer_id = this.purchaseOrderID;
+        this.yo=true;
+        this.isLastMessage=true;
+    
+      this._chatOdoo.sendMessageClient(this.message);
+      console.log('´sms mandado', this.message.message);
+      this.message = new MessageModel();
+    }
 
     setTimeout(() => {
       this.content.scrollToBottom(300);
     }, 500);
 
-    this.newMessage = '';
+    this.message.message= '';
 
-    console.log(this.chats);
+    
+
+
+
   }
 
-  unshiftChat(chat: ChatDetails) {
+/*   unshiftChat(chat: ChatDetails) {
     let currentTime = Date.now();
     let strTime = new Date(currentTime).toLocaleString();
 
     chat.date = strTime;
 
     this.chats.unshift(chat);
-  }
+  } */
 
   onClose() {
     console.log("Close clicked");

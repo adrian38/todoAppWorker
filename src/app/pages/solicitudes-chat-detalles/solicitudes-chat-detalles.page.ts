@@ -44,6 +44,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
   imagen_0:string="";
   imagen_1:string="";
   imagen_2:string="";
+  ultimo_sms:string="";
+  sms_cliente:string="";
 
   //-------------------------------------------------------
 yo:boolean=false;
@@ -64,7 +66,7 @@ yo:boolean=false;
   chats: ChatDetails[] = [];
   newMessage: string;
 
-  isLastMessage:boolean=false;
+  isLastMessage:boolean=true;
 
   @ViewChild(IonContent) content: IonContent;
 
@@ -185,7 +187,9 @@ yo:boolean=false;
               console.log('sms if',this.messagesList);						
             } else {
 							this.messagesList = messagesList;
+              /* this.yo=false; */
               console.log('sms else',this.messagesList);
+              this.coger();
               
 						}
 					}
@@ -211,26 +215,29 @@ yo:boolean=false;
     };  */
 
     //Se limpian las banderas de ultimo mensaje
-    /*  for(let i = 0; i < this.messagesList.length; i++) {
+  /*     for(let i = 0; i < this.messagesList.length; i++) {
+        console.log('for0',this.messagesList.length);
+        console.log('for1',this.message);
       if(this.chats[i].userID ===this.purchaseOrderID.toString() ) {
         this.chats[i].isLastMessage = false;
-      }
+      } 
 
    
 
  
 
 
-    }  */
+    }  */ 
 
     //this.unshiftChat(this.messages);
 
     if (this.message.message.length > 0) {
         this.message.offer_id = this.purchaseOrderID;
-        this.yo=true;
-        this.isLastMessage=true;
+        //this.yo=true;
+        //this.isLastMessage=true;
     
       this._chatOdoo.sendMessageClient(this.message);
+      this.ultimo_sms=this.message.message;
       console.log('´sms mandado', this.message.message);
       this.message = new MessageModel();
     }
@@ -321,5 +328,23 @@ yo:boolean=false;
 			.then((modal) => modal.present()); 
 
 	}
+  coger(){
+             console.log('ultimo sms',this.messagesList[0].message )
+              console.log('ultimo sms',this.messagesList[0].author_id )
+              console.log('ultimovvv sms',this.user.partner_id )
+
+     for (let i = 0; i <  this.messagesList.length; i++) {
+
+     if(this.messagesList[i].author_id != this.user.partner_id ){
+              this.sms_cliente = this.messagesList[i].message;
+              console.log('ultimo sms temporal', this.sms_cliente);
+     }
+     else{
+      console.log('nooooo');
+     }
+      
+    } 
+  
+  }
 
 }

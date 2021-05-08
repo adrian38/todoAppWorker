@@ -47,14 +47,15 @@
       <div style="height: 100%; width: 5%"></div>
 
       <div class="div_chat">
-        <div *ngFor="let message of messagesList"
+        <ion-row 
               class="chat_bubble"
               lines="none"
-              [ngClass]="(this.yo == true) ? 'align_right' : 'align_left'" >
+              [ngClass]="(user.partner_id ==  message.author_id) ? 'align_right' : 'align_left'"
+              *ngFor="let message of messagesList" >
           <ng-container *ngIf="(user.partner_id ==  message.author_id ); else elseTemplate">
              <div
               style="width: auto; height: auto; max-width: 80%"
-              [ngClass]="(isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
+              [ngClass]="( message.message === ultimo_sms) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
             > 
               <div>{{  message.message }}</div>
             </div>
@@ -62,12 +63,12 @@
           <ng-template #elseTemplate>
              <div
               style="width: auto; height: auto; max-width: 80%"
-              [ngClass]="(isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
+              [ngClass]="( message.message === sms_cliente) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
             > 
               <div>{{  message.message }}</div>
             </div>
           </ng-template>
-        </div>
+        </ion-row>
         <!-- <ion-row
           class="chat_bubble"
           [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'"

@@ -68,6 +68,8 @@ let notifications$ = new Subject<boolean>();
 let rutaActual:boolean = true ;
 let rutaChat: boolean = false;
 
+let invoiceStatus =['no','invoiced'];
+
 
 //-------------------------------------------------cesar
 
@@ -823,13 +825,18 @@ export class TaskOdooService {
 
 					console.log(value, 'todas las tareas');
 					
-					/* for (let orderLine of value) {
+					 for (let orderLine of value) {
 						for (let task of tasksList) {
 							for (let line of task.order_line){
 
 								if(line === orderLine.id){
-									switch (orderLine[0]){
-										case 39:
+									switch (orderLine.product_id[0]){
+										case 40:
+											task.work_force = orderLine.price_unit;
+										break;
+
+										case 41:
+											task.materials = orderLine.price_unit;
 										break;
 									}
 								}
@@ -838,10 +845,10 @@ export class TaskOdooService {
 
 						}
 
-					} */
+					} 
 					
-					
-					//get_Res_Id();
+					console.log(tasksList, "con presupuesto");
+					get_Res_Id();
 
 				
 					
@@ -940,7 +947,7 @@ export class TaskOdooService {
 
 		let get_po_list = function(partnerId) {
 			let inParams = [];
-			inParams.push([ [ 'partner_id', '=', partnerId ] ]);
+			inParams.push([ [ 'partner_id', '=', partnerId ],['invoice_status' , 'in', invoiceStatus] ]);
 			inParams.push([
 				'state',
 				'product_id',

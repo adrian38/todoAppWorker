@@ -50,11 +50,8 @@ export class Tab1Page {
     private _taskOdoo: TaskOdooService,
     private ngZone: NgZone,
     public navCtrl: NavController,
-    private platform: Platform,
     public alertCtrl: AlertController,
-    private messageService: MessageService,
     public loadingController: LoadingController,
-    //private _location: Location,
     private _chatOdoo: ChatOdooService
   ) {}
 

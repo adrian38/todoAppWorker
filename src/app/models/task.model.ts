@@ -44,6 +44,8 @@ export class TaskModel {
 	budget: number;
 	materials: number;
 	work_force: number;
+	materials_extra: number;
+	work_force_extra: number;
 	origin: string;
 	date_planned: string;
 	date: string;
@@ -97,6 +99,8 @@ export class TaskModel {
 		notificationNewSo=false,
 		materials = 0,
 		work_force= 0,
+		materials_extra = 0,
+		work_force_extra = 0,
 	) {
 		this.notificationType = notificationType;
 		this.comment = comment;
@@ -128,6 +132,8 @@ export class TaskModel {
 		this.notificationChat = notificationChat;
 		this.work_force = work_force;
 		this.materials =materials;
+		this.work_force_extra = work_force;
+		this.materials_extra =materials_extra;
 		this.order_line = [];
 	}
 }

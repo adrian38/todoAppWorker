@@ -275,7 +275,7 @@ export class TaskOdooService {
 								notificationNewPoSuplier$.next(id_po);}
 								else {
 
-									let notifTaskNew: TaskModel=new TaskModel();
+									let notifTaskNew: TaskModel= new TaskModel();
 									notifTaskNew.notificationType = 1 ;
 									for (let i = 0; i < id_po.length; i++) {
 										notifTaskNew.id = id_po[i];
@@ -386,7 +386,7 @@ export class TaskOdooService {
 					}
 					console.log('actualizando tareas');
 					if(rutaActual){
-					Array.prototype.push.apply(solicitudesList, tasksUpdate);
+					Array.prototype.unshift(solicitudesList, tasksUpdate);
 					}
 					tasksList$.next(true);
 				}
@@ -822,8 +822,6 @@ export class TaskOdooService {
 				if (err || !value) {
 					console.log(err, 'get_po_list');
 				} else {
-
-					console.log(value, 'todas las tareas');
 					
 					 for (let orderLine of value) {
 						for (let task of tasksList) {
@@ -848,9 +846,7 @@ export class TaskOdooService {
 					} 
 					
 					console.log(tasksList, "con presupuesto");
-					get_Res_Id();
-
-				
+					get_photo_so();
 					
 				}
 			});
@@ -929,7 +925,7 @@ export class TaskOdooService {
 				if (err || !value) {
 					console.log(err, 'Error get_Res_Id');
 				} else {
-					SO_id = [];
+					
 					for (let id_value of value) {
 						SO_id.push(id_value.id);
 					}
@@ -940,7 +936,12 @@ export class TaskOdooService {
 						}
 					}
 
-					get_photo_so();
+					if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
+						get_order_line();}else{
+							get_photo_so();
+						}
+
+					
 				}
 			});
 		};
@@ -1036,14 +1037,13 @@ export class TaskOdooService {
 							task['address_latitude'],
 							task['address_longitude']
 						);
-						temp.order_line = ['order_line'];
-
+						temp.order_line = task['order_line'];
 						tasksList.push(temp);
+
+						
 					}
 
-					if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
-						get_order_line();
-					} else if(typeof SO_id !== 'undefined' && SO_id.length > 0) {
+					if(typeof SO_id !== 'undefined' && SO_id.length > 0) {
 						get_Res_Id();
 					}else{
 						tasksList$.next(true);

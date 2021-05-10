@@ -38,10 +38,9 @@
             <div class="flex_column" style="width: 100%; margin-left: 20px">
               <div class="flex_row" style="width: 100%">
                 <ion-label class="cat_title"
-                  >{{ contratado.title.slice(0,12) + " . . " }}</ion-label
+                  >{{contratado.title.slice(0,15) + " ... "}}</ion-label
                 >
-                <!--   <ion-label class="ordenNumber">{{ contratado.numeroOrden }}</ion-label> -->
-                <!--     <ion-label class="start_date">{{ contratado.fechaInicio }}</ion-label> -->
+           
               </div>
 
               <div class="flex_row">
@@ -62,10 +61,28 @@
                 <ion-label class="horario"
                   >{{ contratado.time | date: "h:mm a" }}</ion-label
                 >
-                <div style="min-width: 43px"></div>
-                <ion-label class="precio"> 35 € </ion-label>
+                <!-- <div style="min-width: 43px"></div> -->
               </div>
+        
+                
+              
             </div>
+                <div class="flex_column" style="
+                min-height: 100% !important;
+                width: 55px !important;
+                justify-content: flex-end;
+              ">
+                <div
+                style="display: flex; margin-bottom: 10px;margin-left: 17px;"
+                *ngIf="contratado.notificationOffert"
+              >
+                <ion-img
+                  class="icon_noti_offer"
+                  src="/assets/icons/noti_ofer.svg"
+                ></ion-img>
+              </div>
+                <ion-label class="precio"> 35 € </ion-label>
+              </div> 
           </div>
         </ion-item>
       </ion-list>

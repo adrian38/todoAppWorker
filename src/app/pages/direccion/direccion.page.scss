@@ -13,7 +13,7 @@
     text-transform: uppercase;
   }
 
-  .address{
+/*   .address{
     border-bottom: 1px solid var(--ion-color-orange); 
     width: 80% !important; 
     padding-top: 8px !important; 
@@ -27,4 +27,31 @@
     width: 30px !important; 
     margin-left: 15px !important;
     margin-right: 15px !important;
+} */
+
+img {
+  width: 120px;
+
+}
+
+#imgGPS {
+  width: 30px;
+  height: 30px;
+}
+
+.custom_input {
+  border: none;
+  width: 100% !important;
+  --padding-top: 5px;
+  --padding-end: 15px;
+  --padding-bottom: 5px;
+  --padding-start: 15px;
+  text-align: left;
+  font-family: 'Helvetica-Roman', sans-serif !important;
+  font-size: 16px !important;
+  outline: none !important;
+}
+
+#link {
+  color: var(--ion-color-greenblue);
 }

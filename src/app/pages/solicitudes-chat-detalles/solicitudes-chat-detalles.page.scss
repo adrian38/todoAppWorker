@@ -87,7 +87,7 @@ ion-segment .segment-button-checked {
   height: 100%;
   width: 90%;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   overflow-y: auto !important;
 }
 
@@ -244,4 +244,11 @@ ion-item {
   padding: 8px 5px 8px 0 !important;
   text-align: left;
   width: 100%;
+}
+
+.selecf{
+  width: 78px;
+ height: 78px;  
+ object-fit: cover;
+ 
 }

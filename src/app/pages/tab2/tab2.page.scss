@@ -104,9 +104,16 @@ ion-item {
 
 .precio {
   font: normal 18px 'Helvetica-Md', sans-serif;
-  text-align: end;
+  text-align: start;
   color: var(--ion-color-orange);
   width: 33%;
   margin-top: 3px;
   min-width: 45px;
+}
+
+.icon_noti_offer{
+  height: 20px !important;
+  width : 20px !important;
+  text-align: end;
+
 }

@@ -220,6 +220,7 @@
         <ion-row>
           <ion-col size="4" style="padding-top: 0px">
             <ion-card
+            [disabled]="habilitar_0"
               style="
                 border: 0.5px solid rgb(49, 49, 57);
                 width: 80px;
@@ -227,12 +228,13 @@
                 border-radius: 5px 5px 5px 5px;
                 margin: 10px 0px;
               "
-               (click)="imageClick()">
-              <img src="src={{imagen}}" />
+               (click)="imageClick(imagen_0)">
+              <img class="selecf" src="{{imagen_0}}" />
             </ion-card>
           </ion-col>
           <ion-col size="4" style="padding-top: 0px">
             <ion-card
+            [disabled]="habilitar_1"
               style="
                 border: 0.5px solid rgb(49, 49, 57);
                 width: 80px;
@@ -240,13 +242,14 @@
                 border-radius: 5px 5px 5px 5px;
                 margin: 10px 0px;
               "
-            >
-              <img src="src=../../../assets/icons/noImage.svg " />
+            (click)="imageClick(imagen_1)">
+            <img class="selecf" src="{{imagen_1}}" />
             </ion-card>
           </ion-col>
 
           <ion-col size="4" style="padding-top: 0px">
             <ion-card
+            [disabled]="habilitar_2"
               style="
                 border: 0.5px solid rgb(49, 49, 57);
                 width: 80px;
@@ -254,8 +257,8 @@
                 border-radius: 5px 5px 5px 5px;
                 margin: 10px 0px;
               "
-            >
-              <img src="src=../../../assets/icons/noImage.svg " />
+            (click)="imageClick(imagen_2)">
+            <img class="selecf" src="{{imagen_2}}" />
             </ion-card>
           </ion-col>
         </ion-row>

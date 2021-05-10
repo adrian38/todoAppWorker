@@ -126,3 +126,8 @@
   -webkit-animation-name: flash;
   animation-name: flash;
 }
+
+.my-custom-class{
+ // --background:#F4B004;
+  --spinner-color:var(--ion-color-orange);
+}

@@ -42,7 +42,7 @@ export class ContrasePage implements OnInit {
 
   guardar(){
 
-    if( this.usuario.password == this.actual ) {
+    /* if( this.usuario.password == this.actual ) {
 
             console.log("contraseña actual bien");
             this.error_actual=true;
@@ -50,7 +50,7 @@ export class ContrasePage implements OnInit {
             else{
                this.error_actual=false;
               console.log("contraseña actual mal");
-    }
+    } */
 
     if(this.cambiada == this.confirmada){
              

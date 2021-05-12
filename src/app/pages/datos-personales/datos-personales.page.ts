@@ -39,10 +39,27 @@ export class DatosPersonalesPage implements OnInit {
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
+	services = [
+		{
+			name: 'Fontaneria'
+		}
+		/* {
+      name: 'Electricidad'
+    } */
+	];
 
-	cities: City[];
+	filtro = [
+		{
+			name: 'Cercania'
+		},
+		{
+			name: 'Fecha'
+		}
 
-    selectedCity1: City;
+		/* {
+      name: 'Electricidad'
+    } */
+	];
 
 
   constructor(private platform: Platform,
@@ -50,13 +67,7 @@ export class DatosPersonalesPage implements OnInit {
 	          private _authOdoo: AuthOdooService) {
 				
 				
-				this.cities = [
-					{name: 'New York', code: 'NY'},
-					{name: 'Rome', code: 'RM'},
-					{name: 'London', code: 'LDN'},
-					{name: 'Istanbul', code: 'IST'},
-					{name: 'Paris', code: 'PRS'}
-				];
+			
 				
 			   }
 

@@ -42,7 +42,6 @@ export class TabHeaderComponent implements OnInit {
       (notiAlert: boolean) => {
         this.ngZone.run(() => {
 
-          
           if (notiAlert) {
            this.notification=true;
           }

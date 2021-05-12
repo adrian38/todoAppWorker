@@ -75,3 +75,40 @@ ion-card {
       width: 17px;
   }
 }
+
+
+/* 
+.p-dropdown {
+  background-color: rgb(246, 183, 118);
+  border-radius: 8px;
+  border-color: #f5bc82 !important;
+  .p-dropdown-label.p-placeholder,
+  .p-dropdown-trigger {
+    color: rgb(49, 49, 58);
+  }
+  span {
+    font-size: 14px;
+    //padding: 4px;
+    margin-left: 10px;
+  }
+}
+.p-dropdown:not(.p-disabled):hover {
+  border-color: #f6b776 !important;
+  box-shadow: 0 0 0 0.2rem #f5bc82 !important;
+  border-color: #f5bc82 !important;
+}
+
+.p-dropdown .p-dropdown-clear-icon {
+  display: none;
+} */
+
+.input-label{
+  background: var(--ion-color-greenblue);
+}
+
+.item-select{
+  width: 150px;
+}
+.item item-input{
+  width: 150px;
+}

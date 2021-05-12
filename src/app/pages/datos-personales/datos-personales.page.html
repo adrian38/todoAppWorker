@@ -30,6 +30,22 @@
     <!--   <div>
         <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-dropdown>
       </div> -->
+<!-- 
+      <div fxFlex="10" fxFlexOffset="5">
+        <p-dropdown [options]="services" [(ngModel)]="selectedService" placeholder="Elegir servicio"
+            optionLabel="name" [showClear]="true" (onChange)="emitRequest()"></p-dropdown>
+    </div> -->
+    <label class = "item item-input item-select">
+      <div class = "input-label">
+         Select
+      </div>
+     
+      <select>
+         <option>Option 1</option>
+         <option selected>Option 2</option>
+         <option>Option 3</option>
+      </select>
+   </label>
 
       <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange);">
         <ion-input  class="custom_input" 

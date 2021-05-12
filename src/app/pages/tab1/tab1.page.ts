@@ -302,7 +302,7 @@ export class Tab1Page {
     /////////////////////////////////////////////////poner cargado;
   }
 
-  /* cantidad_solicitudes(){
+   /*  cantidad_solicitudes(){
      
     if (this.solicitudesList.length < 1) {
       this.solicitud_vacia=true;
@@ -311,4 +311,17 @@ export class Tab1Page {
         this.solicitud_vacia=false;
       } 
     } */
+
+    
+      tituloSolicitud(i){
+        
+        this.titulo_solicitud=this.solicitudesList[i].title;
+        if (this.titulo_solicitud.length <16){
+          return this.titulo_solicitud;
+        }
+        else {
+          return  this.titulo_solicitud.slice(0,15) + " ... ";
+          }
+      }
+  
 }

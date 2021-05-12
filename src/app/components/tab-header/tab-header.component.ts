@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
+import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
   selector: 'app-tab-header',
@@ -11,8 +13,14 @@ export class TabHeaderComponent implements OnInit {
   @Input() backgroundColor: string = '';
 
   notification: boolean = false;
+  notification$: Observable<boolean>;
+  subscriptionNotification:Subscription;
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController,
+              private _taskOdoo: TaskOdooService,
+              private ngZone: NgZone,) {
+
+              }
 
   ngOnInit() {
     const elemento = document.getElementById('div_back');
@@ -21,6 +29,28 @@ export class TabHeaderComponent implements OnInit {
       elemento.style.backgroundColor = this.backgroundColor;
     }
   }
+
+  ngOnDestroy(){
+    this.subscriptionNotification.unsubscribe();
+
+  }
+
+  subscriptions() {
+  this.notification$ = this._taskOdoo.getNotifications$();
+    this.subscriptionNotification = this.notification$.subscribe(
+      (notiAlert: boolean) => {
+        this.ngZone.run(() => {
+
+          
+          if (notiAlert) {
+           this.notification=true;
+          }
+       
+        });
+      }
+    );
+  }
+
   on_Click() {
     console.log('click nuevament');
   }

@@ -14,8 +14,8 @@ let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer;
 
 let knownTypes = {
-	'/': 'data:image/jpg;base64,',
-	i: 'data:image/png;base64,'
+  '/': 'data:image/jpg;base64,',
+  i: 'data:image/png;base64,',
 };
 
 let user: UsuarioModel;
@@ -24,11 +24,9 @@ let task$ = new Subject<TaskModel[]>();
 
 let tasksList$ = new Subject<boolean>();
 
-let tasksList:TaskModel [];
+let tasksList: TaskModel[];
 
-let pilaNotificaciones:any[];
-
-
+let pilaNotificaciones: any[];
 
 let solicitudesList: TaskModel[];
 let historialList: TaskModel[];
@@ -36,18 +34,13 @@ let contratadosList: TaskModel[];
 
 let temp;
 
-
 let notificationPoCancelled$ = new Subject<number[]>(); ////Proveedor
 
 //////**********************bprrar */******************************************************************************** */
 
-
-
 //////////////////////////////////////////////////////////////////////////////
 
 let notificationNewPoSuplier$ = new Subject<number[]>(); ///////Proveedor
-
-
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -65,15 +58,16 @@ let notificationOffertCancelled$ = new Subject<number[]>();
 
 let notifications$ = new Subject<boolean>();
 
-let rutaActual:boolean = true ;
+let notiAlert:boolean = false;
+
+let rutaActual: boolean = true;
 let rutaChat: boolean = false;
 
-let invoiceStatus =['no','invoiced'];
-
+let invoiceStatus = ['no', 'invoiced'];
 
 //-------------------------------------------------cesar
 
-let pilaSolicitudes:PilaSolicitudes<TaskModel>;
+let pilaSolicitudes: PilaSolicitudes<TaskModel>;
 
 let taskPayment: TaskModel;
 
@@ -84,1208 +78,1280 @@ let init: boolean = false;
 let initTab: boolean = false;
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskOdooService {
-	selectedTab: String;
-	selectedTab$ = new Subject<String>();
-
-	constructor(private _authOdoo: AuthOdooService, private router: Router,) {
-		jaysonServer = this._authOdoo.OdooInfoJayson;
-		pilaSolicitudes = new PilaSolicitudes<TaskModel>();
-		pilaNotificaciones = [];
-		
-	}
-
-	setTaskPayment(task: TaskModel) {
-		taskPayment = task;
-	}
-
-	getTaskPayment() {
-		return taskPayment;
-	}
-
-	setInit() {
-		init = true;
-	}
-
-	getInit() {
-		return init;
-	}
-
-	setInitTab(temp:boolean) {
-		initTab = temp;
-	}
-
-	getInitTab() {
-		return initTab;
-	}
-
-	setTaskCesar(task: TaskModel) {
-		taskCesar = task;
-	}
-	getTaskCesar() {
-		return taskCesar;
-	}
-
-	getPilaSolicitud() {
-		return pilaSolicitudes.extraer();
-	}
-
-	getPilaEmpthy() {
-		return pilaSolicitudes.empthy();
-	}
-
-	////---------------------------------------------------------------------------------------------------------Adrian
-
-	setUser(usuario: UsuarioModel) {
-		user = usuario;
-	}
-
-	
-
-	setTab1In(temp:boolean){
-		rutaActual = temp;
-	}
-
-	getNotifications$(): Observable<boolean> {
-		return notificationError$.asObservable();
-	}
-
-	getNotificationError$(): Observable<boolean> {
-		return notificationError$.asObservable();
-	}
-
-	getRequestedNotificationPoAcepted$(): Observable<any[]> {
-		return notificationPoAcepted$.asObservable();
-	}
-
-	getRequestedNotificationNewMessg$(): Observable<number[]> {
-		return notificationNewMessg$.asObservable();
-	}
-
-	getRequestedNotificationOffertCancelled$(): Observable<number[]> {
-		return notificationOffertCancelled$.asObservable();
-	}
-
-	getRequestedNotificationNewPoSuplier$(): Observable<number[]> {
-		return notificationNewPoSuplier$.asObservable();
-	}
-
-	notificationPull() {
-		let id_po = [];
-		let id_po_offert = [];
-		let id_messg = [];
-		let new_offert = [];
-		let id_offert_acepted = [];
-
-		let poll = function(uid, partner_id, last) {
-			let path = '/longpolling/poll';
-
-			client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + path });
-
-			client.request(
-				'call',
-				{ context: { uid: uid }, channels: [ jaysonServer.db + '_' + partner_id.toString() ], last: last },
-				{ context: { lang: 'es_ES', uid: uid } },
-				function(err, error, value) {
-					if (err) {
-						console.log(err, 'Error poll');
-					} else {
-						if (typeof value !== 'undefined' && value.length > 0) {
-							id_po = [];
-							id_po_offert = [];
-							id_messg = [];
-							new_offert = [];
-							id_offert_acepted = [];
-
-							console.log(value, 'esta fue la notificacion q llego');
-
-							for (let task of value) {
-								if (
-									task['message']['type'] === 'purchase_order_notification' &&
-									task['message']['action'] === 'created'
-								) {
-									console.log('se ha creado una nueva So');
-									id_po.push(task['message']['order_id']);
-								}
-
-								if (
-									(task['message']['type'] === 'purchase_order_notification' &&
-										task['message']['action'] === 'canceled') ||
-									task['message']['action'] === 'calceled'
-								) {
-									console.log('se ha eliminado una oferta');
-									id_po_offert.push(task['message']['order_id']);
-								}
-
-								if (
-									task['message']['type'] === 'purchase_order_notification' &&
-									task['message']['action'] === 'confirmed'
-								) {
-									console.log('se ha contratado Servicio');
-									id_offert_acepted.push({
-										po_id: task['message']['order_id'],
-										so_origin: task['message']['origin']
-									});
-								}
-
-								if (
-									task['message']['type'] === 'purchase_order_notification' &&
-									task['message']['action'] === 'accepted'
-								) {
-									console.log('se ha creado una nueva oferta');
-									new_offert.push({
-										order_id: task['message']['order_id'],
-										origin: task['message']['origin']
-									});
-								}
-
-								if (
-									task['message']['type'] === 'message_notification' &&
-									task['message']['action'] === 'new'
-								) {
-									console.log('nuevo mensaje So');
-									id_messg.push(task['message']['message_id']);
-								}
-							}
-
-							if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
-								/* console.log(id_messg, 'nuevo mensaje id'); */
-
-								if (rutaActual) {
-									notificationNewMessg$.next(id_messg);
-								}  else if(!rutaActual && !rutaChat) {
-
-									let notifTask: TaskModel=new TaskModel();
-									notifTask.notificationType =3 ;
-									for (let i = 0; i < id_messg.length; i++) {
-										notifTask.id = id_messg[i];
-										pilaSolicitudes.insertar(notifTask);
-										
-									}
-								
-								} 
-							}
-
-							if (typeof id_po !== 'undefined' && id_po.length > 0) {
-								
-								if (rutaActual) {
-									
-								notificationNewPoSuplier$.next(id_po);}
-								else {
-
-									let notifTaskNew: TaskModel= new TaskModel();
-									notifTaskNew.notificationType = 1 ;
-									for (let i = 0; i < id_po.length; i++) {
-										notifTaskNew.id = id_po[i];
-										pilaSolicitudes.insertar(notifTaskNew);
-										
-									}
-
-								}
-								
-							}
-
-							if (typeof id_offert_acepted !== 'undefined' && id_offert_acepted.length > 0) {
-								// console.log(id_offert_acepted,"lo q se esta mandando oferta aceptada")
-								notificationPoAcepted$.next(id_offert_acepted);
-							}
-
- 							if (typeof id_po_offert !== 'undefined' && id_po_offert.length > 0) {
-								
-								if (rutaActual) {
-								notificationOffertCancelled$.next(id_po_offert);
-							}else {
-									for (let i = 0; i < id_po_offert.length; i++) {
-
-								temp = solicitudesList.findIndex((element) => element.id === id_po_offert[i]);
-								if (temp != -1) {
-									solicitudesList.splice(temp, 1);
-								}
-							}
-							
-							 
-						}
-					}
-
-
-							poll(user.id, user.partner_id, value[value.length - 1].id);
-						} else {
-							poll(user.id, user.partner_id, 0);
-						}
-					}
-				}
-			);
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error cancelPOsuplier');
-				} else {
-					poll(user.id, user.partner_id, 0);
-				}
-			}
-		);
-	}
-
-
-
-
-	requestTaskPoUpdate(id_po: number[]) {
-
-		let SO_origin = [];
-		let SO_id = [];
-		let tasksUpdate:TaskModel[];
-
-		let get_photo_so = function() {
-			let inParams = [];
-			inParams.push([ [ 'res_id', 'in', SO_id ] ]);
-			inParams.push([ 'name', 'res_id', 'res_model', 'url', 'datas', 'mimetype', 'file_size' ]);
-
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('ir.attachment'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err) {
-					console.log(err, 'Error get_photo_so');
-				} else {
-					
-					if (value) {
-						for (let resId of value) {
-							for (let task of tasksUpdate) {
-								if (task.origin_id === resId.res_id) {
-									if (knownTypes[resId.datas[0]]) {
-										task.photoNewTaskArray.push(knownTypes[resId.datas[0]] + resId.datas);
-									}
-								}
-							}
-						}
-					}
-					console.log('actualizando tareas');
-					if(rutaActual){
-					Array.prototype.unshift(solicitudesList, tasksUpdate);
-					}
-					tasksList$.next(true);
-				}
-			});
-		};
-
-		let get_Res_Id = function() {
-			let inParams = [];
-			inParams.push([ [ 'name', 'in', SO_origin ] ]);
-			inParams.push([ 'id', 'name' ]);
-
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('sale.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error get_Res_Id');
-				} else {
-					SO_id = [];
-					for (let id_value of value) {
-						SO_id.push(id_value.id);
-					}
-					for (let task of tasksUpdate) {
-						let temp = value.find((element) => element.name === task.origin);
-						if (temp) {
-							task.origin_id = temp.id;
-						}
-					}
-
-					get_photo_so();
-				}
-			});
-		};
-
-
-		let get_po_by_id = function() {
-			//console.log(id_po);
-			let inParams = [];
-			inParams.push([ [ 'id', 'in', id_po ] ]);
-			inParams.push([
-				'state',
-				'product_id',
-				'note',
-				'user_id',
-				'partner_id',
-				'name',
-				'date_order',
-				'commitment_date',
-				'invoice_status',
-				'title',
-				'note',
-				'require_materials',
-				'commitment_date',
-				'address_street',
-				'address_floor',
-				'address_portal',
-				'address_number',
-				'address_door',
-				'address_stairs',
-				'address_zip_code',
-				'address_latitude',
-				'address_longitude',
-				'origin',
-				'state'
-			]);
-			let params = [];
-			params.push(inParams);
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error get_po_by_id');
-				} else {
-					tasksUpdate = [];
-					SO_origin = [];
-					for (let task of value) {
-						let temp = new TaskModel();
-						temp.offer_send = task['state'];
-						temp.origin = task['origin'];
-						SO_origin.push(task['origin']);
-						temp.type = task['product_id'][1];
-						temp.description = task['note'];
-						temp.client_id = task['user_id'][0];
-						temp.client_name = task['user_id'][1];
-						temp.provider_id = task['partner_id'][0];
-						temp.provider_name = task['partner_id'][1];
-						temp.require_materials = task['require_materials'];
-						temp.id = task['id'];
-						temp.state = task['invoice_status'];
-						temp.id_string = task['name'];
-						temp.date = task['date_order'];
-						temp.date_planned = String(task['commitment_date']).slice(0, 10);
-						temp.time = String(task['commitment_date']);
-						temp.title = task['title'];
-						temp.address = new Address(
-							task['address_street'],
-							task['address_number'],
-							task['address_portal'],
-							task['address_stairs'],
-							task['address_floor'],
-							task['address_door'],
-							task['address_zip_code'],
-							task['address_latitude'],
-							task['address_longitude']
-						);
-						if(rutaActual){
-						temp.notificationNewSo = true;}
-						tasksUpdate.push(temp);
-						
-					}
-					//      console.log(tasksList, "reques por notifications");
-					if (SO_origin.length) {
-						get_Res_Id();
-					} else {
-						if(rutaActual){
-						Array.prototype.push.apply(solicitudesList, tasksUpdate);
-					}
-						tasksList$.next(true);
-					}
-				}
-			});
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error  requestTaskPoUpdate');
-				} else {
-					get_po_by_id();
-				}
-			}
-		);
-	}
-	
-	
-
-	cancelPOsuplier(id: number) {
-		let cancelPOsuplierSelected = function() {
-			let inParams = [];
-			inParams.push([ id ]);
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('button_cancel'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err) {
-					console.log(err, 'Error cancelPOsuplierSelected');
-				} else {
-					
-					notificationPoCancelled$.next([ id ]);
-				}
-			});
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error cancelPOsuplier');
-				} else {
-					cancelPOsuplierSelected();
-				}
-			}
-		);
-	}
-
-	getRequestedNotificationPoCancelled$(): Observable<number[]> {
-		return notificationPoCancelled$.asObservable();
-	}
-
-	requestTask(id: number) {
-		let tasksList: TaskModel[] = [];
-		let id_po = [];
-
-		let search_avatar_provider = function() {
-			let inParams = [];
-			inParams.push([ [ 'partner_id', '=', tasksList[0].provider_id ] ]);
-			inParams.push([ 'image_1920' ]);
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(12);
-			fparams.push(jaysonServer.password);
-			fparams.push('res.users'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err) {
-					console.log(err, 'Error search_avatar_provider');
-				} else {
-					if (value) {
-						console.log(value, 'photo');
-						if (knownTypes[value[0].image_1920[0]]) {
-							tasksList[0].photoProvider = knownTypes[value[0].image_1920[0]] + value[0].image_1920;
-						}
-					}
-					task$.next(tasksList);
-				}
-			});
-		};
-
-		let get_po_by_id = function() {
-			id_po.push(id);
-			let inParams = [];
-			inParams.push([ [ 'id', 'in', id_po ] ]);
-			inParams.push([
-				'partner_id',
-				'amount_total',
-				'user_id',
-				'origin',
-				'title',
-				'note',
-				'commitment_date',
-				'product_id',
-				'address_street'
-			]);
-			let params = [];
-			params.push(inParams);
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error get_po_by_id');
-				} else {
-					for (let task of value) {
-						let temp = new TaskModel();
-						//temp.offer_send = task['state'];
-						temp.budget = task['amount_total'];
-						temp.type = task['product_id'][1];
-						temp.description = task['note'];
-						temp.client_id = task['user_id'][0];
-						temp.client_name = task['user_id'][1];
-						temp.provider_id = task['partner_id'][0];
-						temp.provider_name = task['partner_id'][1];
-						temp.id = id;
-						//temp.state = task['invoice_status'];
-						//temp.id_string = task['name'];
-						//temp.date = task['date_order'];
-						temp.date_planned = String(task['commitment_date']).slice(0, 10);
-						temp.time = String(task['commitment_date']);
-						temp.title = task['title'];
-						temp.address = new Address(
-							task['address_street'],
-							task['address_number'],
-							task['address_portal'],
-							task['address_stairs'],
-							task['address_floor'],
-							task['address_door'],
-							task['address_zip_code'],
-							task['address_latitude'],
-							task['address_longitude']
-						);
-
-						tasksList.push(temp);
-					}
-					search_avatar_provider();
-					//task$.next(tasksList);
-				}
-			});
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error requestTask');
-				} else {
-					console.log(value);
-					get_po_by_id();
-				}
-			}
-		);
-	}
-
-	getRequestedTask$(): Observable<TaskModel[]> {
-		return task$.asObservable();
-	}
-
- 	 requestTaskListProvider() {
-		let SO_origin = [];
-		let SO_id = [];
-		let PO_id = [];
-
-		let filter = function() {
-			
-			let temp: TaskModel[];
-			temp = tasksList.filter((task) => {
-				return task.state === 'no'; //Solicitadas
-			});
-			if (typeof solicitudesList !== 'undefined' && solicitudesList.length > 0) {
-				Array.prototype.push.apply(solicitudesList, temp);
-			} else {
-				solicitudesList = temp;
-			}
-
-			temp = tasksList.filter((task) => {
-				return task.state === 'invoiced'; //Contratadas
-			});
-			if (typeof contratadosList !== 'undefined' && contratadosList.length > 0) {
-				Array.prototype.push.apply(contratadosList, temp);
-			} else {
-				contratadosList = temp;
-				historialList = temp;///////////////////////////borrar despues
-			}
-
-			temp = tasksList.filter((task) => {
-				return task.state === ''; //Historial
-			});
-			if (typeof historialList !== 'undefined' && historialList.length > 0) {
-				Array.prototype.push.apply(historialList, temp);
-			} else {
-				historialList = temp;
-			}
-
-			tasksList$.next(true);
-		};
-
-		let get_order_line = function(){
-
-			let inParams = [];
-			inParams.push([ [ 'order_id', 'in', PO_id ] ]);
-			inParams.push([
-						
-				'product_id',
-				'product_qty',
-				'price_unit', 
-			
-			]);
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order.line'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'get_po_list');
-				} else {
-					
-					 for (let orderLine of value) {
-						for (let task of tasksList) {
-							for (let line of task.order_line){
-
-								if(line === orderLine.id){
-									switch (orderLine.product_id[0]){
-										case 40:
-											task.work_force = orderLine.price_unit;
-										break;
-
-										case 41:
-											task.materials = orderLine.price_unit;
-										break;
-									}
-								}
-
-							}
-
-						}
-
-					} 
-					
-					console.log(tasksList, "con presupuesto");
-					get_photo_so();
-					
-				}
-			});
-
-		} 
-
-
-		let get_photo_so = function() {
-			let inParams = [];
-			inParams.push([ [ 'res_id', 'in', SO_id ] ]);
-			inParams.push([ 'name', 'res_id', 'res_model', 'url', 'datas', 'mimetype', 'file_size' ]);
-
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('ir.attachment'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err) {
-					console.log(err, 'Error get_photo_so');
-				} else {
-					
-					if (value) {
-						for (let resId of value) {
-							for (let task of tasksList) {
-								if (task.origin_id === resId.res_id) {
-									if (knownTypes[resId.datas[0]]) {
-										task.photoNewTaskArray.push(knownTypes[resId.datas[0]] + resId.datas);
-									}
-								}
-							}
-						}
-					}
-					console.log('actualizando tareas');
-					filter();
-				}
-			});
-		};
-
-		let get_Res_Id = function() {
-			let inParams = [];
-			inParams.push([ [ 'name', 'in', SO_origin ] ]);
-			inParams.push([ 'id', 'name' ]);
-
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('sale.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error get_Res_Id');
-				} else {
-					
-					for (let id_value of value) {
-						SO_id.push(id_value.id);
-					}
-					for (let task of tasksList) {
-						let temp = value.find((element) => element.name === task.origin);
-						if (temp) {
-							task.origin_id = temp.id;
-						}
-					}
-
-					if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
-						get_order_line();}else{
-							get_photo_so();
-						}
-
-					
-				}
-			});
-		};
-
-		let get_po_list = function(partnerId) {
-			let inParams = [];
-			inParams.push([ [ 'partner_id', '=', partnerId ],['invoice_status' , 'in', invoiceStatus] ]);
-			inParams.push([
-				'state',
-				'product_id',
-				'note',
-				'user_id',
-				'partner_id',
-				'name',
-				'date_order',
-				'commitment_date',
-				'invoice_status',
-				'title',
-				'note',
-				'require_materials',
-				'commitment_date',
-				'address_street',
-				'address_floor',
-				'address_portal',
-				'address_number',
-				'address_door',
-				'address_stairs',
-				'address_zip_code',
-				'address_latitude',
-				'address_longitude',
-				'origin',
-				'state',
-				'order_line'
-
-			]);
-			let params = [];
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('search_read'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'get_po_list');
-				} else {
-
-					console.log(value, 'todas las tareas');
-
-					tasksList = [];
-					SO_origin = [];
-					for (let task of value) {
-						let temp = new TaskModel();
-						temp.offer_send = task['state'];
-						temp.origin = task['origin'];
-						SO_origin.push(task['origin']);
-						if(task['state']== 'sent'){
-							PO_id.push(task['id']);
-						}
-						temp.type = task['product_id'][1];
-						temp.description = task['note'];
-						temp.client_id = task['user_id'][0];
-						temp.client_name = task['user_id'][1];
-						temp.provider_id = task['partner_id'][0];
-						temp.provider_name = task['partner_id'][1];
-						temp.require_materials = task['require_materials'];
-						temp.id = task['id'];
-						temp.state = task['invoice_status'];
-						temp.id_string = task['name'];
-						temp.date = task['date_order'];
-						temp.date_planned = String(task['commitment_date']).slice(0, 10);
-						temp.time = String(task['commitment_date']);
-						temp.title = task['title'];
-						temp.address = new Address(
-							task['address_street'],
-							task['address_number'],
-							task['address_portal'],
-							task['address_stairs'],
-							task['address_floor'],
-							task['address_door'],
-							task['address_zip_code'],
-							task['address_latitude'],
-							task['address_longitude']
-						);
-						temp.order_line = task['order_line'];
-						tasksList.push(temp);
-
-						
-					}
-
-					if(typeof SO_id !== 'undefined' && SO_id.length > 0) {
-						get_Res_Id();
-					}else{
-						tasksList$.next(true);
-					}
-				}
-			});
-		};
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
-		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'requestTaskListProvider');
-				} else {
-					get_po_list(user.partner_id);
-				}
-			}
-		);
-	}  
-
-
-
-	getRequestedTaskList$(): Observable<boolean> {
-		return tasksList$.asObservable();
-	}
-
-	getSolicitudeList() {
-		return solicitudesList;
-	}
-
- 	setSolicitudesListEdit(messagesList:MessageModel[]){
-
-		
-		for (let i = 0; i < messagesList.length; i++) {
-			let temp = solicitudesList.findIndex((element) => element.id === messagesList[i].offer_id);
-			if (temp != -1) {
-				solicitudesList[temp].notificationChat=true;
-			
+  selectedTab: String;
+  selectedTab$ = new Subject<String>();
+
+  constructor(private _authOdoo: AuthOdooService, private router: Router) {
+    jaysonServer = this._authOdoo.OdooInfoJayson;
+    pilaSolicitudes = new PilaSolicitudes<TaskModel>();
+    pilaNotificaciones = [];
+  }
+
+  setTaskPayment(task: TaskModel) {
+    taskPayment = task;
+  }
+
+  getTaskPayment() {
+    return taskPayment;
+  }
+
+  setInit() {
+    init = true;
+  }
+
+  getInit() {
+    return init;
+  }
+
+  setInitTab(temp: boolean) {
+    initTab = temp;
+  }
+
+  setNotification(temp: boolean) {
+    notiAlert = temp;
+  }
+
+  getInitTab() {
+    return initTab;
+  }
+
+  setTaskCesar(task: TaskModel) {
+    taskCesar = task;
+  }
+  getTaskCesar() {
+    return taskCesar;
+  }
+
+  getPilaSolicitud() {
+    return pilaSolicitudes.extraer();
+  }
+
+  getPilaEmpthy() {
+    return pilaSolicitudes.empthy();
+  }
+
+  ////---------------------------------------------------------------------------------------------------------Adrian
+
+  setUser(usuario: UsuarioModel) {
+    user = usuario;
+  }
+
+  setTab1In(temp: boolean) {
+    rutaActual = temp;
+  }
+
+  getNotifications$(): Observable<boolean> {
+    return notificationError$.asObservable();
+  }
+
+  getNotificationError$(): Observable<boolean> {
+    return notificationError$.asObservable();
+  }
+
+  getRequestedNotificationPoAcepted$(): Observable<any[]> {
+    return notificationPoAcepted$.asObservable();
+  }
+
+  getRequestedNotificationNewMessg$(): Observable<number[]> {
+    return notificationNewMessg$.asObservable();
+  }
+
+  getRequestedNotificationOffertCancelled$(): Observable<number[]> {
+    return notificationOffertCancelled$.asObservable();
+  }
+
+  getRequestedNotificationNewPoSuplier$(): Observable<number[]> {
+    return notificationNewPoSuplier$.asObservable();
+  }
+
+  notificationPull() {
+    let id_po = [];
+    let id_po_offert = [];
+    let id_messg = [];
+    let new_offert = [];
+    let id_offert_acepted = [];
+
+    let poll = function (uid, partner_id, last) {
+      let path = '/longpolling/poll';
+
+      client = jayson.http({
+        host: jaysonServer.host,
+        port: jaysonServer.port + path,
+      });
+
+      client.request(
+        'call',
+        {
+          context: { uid: uid },
+          channels: [jaysonServer.db + '_' + partner_id.toString()],
+          last: last,
+        },
+        { context: { lang: 'es_ES', uid: uid } },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error poll');
+          } else {
+            if (typeof value !== 'undefined' && value.length > 0) {
+              id_po = [];
+              id_po_offert = [];
+              id_messg = [];
+              new_offert = [];
+              id_offert_acepted = [];
+
+              console.log(value, 'esta fue la notificacion q llego');
+
+              for (let task of value) {
+                if (
+                  task['message']['type'] === 'purchase_order_notification' &&
+                  task['message']['action'] === 'created'
+                ) {
+                  console.log('se ha creado una nueva So');
+                  id_po.push(task['message']['order_id']);
+                }
+
+                if (
+                  (task['message']['type'] === 'purchase_order_notification' &&
+                    task['message']['action'] === 'canceled') ||
+                  task['message']['action'] === 'calceled'
+                ) {
+                  console.log('se ha eliminado una oferta');
+                  id_po_offert.push(task['message']['order_id']);
+                }
+
+                if (
+                  task['message']['type'] === 'purchase_order_notification' &&
+                  task['message']['action'] === 'confirmed'
+                ) {
+                  console.log('se ha contratado Servicio');
+                  id_offert_acepted.push({
+                    po_id: task['message']['order_id'],
+                    so_origin: task['message']['origin'],
+                  });
+                }
+
+                if (
+                  task['message']['type'] === 'purchase_order_notification' &&
+                  task['message']['action'] === 'accepted'
+                ) {
+                  console.log('se ha creado una nueva oferta');
+                  new_offert.push({
+                    order_id: task['message']['order_id'],
+                    origin: task['message']['origin'],
+                  });
+                }
+
+                if (
+                  task['message']['type'] === 'message_notification' &&
+                  task['message']['action'] === 'new'
+                ) {
+                  console.log('nuevo mensaje So');
+                  id_messg.push(task['message']['message_id']);
+                }
+              }
+
+              if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
+                /* console.log(id_messg, 'nuevo mensaje id'); */
+				
+				let notifTask: TaskModel = new TaskModel();
+				notifTask.notificationType = 3;
+                  for (let i = 0; i < id_messg.length; i++) {
+                    notifTask.id = id_messg[i];
+                    pilaNotificaciones.push(notifTask);
+                  }
+
+                if (rutaActual) {
+                  notificationNewMessg$.next(id_messg);
+                } else if (!rutaActual && !rutaChat) {
+                          
+                    pilaSolicitudes.insertar(notifTask);
+                  
+                }
+              }
+
+              if (typeof id_po !== 'undefined' && id_po.length > 0) {
+                if (rutaActual) {
+                  notificationNewPoSuplier$.next(id_po);
+                } else {
+                  let notifTaskNew: TaskModel = new TaskModel();
+                  notifTaskNew.notificationType = 1;
+                  for (let i = 0; i < id_po.length; i++) {
+                    notifTaskNew.id = id_po[i];
+                    pilaSolicitudes.insertar(notifTaskNew);
+                  }
+                }
+              }
+
+              if (
+                typeof id_offert_acepted !== 'undefined' &&
+                id_offert_acepted.length > 0
+              ) {
+                // console.log(id_offert_acepted,"lo q se esta mandando oferta aceptada")
+                notificationPoAcepted$.next(id_offert_acepted);
+              }
+
+              if (
+                typeof id_po_offert !== 'undefined' &&
+                id_po_offert.length > 0
+              ) {
+                if (rutaActual) {
+                  notificationOffertCancelled$.next(id_po_offert);
+                } else {
+                  for (let i = 0; i < id_po_offert.length; i++) {
+                    temp = solicitudesList.findIndex(
+                      (element) => element.id === id_po_offert[i]
+                    );
+                    if (temp != -1) {
+                      solicitudesList.splice(temp, 1);
+                    }
+                  }
+                }
+              }
+
+              poll(user.id, user.partner_id, value[value.length - 1].id);
+            } else {
+              poll(user.id, user.partner_id, 0);
+            }
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error cancelPOsuplier');
+        } else {
+          poll(user.id, user.partner_id, 0);
+        }
+      }
+    );
+  }
+
+  requestTaskPoUpdate(id_po: number[]) {
+    let SO_origin = [];
+    let SO_id = [];
+	let PO_id = [];
+    let tasksUpdate: TaskModel[];
+
+	let get_order_line = function () {
+		let inParams = [];
+		inParams.push([['order_id', 'in', PO_id]]);
+		inParams.push(['product_id', 'product_qty', 'price_unit']);
+		let params = [];
+		params.push(inParams);
+  
+		let fparams = [];
+		fparams.push(jaysonServer.db);
+		fparams.push(user.id);
+		fparams.push(jaysonServer.password);
+		fparams.push('purchase.order.line'); //model
+		fparams.push('search_read'); //method
+  
+		for (let i = 0; i < params.length; i++) {
+		  fparams.push(params[i]);
 		}
-	}
-
-	} 
-
-
-	solicitudeListEdit(id: number, type: number) {
-		switch (type) {
-			case 1:
-				//////////////////////////eliminar solicitud
-				temp = solicitudesList.findIndex((element) => element.id === id);
-				if (temp !== -1) {
-					solicitudesList.splice(temp, 1);
-				}
-				break;
-			case 2:
-				temp = solicitudesList.findIndex((element) => element.id === id);
-				if (temp != -1) {
-					solicitudesList[temp].notificationNewSo = false;
-					solicitudesList[temp].notificationOffert = false;
-					solicitudesList[temp].notificationChat = false;
-				}
-
-				break;
-		}
-	}
-
-	solicitudeListEditBudget(taskEdit:TaskModel) {
-	
-	temp = solicitudesList.findIndex((element) => element.id === taskEdit.id);
-				if (temp != -1) {
-					if(!taskEdit.require_materials){
-					solicitudesList[temp].work_force = taskEdit.work_force;
-					solicitudesList[temp].materials = taskEdit.materials;}
-					else{
-						solicitudesList[temp].work_force = taskEdit.work_force;
-					}
-					
-				}
-		
-	}
-
-	getContratadosList() {
-		/* return contratadosList; */  //esto esta bien
-		return solicitudesList;  //temporal se puede borrar es para que se vea los contratados
-	}
-
-	getHistorialList() {
-		//return historialList;  esto esta bien
-		return solicitudesList;  //temporal se puede borrar es para que se vea los contratados
-	}
-
-	sendOffer(offer: TaskModel) {
-
-		console.log(offer)
-
-		let POlineMaterials = {
-			name: 'Materiales',
-			product_id: 41,
-			product_uom: 1,
-			product_qty: 1,
-			price_unit: offer.materials,
-			date_planned: offer.date_planned,
-			order_id: offer.id
-		};
-
-
-		 let POline = {
-			name: 'Mano de Obra',
-			product_id: 40, 
-			product_uom: 1,
-			product_qty: 1,
-			price_unit: offer.work_force,
-			date_planned: offer.date_planned,
-			order_id: offer.id
-		}; 
-
-		let acept_PO = function() {
-			let inParams = [];
-			let params = [];
-			inParams.push(offer.id);
-			params.push(inParams);
-
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order'); //model
-			fparams.push('set_state_sent'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err) {
-					console.log(err);
-				} else {
-					console.log(value);
-					notificationSendOffertOk$.next(offer.id);
-				}
-			});
-		};
-
-		let addLinePOMaterials = function() {
-			
-			let inParams = [];
-			inParams.push(POlineMaterials);
-			let params = [];
-			params.push(inParams);
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order.line'); //model
-			fparams.push('create'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error addPOlineMaterials');
-				} else {
-
-					console.log("añadiendo materiales");
-					acept_PO();
-				}
-			});
-		};
-		
-		let addLinePO = function() {
-			console.log(POline);
-
-			let inParams = [];
-			inParams.push(POline);
-			let params = [];
-			params.push(inParams);
-			let fparams = [];
-			fparams.push(jaysonServer.db);
-			fparams.push(user.id);
-			fparams.push(jaysonServer.password);
-			fparams.push('purchase.order.line'); //model
-			fparams.push('create'); //method
-
-			for (let i = 0; i < params.length; i++) {
-				fparams.push(params[i]);
-			}
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
-				err,
-				error,
-				value
-			) {
-				if (err || !value) {
-					console.log(err, 'Error addLinePO');
-				} else {
-					if(offer.materials){
-
-						addLinePOMaterials();
-					}else{
-					acept_PO();
-				}
-				}
-			});
-		};
-
-		
-
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+  
 		client.request(
-			'call',
-			{
-				service: 'common',
-				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
-			},
-			function(err, error, value) {
-				if (err || !value) {
-					console.log(err, 'Error sendOffer');
-				} else {
-					console.log(value);
-					addLinePO();
+		  'call',
+		  { service: 'object', method: 'execute_kw', args: fparams },
+		  function (err, error, value) {
+			if (err || !value) {
+			  console.log(err, 'get_po_list');
+			} else {
+			  for (let orderLine of value) {
+				for (let task of tasksList) {
+				  for (let line of task.order_line) {
+					if (line === orderLine.id) {
+					  switch (orderLine.product_id[0]) {
+						case 40:
+						  task.work_force = orderLine.price_unit;
+						  break;
+  
+						case 41:
+						  task.materials = orderLine.price_unit;
+						  break;
+					  }
+					}
+				  }
 				}
+			  }
+  
+			  console.log(tasksList, 'con presupuesto');
+			  get_photo_so();
 			}
+		  }
 		);
-	}
+	  };
 
-	getnotificationSendOffertOk$(): Observable<number> {
-		return notificationSendOffertOk$.asObservable();
-	}
+    let get_photo_so = function () {
+      let inParams = [];
+      inParams.push([['res_id', 'in', SO_id]]);
+      inParams.push([
+        'name',
+        'res_id',
+        'res_model',
+        'url',
+        'datas',
+        'mimetype',
+        'file_size',
+      ]);
 
-	
+      let params = [];
+      params.push(inParams);
 
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('ir.attachment'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error get_photo_so');
+          } else {
+            if (value) {
+              for (let resId of value) {
+                for (let task of tasksUpdate) {
+                  if (task.origin_id === resId.res_id) {
+                    if (knownTypes[resId.datas[0]]) {
+                      task.photoNewTaskArray.push(
+                        knownTypes[resId.datas[0]] + resId.datas
+                      );
+                    }
+                  }
+                }
+              }
+            }
+
+            if (rutaActual) {
+              if (
+                typeof solicitudesList !== 'undefined' &&
+                solicitudesList.length > 0
+              ) {
+              	Array.prototype.unshift.apply(solicitudesList, tasksUpdate);
+              } else {
+                solicitudesList = tasksUpdate;
+              }
+            }
+            tasksList$.next(true);
+          }
+        }
+      );
+    };
+
+    let get_Res_Id = function () {
+      let inParams = [];
+      inParams.push([['name', 'in', SO_origin]]);
+      inParams.push(['id', 'name']);
+
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('sale.order'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error get_Res_Id');
+          } else {
+            SO_id = [];
+            for (let id_value of value) {
+              SO_id.push(id_value.id);
+            }
+            for (let task of tasksUpdate) {
+              let temp = value.find((element) => element.name === task.origin);
+              if (temp) {
+                task.origin_id = temp.id;
+              }
+            }
+
+			if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
+				get_order_line();
+			   
+			  } else {
+		
+				get_photo_so();
+			  }
+          }
+        }
+      );
+    };
+
+    let get_po_by_id = function () {
+      //console.log(id_po);
+      let inParams = [];
+      inParams.push([['id', 'in', id_po]]);
+      inParams.push([
+        'state',
+        'product_id',
+        'note',
+        'user_id',
+        'partner_id',
+        'name',
+        'date_order',
+        'commitment_date',
+        'invoice_status',
+        'title',
+        'note',
+        'require_materials',
+        'commitment_date',
+        'address_street',
+        'address_floor',
+        'address_portal',
+        'address_number',
+        'address_door',
+        'address_stairs',
+        'address_zip_code',
+        'address_latitude',
+        'address_longitude',
+        'origin',
+        'state',
+      ]);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client = jayson.http({
+        host: jaysonServer.host,
+        port: jaysonServer.port + jaysonServer.pathConnection,
+      });
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error get_po_by_id');
+          } else {
+            tasksUpdate = [];
+            SO_origin = [];
+            for (let task of value) {
+              let temp = new TaskModel();
+              temp.offer_send = task['state'];
+              temp.origin = task['origin'];
+              SO_origin.push(task['origin']);
+			  if (task['state'] == 'sent') {
+                PO_id.push(task['id']);
+              }
+              temp.type = task['product_id'][1];
+              temp.description = task['note'];
+              temp.client_id = task['user_id'][0];
+              temp.client_name = task['user_id'][1];
+              temp.provider_id = task['partner_id'][0];
+              temp.provider_name = task['partner_id'][1];
+              temp.require_materials = task['require_materials'];
+              temp.id = task['id'];
+              temp.state = task['invoice_status'];
+              temp.id_string = task['name'];
+              temp.date = task['date_order'];
+              temp.date_planned = String(task['commitment_date']).slice(0, 10);
+              temp.time = String(task['commitment_date']);
+              temp.title = task['title'];
+              temp.address = new Address(
+                task['address_street'],
+                task['address_number'],
+                task['address_portal'],
+                task['address_stairs'],
+                task['address_floor'],
+                task['address_door'],
+                task['address_zip_code'],
+                task['address_latitude'],
+                task['address_longitude']
+              );
+              if (rutaActual) {
+                temp.notificationNewSo = true;
+              }
+              tasksUpdate.push(temp);
+            }
+
+            if (typeof SO_origin !== 'undefined' && SO_origin.length > 0) {
+              get_Res_Id();
+            } else {
+              tasksList$.next(true);
+            }
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error  requestTaskPoUpdate');
+        } else {
+          get_po_by_id();
+        }
+      }
+    );
+  }
+
+  cancelPOsuplier(id: number) {
+    let cancelPOsuplierSelected = function () {
+      let inParams = [];
+      inParams.push([id]);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('button_cancel'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error cancelPOsuplierSelected');
+          } else {
+            notificationPoCancelled$.next([id]);
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error cancelPOsuplier');
+        } else {
+          cancelPOsuplierSelected();
+        }
+      }
+    );
+  }
+
+  getRequestedNotificationPoCancelled$(): Observable<number[]> {
+    return notificationPoCancelled$.asObservable();
+  }
+
+  requestTask(id: number) {
+    let tasksList: TaskModel[] = [];
+    let id_po = [];
+
+    let search_avatar_provider = function () {
+      let inParams = [];
+      inParams.push([['partner_id', '=', tasksList[0].provider_id]]);
+      inParams.push(['image_1920']);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(12);
+      fparams.push(jaysonServer.password);
+      fparams.push('res.users'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error search_avatar_provider');
+          } else {
+            if (value) {
+              console.log(value, 'photo');
+              if (knownTypes[value[0].image_1920[0]]) {
+                tasksList[0].photoProvider =
+                  knownTypes[value[0].image_1920[0]] + value[0].image_1920;
+              }
+            }
+            task$.next(tasksList);
+          }
+        }
+      );
+    };
+
+    let get_po_by_id = function () {
+      id_po.push(id);
+      let inParams = [];
+      inParams.push([['id', 'in', id_po]]);
+      inParams.push([
+        'partner_id',
+        'amount_total',
+        'user_id',
+        'origin',
+        'title',
+        'note',
+        'commitment_date',
+        'product_id',
+        'address_street',
+      ]);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error get_po_by_id');
+          } else {
+            for (let task of value) {
+              let temp = new TaskModel();
+              //temp.offer_send = task['state'];
+              temp.budget = task['amount_total'];
+              temp.type = task['product_id'][1];
+              temp.description = task['note'];
+              temp.client_id = task['user_id'][0];
+              temp.client_name = task['user_id'][1];
+              temp.provider_id = task['partner_id'][0];
+              temp.provider_name = task['partner_id'][1];
+              temp.id = id;
+              //temp.state = task['invoice_status'];
+              //temp.id_string = task['name'];
+              //temp.date = task['date_order'];
+              temp.date_planned = String(task['commitment_date']).slice(0, 10);
+              temp.time = String(task['commitment_date']);
+              temp.title = task['title'];
+              temp.address = new Address(
+                task['address_street'],
+                task['address_number'],
+                task['address_portal'],
+                task['address_stairs'],
+                task['address_floor'],
+                task['address_door'],
+                task['address_zip_code'],
+                task['address_latitude'],
+                task['address_longitude']
+              );
+
+              tasksList.push(temp);
+            }
+            search_avatar_provider();
+            //task$.next(tasksList);
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error requestTask');
+        } else {
+          console.log(value);
+          get_po_by_id();
+        }
+      }
+    );
+  }
+
+  getRequestedTask$(): Observable<TaskModel[]> {
+    return task$.asObservable();
+  }
+
+  requestTaskListProvider() {
+    let SO_origin = [];
+    let SO_id = [];
+    let PO_id = [];
+
+    let filter = function () {
+      let temp: TaskModel[];
+      temp = tasksList.filter((task) => {
+        return task.state === 'no'; //Solicitadas
+      });
+      if (
+        typeof solicitudesList !== 'undefined' &&
+        solicitudesList.length > 0
+      ) {
+        Array.prototype.push.apply(solicitudesList, temp);
+      } else {
+        solicitudesList = temp;
+      }
+
+      temp = tasksList.filter((task) => {
+        return task.state === 'invoiced'; //Contratadas
+      });
+      if (
+        typeof contratadosList !== 'undefined' &&
+        contratadosList.length > 0
+      ) {
+        Array.prototype.push.apply(contratadosList, temp);
+      } else {
+        contratadosList = temp;
+        historialList = temp; ///////////////////////////borrar despues
+      }
+
+      temp = tasksList.filter((task) => {
+        return task.state === ''; //Historial
+      });
+      if (typeof historialList !== 'undefined' && historialList.length > 0) {
+        Array.prototype.push.apply(historialList, temp);
+      } else {
+        historialList = temp;
+      }
+
+      tasksList$.next(true);
+    };
+
+    let get_order_line = function () {
+      let inParams = [];
+      inParams.push([['order_id', 'in', PO_id]]);
+      inParams.push(['product_id', 'product_qty', 'price_unit']);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'get_po_list');
+          } else {
+            for (let orderLine of value) {
+              for (let task of tasksList) {
+                for (let line of task.order_line) {
+                  if (line === orderLine.id) {
+                    switch (orderLine.product_id[0]) {
+                      case 40:
+                        task.work_force = orderLine.price_unit;
+                        break;
+
+                      case 41:
+                        task.materials = orderLine.price_unit;
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+
+            console.log(tasksList, 'con presupuesto');
+            get_photo_so();
+          }
+        }
+      );
+    };
+
+    let get_photo_so = function () {
+      let inParams = [];
+      inParams.push([['res_id', 'in', SO_id]]);
+      inParams.push([
+        'name',
+        'res_id',
+        'res_model',
+        'url',
+        'datas',
+        'mimetype',
+        'file_size',
+      ]);
+
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('ir.attachment'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error get_photo_so');
+          } else {
+            if (value) {
+              for (let resId of value) {
+                for (let task of tasksList) {
+                  if (task.origin_id === resId.res_id) {
+                    if (knownTypes[resId.datas[0]]) {
+                      task.photoNewTaskArray.push(
+                        knownTypes[resId.datas[0]] + resId.datas
+                      );
+                    }
+                  }
+                }
+              }
+            }
+            filter();
+          }
+        }
+      );
+    };
+
+    let get_Res_Id = function () {
+      let inParams = [];
+      inParams.push([['name', 'in', SO_origin]]);
+      inParams.push(['id', 'name']);
+
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('sale.order'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error get_Res_Id');
+          } else {
+            for (let id_value of value) {
+              SO_id.push(id_value.id);
+            }
+            for (let task of tasksList) {
+              let temp = value.find((element) => element.name === task.origin);
+              if (temp) {
+                task.origin_id = temp.id;
+              }
+            }
+
+            if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
+              get_order_line();
+             
+            } else {
+              
+              get_photo_so();
+            }
+          }
+        }
+      );
+    };
+
+    let get_po_list = function (partnerId) {
+      let inParams = [];
+      inParams.push([
+        ['partner_id', '=', partnerId],
+        ['invoice_status', 'in', invoiceStatus],
+      ]);
+      inParams.push([
+        'state',
+        'product_id',
+        'note',
+        'user_id',
+        'partner_id',
+        'name',
+        'date_order',
+        'commitment_date',
+        'invoice_status',
+        'title',
+        'note',
+        'require_materials',
+        'commitment_date',
+        'address_street',
+        'address_floor',
+        'address_portal',
+        'address_number',
+        'address_door',
+        'address_stairs',
+        'address_zip_code',
+        'address_latitude',
+        'address_longitude',
+        'origin',
+        'state',
+        'order_line',
+      ]);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'get_po_list');
+          } else {
+            console.log(value, 'todas las tareas');
+
+            tasksList = [];
+            SO_origin = [];
+            for (let task of value) {
+              let temp = new TaskModel();
+              temp.offer_send = task['state'];
+              temp.origin = task['origin'];
+              SO_origin.push(task['origin']);
+              if (task['state'] == 'sent') {
+                PO_id.push(task['id']);
+              }
+              temp.type = task['product_id'][1];
+              temp.description = task['note'];
+              temp.client_id = task['user_id'][0];
+              temp.client_name = task['user_id'][1];
+              temp.provider_id = task['partner_id'][0];
+              temp.provider_name = task['partner_id'][1];
+              temp.require_materials = task['require_materials'];
+              temp.id = task['id'];
+              temp.state = task['invoice_status'];
+              temp.id_string = task['name'];
+              temp.date = task['date_order'];
+              temp.date_planned = String(task['commitment_date']).slice(0, 10);
+              temp.time = String(task['commitment_date']);
+              temp.title = task['title'];
+              temp.address = new Address(
+                task['address_street'],
+                task['address_number'],
+                task['address_portal'],
+                task['address_stairs'],
+                task['address_floor'],
+                task['address_door'],
+                task['address_zip_code'],
+                task['address_latitude'],
+                task['address_longitude']
+              );
+              temp.order_line = task['order_line'];
+              tasksList.push(temp);
+            }
+
+            if (typeof SO_origin !== 'undefined' && SO_origin.length > 0) {
+              get_Res_Id();
+            } else {
+              tasksList$.next(true);
+            }
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'requestTaskListProvider');
+        } else {
+          get_po_list(user.partner_id);
+        }
+      }
+    );
+  }
+
+  getRequestedTaskList$(): Observable<boolean> {
+    return tasksList$.asObservable();
+  }
+
+  getSolicitudeList() {
+    return solicitudesList;
+  }
+
+  setSolicitudesListEdit(messagesList: MessageModel[]) {
+    for (let i = 0; i < messagesList.length; i++) {
+      let temp = solicitudesList.findIndex(
+        (element) => element.id === messagesList[i].offer_id
+      );
+      if (temp != -1) {
+        solicitudesList[temp].notificationChat = true;
+      }
+    }
+  }
+
+  solicitudeListEdit(id: number, type: number) {
+    switch (type) {
+      case 1:
+        //////////////////////////eliminar solicitud
+        temp = solicitudesList.findIndex((element) => element.id === id);
+        if (temp !== -1) {
+          solicitudesList.splice(temp, 1);
+        }
+        break;
+      case 2:
+        temp = solicitudesList.findIndex((element) => element.id === id);
+        if (temp != -1) {
+          solicitudesList[temp].notificationNewSo = false;
+          solicitudesList[temp].notificationOffert = false;
+          solicitudesList[temp].notificationChat = false;
+        }
+
+        break;
+    }
+  }
+
+  solicitudeListEditBudget(taskEdit: TaskModel) {
+    temp = solicitudesList.findIndex((element) => element.id === taskEdit.id);
+    if (temp != -1) {
+      if (!taskEdit.require_materials) {
+        solicitudesList[temp].work_force = taskEdit.work_force;
+        solicitudesList[temp].materials = taskEdit.materials;
+      } else {
+        solicitudesList[temp].work_force = taskEdit.work_force;
+      }
+    }
+  }
+
+  getContratadosList() {
+    /* return contratadosList; */ //esto esta bien
+    return solicitudesList; //temporal se puede borrar es para que se vea los contratados
+  }
+
+  getHistorialList() {
+    //return historialList;  esto esta bien
+    return solicitudesList; //temporal se puede borrar es para que se vea los contratados
+  }
+
+  sendOffer(offer: TaskModel) {
+    console.log(offer);
+
+    let POlineMaterials = {
+      name: 'Materiales',
+      product_id: 41,
+      product_uom: 1,
+      product_qty: 1,
+      price_unit: offer.materials,
+      date_planned: offer.date_planned,
+      order_id: offer.id,
+    };
+
+    let POline = {
+      name: 'Mano de Obra',
+      product_id: 40,
+      product_uom: 1,
+      product_qty: 1,
+      price_unit: offer.work_force,
+      date_planned: offer.date_planned,
+      order_id: offer.id,
+    };
+
+    let acept_PO = function () {
+      let inParams = [];
+      let params = [];
+      inParams.push(offer.id);
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('set_state_sent'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(value);
+            notificationSendOffertOk$.next(offer.id);
+          }
+        }
+      );
+    };
+
+    let addLinePOMaterials = function () {
+      let inParams = [];
+      inParams.push(POlineMaterials);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('create'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error addPOlineMaterials');
+          } else {
+            console.log('añadiendo materiales');
+            acept_PO();
+          }
+        }
+      );
+    };
+
+    let addLinePO = function () {
+      console.log(POline);
+
+      let inParams = [];
+      inParams.push(POline);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('create'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error addLinePO');
+          } else {
+            if (offer.materials) {
+              addLinePOMaterials();
+            } else {
+              acept_PO();
+            }
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error sendOffer');
+        } else {
+          console.log(value);
+          addLinePO();
+        }
+      }
+    );
+  }
+
+  getnotificationSendOffertOk$(): Observable<number> {
+    return notificationSendOffertOk$.asObservable();
+  }
 }

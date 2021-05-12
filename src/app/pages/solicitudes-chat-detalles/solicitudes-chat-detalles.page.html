@@ -184,13 +184,13 @@
             <ion-img class="icon_price" src="/assets/icons/bolsa.png"></ion-img>
             <ion-label class="h3_title">Precio</ion-label>
           </div>
-          <ion-label class="h6_title">Materiales: {{ materiales }}€ </ion-label>
+          <ion-label class="h6_title">Materiales: {{ task.materials }} € </ion-label>
           <div class="flex_row">
             <ion-label class="h6_title" style="width: 50% !important"
-              >Mano de obra: {{ manoObra }}€
+              >Mano de obra: {{ task.work_force }} €
             </ion-label>
             <ion-label class="h6_title" style="width: 50% !important"
-              >TOTAL: {{ total }}€
+              >TOTAL: {{ task.work_force + task.materials  }} €
             </ion-label>
           </div>
         </div>

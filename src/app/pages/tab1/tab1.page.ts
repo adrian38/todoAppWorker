@@ -27,7 +27,6 @@ export class Tab1Page {
   tab: String;
   loading: any;
   solicitud_vacia: boolean = true;
-  
 
   tasksList$: Observable<boolean>; // servicio comunicacion
   notificationNewMessg$: Observable<number[]>;
@@ -60,9 +59,7 @@ export class Tab1Page {
     this.init();
     this._taskOdoo.setTab1In(true);
 
-   /*  this.cantidad_solicitudes(); */
-
-
+    /*  this.cantidad_solicitudes(); */
   }
 
   ngOnDestroy(): void {
@@ -84,47 +81,53 @@ export class Tab1Page {
       //this.presentLoadingCargado();
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
-      ///////////preguntar si no hay solicitudes cuando se arregle 
-      
-        if (!this._taskOdoo.getPilaEmpthy()) {
-          let temp = this._taskOdoo.getPilaSolicitud();
-          let tempChat:number[]=[];
-          let tempNew:number[]=[];
+      ///////////preguntar si no hay solicitudes cuando se arregle
 
-          for (let newElement of temp) {
-            this.solicitudesList = this.subServ.getSolicitudeList();
-  
-            switch (newElement.notificationType) {
-              case 1:
-               let temp = this.solicitudesList.findIndex(
-                    (element) => element.id === newElement.id
-                  );
-                  if (temp === -1) {
-                    tempNew.push(newElement.id);
-                  }
-               break;
+      if (!this._taskOdoo.getPilaEmpthy()) {
+        let temp = this._taskOdoo.getPilaSolicitud();
+        let tempChat: number[] = [];
+        let tempNew: number[] = [];
 
-              case 2:
-                /* let temp = this.solicitudesList.findIndex(
+        for (let newElement of temp) {
+          this.solicitudesList = this.subServ.getSolicitudeList();
+
+          switch (newElement.notificationType) {
+            case 1:
+              if (
+                typeof this.solicitudesList !== 'undefined' &&
+                this.solicitudesList.length > 0
+              ) {
+                let temp = this.solicitudesList.findIndex(
+                  (element) => element.id === newElement.id
+                );
+                if (temp === -1) {
+                  tempNew.push(newElement.id);
+                }
+              } else {
+                tempNew.push(newElement.id);
+              }
+
+              break;
+
+            case 2:
+              /* let temp = this.solicitudesList.findIndex(
                   (element) => element.id_string === newElement.id_string
                 );
                 if (temp != -1) {
                   this.solicitudesList[temp].notificationOffert = true;
                 } */
-                break;
-                case 3:
-                  tempChat.push(newElement.id);
-                  break;
-
-            }
+              break;
+            case 3:
+              tempChat.push(newElement.id);
+              break;
           }
-          if(typeof tempNew !== 'undefined' && tempNew.length > 0)
-          this._taskOdoo.requestTaskPoUpdate(tempNew);
-          
-          if(typeof tempNew !== 'undefined' && tempNew.length > 0)
-          this._chatOdoo.requestNewMessageNoti(tempChat);
         }
-     
+        if (typeof tempNew !== 'undefined' && tempNew.length > 0)
+          this._taskOdoo.requestTaskPoUpdate(tempNew);
+
+        if (typeof tempNew !== 'undefined' && tempNew.length > 0)
+          this._chatOdoo.requestNewMessageNoti(tempChat);
+      }
     }
   }
 
@@ -134,7 +137,8 @@ export class Tab1Page {
 			this.presentAlert();
 		}); */
 
-    this.notificationNewMessg$ = this._taskOdoo.getRequestedNotificationNewMessg$();
+    this.notificationNewMessg$ =
+      this._taskOdoo.getRequestedNotificationNewMessg$();
     this.subscriptionNotificationMess = this.notificationNewMessg$.subscribe(
       (notificationNewMessg) => {
         this.ngZone.run(() => {
@@ -143,72 +147,56 @@ export class Tab1Page {
       }
     );
 
-    this.notificationNewMessgOrigin$ = this._chatOdoo.getMessagesOriginNotification$(); //
-    this.subscriptionNotificationMessgOrigin = this.notificationNewMessgOrigin$.subscribe(
-      (notificationNewMessg) => {
+    this.notificationNewMessgOrigin$ =
+      this._chatOdoo.getMessagesOriginNotification$(); //
+    this.subscriptionNotificationMessgOrigin =
+      this.notificationNewMessgOrigin$.subscribe((notificationNewMessg) => {
         this.ngZone.run(() => {
-
-           for (let i = 0; i < notificationNewMessg.length; i++) {
+          for (let i = 0; i < notificationNewMessg.length; i++) {
             let temp = this.solicitudesList.findIndex(
-              (element) =>
-                element.id === notificationNewMessg[i].offer_id
+              (element) => element.id === notificationNewMessg[i].offer_id
             );
             if (temp != -1) {
               this.solicitudesList[temp].notificationChat = true;
             }
-          } 
+          }
         });
-	  });
-	  
+      });
 
-    this.notificationNewPoSuplier$ = this._taskOdoo.getRequestedNotificationNewPoSuplier$();
+    this.notificationNewPoSuplier$ =
+      this._taskOdoo.getRequestedNotificationNewPoSuplier$();
     this.subscriptioNewPoSuplier = this.notificationNewPoSuplier$.subscribe(
       (notificationNewPoSuplier: number[]) => {
         this.ngZone.run(() => {
-          if (typeof this.solicitudesList !== 'undefined' && this.solicitudesList.length > 0) {
-
-		        for (let Po_id of notificationNewPoSuplier) {
+          if (
+            typeof this.solicitudesList !== 'undefined' &&
+            this.solicitudesList.length > 0
+          ) {
+            for (let Po_id of notificationNewPoSuplier) {
               let temp = this.solicitudesList.findIndex(
                 (element) => element.id === Po_id
               );
               if (temp !== -1) {
                 notificationNewPoSuplier.splice(temp, 1);
               }
-			}
-              
-            	this._taskOdoo.requestTaskPoUpdate(notificationNewPoSuplier);
+            }
           }
+          this._taskOdoo.requestTaskPoUpdate(notificationNewPoSuplier);
         });
       }
     );
 
-
     ////////////////////////////////////////////////esto es para cancelar la solicitud  de provider
-    this.notificationPoCancelled$ = this._taskOdoo.getRequestedNotificationPoCancelled$();
+    this.notificationPoCancelled$ =
+      this._taskOdoo.getRequestedNotificationPoCancelled$();
     this.subscriptioPoCancelled = this.notificationPoCancelled$.subscribe(
       (notificationPoCancelled) => {
         this.ngZone.run(() => {
           for (let Po_id of notificationPoCancelled) {
-            console.log(notificationPoCancelled,'PO Cancelled por notificacion');
-            let temp = this.solicitudesList.findIndex(
-              (element) => element.id === Po_id
+            console.log(
+              notificationPoCancelled,
+              'PO Cancelled por notificacion'
             );
-            if (temp !== -1) {
-              this.solicitudesList.splice(temp, 1);
-            }
-          }
-        });
-      }
-    ); 
-      //////////////////////////////////////////////////////////////////////////////
-    
-
-    this.notificationOffertCancelled$ = this._taskOdoo.getRequestedNotificationOffertCancelled$();
-    this.subscriptionOffertCancelled = this.notificationOffertCancelled$.subscribe(
-      (notificationOffertCancelled) => {
-        this.ngZone.run(() => {
-          for (let Po_id of notificationOffertCancelled) {
-            console.log(notificationOffertCancelled,'PO Cancelled por notificacionOffert');
             let temp = this.solicitudesList.findIndex(
               (element) => element.id === Po_id
             );
@@ -219,8 +207,33 @@ export class Tab1Page {
         });
       }
     );
+    //////////////////////////////////////////////////////////////////////////////
 
-    this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
+    this.notificationOffertCancelled$ =
+      this._taskOdoo.getRequestedNotificationOffertCancelled$();
+    this.subscriptionOffertCancelled =
+      this.notificationOffertCancelled$.subscribe(
+        (notificationOffertCancelled) => {
+          this.ngZone.run(() => {
+            if (
+              typeof this.solicitudesList !== 'undefined' &&
+              this.solicitudesList.length > 0
+            ) {
+              for (let Po_id of notificationOffertCancelled) {
+                let temp = this.solicitudesList.findIndex(
+                  (element) => element.id === Po_id
+                );
+                if (temp !== -1) {
+                  this.solicitudesList.splice(temp, 1);
+                }
+              }
+            }
+          });
+        }
+      );
+
+    this.notificationPoAcepted$ =
+      this._taskOdoo.getRequestedNotificationPoAcepted$();
     this.subscriptionPoAcepted = this.notificationPoAcepted$.subscribe(
       (notificationPoAcepted) => {
         this.ngZone.run(() => {
@@ -240,9 +253,10 @@ export class Tab1Page {
     this.subscriptiontasksList = this.tasksList$.subscribe(
       (tasksList: boolean) => {
         this.ngZone.run(() => {
+
+          
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
-            
           }
           //this.solicitudEmpty();
         });
@@ -250,41 +264,43 @@ export class Tab1Page {
     );
   }
 
-   solicitudEmpty() {
+  solicitudEmpty() {
     if (
       typeof this.solicitudesList !== 'undefined' &&
       this.solicitudesList.length > 0
     ) {
       this.solicitud_vacia = false;
-      console.log('hay solcitud')
+      console.log('hay solcitud');
     } else {
       this.solicitud_vacia = true;
-      console.log(' no hay solcitud')
+      console.log(' no hay solcitud');
     }
-  } 
+  }
 
   in(i) {
     this.task = this.solicitudesList[i];
     this._taskOdoo.setTaskCesar(this.task);
     this._chatOdoo.setIdPo(this.task.id);
 
-    if (this.task.offer_send == 'sent' ){
-      this.navCtrl.navigateRoot('/solicitudes-chat-detalles', { animated: true,animationDirection: 'forward',});
+    if (this.task.offer_send == 'sent') {
+      this.navCtrl.navigateRoot('/solicitudes-chat-detalles', {
+        animated: true,
+        animationDirection: 'forward',
+      });
+    } else {
+      this.navCtrl.navigateRoot('/presupuestar', {
+        animated: true,
+        animationDirection: 'forward',
+      });
     }
-    else{
-      this.navCtrl.navigateRoot('/presupuestar', { animated: true,animationDirection: 'forward',});
-    }
-    
   }
-  
 
-  cancelar(i){
-    
+  cancelar(i) {
     this._taskOdoo.cancelPOsuplier(this.solicitudesList[i].id);
     /////////////////////////////////////////////////poner cargado;
   }
 
-   /* cantidad_solicitudes(){
+  /* cantidad_solicitudes(){
      
     if (this.solicitudesList.length < 1) {
       this.solicitud_vacia=true;
@@ -293,10 +309,4 @@ export class Tab1Page {
         this.solicitud_vacia=false;
       } 
     } */
-      
-  
 }
-
-
-
-  

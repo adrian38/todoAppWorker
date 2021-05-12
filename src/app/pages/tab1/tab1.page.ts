@@ -28,7 +28,6 @@ export class Tab1Page {
   solicitudesList: TaskModel[];
   tab: String;
   loading: any;
-  solicitudVacia: boolean = true;
   solicitud_vacia: boolean = true;
   
 
@@ -92,8 +91,8 @@ export class Tab1Page {
       //this.presentLoadingCargado();
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
-      this.solicitudEmpty();
-      if (!this.solicitudVacia) {
+      ///////////preguntar si no hay solicitudes cuando se arregle 
+      
         if (!this._taskOdoo.getPilaEmpthy()) {
           let temp = this._taskOdoo.getPilaSolicitud();
           let tempChat:number[]=[];
@@ -132,7 +131,7 @@ export class Tab1Page {
           if(typeof tempNew !== 'undefined' && tempNew.length > 0)
           this._chatOdoo.requestNewMessageNoti(tempChat);
         }
-      }
+     
     }
   }
 
@@ -252,23 +251,24 @@ export class Tab1Page {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
             
           }
+          //this.solicitudEmpty();
         });
       }
     );
   }
 
-  solicitudEmpty() {
+   solicitudEmpty() {
     if (
       typeof this.solicitudesList !== 'undefined' &&
       this.solicitudesList.length > 0
     ) {
-      this.solicitudVacia = false;
+      this.solicitud_vacia = false;
       console.log('hay solcitud')
     } else {
-      this.solicitudVacia = true;
+      this.solicitud_vacia = true;
       console.log(' no hay solcitud')
     }
-  }
+  } 
 
   in(i) {
     this.task = this.solicitudesList[i];
@@ -291,7 +291,7 @@ export class Tab1Page {
     /////////////////////////////////////////////////poner cargado;
   }
 
-   cantidad_solicitudes(){
+   /* cantidad_solicitudes(){
      
     if (this.solicitudesList.length < 1) {
       this.solicitud_vacia=true;

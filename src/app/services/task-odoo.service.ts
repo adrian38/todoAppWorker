@@ -68,6 +68,8 @@ let notifications$ = new Subject<boolean>();
 let rutaActual:boolean = true ;
 let rutaChat: boolean = false;
 
+let invoiceStatus =['no','invoiced'];
+
 
 //-------------------------------------------------cesar
 
@@ -748,9 +750,10 @@ export class TaskOdooService {
 		return task$.asObservable();
 	}
 
- 	requestTaskListProvider() {
+ 	 requestTaskListProvider() {
 		let SO_origin = [];
 		let SO_id = [];
+		let PO_id = [];
 
 		let filter = function() {
 			
@@ -785,6 +788,75 @@ export class TaskOdooService {
 
 			tasksList$.next(true);
 		};
+
+		let get_order_line = function(){
+
+			let inParams = [];
+			inParams.push([ [ 'order_id', 'in', PO_id ] ]);
+			inParams.push([
+						
+				'product_id',
+				'product_qty',
+				'price_unit', 
+			
+			]);
+			let params = [];
+			params.push(inParams);
+
+			let fparams = [];
+			fparams.push(jaysonServer.db);
+			fparams.push(user.id);
+			fparams.push(jaysonServer.password);
+			fparams.push('purchase.order.line'); //model
+			fparams.push('search_read'); //method
+
+			for (let i = 0; i < params.length; i++) {
+				fparams.push(params[i]);
+			}
+
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+				err,
+				error,
+				value
+			) {
+				if (err || !value) {
+					console.log(err, 'get_po_list');
+				} else {
+
+					console.log(value, 'todas las tareas');
+					
+					 for (let orderLine of value) {
+						for (let task of tasksList) {
+							for (let line of task.order_line){
+
+								if(line === orderLine.id){
+									switch (orderLine.product_id[0]){
+										case 40:
+											task.work_force = orderLine.price_unit;
+										break;
+
+										case 41:
+											task.materials = orderLine.price_unit;
+										break;
+									}
+								}
+
+							}
+
+						}
+
+					} 
+					
+					console.log(tasksList, "con presupuesto");
+					get_Res_Id();
+
+				
+					
+				}
+			});
+
+		} 
+
 
 		let get_photo_so = function() {
 			let inParams = [];
@@ -875,7 +947,7 @@ export class TaskOdooService {
 
 		let get_po_list = function(partnerId) {
 			let inParams = [];
-			inParams.push([ [ 'partner_id', '=', partnerId ] ]);
+			inParams.push([ [ 'partner_id', '=', partnerId ],['invoice_status' , 'in', invoiceStatus] ]);
 			inParams.push([
 				'state',
 				'product_id',
@@ -936,6 +1008,9 @@ export class TaskOdooService {
 						temp.offer_send = task['state'];
 						temp.origin = task['origin'];
 						SO_origin.push(task['origin']);
+						if(task['state']== 'sent'){
+							PO_id.push(task['id']);
+						}
 						temp.type = task['product_id'][1];
 						temp.description = task['note'];
 						temp.client_id = task['user_id'][0];
@@ -961,14 +1036,17 @@ export class TaskOdooService {
 							task['address_latitude'],
 							task['address_longitude']
 						);
+						temp.order_line = ['order_line'];
 
 						tasksList.push(temp);
 					}
 
-					if (SO_origin.length) {
+					if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
+						get_order_line();
+					} else if(typeof SO_id !== 'undefined' && SO_id.length > 0) {
 						get_Res_Id();
-					} else {
-						filter();
+					}else{
+						tasksList$.next(true);
 					}
 				}
 			});
@@ -990,9 +1068,9 @@ export class TaskOdooService {
 				}
 			}
 		);
-	} 
+	}  
 
-	
+
 
 	getRequestedTaskList$(): Observable<boolean> {
 		return tasksList$.asObservable();

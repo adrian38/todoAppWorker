@@ -33,14 +33,15 @@ export class NotificacionesPage implements OnInit {
 
   ngOnInit() {
     
+    
   }
   ngOnDestroy() {
-    this.subscriptionNotificationMess.unsubscribe();
+   /*  this.subscriptionNotificationMess.unsubscribe();
     this.subscriptionNotificationMessgOrigin.unsubscribe();
     this.subscriptionOffertCancelled.unsubscribe();
     this.subscriptionPoAcepted.unsubscribe();
     this.subscriptioNewPoSuplier.unsubscribe();
-    this.subscriptioPoCancelled.unsubscribe();
+    this.subscriptioPoCancelled.unsubscribe(); */
   }
 
  /*  subscriptions() {

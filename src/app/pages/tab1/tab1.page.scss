@@ -42,13 +42,38 @@ ion-item {
   --ion-safe-area-right: 0 !important;
 }
 
+
 .item {
   width: 100% !important;
   border-bottom: 1px solid var(--ion-color-orange);
-  padding: 8px 0 !important;
-  --padding-start: 0;
+  --padding-start: 0px !important;
+   padding: 8px 0px !important; 
+ /*  --padding-start: 10px !important; 
+  --padding-end: 10px !important;  */
+  //  --padding-top: 2px !important;
+  // --padding-bottom: 2px !important;
+/*   --background: var(--ion-color-gray);
+  --border-radius: 9px !important;
+  --border-width:  9px !important;
+  --border-color:  var(--ion-color-gray); */
   
 }
+
+.item_notificacion{
+  width: 100% !important;
+  border-bottom: 1px solid var(--ion-color-orange);
+  --padding-start: 0px !important;
+   padding: 8px 0px !important; 
+ /*  --padding-start: 10px !important; 
+  --padding-end: 10px !important;  */
+  //  --padding-top: 2px !important;
+  // --padding-bottom: 2px !important;
+  --background: var(--ion-color-gray);
+  --border-radius: 9px !important;
+  --border-width:  9px !important;
+  --border-color:  var(--ion-color-gray);
+}
+
 
 ion-fab ion-fab-button ion-icon {
     color: white;

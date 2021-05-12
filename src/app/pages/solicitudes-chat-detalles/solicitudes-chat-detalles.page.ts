@@ -118,42 +118,6 @@ yo:boolean=false;
 
     this.ver_imagenes();
 
-   /*  setTimeout(() => {
-      let simulatedChat: ChatDetails = 
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: false,
-          message: 'Hola, como estas?? Quisiera ver si se puede pasar la oferta para el Viernes por la mañana.',
-          date: ""
-        };
-
-      this.unshiftChat(simulatedChat);
-
-      simulatedChat =
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: false,
-          message: 'Si pudieras venir el viernes a las 10am seria lo mejor, a esa hora no tengo compromisos',
-          date: ""
-        };
-
-      this.unshiftChat(simulatedChat);
-
-      simulatedChat =
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: true,
-          message: 'Ok, saludos',
-          date: ""
-        };
-
-      this.unshiftChat(simulatedChat);
-
-    }, 8000); */
-
  
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();
 		this.subscriptionNewMsg = this.messageSendOk$.subscribe((messageSendOk) => {
@@ -200,37 +164,6 @@ yo:boolean=false;
 
   pushToChat() {
 
-    /* if(this.newMessage.length === 0)
-    {
-      return;
-    } */
-    
- /*     const newChat: ChatDetails =
-    {
-      userID: "Me",
-      timeStamp: Date.now(),
-      isLastMessage: true,
-      message: this.newMessage,
-      date: ""
-    };  */
-
-    //Se limpian las banderas de ultimo mensaje
-  /*     for(let i = 0; i < this.messagesList.length; i++) {
-        console.log('for0',this.messagesList.length);
-        console.log('for1',this.message);
-      if(this.chats[i].userID ===this.purchaseOrderID.toString() ) {
-        this.chats[i].isLastMessage = false;
-      } 
-
-   
-
- 
-
-
-    }  */ 
-
-    //this.unshiftChat(this.messages);
-
     if (this.message.message.length > 0) {
         this.message.offer_id = this.purchaseOrderID;
         //this.yo=true;
@@ -254,17 +187,12 @@ yo:boolean=false;
 
   }
 
-/*   unshiftChat(chat: ChatDetails) {
-    let currentTime = Date.now();
-    let strTime = new Date(currentTime).toLocaleString();
 
-    chat.date = strTime;
-
-    this.chats.unshift(chat);
-  } */
 
   onClose() {
     console.log("Close clicked");
+    this.navCtrl.navigateRoot('/tabs/tab1', {animated: true, animationDirection: 'back' }) ;
+
   }
 
   ver_imagenes(){

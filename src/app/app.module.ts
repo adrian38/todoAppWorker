@@ -39,6 +39,8 @@ import { MessageService } from 'primeng/api';
 /////////////////////////////////////////////
 
 
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
@@ -67,7 +69,14 @@ import { ComponentsModule } from './components/components.module';
     SignUpOdooService,
     LocationService,
     DatePipe,
-    MessageService,],
+    MessageService,
+  
+  {
+    provide: 
+    LOCALE_ID, 
+    useValue:'es'
+  
+  }],
 
   bootstrap: [AppComponent],
 })

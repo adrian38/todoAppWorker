@@ -3,6 +3,7 @@ import { NavController, Platform } from '@ionic/angular';
 
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 })
 export class DatosPersonalesPage implements OnInit {
 	
+
 
    avatarusuario:string =""; 
     nombre: string = '';
@@ -38,9 +40,25 @@ export class DatosPersonalesPage implements OnInit {
 	usuario: UsuarioModel;
 
 
+	cities: City[];
+
+    selectedCity1: City;
+
+
   constructor(private platform: Platform,
 	          private navCtrl: NavController,
-	          private _authOdoo: AuthOdooService) { }
+	          private _authOdoo: AuthOdooService) {
+				
+				
+				this.cities = [
+					{name: 'New York', code: 'NY'},
+					{name: 'Rome', code: 'RM'},
+					{name: 'London', code: 'LDN'},
+					{name: 'Istanbul', code: 'IST'},
+					{name: 'Paris', code: 'PRS'}
+				];
+				
+			   }
 
   ngOnInit() {
   //  this.avatarusuario =  '../../../assets/registro.svg'
@@ -143,3 +161,7 @@ placeholder() {
 
 
 
+interface City {
+    name: string,
+    code: string
+}

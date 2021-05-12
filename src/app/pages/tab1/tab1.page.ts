@@ -19,9 +19,11 @@ import { MessageModel } from 'src/app/models/message.model';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
+
+  notii:boolean = false;
   cant;
   id_string: string;
-  titulo: string = '';
+  titulo_solicitud: string = '';
   task: TaskModel;
   solicitudesList: TaskModel[];
   tab: String;
@@ -63,6 +65,8 @@ export class Tab1Page {
     this.subscriptions();
     this.init();
     this._taskOdoo.setTab1In(true);
+
+    console.log('tareas del tab',this.solicitudesList);
 
    /*  this.cantidad_solicitudes(); */
 
@@ -296,7 +300,16 @@ export class Tab1Page {
         this.solicitud_vacia=false;
       } 
     }
-      
+      tituloSolicitud(i){
+        
+        this.titulo_solicitud=this.solicitudesList[i].title;
+        if (this.titulo_solicitud.length <16){
+          return this.titulo_solicitud;
+        }
+        else {
+          return  this.titulo_solicitud.slice(0,15) + " ... ";
+          }
+      }
   
 }
 

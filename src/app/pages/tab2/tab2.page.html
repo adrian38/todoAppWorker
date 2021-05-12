@@ -37,10 +37,7 @@
 
             <div class="flex_column" style="width: 100%; margin-left: 20px">
               <div class="flex_row" style="width: 100%">
-                <ion-label class="cat_title"
-                  >{{contratado.title.slice(0,15) + " ... "}}</ion-label
-                >
-           
+                <ion-label class="cat_title">{{tituloContratado(i)}}</ion-label>
               </div>
 
               <div class="flex_row">
@@ -63,17 +60,17 @@
                 >
                 <!-- <div style="min-width: 43px"></div> -->
               </div>
-        
-                
-              
             </div>
-                <div class="flex_column" style="
+            <div
+              class="flex_column"
+              style="
                 min-height: 100% !important;
                 width: 55px !important;
                 justify-content: flex-end;
-              ">
-                <div
-                style="display: flex; margin-bottom: 10px;margin-left: 17px;"
+              "
+            >
+              <div
+                style="display: flex; margin-bottom: 10px; margin-left: 17px"
                 *ngIf="contratado.notificationOffert"
               >
                 <ion-img
@@ -81,8 +78,8 @@
                   src="/assets/icons/noti_ofer.svg"
                 ></ion-img>
               </div>
-                <ion-label class="precio"> 35 € </ion-label>
-              </div> 
+              <ion-label class="precio"> 35 € </ion-label>
+            </div>
           </div>
         </ion-item>
       </ion-list>
@@ -107,45 +104,6 @@
     class="flex_column"
     style="height: 100%; width: 100%"
   >
-    <!-- <div class="flex_centered" style="width: 100%; padding-top: 10px; padding-bottom: 20px;">
-
-      <ion-list style="width: 80% !important;">
-
-        <ion-item class="item" *ngFor="let history of historial" lines="none" (click)="onClickItemHistorial()">
-
-          <div class="flex_row" style="width: 100%;">
-
-            <img class="image" [src]="history.foto">
-
-            <div class="flex_column" style="width: 100%; margin-left: 20px;">
-
-              <div class="flex_row" style="width: 100%;">
-                <ion-label class="cat_title">{{ history.titulo }}</ion-label>
-                <ion-label class="ordenNumber">{{ history.numeroOrden }}</ion-label>
-                <ion-label class="start_date">{{ history.fechaInicio }}</ion-label>
-              </div>
-
-              <div class="flex_row">
-                <ion-img class="icon_calendar" src="/assets/icons/calendario.svg"></ion-img>
-                <ion-label class="fecha_fin">{{ history.fechaFin }}</ion-label>
-              </div>
-              <div class="flex_row">
-                <ion-img class="icon_horario" src="/assets/icons/hora.svg"></ion-img>
-                <ion-label class="horario">{{ history.horario }}</ion-label>
-                <ion-label class="precio">{{ history.precio }}</ion-label>
-              </div>
-            </div>
-
-          </div>
-
-        </ion-item>
-
-      </ion-list>
-
-    </div>
-    
- -->
-
     <div
       *ngIf=" !historial_vacio"
       class="flex_centered"
@@ -163,9 +121,7 @@
 
             <div class="flex_column" style="width: 100%; margin-left: 20px">
               <div class="flex_row" style="width: 100%">
-                <ion-label class="cat_title"
-                  >{{ historial.title.slice(0,12) + " . . " }}</ion-label
-                >
+                <ion-label class="cat_title">{{tituloHistorial(i)}}</ion-label>
               </div>
 
               <div class="flex_row">
@@ -186,9 +142,17 @@
                 <ion-label class="horario"
                   >{{ historial.time | date: "h:mm a" }}</ion-label
                 >
-                <div style="min-width: 43px"></div>
-                <ion-label class="precio"> 35 € </ion-label>
               </div>
+            </div>
+            <div
+              class="flex_column"
+              style="
+                min-height: 100% !important;
+                width: 55px !important;
+                justify-content: flex-end;
+              "
+            >
+              <ion-label class="precio"> 35 € </ion-label>
             </div>
           </div>
         </ion-item>

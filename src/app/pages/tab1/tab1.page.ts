@@ -19,9 +19,11 @@ import { MessageModel } from 'src/app/models/message.model';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
+
+  notii:boolean = false;
   cant;
   id_string: string;
-  titulo: string = '';
+  titulo_solicitud: string = '';
   task: TaskModel;
   solicitudesList: TaskModel[];
   tab: String;

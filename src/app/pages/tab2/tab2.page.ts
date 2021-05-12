@@ -12,6 +12,8 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 export class Tab2Page implements OnInit {
 
   task           : TaskModel;
+  titulo_contratado: string = '';
+  titulo_historial: string = '';
   contratadosList: TaskModel[];
   historialList  :TaskModel[];
 
@@ -67,6 +69,27 @@ export class Tab2Page implements OnInit {
     this._taskOdoo.setTaskCesar(this.task);
     
     this.navCtrl.navigateRoot('/historial-detalles', { animated: true, animationDirection: 'forward' }); 
+  }
+
+  tituloContratado(i){
+        
+    this.titulo_contratado=this.contratadosList[i].title;
+    if (this.titulo_contratado.length <16){
+      return this.titulo_contratado;
+    }
+    else {
+      return  this.titulo_contratado.slice(0,15) + " ... ";
+      }
+  }
+
+  tituloHistorial(i){
+    this.titulo_historial=this.historialList[i].title;
+    if (this.titulo_historial.length <16){
+      return this.titulo_historial;
+    }
+    else {
+      return  this.titulo_historial.slice(0,15) + " ... ";
+      }
   }
 
 }

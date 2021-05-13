@@ -25,16 +25,17 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+
 .flex_row {
-  display: flex;
+  display       : flex;
   flex-direction: row;
-  width: 100% !important;
+  width         : 100% !important;
 }
 
 .flex_column {
-  display: flex;
+  display       : flex;
   flex-direction: column;
-  width: 100% !important;
+  width         : 100% !important;
 }
 
 .flex_space_between {
@@ -42,33 +43,32 @@
 }
 
 .flex_centered {
-  display: flex !important;
+  display        : flex !important;
   justify-content: center !important;
-  align-items: center !important;
-  text-align: center;
+  align-items    : center !important;
+  text-align     : center;
 }
 
-
 .animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration : 1s;
+  animation-duration         : 1s;
   -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+  animation-fill-mode        : both;
 }
 
 .animated.infinite {
   -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+  animation-iteration-count        : infinite;
 }
 
 .animated.fast {
   -webkit-animation-duration: 400ms;
-  animation-duration: 400ms;
+  animation-duration        : 400ms;
 }
 
 .animated.slow {
   -webkit-animation-duration: 2s;
-  animation-duration: 2s;
+  animation-duration        : 2s;
 }
 
 @-webkit-keyframes fadeIn {
@@ -93,10 +93,11 @@
 
 .fadeIn {
   -webkit-animation-name: fadeIn;
-  animation-name: fadeIn;
+  animation-name        : fadeIn;
 }
 
 @-webkit-keyframes flash {
+
   from,
   50%,
   to {
@@ -110,6 +111,7 @@
 }
 
 @keyframes flash {
+
   from,
   50%,
   to {
@@ -124,10 +126,39 @@
 
 .flash {
   -webkit-animation-name: flash;
-  animation-name: flash;
+  animation-name        : flash;
 }
 
-.my-custom-class{
- // --background:#F4B004;
-  --spinner-color:var(--ion-color-orange);
+.alert-button.sc-ion-alert-md {
+  color: var(--ion-color-orange) !important;
 }
+
+.alert-button.sc-ion-alert-ios {
+  color: var(--ion-color-orange) !important;
+}
+
+.iaePop{
+  --min-width : 240px !important;
+  --box-shadow: var(--ion-color-black) 1px 1px 3px;
+}
+
+.sc-ion-popover-md-h {
+  --backdrop-opacity: 0;
+  --width           : 30%;
+  --min-width       : 135px;
+}
+
+.sc-ion-popover-ios-h {
+  --backdrop-opacity: 0;
+  --width           : 30%;
+  --min-width       : 135px;
+}
+
+// .sc-ion-select-popover.item.in-list.item-label {
+//   min-height: 30px;
+// }
+
+.my-custom-class{
+  // --background:#F4B004;
+   --spinner-color:var(--ion-color-orange);
+ }

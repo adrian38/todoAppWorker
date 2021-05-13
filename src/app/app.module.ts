@@ -44,7 +44,7 @@ import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [AppComponent],
@@ -57,6 +57,7 @@ import { ComponentsModule } from './components/components.module';
     AppRoutingModule,
     ToastModule,
     CommonModule,
+    DropdownModule,
     
     AgmCoreModule.forRoot({
         apiKey: 'AIzaSyBXq33cjYMCezL6xP-vo3m-qWQ5U9gRTfQ'

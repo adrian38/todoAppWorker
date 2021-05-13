@@ -9,7 +9,7 @@
 
       <div class="image_div" style="height: 160px !important;">
         <ion-card id="card_pic" [ngClass]="(selectFoto == true) ? 'no_border':'green_border_bold'">
-          <ion-img  [src]="avatarUsuario" (click)="onPictureClick( $event )">
+          <ion-img class="selecf" [src]="avatarUsuario" (click)="onPictureClick( $event )">
           </ion-img>
         </ion-card>
       </div>
@@ -20,13 +20,14 @@
                   lines=none 
                   [ngClass]="(categoriaSelected == '' && isCatTouched === true) ? 'green_border':'no_border'">
           <ion-label style="margin-top: 0 !important; margin-bottom: 0 !important;">Categoría de trabajador</ion-label>
-          <ion-select placeholder="Categoría" 
+          <ion-select interface="popover"
+                      placeholder="Categoría" 
                       [(ngModel)]="categoriaSelected"
                       name="categoria" 
                       cancelText="CANCELAR" 
                       okText="ACEPTAR"
-                      (ionChange)="onCatChange()"
-                      (ionCancel)="onCatCancel()">
+                      mode="ios"
+                      (ionFocus)="onCatFocusChange()">
             <ion-select-option *ngFor="let categoria of categorias" [value] = "categoria">{{ categoria }}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -39,13 +40,13 @@
                   lines=none 
                   [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'">
           <ion-label style="margin-top: 0 !important; margin-bottom: 0 !important;">Entidad jurídica</ion-label>
-          <ion-select placeholder="Entidad" 
+          <ion-select interface="popover"
+                      placeholder="Entidad" 
                       [(ngModel)]="entJuridicaSelected"
                       name="entidad" 
                       cancelText="CANCELAR" 
                       okText="ACEPTAR"
-                      (ionChange)="onEntChange()"
-                      (ionCancel)="onEntCancel()">
+                      (ionFocus)="onEntFocusChange()">
             <ion-select-option *ngFor="let entidad of entJuridica" [value] = "entidad">{{ entidad }}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -168,22 +169,6 @@
           </ion-label>
         </div>
 
-        
-        <div class="div_1">
-          <ion-input  class="custom_input"
-                      [ngClass]="(iae.invalid && iae.touched) ? 'green_border':'no_border'" 
-                      type="text" 
-                      [(ngModel)]="IAE" 
-                      name = 'IAE'
-                      required 
-                      placeholder="IAE"
-                      #iae="ngModel">
-          </ion-input>
-          <ion-label *ngIf="iae.invalid && iae.touched" class="mandatory">
-            Campo obligatorio
-          </ion-label>
-        </div>
-
         <div class="div_1">
           <ion-input  class="custom_input"
                       [ngClass]="(dni.invalid && dni.touched) ? 'green_border':'no_border'" 
@@ -284,7 +269,7 @@
               <ion-button   class="location_btn"
                             [ngClass]="(coordenadas == true) ? 'no_border':'green_border_bold'"
                             color="orange" 
-                            (click)="onLocationClick()">
+                            (click)="onLocationClick( $event )">
                 <ion-img  src="/assets/icons/ubicacion.svg"></ion-img>
               </ion-button>
             </div>
@@ -317,14 +302,24 @@
                           placeholder="CÓD POSTAL">
               </ion-input>
             </div>
+
+            <div class="div_1" style="display: flex; flex-direction: row; justify-content: flex-end;">
+              <ion-label class="iae_label">IAE</ion-label>
+              <ion-button   class="iae_btn"
+                            slot="icon-only"
+                            color="orange"
+                            (click)="presentPopover( $event )">
+                <ion-icon name="attach" style="color: white;"></ion-icon>
+              </ion-button>
+            </div>
+
           </div>
         </div>
 
-        <div class="flex_centered" style="height: 100px;">
+        <div class="flex_centered" style="height: 160px;">
           <ion-button   type="submit"
                         class="next_btn" 
                         color="orange"
-                        [disabled]="formulario.invalid || !coordenadas || !selectFoto || entJuridicaSelected == '' || categoriaSelected == ''" 
                         (click)="onNextClick( $event )">
             CREAR
           </ion-button>

@@ -1,0 +1,116 @@
+.btn_camera {
+    position        : relative;
+    width           : 50px;
+    height          : 50px;
+    --border-radius : 50%;
+    --background    : linear-gradient(to bottom, #0099FF, #0000CC);
+    --padding-top   : auto;
+    --padding-bottom: auto;
+    --padding-start : auto;
+    --padding-end   : auto;
+    margin-top      : 20px;
+    margin-bottom   : 30px;
+    color           : white;
+    outline         : none;
+}
+
+.btn_camera::before {
+    position     : absolute;
+    content      : "";
+    left         : 1px;
+    top          : 1px;
+    bottom       : 1px;
+    width        : 50%;
+    border-radius: 24px 0 0 24px;
+    background   : rgba(255, 255, 255, 0.2);
+    z-index      : 1000;
+}
+
+.btn_camera::after {
+    position  : absolute;
+    content   : "Cámara";
+    left      : 8px;
+    bottom    : -14px;
+    font      : normal 10px 'Helvetica-Roman', sans-serif;
+    text-align: center;
+    color     : var(--ion-color-black);
+}
+
+.btn_galery {
+    position     : relative;
+    width        : 50px;
+    height       : 50px;
+    --border-radius: 50%;
+    --background-activated: linear-gradient(to bottom, #FF0000, #dd5884);
+    --background   : linear-gradient(to bottom, #dd5884, #FF0000);
+    --padding-top   : auto;
+    --padding-bottom: auto;
+    --padding-start : auto;
+    --padding-end   : auto;
+    margin-top   : 20px;
+    margin-bottom: 30px;
+    color        : white;
+    outline      : none;
+}
+
+.btn_galery::before {
+    position  : absolute;
+    content   : "";
+    left      : 1px;
+    top       : 1px;
+    bottom    : 1px;
+    width     : 50%;
+    border-radius: 24px 0 0 24px;
+    background   : rgba(255, 255, 255, 0.2);
+    z-index      : 1000;
+}
+
+.btn_galery::after {
+    position  : absolute;
+    content   : "Galería";
+    left      : 10px;
+    bottom    : -14px;
+    font      : normal 10px 'Helvetica-Roman', sans-serif;
+    text-align: center;
+    color     : var(--ion-color-black);
+}
+
+.btn_document {
+    position     : relative;
+    width        : 50px;
+    height       : 50px;
+    --border-radius: 50%;
+    --background-activated: linear-gradient(to bottom, #d66406, #FF9500);
+    --background   : linear-gradient(to bottom, #FF9500, #d66406);
+    --padding-top   : auto;
+    --padding-bottom: auto;
+    --padding-start : auto;
+    --padding-end   : auto;
+    margin-top   : 20px;
+    margin-bottom: 30px;
+    color        : white;
+    outline      : none;
+    opacity      : 0.8;
+}
+
+.btn_document::before {
+    position  : absolute;
+    content   : "";
+    left      : 1px;
+    top       : 1px;
+    bottom    : 1px;
+    width     : 50%;
+    border-radius: 24px 0 0 24px;
+    background   : rgba(255, 255, 255, 0.2);
+    z-index      : 1000;
+}
+
+.btn_document::after {
+    position  : absolute;
+    content   : "Documentos";
+    left      : 0;
+    bottom    : -14px;
+    font      : normal 10px 'Helvetica-Roman', sans-serif;
+    text-align: center;
+    color     : var(--ion-color-black);
+}

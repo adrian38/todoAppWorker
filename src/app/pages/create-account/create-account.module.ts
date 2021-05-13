@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CreateAccountPageRoutingModule } from './create-account-routing.module';
 
 import { CreateAccountPage } from './create-account.page';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CreateAccountPageRoutingModule
+    CreateAccountPageRoutingModule,
+    DropdownModule
   ],
   declarations: [CreateAccountPage]
 })

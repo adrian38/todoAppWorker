@@ -26,11 +26,13 @@ let tasksList$ = new Subject<boolean>();
 
 let tasksList: TaskModel[];
 
-let pilaNotificaciones: any[];
+let pilaNotificaciones: PilaSolicitudes<TaskModel>;
 
 let solicitudesList: TaskModel[];
 let historialList: TaskModel[];
 let contratadosList: TaskModel[];
+
+let notificationsList: TaskModel[];
 
 let temp;
 
@@ -87,7 +89,7 @@ export class TaskOdooService {
   constructor(private _authOdoo: AuthOdooService, private router: Router) {
     jaysonServer = this._authOdoo.OdooInfoJayson;
     pilaSolicitudes = new PilaSolicitudes<TaskModel>();
-    pilaNotificaciones = [];
+    pilaNotificaciones = new PilaSolicitudes<TaskModel>();;
   }
 
   setTaskPayment(task: TaskModel) {
@@ -141,6 +143,14 @@ export class TaskOdooService {
 
   setTab1In(temp: boolean) {
     rutaActual = temp;
+  }
+
+  getPilaNotifications() {
+    return pilaNotificaciones.extraer();
+  }
+
+  getNotificationsList(){
+    return notificationsList;
   }
 
   getNotifications$(): Observable<boolean> {
@@ -255,12 +265,14 @@ export class TaskOdooService {
               if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
                 /* console.log(id_messg, 'nuevo mensaje id'); */
 				
-				let notifTask: TaskModel = new TaskModel();
-				notifTask.notificationType = 3;
+				          let notifTask: TaskModel = new TaskModel();
+				          notifTask.notificationType = 3;
                   for (let i = 0; i < id_messg.length; i++) {
                     notifTask.id = id_messg[i];
-                    pilaNotificaciones.push(notifTask);
+                    pilaNotificaciones.insertar(notifTask);
                   }
+
+                  notifications$.next(true);
 
                 if (rutaActual) {
                   notificationNewMessg$.next(id_messg);
@@ -343,7 +355,7 @@ export class TaskOdooService {
   requestTaskPoUpdate(id_po: number[]) {
     let SO_origin = [];
     let SO_id = [];
-	let PO_id = [];
+	  let PO_id = [];
     let tasksUpdate: TaskModel[];
 
 	let get_order_line = function () {
@@ -389,7 +401,6 @@ export class TaskOdooService {
 				}
 			  }
   
-			  console.log(tasksList, 'con presupuesto');
 			  get_photo_so();
 			}
 		  }

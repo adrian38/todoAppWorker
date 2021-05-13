@@ -24,7 +24,7 @@ export class TabHeaderComponent implements OnInit {
 
   ngOnInit() {
     const elemento = document.getElementById('div_back');
-    this. subscriptions();
+    this.subscriptions();
 
     if (this.backgroundColor !== '') {
       elemento.style.backgroundColor = this.backgroundColor;
@@ -42,7 +42,6 @@ export class TabHeaderComponent implements OnInit {
       (notiAlert: boolean) => {
         this.ngZone.run(() => {
 
-          
           if (notiAlert) {
            this.notification=true;
           }

@@ -121,11 +121,15 @@ ion-select {
   --padding-top   : 0;
   --padding-bottom: 0;
   --padding-start : 5px;
-  background      : white;
+  background      :  var(--ion-color-gray);
   text-align      : right;
   width           : 40%;
-  font            : normal 14px 'Helvetica-Roman', sans-serif !important;
+  font            : normal 13px 'Helvetica-Roman', sans-serif !important;
   min-width       : 100px;
+}
+
+ion-select-option{
+  width: 100%;
 }
 
 ion-select::part(text) {

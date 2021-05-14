@@ -1,7 +1,7 @@
 
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { NavController,Platform ,IonContent, ModalController} from '@ionic/angular';
+import { NavController,Platform ,IonContent, ModalController, LoadingController} from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { MessageModel } from 'src/app/models/message.model';
@@ -68,6 +68,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
   chats: ChatDetails[] = [];
   newMessage: string;
+  loading: HTMLIonLoadingElement = null;
 
   isLastMessage:boolean=true;
 
@@ -81,7 +82,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
              private _chatOdoo: ChatOdooService,
              private _authOdoo: AuthOdooService,
              private modalCtrl   :ModalController,
-             private subServ: ObtSubSService) {
+             private subServ: ObtSubSService,
+             public loadingController: LoadingController) {
 
             this.task = new TaskModel();
 
@@ -105,6 +107,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.valorSegment( this.subServ.getruta());
     
     this.subServ.setruta('solicitudes-chat-detalles');
+
+    this.presentLoading();
 
     
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -163,6 +167,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
            
               console.log('sms else',this.messagesList);
               this.coger();
+              this.loading.dismiss();
               
 						}
 					}
@@ -170,6 +175,15 @@ export class SolicitudesChatDetallesPage implements OnInit {
 			});
 		}); 
   }
+
+  // ngOnDestroy(): void {
+	
+	// 	this.subscriptionMessList.unsubscribe();
+	// 	this.subscriptionNewMsg.unsubscribe();
+	// 	this.subscriptionNotification.unsubscribe();
+	// 	this.subscriptionTask.unsubscribe();
+	// 	this._taskOdoo.setChatIn(false);
+	// }
 
   pushToChat() {
 
@@ -291,5 +305,15 @@ export class SolicitudesChatDetallesPage implements OnInit {
   this.valor_segment = 'detalles';
  }
   }
+
+  async presentLoading() {
+		this.loading = await this.loadingController.create({
+			cssClass: 'my-custom-class',
+			message: 'Espere...'
+			//duration: 2000
+		});
+
+		return this.loading.present();
+	}
 
 }

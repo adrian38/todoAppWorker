@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+
+  <div style="background: var(--ion-color-orange);">
+    <app-tab-header titulo="Perfil"></app-tab-header>
+  </div>
+
+  <div class="flex_row">
+    <div class="page_subheader">
+      <span class="page_subheader_title">Promociones</span>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="flex_column" style="padding: 20px 10% !important;">
+
+    <div class="div_1">
+      <ion-input  class="custom_input" 
+                  type="text" 
+                  [(ngModel)]='titulo' 
+                  autofocus 
+                  placeholder="TÍTULO">
+      </ion-input>
+    </div>
+
+    <div class="div_1">
+      <ion-input  class="custom_input" 
+                  type="number" 
+                  [(ngModel)]='precio'
+                  placeholder="PRECIO"
+                  style="width: 40% !important;">
+      </ion-input>
+    </div>
+
+    <div class="div_1">
+      <ion-textarea class="comentarios"
+                    placeholder="Escriba los comentarios..."
+                    rows="6"
+                    autocapitalize="true"
+                    inputmode="text"
+                    wrap="soft">
+      </ion-textarea>
+    </div>
+
+    <div class="flex_row" style="margin-top: 25px;">
+      <img class="add_img" src="/assets/icons/noImage.svg">
+      <img class="add_img" src="/assets/icons/noImage.svg">
+    </div>
+
+  </div>
+
+</ion-content>

@@ -377,4 +377,9 @@ export class Tab1Page {
     
         return this.loading.present();
       }
+
+      onFabClick(  ){
+        this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
+              
+      }
 }

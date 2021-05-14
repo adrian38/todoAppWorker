@@ -43,27 +43,9 @@ export class DatosPersonalesPage implements OnInit {
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
-	services = [
-		{
-			name: 'Fontaneria'
-		}
-		/* {
-      name: 'Electricidad'
-    } */
-	];
-
-	filtro = [
-		{
-			name: 'Cercania'
-		},
-		{
-			name: 'Fecha'
-		}
-
-		/* {
-      name: 'Electricidad'
-    } */
-	];
+	categorias: string [] = ['Electricista', 'Fontanero'];
+	categoriaSelected: string = '';
+	isCatTouched: boolean = false;
 
 
   constructor(private platform: Platform,

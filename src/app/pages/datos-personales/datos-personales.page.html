@@ -28,7 +28,7 @@
     <ion-col size=1></ion-col>
     <ion-col size=10>
 
-   <label class = "item item-input item-select"> 
+  <!--  <label class = "item item-input item-select"> 
        <div class = "input-label">
         Categoría de trabajador
       </div> 
@@ -51,7 +51,40 @@
       <option >Autónomo</option>
     
    </select>
- </label>
+ </label> -->
+
+ <div class="div_1">
+  <ion-item
+    class="select"
+    lines="none"
+    [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'"
+  >
+    <ion-label
+      style="margin-top: 0 !important; margin-bottom: 0 !important"
+      >Entidad jurídica</ion-label
+    >
+    <ion-select
+      interface="action-sheet"
+      mode="ios"
+      [(ngModel)]="entJuridicaSelected"
+      name="entidad"
+
+      (ionFocus)="onEntFocusChange()"
+    >
+      <ion-select-option
+        *ngFor="let entidad of entJuridica"
+        [value]="entidad"
+        >{{ entidad }}</ion-select-option
+      >
+    </ion-select>
+  </ion-item>
+  <ion-label
+    *ngIf="entJuridicaSelected == '' && isEntTouched === true"
+    class="mandatory"
+  >
+    Campo obligatorio
+  </ion-label>
+</div>
 
     
 

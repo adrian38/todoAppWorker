@@ -61,15 +61,22 @@ export class MapaRegistroPage implements OnInit {
 
 
       
-/* 
+ 
 		this.ruta = this.datos.getruta();
-		console.log('ruta',this.ruta); */
+		console.log('ruta',this.ruta); 
 
-        /* this.mostrarBoton(); */
+
 
 		 this.platform.backButton.subscribeWithPriority(10, () => {
+
+			if(this.datos.getruta() == 'direccion'){
+				this.navCtrl.navigateRoot('/direccion', {animated: true, animationDirection: 'back' }) ;
+				
+			}
+			else{
+				this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
+				}
 			
-				   this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
 				
 			 
             

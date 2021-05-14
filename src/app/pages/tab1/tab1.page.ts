@@ -1,10 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import {
-  AlertController,
-  LoadingController,
-  NavController,
-  Platform,
-} from '@ionic/angular';
+import {AlertController,LoadingController,NavController, Platform} from '@ionic/angular';
 import { MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
@@ -52,13 +47,19 @@ export class Tab1Page {
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public loadingController: LoadingController,
-    private _chatOdoo: ChatOdooService
+    private _chatOdoo: ChatOdooService,
+    private platform      : Platform,
   ) {}
 
   ngOnInit(): void {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this. presentAlert();
+ });
+   
     this.subscriptions();
     this.init();
     this._taskOdoo.setTab1In(true);
+    this.subServ.setruta('tabs/tab1');
 
     /*  this.cantidad_solicitudes(); */
   }
@@ -80,6 +81,7 @@ export class Tab1Page {
       this._taskOdoo.setInitTab(true);
       this._taskOdoo.requestTaskListProvider();
       //this.presentLoadingCargado();
+      this.presentLoadingCargado();
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
       ///////////preguntar si no hay solicitudes cuando se arregle
@@ -204,6 +206,8 @@ export class Tab1Page {
             if (temp !== -1) {
               this.solicitudesList.splice(temp, 1);
             }
+            this.loading.dismiss();
+            console.log('solicitud eliminada')
           }
         });
       }
@@ -258,6 +262,7 @@ export class Tab1Page {
           
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
+            this.loading.dismiss();
           }
           //this.solicitudEmpty();
         });
@@ -299,6 +304,7 @@ export class Tab1Page {
   cancelar(i) {
     this._taskOdoo.cancelPOsuplier(this.solicitudesList[i].id);
     /////////////////////////////////////////////////poner cargado;
+    this.presentLoading();
   }
 
    /*  cantidad_solicitudes(){
@@ -322,5 +328,53 @@ export class Tab1Page {
           return  this.titulo_solicitud.slice(0,15) + " ... ";
           }
       }
+
+      async presentLoadingCargado() {
+        this.loading = await this.loadingController.create({
+          cssClass: 'my-custom-class',
+          message: 'Cargando Solicitudes...'
+          //duration: 2000
+        });
+        return this.loading.present();
+      }
   
+
+      async presentAlert() {
+		
+       // this.loading.dismiss();  //////////////////////Probar a ver si quita las anteriores cuando doy atras
+    
+    
+        const alert = await this.alertCtrl.create({
+          cssClass: 'my-custom-class',
+          header: 'Alerta',
+          message: 'Desea registrarse con otro usuario',
+    
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {}
+            },
+            {
+              text: 'Aceptar',
+              handler: (datos) => {
+                this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'back' });
+              }
+            }
+          ]
+        });
+    
+        await alert.present();
+      }
+
+      async presentLoading() {
+        this.loading = await this.loadingController.create({
+          cssClass: 'my-custom-class',
+          message: 'Eliminando Solicitud...'
+          //duration: 2000
+        });
+    
+        return this.loading.present();
+      }
 }

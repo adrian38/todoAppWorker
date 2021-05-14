@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-factura-servicios',
@@ -21,7 +22,8 @@ export class FacturaServiciosPage implements OnInit {
 
   constructor(private _taskOdoo :TaskOdooService,
               private platform: Platform,
-		          private navCtrl: NavController) { }
+		          private navCtrl: NavController,
+              private subServ: ObtSubSService) { }
 
   ngOnInit() {
    
@@ -34,6 +36,7 @@ export class FacturaServiciosPage implements OnInit {
     this.impuestoPlataforma = 35.89;
   
         this.total = this.task.budget;
+        this.subServ.setruta('factura-servicios');
     
   
   this.platform.backButton.subscribeWithPriority(10, () => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -60,9 +60,22 @@ export class CreateAccountPage implements OnInit {
               public photoService: PhotoService,
               public _authOdoo: AuthOdooService,
               private actionSheetCtrl: ActionSheetController,
-              private popoverCtrl: PopoverController) { }
+              private popoverCtrl: PopoverController,
+              public navController:NavController,
+              private platform: Platform) { }
 
   ngOnInit() {
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      
+        
+        this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+        
+      
+      
+      });
+
+      
 
   }
 
@@ -81,7 +94,16 @@ export class CreateAccountPage implements OnInit {
     const { data } = await popover.onWillDismiss();
 
     console.log("Item: ", data);
+    // this.subir();
   }
+/* 
+  subir(){
+   console.log('estoy en la funcion subir')
+    
+  
+  
+  
+  } */
 
   async presentAlert() {
     const alert = await this.alertCtrl.create({
@@ -176,11 +198,7 @@ export class CreateAccountPage implements OnInit {
     toast.present();
   }
 
-  ubicacion(){
-    // this.entrar_campos();
-    // this.datos.setruta("datospersonales");
-    // this.navCtrl.navigateRoot('/regismapa', {animated: true, animationDirection: 'forward' }) ;
-  }
+ 
 
   entrar_campos(){
     // this.datos.setnombre(this.nombre);
@@ -207,6 +225,7 @@ export class CreateAccountPage implements OnInit {
   onLocationClick(event) {
     this.coordenadas = true;
     console.log('Location clicked');
+    this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
   }
 
   onNextClick(event) {

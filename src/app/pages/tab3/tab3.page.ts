@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-tab3',
@@ -9,10 +10,14 @@ import { NavController, Platform } from '@ionic/angular';
 export class Tab3Page implements OnInit {
 
 
-  constructor(public navCtrl:NavController) { }
+  constructor(public navCtrl:NavController,
+              private subServ: ObtSubSService) { }
 
   ngOnInit() {
+
+    this.subServ.setruta('tabs/tab3');
   }
+
 
   datospersonales(){
     this.navCtrl.navigateRoot('/datos-personales', {animated: true, animationDirection: 'forward' }) ;      

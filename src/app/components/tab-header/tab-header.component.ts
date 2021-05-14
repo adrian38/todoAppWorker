@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
 @Component({
@@ -16,9 +17,12 @@ export class TabHeaderComponent implements OnInit {
   notification$: Observable<boolean>;
   subscriptionNotification:Subscription;
 
+  ruta:string = '';
+
   constructor(private navCtrl: NavController,
               private _taskOdoo: TaskOdooService,
-              private ngZone: NgZone,) {
+              private ngZone: NgZone,
+              private subServ: ObtSubSService) {
 
               }
 
@@ -56,6 +60,8 @@ export class TabHeaderComponent implements OnInit {
   }
   OnClickNotificaciones(){
     console.log('click campana');
+    console.log('mi ruta',this.subServ.getruta());
+    
     this.navCtrl.navigateRoot('/notificaciones', {animated: true, animationDirection: 'forward' }) ;
 
 

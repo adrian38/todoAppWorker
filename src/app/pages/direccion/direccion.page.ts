@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-direccion',
@@ -30,10 +31,11 @@ export class DireccionPage implements OnInit {
 
   constructor(private platform: Platform,
               private navCtrl: NavController,
-              private _authOdoo: AuthOdooService) { }
+              private _authOdoo: AuthOdooService,
+              private subServ: ObtSubSService) { }
 
   ngOnInit() {
-
+    this.subServ.setruta('direccion');
     this.usuario = this._authOdoo.getUser();
 	  console.log('usuario actual',this.usuario);
 
@@ -41,7 +43,7 @@ export class DireccionPage implements OnInit {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
     
-      this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+      this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
   
        
        });

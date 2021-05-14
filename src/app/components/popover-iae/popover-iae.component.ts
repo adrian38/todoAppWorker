@@ -21,6 +21,8 @@ export class PopoverIaeComponent implements OnInit {
   onCameraClick() {
     console.log("Camera clicked");
     this.elementoClicked = 1;
+    console.log('Camera clicked con foto')
+    
     this.popoverCtrl.dismiss({
       item: this.elementoClicked
     });

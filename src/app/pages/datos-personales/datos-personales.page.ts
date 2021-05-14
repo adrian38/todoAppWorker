@@ -4,6 +4,7 @@ import { NavController, Platform } from '@ionic/angular';
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import {DropdownModule} from 'primeng/dropdown';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 
 @Component({
@@ -64,7 +65,8 @@ export class DatosPersonalesPage implements OnInit {
 
   constructor(private platform: Platform,
 	          private navCtrl: NavController,
-	          private _authOdoo: AuthOdooService) {
+	          private _authOdoo: AuthOdooService,
+			  private subServ: ObtSubSService) {
 				
 				
 			
@@ -74,12 +76,14 @@ export class DatosPersonalesPage implements OnInit {
   ngOnInit() {
   //  this.avatarusuario =  '../../../assets/registro.svg'
 	  /* this.avatarusuario =  '../../../assets/registro.svg' */
+
+	  this.subServ.setruta('datos-personales');
 	  this.usuario = this._authOdoo.getUser();
 	  console.log('usuario actual',this.usuario);
 
 	  this.platform.backButton.subscribeWithPriority(10, () => {
     
-		this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+		this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
 	
 		 
 		 }); 

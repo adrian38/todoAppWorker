@@ -1,7 +1,7 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { IonContent, ModalController, NavController } from '@ionic/angular';
+import { IonContent, ModalController, NavController, Platform } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -40,22 +40,31 @@ export class ContratadosChatDetallesPage implements OnInit {
   imagen_0:string="";
   imagen_1:string="";
   imagen_2:string="";
+  valor_segment:string="";
 
   @ViewChild(IonContent) content: IonContent;
 
 
   constructor(private _taskOdoo :TaskOdooService,
               private navCtrl   :NavController,
-              private datos: ObtSubSService,
-              private modalCtrl   :ModalController) { }
+              private datos     :ObtSubSService,
+              private modalCtrl :ModalController,
+              private platform      : Platform) { }
 
   ngOnInit() {
-    
+
+    console.log('mi ruta ',this.datos.getruta());
+    this.valorSegment( this.datos.getruta());
+    this.datos.setruta('contratados-chat-detalles');
     this.task=this._taskOdoo.getTaskCesar();
     console.log(" estoy ",this.task);
     this.ver_imagenes();
 
     this.presupuesto = this.task.budget;
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateRoot('/tabs/tab2', {animated: true, animationDirection: 'back' }) ;
+ });
    /*  this.descripcion = 'Arreglar un grifo de agua';
     this.fecha = 'Miércoles, 9 de Septiembre de 2020';
     this.horario = 'De 09:00am a 10:00am';
@@ -242,5 +251,14 @@ export class ContratadosChatDetallesPage implements OnInit {
 			.then((modal) => modal.present()); 
 
 	}
+
+  valorSegment( ruta:string){
+    if( ruta == 'tabs/tab2'){
+      this.valor_segment = 'chat';
+    }
+    else{
+     this.valor_segment = 'detalles';
+    }
+     }
 
 }

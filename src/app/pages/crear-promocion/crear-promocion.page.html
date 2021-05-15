@@ -45,8 +45,16 @@
     </div>
 
     <div class="flex_row" style="margin-top: 25px;">
-      <img class="add_img" src="/assets/icons/noImage.svg">
-      <img class="add_img" src="/assets/icons/noImage.svg">
+      <img class="add_img" src={{foto1}} (click)="onclickFoto1( true)">
+      <img class="add_img" src={{foto2}} (click)="onclickFoto2( false)">
+    </div>
+
+    <div style="display: flex; justify-content: center; width: 100%; height: 30%; padding-top: 80px;">
+
+      <ion-button class="btn_anadir" color="orange" (click)="onAnadir()">
+        Añadir
+      </ion-button>
+    
     </div>
 
   </div>

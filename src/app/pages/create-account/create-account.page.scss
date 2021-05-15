@@ -135,7 +135,20 @@ ion-select {
   font            : normal 13px 'Helvetica-Roman', sans-serif !important;
   min-width       : 100px;
  
+}
 
+ion-select:hover {
+  justify-content : center;
+  align-items     : center;
+  --padding-top   : 0;
+  --padding-bottom: 0;
+  --padding-start : 5px;
+  background      :  var(--ion-color-gray);
+  text-align      : right;
+  width           : 40%;
+  font            : normal 13px 'Helvetica-Roman', sans-serif !important;
+  min-width       : 100px;
+ 
 }
 
 

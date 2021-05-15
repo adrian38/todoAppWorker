@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-inicio',
@@ -7,9 +8,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioPage implements OnInit {
 
-  constructor() { }
+  constructor(private platform : Platform,
+              private navCtrl: NavController,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.presentAlert();
+ });
   }
+
+    async presentAlert() {
+    
+    
+        const alert = await this.alertCtrl.create({
+          cssClass: 'my-custom-class',
+          header: 'Alerta',
+          message: 'Desea salir de la aplicación',
+    
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {}
+            },
+            {
+              text: 'Aceptar',
+              handler: (datos) => {
+                navigator['app'].exitApp();
+              }
+            }
+          ]
+        });
+    
+        await alert.present();
+      }
 
 }

@@ -52,9 +52,11 @@ export class Tab1Page {
   ) {}
 
   ngOnInit(): void {
-    this.platform.backButton.subscribeWithPriority(10, () => {
+
+    console.log('en el tab1 dentro !!')
+   /*  this.platform.backButton.subscribeWithPriority(10, () => {
       this. presentAlert();
- });
+ }); */
    
     this.subscriptions();
     this.init();
@@ -62,6 +64,8 @@ export class Tab1Page {
     this.subServ.setruta('tabs/tab1');
 
     /*  this.cantidad_solicitudes(); */
+
+
   }
 
   ngOnDestroy(): void {
@@ -339,7 +343,7 @@ export class Tab1Page {
       }
   
 
-      async presentAlert() {
+     /*  async presentAlert() {
 		
        // this.loading.dismiss();  //////////////////////Probar a ver si quita las anteriores cuando doy atras
     
@@ -367,7 +371,7 @@ export class Tab1Page {
     
         await alert.present();
       }
-
+ */
       async presentLoading() {
         this.loading = await this.loadingController.create({
           cssClass: 'my-custom-class',

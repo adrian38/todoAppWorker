@@ -47,12 +47,12 @@ export class CrearPromocionPage implements OnInit {
             console.log( "Foto",photo.webviewPath);
             if(photo){
                  if(posicion == true){
-                  this.foto1=this.photoService.devuelve64();
+                  this.foto1=photo.webviewPath;
                   console.log(this.foto1);
                   this.foto164= this.photoService.devuelve64();
                  }
                  else{
-                  this.foto2=this.photoService.devuelve64();
+                  this.foto2=photo.webviewPath;
                   console.log(this.foto2);
                   this.foto264= this.photoService.devuelve64();
                  }
@@ -70,12 +70,12 @@ export class CrearPromocionPage implements OnInit {
             if(photos.length == 1){
 
               if(posicion == true){
-                this.foto1= this.photoService.devuelve64(); 
+                this.foto1= photos[0].webviewPath; 
                 console.log(this.foto1);
                 this.foto164= this.photoService.devuelve64(); 
               }
               else {
-                this.foto2= this.photoService.devuelve64(); 
+                this.foto2= photos[0].webviewPath; 
                 console.log(this.foto1);
                 this.foto264= this.photoService.devuelve64(); 
               }

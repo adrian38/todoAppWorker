@@ -56,11 +56,11 @@ export class SolicitudesChatDetallesPage implements OnInit {
   categoria: string;
   presupuesto: number;
   descripcion: string;
-  fecha: string;
-  horario: string;
-  direccion: string;
-  materiales: number;
-  manoObra: number;
+  // fecha: string;
+  // horario: string;
+  // direccion: string;
+  // materiales: number;
+  // manoObra: number;
   fotos: string [];
 
   total: number;
@@ -125,9 +125,9 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.categoria = 'FONTANERIA';
     this.descripcion = this.task.title;
    
-    this.materiales = 28;
-    this.manoObra = 54;
-    this.total = this.materiales + this.manoObra;
+    // this.materiales = 28;
+    // this.manoObra = 54;
+    // this.total = this.materiales + this.manoObra;
 
     this.ver_imagenes();
 
@@ -202,12 +202,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
     }, 500);
 
     this.message.message= '';
-
-    
-
-
-
-  }
+}
 
 
 
@@ -230,15 +225,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
         this.habilitar_1=true;
         this.habilitar_2=true;
       }
-    /*    if (this.task.photoNewTaskArray.length == 0)
-        {
-          this.imagen_0="../../../assets/icons/noImage.svg ";
-          this.imagen_1="../../../assets/icons/noImage.svg ";
-          this.imagen_2="../../../assets/icons/noImage.svg ";
-          this.habilitar_0=true;
-          this.habilitar_1=true;
-          this.habilitar_2=true;
-        } */
+ 
         if (this.task.photoNewTaskArray.length == 1)
         {
           this.imagen_0= this.task.photoNewTaskArray[0];

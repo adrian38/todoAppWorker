@@ -43,27 +43,9 @@ export class DatosPersonalesPage implements OnInit {
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
-	services = [
-		{
-			name: 'Fontaneria'
-		}
-		/* {
-      name: 'Electricidad'
-    } */
-	];
-
-	filtro = [
-		{
-			name: 'Cercania'
-		},
-		{
-			name: 'Fecha'
-		}
-
-		/* {
-      name: 'Electricidad'
-    } */
-	];
+	categorias: string [] = ['Electricista', 'Fontanero'];
+	categoriaSelected: string = '';
+	isCatTouched: boolean = false;
 
 
   constructor(private platform: Platform,
@@ -193,7 +175,7 @@ async presentAlert() {
             let photo: Photo = await this.photoService.addNewToCamara();
             console.log( "Foto",photo.webviewPath);
             if(photo){
-              this.avatarusuario =this.photoService.devuelve64();
+              this.avatarusuario =photo.webviewPath;
               console.log(this.avatarusuario);
               this.avatarUsuario64= this.photoService.devuelve64();
             }
@@ -208,7 +190,7 @@ async presentAlert() {
 
             if(photos.length == 1){
               
-              this.avatarusuario= this.photoService.devuelve64();
+              this.avatarusuario= photos[0].webviewPath;
               console.log(this.avatarusuario);
               this.avatarUsuario64= this.photoService.devuelve64(); 
             }

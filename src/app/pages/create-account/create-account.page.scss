@@ -113,7 +113,15 @@
   --padding-top   : 0;
   font            : normal 14px 'Helvetica-Roman', sans-serif !important;
   border-radius   : 5px;
+
+
+    
+      
+
 }
+
+
+
 
 ion-select {
   justify-content : center;
@@ -126,11 +134,24 @@ ion-select {
   width           : 40%;
   font            : normal 13px 'Helvetica-Roman', sans-serif !important;
   min-width       : 100px;
+ 
 }
 
-ion-select-option{
-  width: 100%;
+ion-select:hover {
+  justify-content : center;
+  align-items     : center;
+  --padding-top   : 0;
+  --padding-bottom: 0;
+  --padding-start : 5px;
+  background      :  var(--ion-color-gray);
+  text-align      : right;
+  width           : 40%;
+  font            : normal 13px 'Helvetica-Roman', sans-serif !important;
+  min-width       : 100px;
+ 
 }
+
+
 
 ion-select::part(text) {
   padding-right: 5px;
@@ -179,3 +200,12 @@ ion-item::part(native) {
  object-fit: cover;
  
 }
+
+/* .action-sheet-button-inner{
+--color: var(--ion-color-gray);
+}
+.sc-ion-action-sheet-ios{
+  --color: var(--ion-color-gray);
+
+} */
+

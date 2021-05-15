@@ -1,10 +1,15 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { IonContent, ModalController, NavController, Platform } from '@ionic/angular';
+import { IonContent, LoadingController, ModalController, NavController, Platform } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
+import { MessageModel } from 'src/app/models/message.model';
+import { ChatOdooService } from 'src/app/services/chat-odoo.service';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { AuthOdooService } from 'src/app/services/auth-odoo.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contratados-chat-detalles',
@@ -14,25 +19,40 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 export class ContratadosChatDetallesPage implements OnInit {
 
   presupuesto: number;
-  descripcion: string;
-  fecha: string;
-  horario: string;
-  direccion: string;
-  precio: number;
-  materiales: number;
-  manoObra: number;
-  fotos: string [];
-  nombreTrabajador: string;
+  //descripcion: string;
+  // fecha: string;
+  // horario: string;
+  // direccion: string;
+  // precio: number;
+  // materiales: number;
+  // manoObra: number;
+  // fotos: string [];
+  // nombreTrabajador: string;
 
-  total: number;
+  // total: number;
 
   display:boolean=false;
 
 
-  chats: ChatDetails[] = [];
-  newMessage: string;
+/*   chats: ChatDetails[] = [];
+  newMessage: string; */
 
   task: TaskModel;
+  message: MessageModel;
+	messagesList: MessageModel[];
+  purchaseOrderID: number;
+	user: UsuarioModel;  
+
+  messagesList$: Observable<MessageModel[]>;
+	messageSendOk$: Observable<MessageModel>;
+	task$: Observable<TaskModel[]>;
+	notificationNewMessg$: Observable<number[]>;
+
+	subscriptionMessList: Subscription;
+	subscriptionNewMsg: Subscription;
+	subscriptionNotification: Subscription;
+	subscriptionTask: Subscription;
+
 
   habilitar_0:boolean;
   habilitar_1:boolean;
@@ -41,15 +61,41 @@ export class ContratadosChatDetallesPage implements OnInit {
   imagen_1:string="";
   imagen_2:string="";
   valor_segment:string="";
+  ultimo_sms:string="";
+  sms_cliente:string="";
+
+  loading: HTMLIonLoadingElement = null;
 
   @ViewChild(IonContent) content: IonContent;
 
 
-  constructor(private _taskOdoo :TaskOdooService,
-              private navCtrl   :NavController,
-              private datos     :ObtSubSService,
-              private modalCtrl :ModalController,
-              private platform      : Platform) { }
+  constructor(private _taskOdoo  :TaskOdooService,
+              private navCtrl    :NavController,
+              private datos      :ObtSubSService,
+              private modalCtrl  :ModalController,
+              private platform   : Platform,
+              private _chatOdoo  : ChatOdooService,
+              private _authOdoo  : AuthOdooService,
+              private ngZone     : NgZone,
+              public loadingController: LoadingController) {
+
+
+                this.task = new TaskModel();
+
+                this.task = this._taskOdoo.getTaskCesar();
+                console.log('tarea',this.task);
+                
+                this.user = this._authOdoo.getUser();
+                console.log('usuario',this.user);
+                this.message = new MessageModel();
+                this.messagesList = [];
+                
+                this.purchaseOrderID = this._chatOdoo.getIdPo();
+                
+                console.log('purchaseOrderID',this.purchaseOrderID);
+                this._taskOdoo.requestTask(this.purchaseOrderID);
+                this._chatOdoo.requestAllMessages(this.purchaseOrderID); 
+               }
 
   ngOnInit() {
 
@@ -59,101 +105,82 @@ export class ContratadosChatDetallesPage implements OnInit {
     this.task=this._taskOdoo.getTaskCesar();
     console.log(" estoy ",this.task);
     this.ver_imagenes();
+    this.presentLoading();
 
     this.presupuesto = this.task.budget;
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot('/tabs/tab2', {animated: true, animationDirection: 'back' }) ;
  });
-   /*  this.descripcion = 'Arreglar un grifo de agua';
-    this.fecha = 'Miércoles, 9 de Septiembre de 2020';
-    this.horario = 'De 09:00am a 10:00am';
-    this.direccion = 'Calle 52 #1701 e/ 19 y 17, Playa'; */
-   // this.precio = 20;
-    /* this.nombreTrabajador = 'Lisniel Sanchez' */
-  /*   this.materiales = 28;
-    this.manoObra = 54;
-    this.total = this.materiales + this.manoObra; */
 
-    setTimeout(() => {
-      let simulatedChat: ChatDetails = 
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: false,
-          message: 'Hola, como estas?? Quisiera ver si se puede pasar la oferta para el Viernes por la mañana.',
-          date: ""
-        };
 
-      this.unshiftChat(simulatedChat);
+    this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();
+		this.subscriptionNewMsg = this.messageSendOk$.subscribe((messageSendOk) => {
+			this.ngZone.run(() => {
+				if (messageSendOk.offer_id === this.purchaseOrderID) {
+					messageSendOk.author = this.user.realname;
+					messageSendOk.author_id = this.user.partner_id;
+					this.messagesList.push(messageSendOk);
+				}
+			});
+		});
 
-      simulatedChat =
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: false,
-          message: 'Si pudieras venir el viernes a las 10am seria lo mejor, a esa hora no tengo compromisos',
-          date: ""
-        };
+		this.notificationNewMessg$ = this._taskOdoo.getRequestedNotificationNewMessg$();
+		this.subscriptionNotification = this.subscriptionNotification = this.notificationNewMessg$.subscribe(
+			(notificationNewMessg) => {
+				this.ngZone.run(() => {
+					this._chatOdoo.requestNewMessage(notificationNewMessg);
+				});
+			}
+		);
 
-      this.unshiftChat(simulatedChat);
+		this.messagesList$ = this._chatOdoo.getAllMessages$();
+		this.subscriptionMessList = this.messagesList$.subscribe((messagesList) => {
+			this.ngZone.run(() => {
+		
+				let temp = messagesList.find((element) => element.offer_id);
+				if (temp) {
+					if (this.purchaseOrderID === temp.offer_id) {
+						if (typeof this.messagesList !== 'undefined' && this.messagesList.length > 0) {
+							Array.prototype.push.apply(this.messagesList, messagesList);
+              console.log('sms if',this.messagesList);						
+            } else {
+							this.messagesList = messagesList;
+           
+              console.log('sms else',this.messagesList);
+              this.coger();
+              this.loading.dismiss();
+              
+						}
+					}
+				}
+			});
+		}); 
 
-      simulatedChat =
-        {
-          userID: "Juan Perez",
-          timeStamp: Date.now(),
-          isLastMessage: true,
-          message: 'Ok, saludos',
-          date: ""
-        };
-
-      this.unshiftChat(simulatedChat);
-
-    }, 8000);
+ 
   }
 
-  pushToChat() {
 
-    if(this.newMessage.length === 0)
-    {
-      return;
-    }
-    
-    const newChat: ChatDetails =
-    {
-      userID: "Me",
-      timeStamp: Date.now(),
-      isLastMessage: true,
-      message: this.newMessage,
-      date: ""
-    };
 
-    //Se limpian las banderas de ultimo mensaje
-    for(let i = 0; i < this.chats.length; i++) {
-      if(this.chats[i].userID === newChat.userID) {
-        this.chats[i].isLastMessage = false;
-      }
-    }
 
-    this.unshiftChat(newChat);
+  coger(){
+    console.log('ultimo sms',this.messagesList[0].message )
+     console.log('ultimo sms',this.messagesList[0].author_id )
+     console.log('ultimovvv sms',this.user.partner_id )
 
-    setTimeout(() => {
-      this.content.scrollToBottom(300);
-    }, 500);
+for (let i = 0; i <  this.messagesList.length; i++) {
 
-    this.newMessage = '';
+if(this.messagesList[i].author_id != this.user.partner_id ){
+     this.sms_cliente = this.messagesList[i].message;
+     console.log('ultimo sms temporal', this.sms_cliente);
+}
+else{
+console.log('nooooo');
+}
 
-    console.log(this.chats);
-  }
+} 
 
-  unshiftChat(chat: ChatDetails) {
-    let currentTime = Date.now();
-    let strTime = new Date(currentTime).toLocaleString();
-
-    chat.date = strTime;
-
-    this.chats.unshift(chat);
-  }
+}
 
   onClickUbicacion(  ) {
     this.datos.setcalle(this.task.address.street);
@@ -182,12 +209,30 @@ export class ContratadosChatDetallesPage implements OnInit {
   }
 
   onClose() {
-    console.log('Close clicked');
+    console.log("Close clicked¿¿¿¿¿");
+    this.navCtrl.navigateRoot('/tabs/tab2', {animated: true, animationDirection: 'back' }) ;
   }
 
-  onClickEnviar() {
-    console.log("Enviar clicked");
-  }
+  pushToChat() {
+
+    if (this.message.message.length > 0) {
+        this.message.offer_id = this.purchaseOrderID;
+
+    
+      this._chatOdoo.sendMessageClient(this.message);
+      this.ultimo_sms=this.message.message;
+      console.log('´sms mandado', this.message.message);
+      this.message = new MessageModel();
+    }
+
+    setTimeout(() => {
+      this.content.scrollToBottom(300);
+    }, 500);
+
+    this.message.message= '';
+}
+
+
 
   ver_imagenes(){
     console.log('ver imagen !!!!',this.task.photoNewTaskArray);
@@ -260,5 +305,15 @@ export class ContratadosChatDetallesPage implements OnInit {
      this.valor_segment = 'detalles';
     }
      }
+
+     async presentLoading() {
+      this.loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Espere...'
+        //duration: 2000
+      });
+  
+      return this.loading.present();
+    }
 
 }

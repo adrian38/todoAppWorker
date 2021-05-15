@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Servicio } from 'src/app/Interfaces/interfaces';
 import { TaskModel } from 'src/app/models/task.model';
+import { ChatOdooService } from 'src/app/services/chat-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
@@ -25,7 +26,8 @@ export class Tab2Page implements OnInit {
 
   constructor( private _taskOdoo: TaskOdooService,
                private navCtrl: NavController,
-               private subServ: ObtSubSService) { }
+               private subServ: ObtSubSService,
+               private _chatOdoo: ChatOdooService) { }
 
   ngOnInit() {
     this.subServ.setruta('tabs/tab2');
@@ -46,6 +48,7 @@ export class Tab2Page implements OnInit {
   onClickItemContratados(i) {
     this.task = this.contratadosList[i]; 
     this._taskOdoo.setTaskCesar(this.task);
+    this._chatOdoo.setIdPo(this.task.id);
     
     this.navCtrl.navigateRoot('/contratados-chat-detalles', { animated: true, animationDirection: 'forward' }); 
   }

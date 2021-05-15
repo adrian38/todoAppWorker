@@ -90,9 +90,14 @@ const routes: Routes = [
   {
     path: 'imagenmodal',
     loadChildren: () => import('./pages/imagenmodal/imagenmodal.module').then( m => m.ImagenmodalPageModule)
-  },  {
+  },
+  {
     path: 'mapa-registro',
     loadChildren: () => import('./pages/mapa-registro/mapa-registro.module').then( m => m.MapaRegistroPageModule)
+  },
+  {
+    path: 'crear-promocion',
+    loadChildren: () => import('./pages/crear-promocion/crear-promocion.module').then( m => m.CrearPromocionPageModule)
   },
   {
     path: 'notificaciones',

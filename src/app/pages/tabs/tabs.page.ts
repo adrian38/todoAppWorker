@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonTabButton, IonTabs } from '@ionic/angular';
+import { AlertController, IonTabButton, IonTabs } from '@ionic/angular';
 import { element } from 'protractor';
 import { NavController,Platform } from '@ionic/angular';
 
@@ -18,7 +18,8 @@ export class TabsPage {
   tab3Active = '';
 
   constructor(private navController : NavController,
-              private platform      : Platform) {}
+              private platform      : Platform,
+              public alertCtrl      : AlertController) {}
 
   setCurrentTab( event ) {
     const selectedTab = this.tabs.getSelected();
@@ -27,6 +28,10 @@ export class TabsPage {
       this.tab2Active = '';
       this.tab3Active = '';
       console.log('posicion',selectedTab);
+
+      this.platform.backButton.subscribeWithPriority(10, () => {
+        this.presentAlert();
+   });
      
     }
     else if (selectedTab === 'tab2'){
@@ -50,5 +55,34 @@ export class TabsPage {
    });
     }
   }
+
+  async presentAlert() {
+		
+    // this.loading.dismiss();  //////////////////////Probar a ver si quita las anteriores cuando doy atras
+ 
+ 
+     const alert = await this.alertCtrl.create({
+       cssClass: 'my-custom-class',
+       header: 'Alerta',
+       message: 'Desea registrarse con otro usuario',
+ 
+       buttons: [
+         {
+           text: 'Cancelar',
+           role: 'cancel',
+           cssClass: 'secondary',
+           handler: (blah) => {}
+         },
+         {
+           text: 'Aceptar',
+           handler: (datos) => {
+             this.navController.navigateRoot('/login-user', { animated: true, animationDirection: 'back' });
+           }
+         }
+       ]
+     });
+ 
+     await alert.present();
+   }
 
 }

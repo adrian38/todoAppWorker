@@ -90,7 +90,7 @@ export class ContratadosChatDetallesPage implements OnInit {
                 this.message = new MessageModel();
                 this.messagesList = [];
                 
-                this.purchaseOrderID = this._chatOdoo.getIdPo();
+                this.purchaseOrderID = this.task.id;
                 
                 console.log('purchaseOrderID',this.purchaseOrderID);
                 this._taskOdoo.requestTask(this.purchaseOrderID);

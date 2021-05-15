@@ -145,6 +145,10 @@ export class TaskOdooService {
     rutaActual = temp;
   }
 
+  setChat(temp: boolean) {
+    rutaChat = temp;
+  }
+
   getNotifications$(): Observable<boolean> {
     return notificationError$.asObservable();
   }
@@ -278,7 +282,7 @@ export class TaskOdooService {
                     pilaNotificaciones.push(notifTask);
                   }
 
-                if (rutaActual) {
+                if (rutaActual || rutaChat) {
                   notificationNewMessg$.next(id_messg);
                 } else if (!rutaActual && !rutaChat) {
                           

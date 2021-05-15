@@ -48,8 +48,7 @@ export class Tab2Page implements OnInit {
   onClickItemContratados(i) {
     this.task = this.contratadosList[i]; 
     this._taskOdoo.setTaskCesar(this.task);
-    this._chatOdoo.setIdPo(this.task.id);
-    
+  
     this.navCtrl.navigateRoot('/contratados-chat-detalles', { animated: true, animationDirection: 'forward' }); 
   }
 

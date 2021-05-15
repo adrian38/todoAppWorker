@@ -27,16 +27,7 @@ export class ChatOdooService {
 
     constructor(private _authOdoo: AuthOdooService) { }
 
-    setIdPo(id:number){ 
-        this.id = id;
-
-    }
-
-    getIdPo(){ 
-        return this.id;
-
-    }
-
+  
     getRequestedNotificationSendMessage$(): Observable<MessageModel>{
         return messageSendOk$.asObservable();
     }
@@ -204,8 +195,7 @@ export class ChatOdooService {
             if (err || !value) {
                 console.log(err, "Error requestAllMessages ");
             } else {
-                console.log(value);
-                list_msg_ids()
+                 list_msg_ids()
             }
         });
     }

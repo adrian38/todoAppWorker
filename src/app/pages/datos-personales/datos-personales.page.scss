@@ -103,12 +103,17 @@ ion-card {
 } */
 
 .input-label{
-  background: var(--ion-color-greenblue);
+ /*  background: var(--ion-color-greenblue); */
+ margin-top: 30px;
 }
 
 .item-select{
-  width: 150px;
+ /*  width: 150px; */
+/*  background: var(--ion-color-greenblue); */
+/* margin-top: 60px; */
 }
 .item item-input{
-  width: 150px;
+ /*  margin-top: 60px; */
+ /*  width: 150px; */
+ /* background: var(--ion-color-greenblue); */
 }

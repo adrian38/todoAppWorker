@@ -3,7 +3,7 @@
     <app-tab-header titulo="Contratados"></app-tab-header>
   </div>
 
-  <ion-segment mode="md" class="segment" value="chat" #segment>
+  <ion-segment mode="md" class="segment" value={{valor_segment}} #segment>
     <ion-segment-button class="segment_btn" value="chat">
       <ion-label>Chat</ion-label>
     </ion-segment-button>
@@ -243,7 +243,9 @@
             </ion-button>
           </div>
           <div class="flex_row">
-            <ion-label class="h6_title ion-text-wrap"> Total: {{ presupuesto }} € </ion-label>
+            <ion-label class="h6_title ion-text-wrap">
+              Total: {{ presupuesto }} €
+            </ion-label>
             <ion-button
               class="btn"
               style="min-width: 105px !important"
@@ -266,11 +268,11 @@
             <ion-label class="h3_title">Fotos</ion-label>
           </div>
           <div class="flex_column">
-            <ion-label class="h6_title">Antes</ion-label>
+            <!-- <ion-label class="h6_title">Antes</ion-label> -->
             <div class="flex_row">
-              <div class="flex_column"> 
+              <div class="flex_column">
                 <ion-card
-                [disabled]="habilitar_0"
+                  [disabled]="habilitar_0"
                   style="
                     border: 0.5px solid rgb(49, 49, 57);
                     width: 80px;
@@ -278,13 +280,14 @@
                     border-radius: 5px 5px 5px 5px;
                     margin: 10px 0px;
                   "
-                   (click)="imageClick(imagen_0)">
+                  (click)="imageClick(imagen_0)"
+                >
                   <img class="selecf" src="{{imagen_0}}" />
                 </ion-card>
               </div>
               <div class="flex_column">
                 <ion-card
-                [disabled]="habilitar_1"
+                  [disabled]="habilitar_1"
                   style="
                     border: 0.5px solid rgb(49, 49, 57);
                     width: 80px;
@@ -292,13 +295,14 @@
                     border-radius: 5px 5px 5px 5px;
                     margin: 10px 0px;
                   "
-                (click)="imageClick(imagen_1)">
-                <img class="selecf" src="{{imagen_1}}" />
+                  (click)="imageClick(imagen_1)"
+                >
+                  <img class="selecf" src="{{imagen_1}}" />
                 </ion-card>
               </div>
               <div class="flex_column">
                 <ion-card
-                [disabled]="habilitar_2"
+                  [disabled]="habilitar_2"
                   style="
                     border: 0.5px solid rgb(49, 49, 57);
                     width: 80px;
@@ -306,64 +310,18 @@
                     border-radius: 5px 5px 5px 5px;
                     margin: 10px 0px;
                   "
-                (click)="imageClick(imagen_2)">
-                <img class="selecf" src="{{imagen_2}}" />
+                  (click)="imageClick(imagen_2)"
+                >
+                  <img class="selecf" src="{{imagen_2}}" />
                 </ion-card>
               </div>
             </div>
-           <!--  <div
-              class="flex_row flex_space_between"
-              style="margin-bottom: 8px !important"
-            >
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-            </div> -->
-            <ion-label class="h6_title">Después</ion-label>
-        <!--      <div
-              class="flex_row flex_space_between"
-              style="margin-bottom: 8px !important"
-            > 
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-              <ion-img
-                class="add_img"
-                src="/assets/icons/noImage.svg"
-              ></ion-img>
-            </div> -->
-            <div class="flex_row">
-              <div class="flex_column"> 
-                <ion-card
-                
-                  style="
-                    border: 0.5px solid rgb(49, 49, 57);
-                    width: 80px;
-                    height: 80px;
-                    border-radius: 5px 5px 5px 5px;
-                    margin: 10px 0px;
-                  "
-                   >
-                  <img class="selecf" src="../../../assets/icons/fotoadd.png " />
-                </ion-card>
-              </div>
+
+            <!-- <ion-label class="h6_title">Después</ion-label> -->
+
+            <!-- <div class="flex_row">
               <div class="flex_column">
                 <ion-card
-                
                   style="
                     border: 0.5px solid rgb(49, 49, 57);
                     width: 80px;
@@ -372,12 +330,14 @@
                     margin: 10px 0px;
                   "
                 >
-                <img class="selecf" src="../../../assets/icons/fotoadd.png " />
+                  <img
+                    class="selecf"
+                    src="../../../assets/icons/fotoadd.png "
+                  />
                 </ion-card>
               </div>
               <div class="flex_column">
                 <ion-card
-               
                   style="
                     border: 0.5px solid rgb(49, 49, 57);
                     width: 80px;
@@ -386,10 +346,29 @@
                     margin: 10px 0px;
                   "
                 >
-                <img class="selecf" src="../../../assets/icons/fotoadd.png " />
+                  <img
+                    class="selecf"
+                    src="../../../assets/icons/fotoadd.png "
+                  />
                 </ion-card>
               </div>
-            </div>
+              <div class="flex_column">
+                <ion-card
+                  style="
+                    border: 0.5px solid rgb(49, 49, 57);
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 5px 5px 5px 5px;
+                    margin: 10px 0px;
+                  "
+                >
+                  <img
+                    class="selecf"
+                    src="../../../assets/icons/fotoadd.png "
+                  />
+                </ion-card>
+              </div>
+            </div> -->
           </div>
         </div>
       </ion-item>

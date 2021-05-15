@@ -1,7 +1,7 @@
 
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { NavController,Platform ,IonContent, ModalController} from '@ionic/angular';
+import { NavController,Platform ,IonContent, ModalController, LoadingController} from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { MessageModel } from 'src/app/models/message.model';
@@ -10,6 +10,7 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { ChatOdooService } from 'src/app/services/chat-odoo.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   habilitar_0:boolean;
   habilitar_1:boolean;
   habilitar_2:boolean;
+  valor_segment:string="";
   imagen_0:string="";
   imagen_1:string="";
   imagen_2:string="";
@@ -48,7 +50,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
   sms_cliente:string="";
 
   //-------------------------------------------------------
-yo:boolean=false;
+// yo:boolean=false;
+
 
   categoria: string;
   presupuesto: number;
@@ -65,6 +68,7 @@ yo:boolean=false;
 
   chats: ChatDetails[] = [];
   newMessage: string;
+  loading: HTMLIonLoadingElement = null;
 
   isLastMessage:boolean=true;
 
@@ -77,7 +81,9 @@ yo:boolean=false;
              private ngZone: NgZone,
              private _chatOdoo: ChatOdooService,
              private _authOdoo: AuthOdooService,
-             private modalCtrl   :ModalController) {
+             private modalCtrl   :ModalController,
+             private subServ: ObtSubSService,
+             public loadingController: LoadingController) {
 
             this.task = new TaskModel();
 
@@ -96,6 +102,13 @@ yo:boolean=false;
               }
 
   ngOnInit() {
+
+    console.log('mi ruta ',this.subServ.getruta());
+    this.valorSegment( this.subServ.getruta());
+    
+    this.subServ.setruta('solicitudes-chat-detalles');
+
+    this.presentLoading();
 
     
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -151,9 +164,10 @@ yo:boolean=false;
               console.log('sms if',this.messagesList);						
             } else {
 							this.messagesList = messagesList;
-              /* this.yo=false; */
+           
               console.log('sms else',this.messagesList);
               this.coger();
+              this.loading.dismiss();
               
 						}
 					}
@@ -162,12 +176,20 @@ yo:boolean=false;
 		}); 
   }
 
+  // ngOnDestroy(): void {
+	
+	// 	this.subscriptionMessList.unsubscribe();
+	// 	this.subscriptionNewMsg.unsubscribe();
+	// 	this.subscriptionNotification.unsubscribe();
+	// 	this.subscriptionTask.unsubscribe();
+	// 	this._taskOdoo.setChatIn(false);
+	// }
+
   pushToChat() {
 
     if (this.message.message.length > 0) {
         this.message.offer_id = this.purchaseOrderID;
-        //this.yo=true;
-        //this.isLastMessage=true;
+
     
       this._chatOdoo.sendMessageClient(this.message);
       this.ultimo_sms=this.message.message;
@@ -274,5 +296,24 @@ yo:boolean=false;
     } 
   
   }
+
+  valorSegment( ruta:string){
+ if( ruta == 'tabs/tab1'){
+   this.valor_segment = 'chat';
+ }
+ else{
+  this.valor_segment = 'detalles';
+ }
+  }
+
+  async presentLoading() {
+		this.loading = await this.loadingController.create({
+			cssClass: 'my-custom-class',
+			message: 'Espere...'
+			//duration: 2000
+		});
+
+		return this.loading.present();
+	}
 
 }

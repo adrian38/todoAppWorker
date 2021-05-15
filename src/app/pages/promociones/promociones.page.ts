@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-promociones',
@@ -30,9 +32,16 @@ export class PromocionesPage implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor( private subServ  : ObtSubSService,
+               private navCtrl  : NavController,
+               private platform : Platform) { }
 
   ngOnInit() {
+
+    this.subServ.setruta('promociones');
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
+ });
   }
 
   onFabClick() {

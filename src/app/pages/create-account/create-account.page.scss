@@ -55,7 +55,7 @@
   --border-radius: 5px !important;
   width          : 140px;
   height         : 30px;
-  font           : normal 12px 'Helvetica-Md', sans-serif !important;
+  font           : normal 16px 'Helvetica-Md', sans-serif !important;
 }
 
 .custom_input {
@@ -69,7 +69,7 @@
   --padding-start : 6px;
   text-align      : left;
   font-family     : 'Helvetica-Roman', sans-serif !important;
-  font-size       : 11px !important;
+  font-size       : 14px !important;
   outline         : none !important;
 }
 
@@ -83,7 +83,7 @@
 
 .date {
   background   : var(--ion-color-gray);
-  font         : normal 11px 'Helvetica-Roman', sans-serif !important;
+  font         : normal 14px 'Helvetica-Roman', sans-serif !important;
   border-radius: 5px !important;
   padding      : 5px 6px !important;
 }
@@ -111,7 +111,7 @@
   --padding-start : 5px;
   --padding-bottom: 0;
   --padding-top   : 0;
-  font            : normal 11px 'Helvetica-Roman', sans-serif !important;
+  font            : normal 14px 'Helvetica-Roman', sans-serif !important;
   border-radius   : 5px;
 }
 
@@ -120,8 +120,62 @@ ion-select {
   align-items     : center;
   --padding-top   : 0;
   --padding-bottom: 0;
+  --padding-start : 5px;
+  background      :  var(--ion-color-gray);
+  text-align      : right;
+  width           : 40%;
+  font            : normal 13px 'Helvetica-Roman', sans-serif !important;
+  min-width       : 100px;
+}
+
+ion-select-option{
+  width: 100%;
+}
+
+ion-select::part(text) {
+  padding-right: 5px;
+}
+
+ion-select::part(placeholder) {
+  padding-right: 5px;
 }
 
 ion-item::part(native) {
-  min-height: 24px;
+  min-height: 30px;
+}
+
+// .iae_btn {
+//   width           : 70px;
+//   height          : 31px;
+//   --padding-top   : 0;
+//   --padding-bottom: 0;
+//   --padding-start : 0;
+//   --padding-end   : 0;
+//   margin          : 0;
+//   --border-radius : 3px;
+// }
+
+.iae_btn {
+  width           : 31px;
+  height          : 31px;
+  --padding-top   : 0;
+  --padding-bottom: 0;
+  --padding-start : 0;
+  --padding-end   : 0;
+  margin          : 0;
+  --border-radius : 20% !important;
+}
+
+.iae_label {
+  font      : normal 16px 'Helvetica-Roman', sans-serif !important;
+  text-align: center;
+  padding   : 6px;
+}
+
+
+.selecf{
+  width: 80px;
+ height: 80px;  
+ object-fit: cover;
+ 
 }

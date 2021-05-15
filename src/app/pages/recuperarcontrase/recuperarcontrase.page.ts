@@ -16,14 +16,14 @@ export class RecuperarcontrasePage implements OnInit {
   ngOnInit() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+      this.navController.navigateRoot('/login-user', {animated: true, animationDirection: 'back' }) ;
  }); 
   }
 
   aceptar(caso1,caso2){
 
     if( caso1 == false && caso2 == true){
-      this.navController.navigateRoot('/ogin-user', {animated: true, animationDirection: 'back' }) ;
+      this.navController.navigateRoot('/login-user', {animated: true, animationDirection: 'back' }) ;
 
     }
     else{

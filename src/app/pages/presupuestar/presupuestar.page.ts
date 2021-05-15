@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController,ModalController,Platform } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
@@ -43,11 +44,12 @@ export class PresupuestarPage implements OnInit {
               private toastController :ToastController,
               private modalCtrl       :ModalController,
               private ngZone          :NgZone,
-              private platform        :Platform) { }
+              private platform        :Platform,
+              private subServ         :ObtSubSService) { }
 
   ngOnInit() {
  
-    
+    this.subServ.setruta('presupuestar');
     this.task=this._taskOdoo.getTaskCesar();
     console.log('tarea actual',this.task);
     this._taskOdoo.solicitudeListEdit(this.task.id,2);

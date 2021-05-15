@@ -4,6 +4,8 @@ import { MessageModel } from 'src/app/models/message.model';
 import { TaskModel } from 'src/app/models/task.model';
 import { ChatOdooService } from 'src/app/services/chat-odoo.service';
 import { Observable, Subscription } from 'rxjs';
+import { ModalController, NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-notificaciones',
@@ -28,10 +30,17 @@ export class NotificacionesPage implements OnInit {
   constructor(
     private _taskOdoo: TaskOdooService,
     private ngZone: NgZone,
-    private _chatOdoo: ChatOdooService
+    private _chatOdoo: ChatOdooService,
+    private platform        :Platform,
+    private navCtrl         :NavController,
+    private subServ: ObtSubSService
   ) {}
 
   ngOnInit() {
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateRoot(this.subServ.getruta(), {animated: true, animationDirection: 'back' }) ;
+ });
 
     //this.subscriptions();
 

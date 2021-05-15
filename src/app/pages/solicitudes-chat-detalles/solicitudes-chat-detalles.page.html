@@ -3,7 +3,7 @@
     <app-tab-header titulo="Solicitudes"></app-tab-header>
   </div>
 
-  <ion-segment class="segment" value="chat" mode="md" #segment>
+  <ion-segment class="segment" value={{valor_segment}} mode="md" #segment>
     <ion-segment-button class="segment_btn" value="chat">
       <ion-label>Chat</ion-label>
     </ion-segment-button>
@@ -47,51 +47,31 @@
       <div style="height: 100%; width: 5%"></div>
 
       <div class="div_chat">
-        <ion-row 
-              class="chat_bubble"
-              lines="none"
-              [ngClass]="(user.partner_id ==  message.author_id) ? 'align_right' : 'align_left'"
-              *ngFor="let message of messagesList" >
-          <ng-container *ngIf="(user.partner_id ==  message.author_id ); else elseTemplate">
-             <div
+        <ion-row
+          class="chat_bubble"
+          lines="none"
+          [ngClass]="(user.partner_id ==  message.author_id) ? 'align_right' : 'align_left'"
+          *ngFor="let message of messagesList"
+        >
+          <ng-container
+            *ngIf="(user.partner_id ==  message.author_id ); else elseTemplate"
+          >
+            <div
               style="width: auto; height: auto; max-width: 80%"
               [ngClass]="( message.message === ultimo_sms) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
-            > 
-              <div>{{  message.message }}</div>
+            >
+              <div>{{ message.message }}</div>
             </div>
           </ng-container>
           <ng-template #elseTemplate>
-             <div
+            <div
               style="width: auto; height: auto; max-width: 80%"
               [ngClass]="( message.message === sms_cliente) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
-            > 
-              <div>{{  message.message }}</div>
+            >
+              <div>{{ message.message }}</div>
             </div>
           </ng-template>
         </ion-row>
-        <!-- <ion-row
-          class="chat_bubble"
-          [ngClass]="(chat.userID === 'Me') ? 'align_right' : 'align_left'"
-          *ngFor="let chat of chats"
-          lines="none"
-        >
-          <ng-container *ngIf="(chat.userID === 'Me'); else elseTemplate">
-            <div
-              style="width: auto; height: auto; max-width: 80%"
-              [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_me' : 'bubble_chat_me_old'"
-            >
-              <div>{{ chat.message }}</div>
-            </div>
-          </ng-container>
-          <ng-template #elseTemplate>
-            <div
-              style="width: auto; height: auto; max-width: 80%"
-              [ngClass]="(chat.isLastMessage === true) ? 'bubble_chat_others' : 'bubble_chat_others_old'"
-            >
-              <div>{{ chat.message }}</div>
-            </div>
-          </ng-template>
-        </ion-row> -->
       </div>
 
       <div style="height: 100%; width: 5%"></div>
@@ -153,7 +133,7 @@
             ></ion-img>
             <ion-label class="h3_title">Dirección</ion-label>
           </div>
-          <!--  <ion-label class="h6_title ion-text-wrap">{{ direccion }}</ion-label> -->
+
           <ion-row>
             <ion-label class="h6_title ion-text-wrap"
               >{{task.address.street}}, Numero: {{task.address.number}},
@@ -184,13 +164,15 @@
             <ion-img class="icon_price" src="/assets/icons/bolsa.png"></ion-img>
             <ion-label class="h3_title">Precio</ion-label>
           </div>
-          <ion-label class="h6_title">Materiales: {{ task.materials }} € </ion-label>
+          <ion-label class="h6_title"
+            >Materiales: {{ task.materials }} €
+          </ion-label>
           <div class="flex_row">
             <ion-label class="h6_title" style="width: 50% !important"
               >Mano de obra: {{ task.work_force }} €
             </ion-label>
             <ion-label class="h6_title" style="width: 50% !important"
-              >TOTAL: {{ task.work_force + task.materials  }} €
+              >TOTAL: {{ task.work_force + task.materials }} €
             </ion-label>
           </div>
         </div>
@@ -209,14 +191,7 @@
             ></ion-img>
             <ion-label class="h3_title">Fotos</ion-label>
           </div>
-          <!-- <div
-            class="flex_row flex_space_between"
-            style="margin-bottom: 8px !important; margin-top: 12px"
-          >
-            <ion-img class="add_img" src="/assets/icons/noImage.svg"></ion-img>
-            <ion-img class="add_img" src="/assets/icons/noImage.svg"></ion-img>
-            <ion-img class="add_img" src="/assets/icons/noImage.svg"></ion-img>
-          </div> -->
+
           <div class="flex_row">
             <div class="flex_column">
               <ion-card

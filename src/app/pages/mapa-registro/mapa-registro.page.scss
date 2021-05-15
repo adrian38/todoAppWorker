@@ -3,3 +3,9 @@ agm-map {
     width: 99%;
     height: 100%;
   }
+
+  ion-fab-button{
+  // --background-color:  var(--ion-color-orange) !important;
+   --background: var(--ion-color-orange);
+   --color: var(--ion-color-primary-contrast, #fff);
+  }

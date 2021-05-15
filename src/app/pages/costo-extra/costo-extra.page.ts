@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-costo-extra',
@@ -15,10 +16,12 @@ export class CostoExtraPage implements OnInit {
   total:number=0;
 
   constructor(private platform: Platform,
-		          public navCtrl: NavController) { }
+		          public navCtrl: NavController,
+              private subServ: ObtSubSService) { }
 
   ngOnInit() {
 
+    this.subServ.setruta('costo-extra');
     this.platform.backButton.subscribeWithPriority(10, () => {
     
           this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;

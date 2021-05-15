@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import {DropdownModule} from 'primeng/dropdown';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
+import { PhotoService } from 'src/app/services/photo.service';
+import { Photo } from 'src/app/interfaces/interfaces'
 
 
 @Component({
@@ -16,6 +19,7 @@ export class DatosPersonalesPage implements OnInit {
 
 
    avatarusuario:string =""; 
+   avatarUsuario64:string="";
     nombre: string = '';
 	fecha: string = '';
 	correo: string = '';
@@ -64,7 +68,10 @@ export class DatosPersonalesPage implements OnInit {
 
   constructor(private platform: Platform,
 	          private navCtrl: NavController,
-	          private _authOdoo: AuthOdooService) {
+	          private _authOdoo: AuthOdooService,
+			  private subServ: ObtSubSService,
+			  public photoService: PhotoService,
+			  private alertCtrl: AlertController) {
 				
 				
 			
@@ -74,12 +81,14 @@ export class DatosPersonalesPage implements OnInit {
   ngOnInit() {
   //  this.avatarusuario =  '../../../assets/registro.svg'
 	  /* this.avatarusuario =  '../../../assets/registro.svg' */
+
+	  this.subServ.setruta('datos-personales');
 	  this.usuario = this._authOdoo.getUser();
 	  console.log('usuario actual',this.usuario);
 
 	  this.platform.backButton.subscribeWithPriority(10, () => {
     
-		this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+		this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
 	
 		 
 		 }); 
@@ -168,6 +177,61 @@ placeholder() {
 /* ubicacion(){
 	this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
 } */
+
+presentAlertConfirm(){
+	this.presentAlert();
+}
+
+async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: '¿Desea colocar una foto?',
+      message: 'Selecione la opcion de camara o galeria para la foto ',
+      buttons: [
+        {
+          text: 'Cámara',
+          handler: async () => {
+            let photo: Photo = await this.photoService.addNewToCamara();
+            console.log( "Foto",photo.webviewPath);
+            if(photo){
+              this.avatarusuario =this.photoService.devuelve64();
+              console.log(this.avatarusuario);
+              this.avatarUsuario64= this.photoService.devuelve64();
+            }
+          }
+        },
+        {
+          text: 'Galería',
+          handler: async () => {
+            this.photoService.photos = [];     
+            let photos: Photo[] = await this.photoService.addNewToGallery();
+            // console.log("Fotos",JSON.stringify(this.photoService.photos));
+
+            if(photos.length == 1){
+              
+              this.avatarusuario= this.photoService.devuelve64();
+              console.log(this.avatarusuario);
+              this.avatarUsuario64= this.photoService.devuelve64(); 
+            }
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: (event) => {
+            //this.selectFoto = false;
+			if (this.usuario.avatar.length == 0) {
+				this.avatarusuario =  '../../../assets/registro.svg'
+			} else {
+				this.avatarusuario = this.usuario.avatar;
+			}
+            this.avatarUsuario64="";
+            console.log('Confirm Cancel');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 }
 
 

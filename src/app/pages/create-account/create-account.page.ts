@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service'
 import { Photo } from 'src/app/interfaces/interfaces'
-import { Address, UsuarioModel } from 'src/app/models/usuario.model';
+import { UsuarioModel } from 'src/app/models/usuario.model';
+import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
+import { DropdownModule } from 'primeng/dropdown'
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-create-account',
@@ -15,7 +18,6 @@ import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 export class CreateAccountPage implements OnInit {
 
   usuario:UsuarioModel;
-  
 
   categorias: string [] = ['Electricista', 'Fontanero'];
   categoriaSelected: string = '';
@@ -46,8 +48,8 @@ export class CreateAccountPage implements OnInit {
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
 
-  selectFoto = false;
-  coordenadas = false;
+  selectFoto = true;
+  coordenadas = true;
   esMayorEdad = true;
 
   constructor(private toastCtrl: ToastController,
@@ -56,13 +58,54 @@ export class CreateAccountPage implements OnInit {
               public navCtrl: NavController,
               private _signupOdoo: SignUpOdooService,
               public photoService: PhotoService,
-              public _authOdoo: AuthOdooService) { }
+              public _authOdoo: AuthOdooService,
+              private actionSheetCtrl: ActionSheetController,
+              private popoverCtrl: PopoverController,
+              public navController:NavController,
+              private platform: Platform) { }
 
   ngOnInit() {
 
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      
+        
+        this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
+        
+      
+      
+      });
+
+      
+
   }
 
- async presentAlert() {
+  async presentPopover(evento) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverIaeComponent,
+      cssClass: 'iaePop',
+      event: evento,
+      mode: 'ios', 
+      translucent: true,
+      animated: true
+    });
+  
+    await popover.present();
+
+    const { data } = await popover.onWillDismiss();
+
+    console.log("Item: ", data);
+    // this.subir();
+  }
+/* 
+  subir(){
+   console.log('estoy en la funcion subir')
+    
+  
+  
+  
+  } */
+
+  async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: '¿Desea colocar una foto?',
       message: 'Selecione la opcion de camara o galeria para la foto ',
@@ -112,7 +155,7 @@ export class CreateAccountPage implements OnInit {
       ]
     });
     await alert.present();
-  } 
+  }
 
   editar(){
     // this.usuario = new UsuarioModel;
@@ -155,11 +198,7 @@ export class CreateAccountPage implements OnInit {
     toast.present();
   }
 
-  ubicacion(){
-    // this.entrar_campos();
-    // this.datos.setruta("datospersonales");
-    // this.navCtrl.navigateRoot('/regismapa', {animated: true, animationDirection: 'forward' }) ;
-  }
+ 
 
   entrar_campos(){
     // this.datos.setnombre(this.nombre);
@@ -180,13 +219,17 @@ export class CreateAccountPage implements OnInit {
 
   onPictureClick(event) {
     this.selectFoto = true;
-   // this.presentAlert();
+    this.presentAlert();
   }
-
 
   onLocationClick(event) {
     this.coordenadas = true;
     console.log('Location clicked');
+    this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
+  }
+
+  onNextClick(event) {
+    console.log('Siguiente clicked');
   }
 
   validarMayorDeEdad(date: string) {
@@ -220,22 +263,12 @@ export class CreateAccountPage implements OnInit {
     }
   }
 
-  onCatChange() {
+  onCatFocusChange() {
     this.isCatTouched = true;
     console.log("El valor es ", this.categoriaSelected);
   }
 
-  onCatCancel() {
-    this.isCatTouched = true;
-    console.log("El valor es ", this.categoriaSelected);
-  }
-
-  onEntChange() {
-    this.isEntTouched = true;
-    console.log("El valor es ", this.entJuridicaSelected);
-  }
-
-  onEntCancel() {
+  onEntFocusChange() {
     this.isEntTouched = true;
     console.log("El valor es ", this.entJuridicaSelected);
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { NavController, Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-contrase',
@@ -20,11 +21,12 @@ export class ContrasePage implements OnInit {
   usuario:UsuarioModel;
 
   constructor(private _authOdoo:AuthOdooService,
-    private platform: Platform,
-              public navCtrl: NavController) { }
+               private platform: Platform,
+              public navCtrl: NavController,
+              private subServ: ObtSubSService) { }
 
   ngOnInit() {
-
+    this.subServ.setruta('contrase');
     this.usuario= this._authOdoo.getUser();
     console.log("usuario",this.usuario);
     console.log(" contraseña del usuario ",this.usuario.password);
@@ -32,7 +34,7 @@ export class ContrasePage implements OnInit {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
     
-      this.navCtrl.navigateRoot('/contratados-chat-detalles', {animated: true, animationDirection: 'back' }) ;
+      this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
   
        
        }); 

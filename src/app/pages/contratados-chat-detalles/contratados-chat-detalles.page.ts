@@ -23,8 +23,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   task: TaskModel;
   message: MessageModel;
 	messagesList: MessageModel[];
-  purchaseOrderID: number;
-	user: UsuarioModel;  
+  user: UsuarioModel;  
   messagesList$: Observable<MessageModel[]>;
 	messageSendOk$: Observable<MessageModel>;
 	task$: Observable<TaskModel[]>;
@@ -65,7 +64,7 @@ export class ContratadosChatDetallesPage implements OnInit {
                 this.task = new TaskModel();
                 this.task = this._taskOdoo.getTaskCesar();
                 this.user = this._authOdoo.getUser();
-                 this._chatOdoo.requestAllMessages(this.purchaseOrderID); 
+                 
                }
 
   ngOnInit() {
@@ -187,7 +186,7 @@ console.log('nooooo');
   pushToChat() {
 
     if (this.message.message.length > 0) {
-        this.message.offer_id = this.purchaseOrderID;
+        this.message.offer_id = this.task.id;
 
     
       this._chatOdoo.sendMessageClient(this.message);

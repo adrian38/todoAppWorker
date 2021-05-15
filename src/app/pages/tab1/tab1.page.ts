@@ -160,6 +160,8 @@ export class Tab1Page {
             if (temp != -1) {
               this.solicitudesList[temp].notificationChat = true;
             }
+            this._taskOdoo.setSolicitudesListEdit(notificationNewMessg);
+
           }
         });
       });

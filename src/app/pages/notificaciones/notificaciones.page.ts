@@ -32,19 +32,21 @@ export class NotificacionesPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    
+
+    //this.subscriptions();
+
     
   }
   ngOnDestroy() {
-   /*  this.subscriptionNotificationMess.unsubscribe();
+    this.subscriptionNotificationMess.unsubscribe();
     this.subscriptionNotificationMessgOrigin.unsubscribe();
     this.subscriptionOffertCancelled.unsubscribe();
     this.subscriptionPoAcepted.unsubscribe();
     this.subscriptioNewPoSuplier.unsubscribe();
-    this.subscriptioPoCancelled.unsubscribe(); */
+    this.subscriptioPoCancelled.unsubscribe(); 
   }
 
- /*  subscriptions() {
+   subscriptions() {
     
     this.notificationNewMessg$ =
       this._taskOdoo.getRequestedNotificationNewMessg$();
@@ -56,8 +58,7 @@ export class NotificacionesPage implements OnInit {
       }
     );
 
-    this.notificationNewMessgOrigin$ =
-      this._chatOdoo.getMessagesOriginNotification$(); //
+    /* this.notificationNewMessgOrigin$ = this._chatOdoo.getMessagesOriginNotification$(); //
     this.subscriptionNotificationMessgOrigin =
       this.notificationNewMessgOrigin$.subscribe((notificationNewMessg) => {
         this.ngZone.run(() => {
@@ -140,9 +141,8 @@ export class NotificacionesPage implements OnInit {
           });
         }
       );
-
-    this.notificationPoAcepted$ =
-      this._taskOdoo.getRequestedNotificationPoAcepted$();
+ */
+    this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
     this.subscriptionPoAcepted = this.notificationPoAcepted$.subscribe(
       (notificationPoAcepted) => {
         this.ngZone.run(() => {
@@ -151,5 +151,5 @@ export class NotificacionesPage implements OnInit {
         });
       }
     );
-  } */
+  } 
 }

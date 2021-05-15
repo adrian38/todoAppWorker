@@ -50,24 +50,16 @@ export class SolicitudesChatDetallesPage implements OnInit {
   sms_cliente: string = '';
 
   //-------------------------------------------------------
-  // yo:boolean=false;
+ 
 
   categoria: string;
   presupuesto: number;
   descripcion: string;
-  // fecha: string;
-  // horario: string;
-  // direccion: string;
-  // materiales: number;
-  // manoObra: number;
   fotos: string[];
-
   total: number;
-
   chats: ChatDetails[] = [];
   newMessage: string;
   loading: HTMLIonLoadingElement = null;
-
   isLastMessage: boolean = true;
 
   @ViewChild(IonContent) content: IonContent;
@@ -109,10 +101,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionMessList.unsubscribe();
-    this.subscriptionNewMsg.unsubscribe();
-    this.subscriptionNotification.unsubscribe();
-    this._taskOdoo.setChat(false);
+  
   }
 
   pushToChat() {

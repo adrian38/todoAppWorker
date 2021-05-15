@@ -64,6 +64,8 @@ export class ContratadosChatDetallesPage implements OnInit {
                 this.task = new TaskModel();
                 this.task = this._taskOdoo.getTaskCesar();
                 this.user = this._authOdoo.getUser();
+                this.message = new MessageModel();
+                this.messagesList = [];
                  
                }
 

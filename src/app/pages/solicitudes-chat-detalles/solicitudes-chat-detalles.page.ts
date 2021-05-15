@@ -30,13 +30,12 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
   messagesList$: Observable<MessageModel[]>;
   messageSendOk$: Observable<MessageModel>;
-  task$: Observable<TaskModel[]>;
   notificationNewMessg$: Observable<number[]>;
 
   subscriptionMessList: Subscription;
   subscriptionNewMsg: Subscription;
   subscriptionNotification: Subscription;
-  subscriptionTask: Subscription;
+  
 
   user: UsuarioModel;
  
@@ -113,7 +112,6 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.subscriptionMessList.unsubscribe();
     this.subscriptionNewMsg.unsubscribe();
     this.subscriptionNotification.unsubscribe();
-    this.subscriptionTask.unsubscribe();
     this._taskOdoo.setChat(false);
   }
 

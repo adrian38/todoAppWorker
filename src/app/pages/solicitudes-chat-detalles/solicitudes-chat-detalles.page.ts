@@ -48,6 +48,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   imagen_2: string = '';
   ultimo_sms: string = '';
   sms_cliente: string = '';
+  chat_vacia: boolean = false;
 
   //-------------------------------------------------------
  
@@ -61,6 +62,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   newMessage: string;
   loading: HTMLIonLoadingElement = null;
   isLastMessage: boolean = true;
+
 
   @ViewChild(IonContent) content: IonContent;
 
@@ -161,7 +163,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
 						}
 					}
 				}
-              
+        this. chatVacia(this.messagesList.length);   
         this.coger();
         this.loading.dismiss();
           });
@@ -257,5 +259,15 @@ export class SolicitudesChatDetallesPage implements OnInit {
 		});
 
     return this.loading.present();
+  }
+
+  chatVacia( cant : number){
+
+    if ( cant == 0){
+this.chat_vacia=true;
+    }
+    else{
+      this.chat_vacia=false;
+    }
   }
 }

@@ -44,6 +44,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   valor_segment:string="";
   ultimo_sms:string="";
   sms_cliente:string="";
+  chat_vacia: boolean = false;
 
   loading: HTMLIonLoadingElement = null;
 
@@ -135,6 +136,7 @@ export class ContratadosChatDetallesPage implements OnInit {
         this.coger();
         this.loading.dismiss();
               
+            this. chatVacia(this.messagesList.length);
           });
          });
     
@@ -145,9 +147,9 @@ export class ContratadosChatDetallesPage implements OnInit {
 
 
   coger(){
-    console.log('ultimo sms',this.messagesList[0].message )
-     console.log('ultimo sms',this.messagesList[0].author_id )
-     console.log('ultimovvv sms',this.user.partner_id )
+    // console.log('ultimo sms',this.messagesList[0].message )
+    //  console.log('ultimo sms',this.messagesList[0].author_id )
+    //  console.log('ultimovvv sms',this.user.partner_id )
 
 for (let i = 0; i <  this.messagesList.length; i++) {
 
@@ -295,6 +297,16 @@ console.log('nooooo');
       });
   
       return this.loading.present();
+    }
+
+    chatVacia( cant : number){
+
+      if ( cant == 0){
+this.chat_vacia=true;
+      }
+      else{
+        this.chat_vacia=false;
+      }
     }
 
 }

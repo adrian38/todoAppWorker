@@ -49,6 +49,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   imagen_2: string = '';
   ultimo_sms: string = '';
   sms_cliente: string = '';
+  chat_vacia: boolean = false;
 
   //-------------------------------------------------------
  
@@ -62,6 +63,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   newMessage: string;
   loading: HTMLIonLoadingElement = null;
   isLastMessage: boolean = true;
+
 
   @ViewChild(IonContent) content: IonContent;
   @ViewChild('target') private myScrollContainer: ElementRef;
@@ -187,9 +189,14 @@ export class SolicitudesChatDetallesPage implements OnInit {
           this.coger();
           
 				}
+<<<<<<< HEAD
               
         
         
+=======
+        this. chatVacia(this.messagesList.length);   
+        this.coger();
+>>>>>>> main
         this.loading.dismiss();
 
         
@@ -286,12 +293,22 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   async presentLoading() {
-    this.loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Espere...',
-      //duration: 2000
-    });
+		this.loading = await this.loadingController.create({
+			cssClass: 'my-custom-class',
+			message: 'Cargado chat'
+			//duration: 2000
+		});
 
     return this.loading.present();
+  }
+
+  chatVacia( cant : number){
+
+    if ( cant == 0){
+this.chat_vacia=true;
+    }
+    else{
+      this.chat_vacia=false;
+    }
   }
 }

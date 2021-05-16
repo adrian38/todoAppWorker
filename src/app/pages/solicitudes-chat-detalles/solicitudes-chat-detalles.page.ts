@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
 import {
   NavController,
@@ -29,6 +29,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   messagesList: MessageModel[];
 
   messagesList$: Observable<MessageModel[]>;
+  
   messageSendOk$: Observable<MessageModel>;
   notificationNewMessg$: Observable<number[]>;
 
@@ -63,6 +64,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   isLastMessage: boolean = true;
 
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild('target') private myScrollContainer: ElementRef;
 
   constructor(
     private _taskOdoo: TaskOdooService,
@@ -98,9 +100,26 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.subscriptions();
   
     this.ver_imagenes();
+
+    
+  }
+ scrollToBottom(){
+
+    if(this.valor_segment === "chat"){
+    
+    setTimeout(() => {
+        this.scrollToElement();
+    }, 400);
+  }
+    
   }
 
   ngOnDestroy(): void {
+
+    this.subscriptionMessList.unsubscribe();
+    this.subscriptionNewMsg.unsubscribe();
+    this.subscriptionNotification.unsubscribe();
+    
   
   }
 
@@ -108,15 +127,19 @@ export class SolicitudesChatDetallesPage implements OnInit {
     if (this.message.message.length > 0) {
       this.message.offer_id = this.task.id;
       this._chatOdoo.sendMessageClient(this.message);
+      
       this.ultimo_sms = this.message.message;
       this.message = new MessageModel();
+      this.coger();
     }
+  }
 
-    setTimeout(() => {
-      this.content.scrollToBottom(300);
-    }, 500);
-
-    this.message.message = '';
+  scrollToElement(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   subscriptions() {
@@ -160,10 +183,16 @@ export class SolicitudesChatDetallesPage implements OnInit {
 							this.messagesList = messagesList;
 						}
 					}
+
+          this.coger();
+          
 				}
               
-        this.coger();
+        
+        
         this.loading.dismiss();
+
+        
           });
          });
     
@@ -238,7 +267,14 @@ export class SolicitudesChatDetallesPage implements OnInit {
       } else {
         console.log('nooooo');
       }
+
+      
     }
+   
+    this.scrollToBottom();
+    //this.scrollToElement();
+    //this.scrollToElement();
+    //setTimeout(this.scrollToElement,1000);
   }
 
   valorSegment(ruta: string) {

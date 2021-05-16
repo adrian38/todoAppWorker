@@ -48,7 +48,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   loading: HTMLIonLoadingElement = null;
 
   @ViewChild(IonContent) content: IonContent;
-
+ 
 
   constructor(private _taskOdoo  :TaskOdooService,
               private navCtrl    :NavController,
@@ -121,11 +121,20 @@ export class ContratadosChatDetallesPage implements OnInit {
     this.subscriptionMessList = this.messagesList$.subscribe((messagesList) => {
       this.ngZone.run(() => {
 
-        console.log("tengo todos los mensajes");
-       
-              this.messagesList = messagesList;
-              this.coger();
-              this.loading.dismiss();
+        let temp = messagesList.find((element) => element.offer_id);
+				if (temp) {
+					if (this.task.id === temp.offer_id) {
+						if (typeof this.messagesList !== 'undefined' && this.messagesList.length > 0) {
+							Array.prototype.push.apply(this.messagesList, messagesList);
+						} else {
+							this.messagesList = messagesList;
+						}
+					}
+				}
+              
+        this.coger();
+        this.loading.dismiss();
+              
           });
          });
     

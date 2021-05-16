@@ -26,13 +26,13 @@ let tasksList$ = new Subject<boolean>();
 
 let tasksList: TaskModel[];
 
-let pilaNotificaciones: PilaSolicitudes<TaskModel>;
+let pilaNotificaciones: any[];
 
 let solicitudesList: TaskModel[];
 let historialList: TaskModel[];
 let contratadosList: TaskModel[];
 
-let notificationsList: TaskModel[];
+let notificationList: TaskModel[];
 
 let temp;
 
@@ -89,7 +89,7 @@ export class TaskOdooService {
   constructor(private _authOdoo: AuthOdooService, private router: Router) {
     jaysonServer = this._authOdoo.OdooInfoJayson;
     pilaSolicitudes = new PilaSolicitudes<TaskModel>();
-    pilaNotificaciones = new PilaSolicitudes<TaskModel>();;
+    pilaNotificaciones = [];
   }
 
   setTaskPayment(task: TaskModel) {
@@ -145,12 +145,8 @@ export class TaskOdooService {
     rutaActual = temp;
   }
 
-  getPilaNotifications() {
-    return pilaNotificaciones.extraer();
-  }
-
-  getNotificationsList(){
-    return notificationsList;
+  setChat(temp: boolean) {
+    rutaChat = temp;
   }
 
   getNotifications$(): Observable<boolean> {
@@ -176,6 +172,20 @@ export class TaskOdooService {
   getRequestedNotificationNewPoSuplier$(): Observable<number[]> {
     return notificationNewPoSuplier$.asObservable();
   }
+
+  getNotificationList() {
+    return notificationList;
+  }
+  setNotificationListEdit(notiList: any[]) {
+   /*  for (let i = 0; i < messagesList.length; i++) {
+      let temp = solicitudesList.findIndex(
+        (element) => element.id === messagesList[i].offer_id
+      );
+      if (temp != -1) {
+        solicitudesList[temp].notificationChat = true;
+      }
+    }*/
+  } 
 
   notificationPull() {
     let id_po = [];
@@ -265,16 +275,14 @@ export class TaskOdooService {
               if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
                 /* console.log(id_messg, 'nuevo mensaje id'); */
 				
-				          let notifTask: TaskModel = new TaskModel();
-				          notifTask.notificationType = 3;
+				let notifTask: TaskModel = new TaskModel();
+				notifTask.notificationType = 3;
                   for (let i = 0; i < id_messg.length; i++) {
                     notifTask.id = id_messg[i];
-                    pilaNotificaciones.insertar(notifTask);
+                    pilaNotificaciones.push(notifTask);
                   }
 
-                  notifications$.next(true);
-
-                if (rutaActual) {
+                if (rutaActual || rutaChat) {
                   notificationNewMessg$.next(id_messg);
                 } else if (!rutaActual && !rutaChat) {
                           
@@ -355,7 +363,7 @@ export class TaskOdooService {
   requestTaskPoUpdate(id_po: number[]) {
     let SO_origin = [];
     let SO_id = [];
-	  let PO_id = [];
+	let PO_id = [];
     let tasksUpdate: TaskModel[];
 
 	let get_order_line = function () {
@@ -401,6 +409,7 @@ export class TaskOdooService {
 				}
 			  }
   
+			  console.log(tasksList, 'con presupuesto');
 			  get_photo_so();
 			}
 		  }

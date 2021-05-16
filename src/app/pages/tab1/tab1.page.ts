@@ -171,6 +171,8 @@ export class Tab1Page {
             if (temp != -1) {
               this.solicitudesList[temp].notificationChat = true;
             }
+            this._taskOdoo.setSolicitudesListEdit(notificationNewMessg);
+
           }
         });
       });
@@ -296,8 +298,7 @@ export class Tab1Page {
   in(i) {
     this.task = this.solicitudesList[i];
     this._taskOdoo.setTaskCesar(this.task);
-    this._chatOdoo.setIdPo(this.task.id);
-
+   
     if (this.task.offer_send == 'sent') {
       this.navCtrl.navigateRoot('/solicitudes-chat-detalles', {
         animated: true,
@@ -316,16 +317,6 @@ export class Tab1Page {
     /////////////////////////////////////////////////poner cargado;
     this.presentLoading();
   }
-
-   /*  cantidad_solicitudes(){
-     
-    if (this.solicitudesList.length < 1) {
-      this.solicitud_vacia=true;
-      }
-      else{
-        this.solicitud_vacia=false;
-      } 
-    } */
 
     
       tituloSolicitud(i){

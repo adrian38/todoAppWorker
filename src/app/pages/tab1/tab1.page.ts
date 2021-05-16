@@ -22,6 +22,7 @@ export class Tab1Page {
   solicitudesList: TaskModel[];
   tab: String;
   loading: any;
+  boton_atras:boolean=false;
   solicitud_vacia: boolean = true;
 
   tasksList$: Observable<boolean>; // servicio comunicacion
@@ -84,11 +85,15 @@ export class Tab1Page {
     if (!this._taskOdoo.getInitTab()) {
       this._taskOdoo.setInitTab(true);
       this._taskOdoo.requestTaskListProvider();
-      //this.presentLoadingCargado();
+     // this.subServ.setcargando(false);
       this.presentLoadingCargado();
+     
+      
+    // this.cargandoSolicitud( this.subServ.getcargando());
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
       ///////////preguntar si no hay solicitudes cuando se arregle
+      console.log('rnnnn')
 
       if (!this._taskOdoo.getPilaEmpthy()) {
         let temp = this._taskOdoo.getPilaSolicitud();
@@ -267,6 +272,7 @@ export class Tab1Page {
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
             this.loading.dismiss();
+            //this.subServ.setcargando(true);
           }
           //this.solicitudEmpty();
         });
@@ -386,4 +392,12 @@ export class Tab1Page {
         this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
               
       }
+ /* cargandoSolicitud( c:boolean){
+
+        if(c == true){
+          this.loading.dismiss();
+        }
+        
+
+      }   */
 }

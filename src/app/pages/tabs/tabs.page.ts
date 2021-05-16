@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonTabButton, IonTabs } from '@ionic/angular';
 import { element } from 'protractor';
 import { NavController,Platform } from '@ionic/angular';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 
 @Component({
@@ -19,9 +20,11 @@ export class TabsPage {
 
   constructor(private navController : NavController,
               private platform      : Platform,
-              public alertCtrl      : AlertController) {}
+              public alertCtrl      : AlertController,
+              private subServ: ObtSubSService) {}
 
   setCurrentTab( event ) {
+   //this.subServ.setcargando(false);
     const selectedTab = this.tabs.getSelected();
     if (selectedTab === 'tab1'){
       this.tab1Active = '_active';
@@ -29,9 +32,15 @@ export class TabsPage {
       this.tab3Active = '';
       console.log('posicion',selectedTab);
 
+   
+
       this.platform.backButton.subscribeWithPriority(10, () => {
-        this.presentAlert();
-   });
+        // this.subServ.setcargando(true);
+         this.presentAlert();
+});
+    
+
+     
      
     }
     else if (selectedTab === 'tab2'){

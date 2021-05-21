@@ -189,14 +189,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
           this.coger();
           
 				}
-<<<<<<< HEAD
-              
-        
-        
-=======
-        this. chatVacia(this.messagesList.length);   
-        this.coger();
->>>>>>> main
+        this.chatVacia(this.messagesList.length);   
         this.loading.dismiss();
 
         

@@ -65,6 +65,7 @@ export class ObtSubSService {
 	foto00: string = '';
 	foto11: string = '';
 	foto22: string = '';
+	boton_atras:boolean=false;
 
 	constructor() {
 		this.SolicitudesList = [];

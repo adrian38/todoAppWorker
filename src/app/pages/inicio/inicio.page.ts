@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
+import {Plugins} from '@capacitor/core';
+const {SplashScreen} = Plugins;
 
 @Component({
   selector: 'app-inicio',
@@ -16,6 +18,12 @@ export class InicioPage implements OnInit {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.presentAlert();
  });
+  }
+
+  ionViewDidEnter() {
+
+    SplashScreen.hide();
+    
   }
 
     async presentAlert() {

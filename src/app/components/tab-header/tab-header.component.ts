@@ -1,8 +1,9 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ActionSheetController, NavController  } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
+
 
 @Component({
   selector: 'app-tab-header',
@@ -19,10 +20,13 @@ export class TabHeaderComponent implements OnInit {
 
   ruta:string = '';
 
+ 
+
   constructor(private navCtrl: NavController,
               private _taskOdoo: TaskOdooService,
               private ngZone: NgZone,
-              private subServ: ObtSubSService) {
+              private subServ: ObtSubSService,
+              public actionSheetCtrl: ActionSheetController) {
 
               }
 
@@ -39,6 +43,7 @@ export class TabHeaderComponent implements OnInit {
     this.subscriptionNotification.unsubscribe();
 
   }
+  
 
   subscriptions() {
   this.notification$ = this._taskOdoo.getNotifications$();
@@ -57,6 +62,7 @@ export class TabHeaderComponent implements OnInit {
 
   on_Click() {
     console.log('click nuevament');
+    this.presentActionSheet();
   }
   OnClickNotificaciones(){
     console.log('click campana');
@@ -66,4 +72,39 @@ export class TabHeaderComponent implements OnInit {
 
 
   }
+
+  
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Busqueda',
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Fecha',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        },{
+          text: 'Distancia',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+
 }

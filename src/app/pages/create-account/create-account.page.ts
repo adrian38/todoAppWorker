@@ -17,6 +17,11 @@ import { SelectItem } from 'primeng/api';
 })
 export class CreateAccountPage implements OnInit {
 
+  customActionSheetOptions: any = {
+    header: 'Colors',
+    subHeader: 'Select your favorite color'
+  };
+
   usuario:UsuarioModel;
 
   categorias: string [] = ['Electricista', 'Fontanero'];

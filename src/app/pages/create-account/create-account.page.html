@@ -37,8 +37,10 @@
             (ionFocus)="onCatFocusChange()"
           >
             <ion-select-option
+            
               *ngFor="let categoria of categorias"
               [value]="categoria"
+              style="text-decoration: black;"
               >{{ categoria }}</ion-select-option
             >
           </ion-select>

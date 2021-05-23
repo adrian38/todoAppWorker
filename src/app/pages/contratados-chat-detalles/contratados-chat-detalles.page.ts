@@ -18,6 +18,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ContratadosChatDetallesPage implements OnInit {
 
+ 
+
+  pre: number;
   presupuesto: number;
   display:boolean=false;
   task: TaskModel;
@@ -212,6 +215,10 @@ this.scrollToBottom();
   onClose() {
     console.log("Close clicked¿¿¿¿¿");
     this.navCtrl.navigateRoot('/tabs/tab2', {animated: true, animationDirection: 'back' }) ;
+  }
+
+  onClickEnviar(){
+    console.log("nnnnn")
   }
 
   pushToChat() {

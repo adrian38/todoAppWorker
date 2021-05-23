@@ -1,5 +1,5 @@
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild ,ElementRef} from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
 import { IonContent, LoadingController, ModalController, NavController, Platform } from '@ionic/angular';
 import { TaskModel } from 'src/app/models/task.model';
@@ -34,6 +34,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 	subscriptionNotification: Subscription;
 	subscriptionTask: Subscription;
 
+  
 
   habilitar_0:boolean;
   habilitar_1:boolean;
@@ -49,6 +50,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   loading: HTMLIonLoadingElement = null;
 
   @ViewChild(IonContent) content: IonContent;
+  @ViewChild('target') private myScrollContainer: ElementRef;
  
 
   constructor(private _taskOdoo  :TaskOdooService,
@@ -81,6 +83,19 @@ export class ContratadosChatDetallesPage implements OnInit {
     this.subscriptions();
  
   }
+
+  scrollToBottom(){
+
+    if(this.valor_segment === "chat"){
+    
+    setTimeout(() => {
+        this.scrollToElement();
+    }, 400);
+  }
+    
+  }
+
+  
 
   ngOnDestroy() {
     this.subscriptionMessList.unsubscribe();
@@ -144,6 +159,7 @@ export class ContratadosChatDetallesPage implements OnInit {
     this._taskOdoo.setChat(true);
   }
 
+ 
 
 
   coger(){
@@ -162,6 +178,8 @@ console.log('nooooo');
 }
 
 } 
+
+this.scrollToBottom();
 
 }
 
@@ -206,13 +224,22 @@ console.log('nooooo');
       this.ultimo_sms=this.message.message;
       console.log('´sms mandado', this.message.message);
       this.message = new MessageModel();
+      this.coger();
     }
 
-    setTimeout(() => {
+   /*  setTimeout(() => {
       this.content.scrollToBottom(300);
     }, 500);
 
-    this.message.message= '';
+    this.message.message= ''; */
+}
+
+scrollToElement(): void {
+  this.myScrollContainer.nativeElement.scroll({
+    top: this.myScrollContainer.nativeElement.scrollHeight,
+    left: 0,
+    behavior: 'smooth'
+  });
 }
 
 

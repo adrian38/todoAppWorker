@@ -164,3 +164,11 @@
  }
 
  
+.picker-opt.picker-opt-selected {
+  color: var(--ion-color-orange) !important;
+}
+
+.picker-button.sc-ion-picker-md,
+.picker-button.sc-ion-picker-ios {
+  color: var(--ion-color-orange) !important;
+}

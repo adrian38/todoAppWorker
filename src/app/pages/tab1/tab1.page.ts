@@ -318,8 +318,8 @@ export class Tab1Page {
     this.presentLoading();
   }
 
-    
-      tituloSolicitud(i){
+    //------------------------------------------------------------------bien
+     /*  tituloSolicitud(i){
         
         this.titulo_solicitud=this.solicitudesList[i].title;
         if (this.titulo_solicitud.length <16){
@@ -328,7 +328,7 @@ export class Tab1Page {
         else {
           return  this.titulo_solicitud.slice(0,15) + " ... ";
           }
-      }
+      } */
 
       async presentLoadingCargado() {
         this.loading = await this.loadingController.create({

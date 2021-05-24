@@ -14,7 +14,15 @@
           [ngClass]="( solicitud.notificationNewSo === false) ? 'item' : 'item_notificacion'"
           lines="none"
         >
-          <div class="flex_row" style="width: 100%" (click)="in(i)">
+
+        <app-solicitud 
+        [solicitud]="solicitud"
+        [numero_solicitud]="i"
+        (click)="in(i)">
+        
+        </app-solicitud>
+
+          <!-- <div class="flex_row" style="width: 100%" (click)="in(i)">
             <img class="image" src="../../../assets/fontaneria.png" />
 
             <div class="flex_column" style="width: 100%; margin-left: 20px">
@@ -58,7 +66,7 @@
                 ></ion-img>
               </div>
             </div>
-          </div>
+          </div> -->
         </ion-item>
         <ion-item-options side="end" style="padding: 8.6px">
           <ion-item-option class="color_fondo" (click)="cancelar(i)"

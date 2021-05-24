@@ -23,11 +23,12 @@ export class CreateAccountPage implements OnInit {
   };
 
   usuario:UsuarioModel;
-
+  categoria:string="";
   categorias: string [] = ['Electricista', 'Fontanero'];
   categoriaSelected: string = '';
   isCatTouched: boolean = false;
 
+  entidad:string="";
   entJuridica: string [] = ['Empresa', 'Autónomo'];
   entJuridicaSelected: string = '';
   isEntTouched: boolean = false;
@@ -278,4 +279,84 @@ export class CreateAccountPage implements OnInit {
     console.log("El valor es ", this.entJuridicaSelected);
   }
 
+  clickCategoria(){
+    console.log('sjjss')
+    this.presentActionSheet();
+  }
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Su categoria es:',
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Electricista',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.categoria=this.categorias[0];
+          }
+        },{
+          text: 'Fontanero',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.categoria=this.categorias[1];
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.categoria="";
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  clickEntidad(){
+   this.presentActionSheetEntidad()
+  }
+
+  async presentActionSheetEntidad() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Tipo de entidad',
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Empresa',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.entidad=this.entJuridica[0];
+          }
+        },{
+          text: 'Autónomo',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.entidad=this.entJuridica[1];
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+           
+            this.entidad="";
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
 }

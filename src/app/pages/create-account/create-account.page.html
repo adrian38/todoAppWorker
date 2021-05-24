@@ -25,25 +25,41 @@
           lines="none"
           [ngClass]="(categoriaSelected == '' && isCatTouched === true) ? 'green_border':'no_border'"
         >
+        <div class="flex_row" style="justify-content:space-between" >
           <ion-label
-            style="margin-top: 0 !important; margin-bottom: 0 !important"
-            >Categoría de trabajador</ion-label
-          >
-          <ion-select
+          class="flex_row"
+          style="margin-top: 0 !important; margin-bottom: 0 !important ; min-width: 155px !important;"
+          >Categoría de trabajador</ion-label
+        >
+       
+        <div class="flex_row" style="justify-content:flex-end">
+          <ion-label
+          style="margin-top: 0 !important; margin-bottom: 0 !important;"
+          (click)="clickCategoria()" >{{categoria}}</ion-label
+        >
+        <ion-icon style="width: 11px;height: 11px;margin-top: 3px !important;"
+                   name="caret-down-outline"
+                   (click)="clickCategoria()"></ion-icon>
+         </div>
+        
+        </div>
+         
+          <!-- <ion-select
             interface="action-sheet"
             [(ngModel)]="categoriaSelected"
             name="categoria"
             mode="ios"
+           
             (ionFocus)="onCatFocusChange()"
           >
             <ion-select-option
             
               *ngFor="let categoria of categorias"
               [value]="categoria"
-              style="text-decoration: black;"
+             
               >{{ categoria }}</ion-select-option
             >
-          </ion-select>
+          </ion-select> -->
         </ion-item>
         <ion-label
           *ngIf="categoriaSelected == '' && isCatTouched === true"
@@ -58,11 +74,23 @@
             lines="none"
             [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'"
           >
+          <div class="flex_row" style="justify-content:space-between" >
+            <ion-label class="flex_row"
+            style="margin-top: 0 !important; margin-bottom: 0 !important"
+            >Entidad jurídica</ion-label>
+
+           <div class="flex_row" style="justify-content:flex-end;min-width: 130px;">
             <ion-label
-              style="margin-top: 0 !important; margin-bottom: 0 !important"
-              >Entidad jurídica</ion-label
-            >
-            <ion-select
+            style="margin-top: 0 !important; margin-bottom: 0 !important;"
+            (click)="clickEntidad()" >{{entidad}}</ion-label
+          >
+          <ion-icon style="width: 11px;height: 11px;margin-top: 3px !important;"
+                     name="caret-down-outline"
+                     (click)="clickEntidad()"></ion-icon>
+           </div>
+          </div>
+            
+            <!-- <ion-select
               interface="action-sheet"
               mode="ios"
               [(ngModel)]="entJuridicaSelected"
@@ -75,7 +103,7 @@
                 [value]="entidad"
                 >{{ entidad }}</ion-select-option
               >
-            </ion-select>
+            </ion-select> -->
           </ion-item>
           <ion-label
             *ngIf="entJuridicaSelected == '' && isEntTouched === true"

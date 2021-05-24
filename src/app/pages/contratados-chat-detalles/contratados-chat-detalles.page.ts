@@ -87,7 +87,7 @@ export class ContratadosChatDetallesPage implements OnInit {
  
   }
 
-  scrollToBottom(){
+   scrollToBottom(){
 
     if(this.valor_segment === "chat"){
     
@@ -96,7 +96,7 @@ export class ContratadosChatDetallesPage implements OnInit {
     }, 400);
   }
     
-  }
+  } 
 
   
 
@@ -182,7 +182,7 @@ console.log('nooooo');
 
 } 
 
-this.scrollToBottom();
+ this.scrollToBottom(); 
 
 }
 
@@ -241,13 +241,13 @@ this.scrollToBottom();
     this.message.message= ''; */
 }
 
-scrollToElement(): void {
+ scrollToElement(): void {
   this.myScrollContainer.nativeElement.scroll({
     top: this.myScrollContainer.nativeElement.scrollHeight,
     left: 0,
     behavior: 'smooth'
   });
-}
+} 
 
 
 

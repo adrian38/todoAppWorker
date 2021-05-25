@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, PopoverController } from '@ionic/angular';
+import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 
 @Component({
   selector: 'app-adjuntar',
@@ -12,13 +13,32 @@ export class AdjuntarPage implements OnInit {
   punto_gris = '../../assets/icons/punto_noti.svg';
 
   
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController,
+              private popoverCtrl: PopoverController) { }
 
   ngOnInit() {
   }
 
   onNextClick(  ){
     this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+  }
+
+  async presentPopover(evento) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverIaeComponent,
+      cssClass: 'iaePop',
+      event: evento,
+      mode: 'ios', 
+      translucent: true,
+      animated: true
+    });
+  
+    await popover.present();
+
+    const { data } = await popover.onWillDismiss();
+
+    console.log("Item: ", data);
+    // this.subir();
   }
 
 }

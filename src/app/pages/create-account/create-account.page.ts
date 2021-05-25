@@ -54,6 +54,10 @@ export class CreateAccountPage implements OnInit {
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
 
+ punto_naranja = '../../assets/icons/punto_naranja.svg';
+ punto_gris = '../../assets/icons/punto_noti.svg';
+
+
   selectFoto = true;
   coordenadas = true;
   esMayorEdad = true;
@@ -236,6 +240,7 @@ export class CreateAccountPage implements OnInit {
 
   onNextClick(event) {
     console.log('Siguiente clicked');
+    this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
   }
 
   validarMayorDeEdad(date: string) {

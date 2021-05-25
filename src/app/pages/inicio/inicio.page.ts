@@ -52,5 +52,15 @@ export class InicioPage implements OnInit {
     
         await alert.present();
       }
+      
+      inicio(){
 
+        this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'forward' }); 
+      }
+
+      crear(){
+        //this.navCtrl.navigateRoot('/create-account', { animated: true, animationDirection: 'forward' }); 
+        this.navCtrl.navigateRoot('/terminos', { animated: true, animationDirection: 'forward' }); 
+
+      }
 }

@@ -62,6 +62,21 @@ export class CreateAccountPage implements OnInit {
   coordenadas = true;
   esMayorEdad = true;
 
+  nombreVacio          :boolean=false;
+  fecha_nacimiento     :boolean=false;
+  user_vacio           :boolean=false;
+  password_vacio       :boolean=false;
+  confirmPass_vacia    :boolean=false;
+  cifNif_vacio         :boolean=false;
+  segSocialNumber_vacio:boolean=false; 
+  //IAE_vacio            :boolean=false; 
+  DNI_vacio            :boolean=false;
+  cuentaBancaria_vacio :boolean=false;
+  phone_vocio          :boolean=false;
+  streetNumber_vacio   :boolean=false;
+  number_vacio         :boolean=false;
+  
+
   constructor(private toastCtrl: ToastController,
               private alertCtrl: AlertController,
               public datos: ObtSubSService,
@@ -240,7 +255,150 @@ export class CreateAccountPage implements OnInit {
 
   onNextClick(event) {
     console.log('Siguiente clicked');
-    this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    this.validarCamposVacio();
+   // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+  }
+
+  validarCamposVacio(){
+
+    if(this.avatarUsuario == '../../assets/icons/registro.svg'){
+      console.log( 'vacio foto')
+      this.selectFoto=false;
+      
+    }
+    else{
+      this.selectFoto=true;
+    }
+
+    if(this.categoria == ""){
+      console.log( 'vacio foto')
+      
+      this.isCatTouched=true;
+      
+    }
+    else{
+      this.isCatTouched=false;
+    }
+
+    if(this.entidad == ""){
+      console.log( 'vacio foto')
+      
+      this.isEntTouched=true;
+      
+    }
+    else{
+      this.isEntTouched=false;
+    }
+
+
+    if(this.nombre == ""){
+      console.log( 'vacio')
+      this.nombreVacio=true;
+      //  nombre1.touched
+    }
+    else{
+      this.nombreVacio=false;
+    }
+
+    if(this.date == ""){
+      console.log( 'vacio fecha de nacimiento')
+      this.fecha_nacimiento=true;
+     
+    }
+    else{
+      this.fecha_nacimiento=false;
+    }
+
+    if(this.user == ""){
+      console.log( 'vacio user')
+      this.user_vacio=true;
+     
+    }
+    else{
+      this.user_vacio=false;
+    }
+
+    if(this.password == ""){
+      console.log( 'vacio user')
+      this.password_vacio=true;
+     
+    }
+    else{
+      this.password_vacio=false;
+    }
+
+    if(this.confirmPass == ""){
+      console.log( 'vacio user')
+      this.confirmPass_vacia=true;
+     
+    }
+    else{
+      this.confirmPass_vacia=false;
+    }
+
+    if(this.cifNif == ""){
+      console.log( 'vacio cifnif')
+      this.cifNif_vacio=true;
+     
+    }
+    else{
+      this.cifNif_vacio=false;
+    }
+
+    if(this.segSocialNumber == ""){
+      console.log( 'vacio seguridad')
+      this.segSocialNumber_vacio=true;
+     
+    }
+    else{
+      this.segSocialNumber_vacio=false;
+    }
+
+    if(this.DNI == ""){
+      console.log( 'vacio seguridad')
+      this.DNI_vacio=true;
+     
+    }
+    else{
+      this.DNI_vacio=false;
+    }
+
+    if(this.cuentaBancaria == ""){
+      console.log( 'vacio seguridad')
+      this.cuentaBancaria_vacio=true;
+     
+    }
+    else{
+      this.cuentaBancaria_vacio=false;
+    }
+
+    if(this.phone == ""){
+      console.log( 'vacio seguridad')
+      this.phone_vocio=true;
+     
+    }
+    else{
+      this.phone_vocio=false;
+    }
+
+    if(this.streetNumber == ""){
+      console.log( 'vacio seguridad')
+      this.streetNumber_vacio=true;
+     
+    }
+    else{
+      this.streetNumber_vacio=false;
+    }
+
+    if(this.number == ""){
+      console.log( 'vacio seguridad')
+      this.number_vacio=true;
+     
+    }
+    else{
+      this.number_vacio=false;
+    }
+
   }
 
   validarMayorDeEdad(date: string) {
@@ -303,6 +461,7 @@ export class CreateAccountPage implements OnInit {
           handler: () => {
             console.log('Destructive clicked');
             this.categoria=this.categorias[0];
+            this.isCatTouched=false;
           }
         },{
           text: 'Fontanero',
@@ -310,6 +469,7 @@ export class CreateAccountPage implements OnInit {
           handler: () => {
             console.log('Archive clicked');
             this.categoria=this.categorias[1];
+            this.isCatTouched=false;
           }
         },{
           text: 'Cancel',
@@ -318,6 +478,7 @@ export class CreateAccountPage implements OnInit {
           handler: () => {
             console.log('Cancel clicked');
             this.categoria="";
+            this.isCatTouched=true;
           }
         }
       ]
@@ -342,6 +503,7 @@ export class CreateAccountPage implements OnInit {
           handler: () => {
             console.log('Destructive clicked');
             this.entidad=this.entJuridica[0];
+            this.isEntTouched=false;
           }
         },{
           text: 'Autónomo',
@@ -349,6 +511,7 @@ export class CreateAccountPage implements OnInit {
           handler: () => {
             console.log('Archive clicked');
             this.entidad=this.entJuridica[1];
+            this.isEntTouched=false;
           }
         },{
           text: 'Cancel',
@@ -356,7 +519,7 @@ export class CreateAccountPage implements OnInit {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
-           
+            this.isEntTouched=true;
             this.entidad="";
           }
         }

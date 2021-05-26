@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, PopoverController } from '@ionic/angular';
+import { AlertController, NavController, PopoverController } from '@ionic/angular';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 
 @Component({
@@ -14,13 +14,15 @@ export class AdjuntarPage implements OnInit {
 
   
   constructor(private navCtrl: NavController,
-              private popoverCtrl: PopoverController) { }
+              private popoverCtrl: PopoverController,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
   }
 
   onNextClick(  ){
-    this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+    this.presentAlert();
+   // this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
   }
 
   async presentPopover(evento) {
@@ -39,6 +41,33 @@ export class AdjuntarPage implements OnInit {
 
     console.log("Item: ", data);
     // this.subir();
+  }
+
+  async presentAlert() {
+    
+    
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      header: 'Alerta',
+      message: 'Es necesario adjuntar el archivo.Desea hacerlo ahora',
+
+      buttons: [
+        {
+          text: 'Aceptar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {}
+        },
+        {
+          text: 'Después',
+          handler: (datos) => {
+            this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

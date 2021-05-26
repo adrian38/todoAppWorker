@@ -123,7 +123,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(nombre1.invalid && nombre1.touched) ? 'green_border':'no_border'"
+            [ngClass]="((nombre1.invalid && nombre1.touched) || nombreVacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="nombre"
             name="nombre"
@@ -134,7 +134,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="nombre1.invalid && nombre1.touched"
+            *ngIf="(nombre1.invalid && nombre1.touched) || nombreVacio"
             class="mandatory"
           >
             Campo obligatorio
@@ -144,7 +144,7 @@
         <div class="div_1">
           <ion-datetime
             class="date"
-            [ngClass]="((fecha_nac.invalid && fecha_nac.touched) || esMayorEdad===false) ? 'green_border':'no_border'"
+            [ngClass]="((fecha_nac.invalid && fecha_nac.touched) || esMayorEdad===false || fecha_nacimiento ) ? 'green_border':'no_border'"
             displayFormat="DDDD MMM D, YYYY"
             min="1900"
             max="2030"
@@ -163,7 +163,7 @@
             Campo obligatorio
           </ion-label>
           <ion-label
-            *ngIf="fecha_nac.valid && fecha_nac.touched && esMayorEdad===false"
+            *ngIf="(fecha_nac.valid && fecha_nac.touched && esMayorEdad===false) || fecha_nacimiento "
             class="mandatory"
           >
             Para registrarse debe ser mayor de 18 años
@@ -173,7 +173,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(usuario.invalid && usuario.touched) ? 'green_border':'no_border'"
+            [ngClass]="((usuario.invalid && usuario.touched) || user_vacio) ? 'green_border':'no_border'"
             type="email"
             [(ngModel)]="user"
             name="user"
@@ -184,7 +184,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="usuario.invalid && usuario.touched"
+            *ngIf="(usuario.invalid && usuario.touched) || user_vacio"
             class="mandatory"
           >
             Debe escribir su correo correctamente
@@ -194,7 +194,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(pass.invalid && pass.touched) ? 'green_border':'no_border'"
+            [ngClass]="((pass.invalid && pass.touched) || password_vacio) ? 'green_border':'no_border'"
             type="password"
             [(ngModel)]="password"
             name="password"
@@ -203,7 +203,7 @@
             #pass="ngModel"
           >
           </ion-input>
-          <ion-label *ngIf="pass.invalid && pass.touched" class="mandatory">
+          <ion-label *ngIf="(pass.invalid && pass.touched) || password_vacio" class="mandatory">
             Campo obligatorio
           </ion-label>
         </div>
@@ -211,7 +211,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(confirm_pass.invalid && confirm_pass.touched) ? 'green_border':'no_border'"
+            [ngClass]="((confirm_pass.invalid && confirm_pass.touched) || confirmPass_vacia) ? 'green_border':'no_border'"
             type="password"
             [(ngModel)]="confirmPass"
             name="confirmPass"
@@ -221,7 +221,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="confirm_pass.invalid && confirm_pass.touched"
+            *ngIf="(confirm_pass.invalid && confirm_pass.touched) || confirmPass_vacia"
             class="mandatory"
           >
             Campo obligatorio
@@ -231,7 +231,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(nif.invalid && nif.touched) ? 'green_border':'no_border'"
+            [ngClass]="((nif.invalid && nif.touched) || cifNif_vacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="cifNif"
             name="cifNif"
@@ -241,7 +241,7 @@
             #nif="ngModel"
           >
           </ion-input>
-          <ion-label *ngIf="nif.invalid && nif.touched" class="mandatory">
+          <ion-label *ngIf="(nif.invalid && nif.touched) || cifNif_vacio" class="mandatory">
             Debe escribir el CIF/NIF correctamente
           </ion-label>
         </div>
@@ -249,7 +249,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(segSocial.invalid && segSocial.touched) ? 'green_border':'no_border'"
+            [ngClass]="((segSocial.invalid && segSocial.touched) || segSocialNumber_vacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="segSocialNumber"
             name="segSocialNumber"
@@ -259,7 +259,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="segSocial.invalid && segSocial.touched"
+            *ngIf="(segSocial.invalid && segSocial.touched) || segSocialNumber_vacio"
             class="mandatory"
           >
             Campo obligatorio
@@ -269,7 +269,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(dni.invalid && dni.touched) ? 'green_border':'no_border'"
+            [ngClass]="((dni.invalid && dni.touched) || DNI_vacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="DNI"
             name="DNI"
@@ -279,7 +279,7 @@
             #dni="ngModel"
           >
           </ion-input>
-          <ion-label *ngIf="dni.invalid && dni.touched" class="mandatory">
+          <ion-label *ngIf="(dni.invalid && dni.touched) || DNI_vacio" class="mandatory">
             Debe escribir el DNI correctamente
           </ion-label>
         </div>
@@ -287,7 +287,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(cBancaria.invalid && cBancaria.touched) ? 'green_border':'no_border'"
+            [ngClass]="((cBancaria.invalid && cBancaria.touched) || cuentaBancaria_vacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="cuentaBancaria"
             name="cuentaBancaria"
@@ -297,7 +297,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="cBancaria.invalid && cBancaria.touched"
+            *ngIf="(cBancaria.invalid && cBancaria.touched) || cuentaBancaria_vacio"
             class="mandatory"
           >
             Campo obligatorio
@@ -307,7 +307,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(telefono.invalid && telefono.touched) ? 'green_border':'no_border'"
+            [ngClass]="((telefono.invalid && telefono.touched) || phone_vocio) ? 'green_border':'no_border'"
             type="tel"
             [(ngModel)]="phone"
             name="phone"
@@ -317,7 +317,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="telefono.invalid && telefono.touched"
+            *ngIf="(telefono.invalid && telefono.touched) || phone_vocio"
             class="mandatory"
           >
             Campo obligatorio
@@ -327,7 +327,7 @@
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="(num_calle.invalid && num_calle.touched) ? 'green_border':'no_border'"
+            [ngClass]="((num_calle.invalid && num_calle.touched) || streetNumber_vacio) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="streetNumber"
             name="streetNumber"
@@ -337,7 +337,7 @@
           >
           </ion-input>
           <ion-label
-            *ngIf="num_calle.invalid && num_calle.touched"
+            *ngIf="(num_calle.invalid && num_calle.touched) || streetNumber_vacio"
             class="mandatory"
           >
             Campo obligatorio
@@ -349,7 +349,7 @@
             <div class="div_1">
               <ion-input
                 class="custom_input"
-                [ngClass]="(numero.invalid && numero.touched) ? 'green_border':'no_border'"
+                [ngClass]="((numero.invalid && numero.touched) || number_vacio) ? 'green_border':'no_border'"
                 type="text"
                 [(ngModel)]="number"
                 name="number"
@@ -359,7 +359,7 @@
               >
               </ion-input>
               <ion-label
-                *ngIf="numero.invalid && numero.touched"
+                *ngIf="(numero.invalid && numero.touched) || number_vacio"
                 class="mandatory"
               >
                 Campo obligatorio

@@ -55,7 +55,7 @@ export class CreateAccountPage implements OnInit {
   avatarUsuario64:string="";
 
  punto_naranja = '../../assets/icons/punto_naranja.svg';
- punto_gris = '../../assets/icons/punto_noti.svg';
+ punto_gris = '../../assets/icons/punto_gris.svg';
 
 
   selectFoto = true;
@@ -92,12 +92,9 @@ export class CreateAccountPage implements OnInit {
   ngOnInit() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
-      
-        
-        this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
-        
-      
-      
+
+        this.navController.navigateRoot('/terminos', {animated: true, animationDirection: 'back' }) ;
+ 
       });
 
       
@@ -256,7 +253,10 @@ export class CreateAccountPage implements OnInit {
   onNextClick(event) {
     console.log('Siguiente clicked');
     this.validarCamposVacio();
-   // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
+      this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    }
   }
 
   validarCamposVacio(){
@@ -357,11 +357,13 @@ export class CreateAccountPage implements OnInit {
     if(this.DNI == ""){
       console.log( 'vacio seguridad')
       this.DNI_vacio=true;
-     
+    
     }
     else{
       this.DNI_vacio=false;
     }
+
+    
 
     if(this.cuentaBancaria == ""){
       console.log( 'vacio seguridad')
@@ -380,7 +382,7 @@ export class CreateAccountPage implements OnInit {
     else{
       this.phone_vocio=false;
     }
-
+    
     if(this.streetNumber == ""){
       console.log( 'vacio seguridad')
       this.streetNumber_vacio=true;

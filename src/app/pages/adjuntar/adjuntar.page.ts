@@ -1,5 +1,6 @@
+// import { Platform } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, PopoverController } from '@ionic/angular';
+import { AlertController, NavController, Platform, PopoverController } from '@ionic/angular';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 
 @Component({
@@ -10,14 +11,21 @@ import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.
 export class AdjuntarPage implements OnInit {
 
   punto_naranja = '../../assets/icons/punto_naranja.svg';
-  punto_gris = '../../assets/icons/punto_noti.svg';
+  punto_gris = '../../assets/icons/punto_gris.svg';
 
   
   constructor(private navCtrl: NavController,
               private popoverCtrl: PopoverController,
-              private alertCtrl: AlertController) { }
+              private alertCtrl: AlertController,
+              private platform: Platform) { }
 
   ngOnInit() {
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+
+      this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
+
+    });
   }
 
   onNextClick(  ){

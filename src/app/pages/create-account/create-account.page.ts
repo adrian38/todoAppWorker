@@ -453,6 +453,7 @@ export class CreateAccountPage implements OnInit {
   async presentActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
       header:'Su categoria es:',
+     
       mode:'ios',
       translucent: true,
       buttons: [

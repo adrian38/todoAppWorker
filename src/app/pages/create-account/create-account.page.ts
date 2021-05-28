@@ -253,10 +253,10 @@ export class CreateAccountPage implements OnInit {
   onNextClick(event) {
     console.log('Siguiente clicked');
     this.validarCamposVacio();
-    // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
-      this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    }
+     this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
+    //   this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // }
   }
 
   validarCamposVacio(){

@@ -17,6 +17,7 @@ import { ComponentsModule } from '../../components/components.module';
     IonicModule,
     ContrasePageRoutingModule,
     ComponentsModule,
+   
  
   ],
   declarations: [ContrasePage]

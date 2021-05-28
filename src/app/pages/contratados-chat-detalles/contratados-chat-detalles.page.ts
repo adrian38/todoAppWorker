@@ -11,6 +11,8 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { Observable, Subscription } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-contratados-chat-detalles',
   templateUrl: './contratados-chat-detalles.page.html',
@@ -18,7 +20,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ContratadosChatDetallesPage implements OnInit {
 
- 
+  
 
   pre: number;
   presupuesto: number;
@@ -342,5 +344,7 @@ this.chat_vacia=true;
         this.chat_vacia=false;
       }
     }
+
+
 
 }

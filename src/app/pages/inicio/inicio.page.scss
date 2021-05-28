@@ -15,15 +15,16 @@
 }
 
 .btn {
-    font: normal 14px 'Helvetica-Roman', sans-serif !important;
-    height: 28px !important;
-    min-width: 160px;
+   // font: normal 14px 'Helvetica-Roman', sans-serif !important;
+    font: normal 15px 'Helvetica-Bd', sans-serif;
+    height: 35px !important;
+    min-width: 175px;
 }
 
-.create_div {
+ .create_div {
     display: flex;
     justify-content: center;
     padding-top: 15px;
     padding-bottom: 15px;
     min-width: 160px;
-}
+} 

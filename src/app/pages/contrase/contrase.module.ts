@@ -9,13 +9,15 @@ import { ContrasePageRoutingModule } from './contrase-routing.module';
 import { ContrasePage } from './contrase.page';
 import { ComponentsModule } from '../../components/components.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ContrasePageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+ 
   ],
   declarations: [ContrasePage]
 })

@@ -1,281 +1,380 @@
 <ion-header class="ion-no-border">
-
-  <div style="background: var(--ion-color-orange);">
-
+  <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
-
   </div>
 
   <div class="page_subheader">
     <span class="page_subheader_title">Datos Personales</span>
   </div>
-
 </ion-header>
 
 <ion-content>
-
-  <ion-row style="margin-top: 25px;">
-    <ion-col size=3.5></ion-col>
-    <ion-col size=5 style="text-align: center; margin-bottom: 20px;">
-      <ion-card *ngIf="avatarusuario" style="margin: auto;">
-        <img id="selecf" [src]="avatarusuario " (click)="presentAlertConfirm()">
+  <ion-row style="margin-top: 25px">
+    <ion-col size="3.5"></ion-col>
+    <ion-col size="5" style="text-align: center; margin-bottom: 20px">
+      <ion-card *ngIf="avatarusuario" style="margin: auto">
+        <img
+          id="selecf"
+          [src]="avatarusuario "
+          (click)="presentAlertConfirm()"
+        />
       </ion-card>
     </ion-col>
-    <ion-col size=3.5></ion-col>
+    <ion-col size="3.5"></ion-col>
   </ion-row>
 
   <ion-row>
-    <ion-col size=1></ion-col>
-    <ion-col size=10>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <div class="flex_row" style="justify-content: space-between">
+              <ion-label
+                class="flex_row"
+                style="
+                  margin-top: 0 !important;
+                  margin-bottom: 0 !important ;
+                  min-width: 175px !important;
+                "
+                >Categoría de trabajador</ion-label
+              >
 
-  <!--  <label class = "item item-input item-select"> 
-       <div class = "input-label">
-        Categoría de trabajador
-      </div> 
-     
-      <select style="width:100%; border: 1px solid var(--ion-color-orange);">
-         <option >Fontaneria</option>
-         <option >Eectricidad</option>
-       
-      </select>
-    </label>
+              <div class="flex_row" style="justify-content: flex-end">
+                <ion-label
+                  style="margin-top: 0 !important; margin-bottom: 0 !important"
+                  (click)="clickCategoria()"
+                  >{{categoria}}</ion-label
+                >
+                <ion-icon
+                  style="width: 11px; height: 11px; margin-top: 3px !important"
+                  name="caret-down-outline"
+                  (click)="clickCategoria()"
+                ></ion-icon>
+              </div>
+            </div>
+          
+        <ion-label
+          *ngIf="entJuridicaSelected == '' && isEntTouched === true"
+          class="mandatory"
+        >
+          Campo obligatorio
+        </ion-label>
+      </div>
 
 
-  <label class = "item item-input item-select" > 
-    <div class = "input-label">
-    Entidad juridica
-   </div> 
-  
-   <select style="width:100%; border: 1px solid var(--ion-color-orange);">
-      <option >Empresa</option>
-      <option >Autónomo</option>
-    
-   </select>
- </label> -->
+      <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 22px;
+            "
+          >
+            <div class="flex_row" style="justify-content: space-between">
+              <ion-label
+                class="flex_row"
+                style="
+                  margin-top: 0 !important;
+                  margin-bottom: 0 !important ;
+                  min-width: 175px !important;
+                "
+                >Entidad juridica</ion-label
+              >
 
- <div class="div_1">
-  <ion-item
-    class="select"
-    lines="none"
-    [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'"
-  >
-    <ion-label
-      style="margin-top: 0 !important; margin-bottom: 0 !important"
-      >Entidad jurídica</ion-label
-    >
-    <ion-select
-      interface="action-sheet"
-      mode="ios"
-      [(ngModel)]="entJuridicaSelected"
-      name="entidad"
+              <div class="flex_row" style="justify-content: flex-end">
+                <ion-label
+                  style="margin-top: 0 !important; margin-bottom: 0 !important"
+                  (click)="clickCategoria()"
+                  >{{entidad}}</ion-label
+                >
+                <ion-icon
+                  style="width: 11px; height: 11px; margin-top: 3px !important"
+                  name="caret-down-outline"
+                  (click)="clickEntidad()"
+                ></ion-icon>
+              </div>
+            </div>
+          
+        <ion-label
+          *ngIf="entJuridicaSelected == '' && isEntTouched === true"
+          class="mandatory"
+        >
+          Campo obligatorio
+        </ion-label>
+      </div>
 
-      (ionFocus)="onEntFocusChange()"
-    >
-      <ion-select-option
-        *ngFor="let entidad of entJuridica"
-        [value]="entidad"
-        >{{ entidad }}</ion-select-option
+      <div
+        style="width: 100%; margin-top: 20px;border-bottom: 1px solid var(--ion-color-orange)"
       >
-    </ion-select>
-  </ion-item>
-  <ion-label
-    *ngIf="entJuridicaSelected == '' && isEntTouched === true"
-    class="mandatory"
-  >
-    Campo obligatorio
-  </ion-label>
-</div>
-
-    
-
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange);">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="nombre" 
-                    [(ngModel)]="nombre" 
-                    placeholder={{this.placeholderNombre}} 
-                    required
-                    #nom_apell="ngModel">
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="nombre"
+          [(ngModel)]="nombre"
+          placeholder="{{this.placeholderNombre}}"
+          required
+          #nom_apell="ngModel"
+        >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="nom_apell.invalid && nom_apell.touched" class="text-danger">Debe escribir su nombre
-          completo</small>
+        <small
+          *ngIf="nom_apell.invalid && nom_apell.touched"
+          class="text-danger"
+          >Debe escribir su nombre completo</small
+        >
       </div>
 
       <!-- Fecha de nacimiento -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-
-        <ion-datetime displayFormat="D MMMM  YYYY" 
-                      name="calendario" 
-                      cancelText="Cancelar" 
-                      doneText="Cambiar"
-                      [(ngModel)]="fecha" 
-                      placeholder={{this.placeholderFecha}}
-                      #fech="ngModel" 
-                      required
-                      style="margin-left: 15px; padding-left: 0px; padding-bottom: 3px;">
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-datetime
+          displayFormat="D MMMM  YYYY"
+          name="calendario"
+          cancelText="Cancelar"
+          doneText="Cambiar"
+          [(ngModel)]="fecha"
+          placeholder="{{this.placeholderFecha}}"
+          #fech="ngModel"
+          required
+          style="margin-left: 15px; padding-left: 0px; padding-bottom: 3px"
+        >
         </ion-datetime>
-
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="fech.invalid && fech.touched" class="text-danger">Debe escribir su nombre completo</small>
+        <small *ngIf="fech.invalid && fech.touched" class="text-danger"
+          >Debe escribir su nombre completo</small
+        >
       </div>
 
       <!-- Correo -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="correo" 
-                    [(ngModel)]="correo" 
-                    placeholder={{this.placeholderUser}} 
-                    #corr="ngModel"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" 
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="correo"
+          [(ngModel)]="correo"
+          placeholder="{{this.placeholderUser}}"
+          #corr="ngModel"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
       </div>
 
       <!-- **************************   -->
 
-
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="CIF/NIF"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="CIF/NIF"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
 
       <!-- --------------------------------- -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="Numero de seguridad social"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="Numero de seguridad social"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
 
       <!-- -------------------------------------------- -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="IAF"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="IAF"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
 
       <!-- ------------------------------------------------------- -->
-     
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="DNI"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="DNI"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
 
-<!-- 
+      <!-- 
       ------------------------------------------------------ -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="Cuenta bancaria"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="Cuenta bancaria"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
-<!-- 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
+      <!-- 
       ----------------------------------------------------- -->
 
-      <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-        <ion-input  class="custom_input" 
-                    type="text" 
-                    name="CIF" 
-                    [(ngModel)]="correo" 
-                    placeholder="Telefono"
-                    #corr="ngModel"
-                    required>
+      <div
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 20px;
+        "
+      >
+        <ion-input
+          class="custom_input"
+          type="text"
+          name="CIF"
+          [(ngModel)]="correo"
+          placeholder="Telefono"
+          #corr="ngModel"
+          required
+        >
         </ion-input>
-
       </div>
       <div id="item"></div>
-     <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger">Debe escribir su correo</small>
-      </div> 
+      <div id="link">
+        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+          >Debe escribir su correo</small
+        >
+      </div>
 
-      <ion-row style="margin-bottom: 50px;">
+      <ion-row style="margin-bottom: 50px">
         <ion-col></ion-col>
         <ion-col>
-          <ion-button [disabled]=" corr.invalid || fech.invalid || nom_apell.invalid "
-                      type="submit" 
-                      color="orange"
-                      style="min-width: 150px; height: 30px !important; font: normal 16px 'Helvetica-Roman', sans-serif; --border-radius: 7px"
-                      (click)="editar()">
+          <ion-button
+            [disabled]=" corr.invalid || fech.invalid || nom_apell.invalid "
+            type="submit"
+            color="orange"
+            style="
+              min-width: 150px;
+              height: 30px !important;
+              font: normal 16px 'Helvetica-Roman', sans-serif;
+              --border-radius: 7px;
+            "
+            (click)="editar()"
+          >
             GUARDAR
           </ion-button>
         </ion-col>
 
         <ion-col></ion-col>
       </ion-row>
-
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
-  
-  
-  <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
 
+  <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
 </ion-content>

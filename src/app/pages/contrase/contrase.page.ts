@@ -4,6 +4,7 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { NavController, Platform, ToastController } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
+
 @Component({
   selector: 'app-contrase',
   templateUrl: './contrase.page.html',
@@ -14,6 +15,7 @@ export class ContrasePage implements OnInit {
  // actual    :string="";
   cambiada  :string="";
   confirmada:string="";
+
 
   error_actual:boolean=true;
   error_confirmacion:boolean=true;

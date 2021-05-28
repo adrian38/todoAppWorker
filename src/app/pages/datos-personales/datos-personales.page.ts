@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, Platform  } from '@ionic/angular';
 
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
@@ -43,7 +43,11 @@ export class DatosPersonalesPage implements OnInit {
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
-	categorias: string [] = ['Electricista', 'Fontanero'];
+	categoria:string="";
+  categorias: string [] = ['Electricista', 'Fontanero'];
+
+  entidad:string="";
+  entJuridica: string [] = ['Empresa', 'Autónomo'];
 	categoriaSelected: string = '';
 	isCatTouched: boolean = false;
 
@@ -53,7 +57,8 @@ export class DatosPersonalesPage implements OnInit {
 	          private _authOdoo: AuthOdooService,
 			  private subServ: ObtSubSService,
 			  public photoService: PhotoService,
-			  private alertCtrl: AlertController) {
+			  private alertCtrl: AlertController,
+			  private actionSheetCtrl: ActionSheetController) {
 				
 				
 			
@@ -214,11 +219,95 @@ async presentAlert() {
     });
     await alert.present();
   }
+
+  clickCategoria(){
+    console.log('sjjss')
+    this.presentActionSheet();
+  }
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Su categoria es:',
+     
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Electricista',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.categoria=this.categorias[0];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Fontanero',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.categoria=this.categorias[1];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.categoria="";
+            this.isCatTouched=true;
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+
+  clickEntidad(){
+	this.presentActionSheetEntidad();
+  }
+
+  async presentActionSheetEntidad() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Su categoria es:',
+     
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Empresa',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.entidad=this.entJuridica[0];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Autónomo',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.entidad=this.entJuridica[1];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.entidad="";
+            this.isCatTouched=true;
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
 }
 
 
-
-interface City {
-    name: string,
-    code: string
-}

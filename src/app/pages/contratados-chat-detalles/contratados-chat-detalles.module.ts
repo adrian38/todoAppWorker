@@ -9,6 +9,7 @@ import { ContratadosChatDetallesPageRoutingModule } from './contratados-chat-det
 import { ContratadosChatDetallesPage } from './contratados-chat-detalles.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import {DialogModule} from 'primeng/dialog';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {DialogModule} from 'primeng/dialog';
     IonicModule,
     ContratadosChatDetallesPageRoutingModule,
     DialogModule,
-    ComponentsModule
+    ComponentsModule,
+
   ],
   declarations: [ContratadosChatDetallesPage]
 })

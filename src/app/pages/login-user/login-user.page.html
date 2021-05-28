@@ -9,7 +9,7 @@
       </div>
 
       <form #formulario="ngForm" (ngSubmit)="onSubmit()">
-        <div class="div">
+        <!-- <div class="div">
           <ion-input
             class="custom_input"
             type="email"
@@ -20,7 +20,17 @@
             required
           >
           </ion-input>
-        </div>
+        </div> -->
+        <ion-input
+            class="custom_input"
+            type="email"
+            name="user"
+            [(ngModel)]="usuario.username"
+            placeholder="USUARIO"
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+            required
+          >
+          </ion-input>
         <div class="div">
           <ion-input
             class="custom_input"

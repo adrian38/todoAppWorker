@@ -264,6 +264,8 @@ ion-item {
   width: 70px !important;
   height: 70px !important;
   min-width: 70px !important;
+
+  
 }
 
 .h2_title {
@@ -321,11 +323,11 @@ ion-button {
 :host ::ng-deep .p-dialog {
   .p-dialog-content {
     border-radius: 0px 0px 15px 15px;
-    background-color: rgb(250, 250, 250) !important;
+    background-color: rgb(245, 245, 245) !important;
   }
   .p-dialog-header {
-   /*  background-color: rgb(245, 245, 245) !important; */
-    background-color: rgb(250, 250, 250) !important;
+    background-color: rgb(245, 245, 245) !important; 
+    //background-color: rgb(250, 250, 250) !important;
     color: black;
      border-radius: 15px 15px 0px 0px; 
    

@@ -1,162 +1,218 @@
 <ion-header class="ion-no-border">
-
   <app-tab-header titulo="Perfil"></app-tab-header>
-
 </ion-header>
 
-
-
 <ion-content>
-
-  <ion-row style="margin-top: 40px;">
-
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px; justify-content: center !important; align-items: center !important;">
-      <ion-img src="../../../assets/icons/contacto.svg" style="width: 20px; height: 20px; margin: 5px auto; color: var(--ion-color-orange)"></ion-img>
+  <ion-row style="margin-top: 40px">
+    <ion-col size="1"></ion-col>
+    <ion-col
+      size="1"
+      style="
+        padding: 0px;
+        justify-content: center !important;
+        align-items: center !important;
+      "
+    >
+      <ion-img
+        (click)="datospersonales()"
+        src="../../../assets/icons/contacto.svg"
+        style="
+          width: 20px;
+          height: 20px;
+          margin: 5px auto;
+          color: var(--ion-color-orange);
+        "
+      ></ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="datospersonales()" style="color: var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="datospersonales()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Datos personales
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/direccion.svg" style="width: 24px; height: 24px; margin: auto; color: var(--ion-color-orange)"></ion-img>
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        (click)="direccion()"
+        src="../../../assets/icons/direccion.svg"
+        style="
+          width: 24px;
+          height: 24px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      ></ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="direccion()" style="color: var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="direccion()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Dirección
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/contraseña.svg" style="width: 24px; height: 24px; margin: auto; color: var(--ion-color-orange)"></ion-img>
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        (click)="contrase()"
+        src="../../../assets/icons/contraseña.svg"
+        style="
+          width: 24px;
+          height: 24px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      ></ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="contrase()" style="color:var(--ion-color-black);margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="contrase()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Contraseña
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/notificacion.svg" style="width: 24px; height: 24px; margin: auto; color: var(--ion-color-orange)">
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        src="../../../assets/icons/notificacion.svg"
+        style="
+          width: 24px;
+          height: 24px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      >
       </ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="datospersonales()" style="color:var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="datospersonales()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Notificaciones
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/promociones.svg" style="width: 24px; height: 24px; margin: auto; color: var(--ion-color-orange)">
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        (click)="promociones()"
+        src="../../../assets/icons/promociones.svg"
+        style="
+          width: 24px;
+          height: 24px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      >
       </ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="promociones()" style="color:var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="promociones()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Promociones
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/documentos.svg" style="width: 24px; height: 24px; margin: auto; color: var(--ion-color-orange)">
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        (click)="documentos()"
+        src="../../../assets/icons/documentos.svg"
+        style="
+          width: 24px;
+          height: 24px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      >
       </ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="documentos()" style="color:var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="documentos()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           Documentos
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row style="margin-top: 18px;">
-
-    <ion-col size=1></ion-col>
-    <ion-col size=1 style="padding: 0px;">
-      <ion-img src="../../../assets/icons/quienes_somos.svg" style="width: 20px; height: 20px; margin: auto; color: var(--ion-color-orange)">
+  <ion-row style="margin-top: 18px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="1" style="padding: 0px">
+      <ion-img
+        (click)="somos()"
+        src="../../../assets/icons/quienes_somos.svg"
+        style="
+          width: 20px;
+          height: 20px;
+          margin: auto;
+          color: var(--ion-color-orange);
+        "
+      >
       </ion-img>
     </ion-col>
-    <ion-col size=8 style="margin-top: 5px; margin-left: 15px; padding: 0px;">
-
-      <ion-list style="padding: 0px;">
-
-        <ion-label (click)="datospersonales()" style="color:var(--ion-color-black); margin-left: 11px;">
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label
+          (click)="somos()"
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
           ¿Quienes somos?
         </ion-label>
         <div id="item"></div>
-
       </ion-list>
     </ion-col>
 
-    <ion-col size=1></ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 </ion-content>

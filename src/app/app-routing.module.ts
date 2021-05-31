@@ -109,6 +109,10 @@ const routes: Routes = [
   {
     path: 'stripe',
     loadChildren: () => import('./pages/stripe/stripe.module').then( m => m.StripePageModule)
+  },
+  {
+    path: 'somos',
+    loadChildren: () => import('./pages/somos/somos.module').then( m => m.SomosPageModule)
   }
 
 

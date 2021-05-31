@@ -89,13 +89,13 @@
         [(ngModel)]="cambiada"
         #nom_apell="ngModel"
       ></ion-input>
-      <div id="link">
+      <!-- <div id="link"> -->
         <small
           *ngIf="nom_apell.invalid && nom_apell.touched"
           class="text-danger"
           >Debe escribir una contraseña segura</small
         >
-      </div>
+      <!-- </div> -->
     </ion-col>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
@@ -121,13 +121,13 @@
           [(ngModel)]="confirmada"
           #nom_apell="ngModel"
         ></ion-input>
-        <div id="link">
+        <!-- <div id="link"> -->
           <small
             *ngIf="nom_apell.invalid && nom_apell.touched"
             class="text-danger"
             >Debe escribir contraeña valida</small
           >
-        </div>
+        <!-- </div> -->
       </div>
 
       <div *ngIf=" !error_confirmacion ">
@@ -137,9 +137,9 @@
           type="text"
           [(ngModel)]="confirmada"
         ></ion-input>
-        <div id="link">
+        <!-- <div id="link"> -->
           <small class="text-danger">No coinciden las contraseñas</small>
-        </div>
+        <!-- </div> -->
       </div>
     </ion-col>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
@@ -152,4 +152,8 @@
       </ion-button>
     </ion-col>
   </ion-row>
+
+
+
+
 </ion-content>

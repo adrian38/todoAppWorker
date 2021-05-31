@@ -1,0 +1,91 @@
+.image {
+    height:            93px !important;
+    width:             91px !important;
+    min-height:        93px;
+    min-width:         91px;
+    border-radius:     20px 0 0 0;
+    background-repeat: no-repeat;
+    background-size:   100%;
+  }
+  
+  .cat_title {
+    text-transform: uppercase;
+    font: normal 16px 'Helvetica-Bd', sans-serif;
+    text-align: left;
+    margin: 5px 0 12px 0;
+  }
+  
+  .icon_calendar {
+    height: 16px !important;
+    width : 16px !important;
+    margin: 5px 0;
+  }
+  
+  .icon_horario {
+    height: 16px !important;
+    width : 16px !important;
+    margin: 5px 0;
+  }
+  .icon_noti_chat{
+    height: 20px !important;
+    width : 20px !important;
+  
+  }
+  
+  .h5_label {
+    font: normal 16px 'Helvetica-Roman', sans-serif;
+    text-align: left;
+    margin: 4px 8px;
+  }
+  
+  ion-item {
+    --ion-safe-area-right: 0 !important;
+  }
+  
+  
+  .item {
+    width: 100% !important;
+    border-bottom: 1px solid var(--ion-color-orange);
+    --padding-start: 0px !important;
+     padding: 8px 0px !important; 
+   /*  --padding-start: 10px !important; 
+    --padding-end: 10px !important;  */
+    //  --padding-top: 2px !important;
+    // --padding-bottom: 2px !important;
+  /*   --background: var(--ion-color-gray);
+    --border-radius: 9px !important;
+    --border-width:  9px !important;
+    --border-color:  var(--ion-color-gray); */
+    
+  }
+  
+  .item_notificacion{
+    width: 100% !important;
+    border-bottom: 1px solid var(--ion-color-orange);
+    --padding-start: 0px !important;
+     padding: 8px 0px !important; 
+   /*  --padding-start: 10px !important; 
+    --padding-end: 10px !important;  */
+    //  --padding-top: 2px !important;
+    // --padding-bottom: 2px !important;
+    --background: var(--ion-color-gray);
+    --border-radius: 9px !important;
+    --border-width:  9px !important;
+    --border-color:  var(--ion-color-gray);
+  }
+  
+  
+  ion-fab ion-fab-button ion-icon {
+      color: white;
+  }
+  
+  /* ion-fab-button {
+      width: 38px;
+      height: 38px;
+  } */
+  
+  .color_fondo {
+    background: var(--ion-color-greenblue);
+  
+  }
+  

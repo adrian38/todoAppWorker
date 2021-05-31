@@ -45,6 +45,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
 import { DropdownModule } from 'primeng/dropdown';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -71,6 +72,7 @@ import { DropdownModule } from 'primeng/dropdown';
     LocationService,
     DatePipe,
     MessageService,
+    InAppBrowser,
   
   {
     provide: 

@@ -11,6 +11,8 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { Observable, Subscription } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-contratados-chat-detalles',
   templateUrl: './contratados-chat-detalles.page.html',
@@ -18,7 +20,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ContratadosChatDetallesPage implements OnInit {
 
- 
+  
 
   pre: number;
   presupuesto: number;
@@ -87,7 +89,7 @@ export class ContratadosChatDetallesPage implements OnInit {
  
   }
 
-  scrollToBottom(){
+   scrollToBottom(){
 
     if(this.valor_segment === "chat"){
     
@@ -96,7 +98,7 @@ export class ContratadosChatDetallesPage implements OnInit {
     }, 400);
   }
     
-  }
+  } 
 
   
 
@@ -182,7 +184,7 @@ console.log('nooooo');
 
 } 
 
-this.scrollToBottom();
+ this.scrollToBottom(); 
 
 }
 
@@ -241,13 +243,13 @@ this.scrollToBottom();
     this.message.message= ''; */
 }
 
-scrollToElement(): void {
+ scrollToElement(): void {
   this.myScrollContainer.nativeElement.scroll({
     top: this.myScrollContainer.nativeElement.scrollHeight,
     left: 0,
     behavior: 'smooth'
   });
-}
+} 
 
 
 
@@ -342,5 +344,7 @@ this.chat_vacia=true;
         this.chat_vacia=false;
       }
     }
+
+
 
 }

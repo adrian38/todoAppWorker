@@ -13,6 +13,7 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 export class TabHeaderComponent implements OnInit {
   @Input() titulo: string;
   @Input() backgroundColor: string = '';
+  @Input() organizar: boolean=false;
 
   notification: boolean = false;
   notification$: Observable<boolean>;
@@ -37,6 +38,8 @@ export class TabHeaderComponent implements OnInit {
     if (this.backgroundColor !== '') {
       elemento.style.backgroundColor = this.backgroundColor;
     }
+
+   
   }
 
   ngOnDestroy(){

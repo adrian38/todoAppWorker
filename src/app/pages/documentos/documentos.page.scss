@@ -17,5 +17,24 @@
   min-width: 150px;
   height: 30px;
   text-transform: uppercase;
-  font: normal 16px "Helvetica-Md", sans-serif;
+  font: normal 16px "Helvetica-Bd", sans-serif;
+}
+
+
+.iae_btn {
+  width           : 31px;
+  height          : 31px;
+  --padding-top   : 0;
+  --padding-bottom: 0;
+  --padding-start : 0;
+  --padding-end   : 0;
+  margin          : 0;
+  --border-radius : 20% !important;
+  margin-left: 50px !important;
+}
+
+.iae_label {
+  font      : normal 16px 'Helvetica-Roman', sans-serif !important;
+  text-align: center;
+  padding   : 6px 0px 6px 20px;
 }

@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform, PopoverController } from '@ionic/angular';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
+import { Photo } from 'src/app/Interfaces/interfaces';
+import { PhotoService } from 'src/app/services/photo.service';
 
 @Component({
   selector: 'app-adjuntar',
@@ -12,12 +14,13 @@ export class AdjuntarPage implements OnInit {
 
   punto_naranja = '../../assets/icons/punto_naranja.svg';
   punto_gris = '../../assets/icons/punto_gris.svg';
-
+  foto:string="";
   
   constructor(private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
-              private platform: Platform) { }
+              private platform: Platform,
+              public photoService: PhotoService) { }
 
   ngOnInit() {
 
@@ -48,7 +51,24 @@ export class AdjuntarPage implements OnInit {
     const { data } = await popover.onWillDismiss();
 
     console.log("Item: ", data);
-    // this.subir();
+    console.log('estoy en adjuntar',data.item);
+    switch(data.item){
+      case 1: {
+        this.abrirCamara();
+        break;
+      }
+
+      case 2: {
+        this.abrirGaleria();
+        break;
+              }
+
+       case 3: {
+         this.abrirDocumento();
+         break;
+      }
+
+    }
   }
 
   async presentAlert() {
@@ -77,5 +97,39 @@ export class AdjuntarPage implements OnInit {
 
     await alert.present();
   }
+
+   async abrirCamara() {
+  console.log('camara abierta')
+  let photo: Photo = await this.photoService.addNewToCamara();
+            console.log( "Foto",photo.webviewPath);
+            if(photo){
+                 
+                 this.foto=photo.webviewPath;
+                  console.log(this.foto);
+                  //this.foto1= this.photoService.devuelve64();
+
+                
+              
+            }
+   }
+
+ async  abrirGaleria(){
+     console.log('galeria abierta');
+     this.photoService.photos = [];     
+              let photos: Photo[] = await this.photoService.addNewToGallery();
+                
+                  this.foto= photos[0].webviewPath; 
+                  console.log(this.foto);
+                 // this.foto164= this.photoService.devuelve64(); 
+               
+           
+              // }
+
+   }
+   abrirDocumento(){
+    console.log('documento abierta');
+    
+   }
+ 
 
 }

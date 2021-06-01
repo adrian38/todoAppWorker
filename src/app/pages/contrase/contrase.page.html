@@ -4,7 +4,7 @@
   </div>
 
   <div class="flex_row">
-    <div style=" background: var(--ion-color-orange)"></div>
+    <div style="background: var(--ion-color-orange)"></div>
 
     <div class="page_subheader">
       <span class="page_subheader_title">CONTRASEÑA</span>
@@ -36,7 +36,7 @@
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row> -->
 
-<!--   <ion-row>
+  <!--   <ion-row>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10">
       <div *ngIf="error_actual ">
@@ -90,11 +90,9 @@
         #nom_apell="ngModel"
       ></ion-input>
       <!-- <div id="link"> -->
-        <small
-          *ngIf="nom_apell.invalid && nom_apell.touched"
-          class="text-danger"
-          >Debe escribir una contraseña segura</small
-        >
+      <small *ngIf="nom_apell.invalid && nom_apell.touched" class="text-danger"
+        >Debe escribir una contraseña segura</small
+      >
       <!-- </div> -->
     </ion-col>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
@@ -122,11 +120,11 @@
           #nom_apell="ngModel"
         ></ion-input>
         <!-- <div id="link"> -->
-          <small
-            *ngIf="nom_apell.invalid && nom_apell.touched"
-            class="text-danger"
-            >Debe escribir contraeña valida</small
-          >
+        <small
+          *ngIf="nom_apell.invalid && nom_apell.touched"
+          class="text-danger"
+          >Debe escribir contraeña valida</small
+        >
         <!-- </div> -->
       </div>
 
@@ -138,7 +136,7 @@
           [(ngModel)]="confirmada"
         ></ion-input>
         <!-- <div id="link"> -->
-          <small class="text-danger">No coinciden las contraseñas</small>
+        <small class="text-danger">No coinciden las contraseñas</small>
         <!-- </div> -->
       </div>
     </ion-col>
@@ -148,12 +146,8 @@
   <ion-row>
     <ion-col style="text-align: center; margin-top: 65px">
       <ion-button color="orange" type="submit" (click)="guardar()">
-        GUARDAR
+        <span style="padding-top: 5px">Guardar</span>
       </ion-button>
     </ion-col>
   </ion-row>
-
-
-
-
 </ion-content>

@@ -1,6 +1,6 @@
 // import { Platform } from '@angular/cdk/platform';
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform, PopoverController } from '@ionic/angular';
+import { AlertController, NavController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { Photo } from 'src/app/Interfaces/interfaces';
 import { PhotoService } from 'src/app/services/photo.service';
@@ -15,12 +15,14 @@ export class AdjuntarPage implements OnInit {
   punto_naranja = '../../assets/icons/punto_naranja.svg';
   punto_gris = '../../assets/icons/punto_gris.svg';
   foto:string="";
+  message:string="";
   
   constructor(private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
               private platform: Platform,
-              public photoService: PhotoService) { }
+              private photoService: PhotoService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -32,8 +34,16 @@ export class AdjuntarPage implements OnInit {
   }
 
   onNextClick(  ){
-    this.presentAlert();
-   // this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+    if(this.foto != ""){
+      
+      this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+      
+    }
+    else{
+      this.presentAlert();
+      }
+
+
   }
 
   async presentPopover(evento) {
@@ -55,16 +65,26 @@ export class AdjuntarPage implements OnInit {
     switch(data.item){
       case 1: {
         this.abrirCamara();
+        // this.message='foto cargada';
+        // this.presentToast(this.message);
         break;
       }
 
       case 2: {
         this.abrirGaleria();
-        break;
+        console.log('la foto',this.foto);
+        // this.message='foto cargada';
+        // this.presentToast(this.message);
+
+          break;
+       
+        
               }
 
        case 3: {
          this.abrirDocumento();
+        //  this.message='documento cargada';
+        //  this.presentToast(this.message);
          break;
       }
 
@@ -89,7 +109,8 @@ export class AdjuntarPage implements OnInit {
         {
           text: 'Después',
           handler: (datos) => {
-            this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+           
+           this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
           }
         }
       ]
@@ -131,5 +152,11 @@ export class AdjuntarPage implements OnInit {
     
    }
  
-
+  //  async presentToast(message:string) {
+	// 	const toast = await this.toastController.create({
+	// 		message: message,
+	// 		duration: 2000
+	// 	});
+	// 	toast.present();
+	// }
 }

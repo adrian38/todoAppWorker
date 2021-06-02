@@ -281,11 +281,13 @@ ion-item {
 
 ion-button {
   text-transform: none;
-  font: normal 15px 'Helvetica-Md', sans-serif;
+  font: normal 15px 'Helvetica-Roman', sans-serif !important;
+  // font: normal 15px 'Helvetica-Md', sans-serif;
 }
 
 .btn {
-  font: bold 10px "Helvetica-Roman", sans-serif;
+  font: normal 10px 'Helvetica-Roman', sans-serif !important;
+  //font: bold 10px "Helvetica-Roman", sans-serif;
   height: 20px !important;
 }
 

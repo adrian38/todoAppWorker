@@ -30,6 +30,11 @@ export class SignUpOdooService {
     return notificationOK$.asObservable();
   }
 
+  show(usuario: UsuarioModel){
+    console.log(usuario, 'sigupClient');
+    
+  }
+
   newUser(usuario: UsuarioModel) {
 
     console.log(usuario, 'sigupClient');
@@ -37,11 +42,11 @@ export class SignUpOdooService {
     let user_to_create;
     let partner_update;
 
-    if (usuario.type === "client") {
+  
 
       user_to_create = {
         'name': usuario.realname,
-        'classification': 'custumer',// puede ser 'custumer','vendor' o 'admin'
+        'classification': 'vendor',// puede ser 'custumer','vendor' o 'admin'
         'login': usuario.username,
         'email': usuario.username,
         'password': usuario.password,
@@ -62,15 +67,35 @@ export class SignUpOdooService {
         'address_zip_code': usuario.address.cp,
         'address_latitude': usuario.address.latitude,
         'address_longitude': usuario.address.longitude,
-        'mobile': usuario.phone,
+        'phone': usuario.phone,
+        'vat':usuario.vat, //NIF
+        //'comment':'',//description
+        //'function':'',//job title
+        //'mobile':'968 88 88 88',
+        'is_company':usuario.is_company,//individual person or company
+        //'vat_cif':'', //CIF number
+        'social_security':usuario.social_security, //Social security number
+        //'iae_code' :'', //I.A.E code
+        'dni':usuario.dni, //DNI number
+        'bank_ids': [[0,0,{'acc_number': usuario.bank_ids }]],//bank account with iban format
+        }
 
-      }
-
-    }
+    
 
     let set_partner_update = function () {
 
       console.log(usuario.partner_id);
+
+
+    /*       'product_supply_ids':[//subscripciones para ser supplier 
+        [0,0,
+            {
+                'name':flow.get('partnerID'),
+                'product_tmpl_id':39,//template_id optenido del servicio del que va a ser supplier
+            }
+        ],
+    ] */
+
 
       let inParams = []
       inParams.push([usuario.partner_id]); //id to update

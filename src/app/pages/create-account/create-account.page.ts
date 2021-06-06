@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
@@ -6,9 +6,11 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service'
 import { Photo } from 'src/app/interfaces/interfaces'
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import { Address } from 'src/app/models/usuario.model';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { DropdownModule } from 'primeng/dropdown'
 import { SelectItem } from 'primeng/api';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-account',
@@ -33,24 +35,28 @@ export class CreateAccountPage implements OnInit {
   entJuridicaSelected: string = '';
   isEntTouched: boolean = false;
   
-  nombre = '';
+  confirmPass = '';
+  /* nombre = '';
   date = '';
   user = '';
   password = '';
-  confirmPass = '';
+  
   cifNif = '';
   segSocialNumber = '';
   IAE = ''; 
   DNI = '';
   cuentaBancaria = '';
   phone = '';
+  */
+  
+  
   streetNumber = '';
   number = '';
   floor = '';
   portal = '';
   stair = '';
   door = '';
-  postalCode = '';
+  postalCode = ''; 
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
 
@@ -72,10 +78,16 @@ export class CreateAccountPage implements OnInit {
   //IAE_vacio            :boolean=false; 
   DNI_vacio            :boolean=false;
   cuentaBancaria_vacio :boolean=false;
-  phone_vocio          :boolean=false;
+  phone_vacio          :boolean=false;
   streetNumber_vacio   :boolean=false;
   number_vacio         :boolean=false;
   
+
+  notificationOK$: Observable<boolean>;
+	notificationError$: Observable<boolean>;
+
+	subscriptionError: Subscription;
+	subscriptionOk: Subscription;
 
   constructor(private toastCtrl: ToastController,
               private alertCtrl: AlertController,
@@ -83,11 +95,15 @@ export class CreateAccountPage implements OnInit {
               public navCtrl: NavController,
               private _signupOdoo: SignUpOdooService,
               public photoService: PhotoService,
-              public _authOdoo: AuthOdooService,
               private actionSheetCtrl: ActionSheetController,
               private popoverCtrl: PopoverController,
               public navController:NavController,
-              private platform: Platform) { }
+              private platform: Platform,
+              private ngZone: NgZone,) { 
+
+                this.usuario = new UsuarioModel();
+                this.usuario.address = new Address();
+              }
 
   ngOnInit() {
 
@@ -96,6 +112,38 @@ export class CreateAccountPage implements OnInit {
         this.navController.navigateRoot('/terminos', {animated: true, animationDirection: 'back' }) ;
  
       });
+
+      
+		this.notificationError$ = this._signupOdoo.getNotificationError$();
+		this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
+			this.ngZone.run(() => {
+				if (notificationError) {
+				/* 	this.loading.dismiss();
+					this.messageService.add({ severity: 'error', detail: 'Registro incompletado' }); */
+					//error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
+          
+          console.log("Error creando el usuario");
+      
+        }
+			});
+		});
+		this.notificationOK$ = this._signupOdoo.getNotificationOK$();
+		this.subscriptionOk = this.notificationOK$.subscribe((notificationOK) => {
+			this.ngZone.run(() => {
+				if (notificationOK) {
+					//quitar cargado e ir a la pagina de logguearse
+
+				/* 	this.loading.dismiss();
+					this.messageService.add({ severity: 'success', detail: 'Registro completado' }); */
+
+          console.log("Usuario creado exitosamente");
+
+					setTimeout(() => {
+            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+					}, 2000);
+				}
+			});
+		});
 
       
 
@@ -251,9 +299,15 @@ export class CreateAccountPage implements OnInit {
   }
 
   onNextClick(event) {
-    console.log('Siguiente clicked');
-    this.validarCamposVacio();
-     this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+
+
+    this._signupOdoo.show(this.usuario);
+   
+    //this.validarCamposVacio();
+
+    
+     
+    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
     //   this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     // }
@@ -291,7 +345,7 @@ export class CreateAccountPage implements OnInit {
     }
 
 
-    if(this.nombre == ""){
+    if(this.usuario.realname == ""){
       console.log( 'vacio')
       this.nombreVacio=true;
       //  nombre1.touched
@@ -300,7 +354,7 @@ export class CreateAccountPage implements OnInit {
       this.nombreVacio=false;
     }
 
-    if(this.date == ""){
+    if(this.usuario.date == ""){
       console.log( 'vacio fecha de nacimiento')
       this.fecha_nacimiento=true;
      
@@ -309,7 +363,7 @@ export class CreateAccountPage implements OnInit {
       this.fecha_nacimiento=false;
     }
 
-    if(this.user == ""){
+    if(this.usuario.username == ""){
       console.log( 'vacio user')
       this.user_vacio=true;
      
@@ -318,7 +372,7 @@ export class CreateAccountPage implements OnInit {
       this.user_vacio=false;
     }
 
-    if(this.password == ""){
+    if(this.usuario.password == ""){
       console.log( 'vacio user')
       this.password_vacio=true;
      
@@ -336,7 +390,7 @@ export class CreateAccountPage implements OnInit {
       this.confirmPass_vacia=false;
     }
 
-    if(this.cifNif == ""){
+    if(this.usuario.vat == ""){
       console.log( 'vacio cifnif')
       this.cifNif_vacio=true;
      
@@ -345,7 +399,7 @@ export class CreateAccountPage implements OnInit {
       this.cifNif_vacio=false;
     }
 
-    if(this.segSocialNumber == ""){
+    if(this.usuario.social_security == ""){
       console.log( 'vacio seguridad')
       this.segSocialNumber_vacio=true;
      
@@ -354,7 +408,7 @@ export class CreateAccountPage implements OnInit {
       this.segSocialNumber_vacio=false;
     }
 
-    if(this.DNI == ""){
+    if(this.usuario.dni == ""){
       console.log( 'vacio seguridad')
       this.DNI_vacio=true;
     
@@ -365,7 +419,7 @@ export class CreateAccountPage implements OnInit {
 
     
 
-    if(this.cuentaBancaria == ""){
+    if(this.usuario.bank_ids == ""){
       console.log( 'vacio seguridad')
       this.cuentaBancaria_vacio=true;
      
@@ -374,13 +428,13 @@ export class CreateAccountPage implements OnInit {
       this.cuentaBancaria_vacio=false;
     }
 
-    if(this.phone == ""){
+    if(this.usuario.phone == 0){
       console.log( 'vacio seguridad')
-      this.phone_vocio=true;
+      this.phone_vacio=true;
      
     }
     else{
-      this.phone_vocio=false;
+      this.phone_vacio=false;
     }
     
     if(this.streetNumber == ""){
@@ -400,6 +454,9 @@ export class CreateAccountPage implements OnInit {
     else{
       this.number_vacio=false;
     }
+
+
+
 
   }
 

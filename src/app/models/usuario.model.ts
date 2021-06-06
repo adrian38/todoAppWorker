@@ -9,17 +9,16 @@ export class Address {
   latitude: string;
   longitude: string;
 
-  constructor(street: '', number: '', portal: '', stair: '', floor: '',
-    door: '', cp: '', latitude: '', longitude: '') {
-    this.street = street;
-    this.number = number;
-    this.portal = portal;
-    this.stair = stair;
-    this.floor = floor;
-    this.door = door;
-    this.cp = cp;
-    this.latitude = latitude;
-    this.longitude = longitude;
+  constructor() {
+    this.street = '';
+    this.number = '';
+    this.portal = '';
+    this.stair = '';
+    this.floor = '';
+    this.door = '';
+    this.cp = '';
+    this.latitude = '';
+    this.longitude = '';
   }
 }
 
@@ -37,6 +36,18 @@ export class UsuarioModel {
   address: Address;
   date: string;
   avatar: any;
+  vat:string; //NIF
+  comment:string;//description
+  //function':'',//job title
+  //mobile
+  is_company:boolean;//individual person or company
+  //vat_cif:number, //CIF number
+  social_security:string; //Social security number
+  //iae_code:string; //I.A.E code
+  dni:string; //DNI number
+  bank_ids:string;
+
+
 
   constructor() {
     this.username = "";
@@ -51,6 +62,17 @@ export class UsuarioModel {
     this.realname = "";
     this.date = "";
     this.avatar = "";
+    this.vat=""; //NIF
+    this.comment="";//description
+  //function':'',//job title
+  //phone
+    this.is_company=false;//individual person or company
+  //vat_cif:number, //CIF number
+    this.social_security=""; //Social security number
+  //iae_code:string; //I.A.E code
+    this.dni = ""; //DNI number
+    this.bank_ids = "";
+
   }
 }
 

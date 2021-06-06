@@ -12,6 +12,7 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { Observable, Subscription } from 'rxjs';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Photo } from 'src/app/Interfaces/interfaces';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 
 
@@ -59,6 +60,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   ultimo_sms:string="";
   sms_cliente:string="";
   chat_vacia: boolean = false;
+  ruta:string = '';
 
   loading: HTMLIonLoadingElement = null;
 
@@ -89,13 +91,22 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   ngOnInit() {
 
+
+    this.ruta = this.datos.getruta();
+    console.log('la ruta',this.ruta);
     this.presupuesto = this.task.materials + this.task.materials;
     this.valorSegment( this.datos.getruta());
     this.datos.setruta('contratados-chat-detalles');
     this.ver_imagenes();
-    this.presentLoading();
     this._chatOdoo.requestAllMessages(this.task.id);
     this.subscriptions();
+
+    if(this.ruta == 'tabs/tab2'){
+      this.presentLoading();
+       }
+    else{
+      this.ruta='';
+       }
  
   }
 
@@ -122,10 +133,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   subscriptions() {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateRoot('/tabs/tab1', {
-        animated: true,
-        animationDirection: 'back',
-      });
+      this.navCtrl.navigateRoot('/tabs/tab1', {animated: true,animationDirection: 'back',});
     });
 
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();

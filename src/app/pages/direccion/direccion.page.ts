@@ -28,6 +28,8 @@ export class DireccionPage implements OnInit {
 	placeholderCp: string = '';
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
+  vacio_calle:boolean = false;
+  vacio_numero:boolean = false;
 
   constructor(private platform: Platform,
               private navCtrl: NavController,
@@ -101,4 +103,25 @@ export class DireccionPage implements OnInit {
 	this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
 } 
 
+editarDireccion(){
+console.log('editando')
+this.validar();
+
+}
+validar(){
+  if(this.calle == ""){
+    this.vacio_calle=true;
+  }
+  else{
+    this.vacio_calle=false;
+    
+  }
+  if(this.numero == ""){
+    this.vacio_numero=true;
+  }
+  else{
+    this.vacio_numero=false;
+    
+  }
+}
 }

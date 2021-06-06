@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
-//import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
 import {Plugins} from '@capacitor/core';
 const {SplashScreen} = Plugins;
 
@@ -14,6 +15,7 @@ export class InicioPage implements OnInit {
   constructor(private platform : Platform,
               private navCtrl: NavController,
               private alertCtrl: AlertController,
+              private screenOrientation: ScreenOrientation
               ) { }
 
   ngOnInit() {
@@ -24,7 +26,7 @@ export class InicioPage implements OnInit {
       this.presentAlert();
  });
 //  console.log('1.0',this.screenOrientation.type);
-//  this.screenOrientation.lock('portrait');
+ this.screenOrientation.lock('portrait');
 //  console.log('2.0',this.screenOrientation.type);
   }
 

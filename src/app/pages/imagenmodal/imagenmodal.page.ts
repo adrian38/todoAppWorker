@@ -1,6 +1,8 @@
 
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController, NavParams, IonSlide, Platform, NavController } from '@ionic/angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
 
 @Component({
   selector: 'app-imagenmodal',
@@ -15,16 +17,27 @@ export class ImagenmodalPage implements OnInit {
 	vertical: boolean;
 
   constructor(private modalCtrl: ModalController,
-		private navparams: NavParams,
-		public navCtrl: NavController) { }
+		          private navparams: NavParams,
+              private screenOrientation: ScreenOrientation) {
+
+                this.imagen = this.navparams.get('imagen');
+               }
 
   ngOnInit() {
-    this.imagen = this.navparams.get('imagen');
+    
+  
+   // this.screenOrientation.unlock();
+  
+  //  this.screenOrientation.lock('landscape');
   }
 
-  cerrar() {
-		//this.screenOrientation.lock('portrait');
+  // ngOnDestroy(): void {
+	// 	this.screenOrientation.lock('portrait');
+	// }
+
+/*   cerrar() {
+	  this.screenOrientation.lock('portrait');
 		this.modalCtrl.dismiss();
-	}
+	} */
 
 }

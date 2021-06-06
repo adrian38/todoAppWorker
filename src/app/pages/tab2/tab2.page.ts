@@ -16,11 +16,14 @@ export class Tab2Page implements OnInit {
   task           : TaskModel;
   titulo_contratado: string = '';
   titulo_historial: string = '';
+  
   contratadosList: TaskModel[];
   historialList  :TaskModel[];
 
   contratado_vacio :boolean=false;
   historial_vacio  :boolean=false;
+  ruta:string = '';
+
 
 
 
@@ -46,6 +49,7 @@ export class Tab2Page implements OnInit {
   }
 
   onClickItemContratados(i) {
+    this.subServ.setruta('tabs/tab2');
     this.task = this.contratadosList[i]; 
     this._taskOdoo.setTaskCesar(this.task);
   

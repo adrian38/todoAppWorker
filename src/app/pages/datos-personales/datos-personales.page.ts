@@ -20,17 +20,7 @@ export class DatosPersonalesPage implements OnInit {
 
    avatarusuario:string =""; 
    avatarUsuario64:string="";
-    nombre: string = '';
-	fecha: string = '';
-	correo: string = '';
-	/* pass: string = '';
-	calle: string = '';
-	piso: string = '';
-	numero: string = '';
-	puerta: string = '';
-	portal: string = '';
-	cpostal: string = '';
-	escalera: string = ''; */
+    
 	placeholderNombre: string = '';
 	placeholderFecha: string = '';
 	placeholderUser: string = '';
@@ -43,14 +33,36 @@ export class DatosPersonalesPage implements OnInit {
 	placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
-	categoria:string="";
-  categorias: string [] = ['Electricista', 'Fontanero'];
-
+	
+  categoria:string="";
   entidad:string="";
-  entJuridica: string [] = ['Empresa', 'Autónomo'];
+  nombre: string = '';
+	fecha: string = '';
+	correo: string = '';
+  CIF_NIF:string = '';
+  cuenta: string = '';
+  segSocial:string = "";
+  iaf_string:string = "";
+  dni_string:string = '';
+  cuenta_bancaria:string = '';
+  phone:string = '';
 	categoriaSelected: string = '';
-	isCatTouched: boolean = false;
-
+  
+  categorias: string [] = ['Electricista', 'Fontanero'];
+  entJuridica: string [] = ['Empresa', 'Autónomo'];
+	
+  nombreVacio:boolean=false;
+  isCatTouched: boolean = false;
+  isEntTouched: boolean = false;
+  fecha_nacimiento: boolean = false;
+  cifNif: boolean = false;
+  segSoc: boolean = false;
+  iaf_bool: boolean = false;
+  dni_bool: boolean = false;
+  cuentaBancaria: boolean = false;
+  phone_bool:boolean= false;
+  correo_bool:boolean= false;
+  esMayorEdad:boolean= true;
 
   constructor(private platform: Platform,
 	          private navCtrl: NavController,
@@ -284,7 +296,7 @@ async presentAlert() {
           handler: () => {
             console.log('Destructive clicked');
             this.entidad=this.entJuridica[0];
-            this.isCatTouched=false;
+            this.isEntTouched=false;
           }
         },{
           text: 'Autónomo',
@@ -292,7 +304,7 @@ async presentAlert() {
           handler: () => {
             console.log('Archive clicked');
             this.entidad=this.entJuridica[1];
-            this.isCatTouched=false;
+            this.isEntTouched=false;
           }
         },{
           text: 'Cancel',
@@ -301,12 +313,164 @@ async presentAlert() {
           handler: () => {
             console.log('Cancel clicked');
             this.entidad="";
-            this.isCatTouched=true;
+            this.isEntTouched=true;
           }
         }
       ]
     });
     actionSheet.present();
+  }
+
+  validarCamposVacio(){
+
+    if(this.categoria == ""){
+      console.log( 'vacio foto')
+      
+      this.isCatTouched=true;
+      
+    }
+    else{
+      this.isCatTouched=false;
+    }
+
+    if(this.entidad == ""){
+      console.log( 'vacio entidad')
+      
+      this.isEntTouched=true;
+      
+    }
+    else{
+      this.isEntTouched=false;
+      console.log( 'lleno entidad')
+    }
+
+
+     if(this.nombre == ""){
+      console.log( 'vacio nombre')
+      this.nombreVacio=true;
+     
+    }
+    else{
+      console.log( 'lleno nombre')
+      this.nombreVacio=false;
+    }
+
+    if(this.fecha == ""){
+      console.log( 'vacio fecha de nacimiento')
+      this.fecha_nacimiento=true;
+     
+    }
+    else{
+      this.fecha_nacimiento=false;
+      this.validarMayorDeEdad(this.fecha);
+    }
+
+    if(this.CIF_NIF == ""){
+      console.log( 'vacio fecha de nacimiento')
+      this.cifNif=true;
+     
+    }
+    else{
+      this.cifNif=false;
+    }
+
+   
+
+    if(this.segSocial == ""){
+      console.log( 'vacio seguridad')
+      this. segSoc=true;
+     
+    }
+    else{
+      this. segSoc=false;
+    }
+
+
+  if(this.iaf_string == ""){
+      console.log( 'vacio user')
+      this.iaf_bool=true;
+     
+    }
+    else{
+      this.iaf_bool=false;
+    }
+
+      if(this.dni_string == ""){
+      console.log( 'vacio user')
+      this.dni_bool=true;
+     
+    }
+    else{
+      this.dni_bool=false;
+    }
+
+    if(this.cuenta_bancaria == ""){
+      console.log( 'vacio user')
+      this.cuentaBancaria=true;
+     
+    }
+    else{
+      this.cuentaBancaria=false;
+    }
+
+   if(this.phone == ""){
+      console.log( 'vacio cifnif')
+      this.phone_bool=true;
+     
+    }
+    else{
+      this.phone_bool=false;
+    }
+
+   
+
+     if(this.correo == ""){
+      console.log( 'vacio seguridad')
+      this.correo_bool=true;
+    
+    }
+    else{
+      this.correo_bool=false;
+    }
+
+    
+
+ 
+  }
+
+  editar(){
+    this.validarCamposVacio();
+  }
+
+  validarMayorDeEdad(date: string) {
+
+    // Ver si se puede mejorar este algoritmo
+
+    const inputDate = new Date(date);
+    const currentDate = new Date(Date.now());
+
+    const bYears = inputDate.getFullYear();
+    const timeYears = currentDate.getFullYear();
+
+    const difYears = timeYears - bYears;
+
+    // Cantidad de meses entre las 2 fechas
+    const months = (difYears * 12) + (currentDate.getMonth() - inputDate.getMonth());
+
+    // 18 años son 12 meses por 18 asi que son 216 meses
+    // si la diferencia de meses entre las 2 fechas es mayor que 216 meses entonces
+    // la persona es mayor de 18 años.
+    // Este algoritmo no toma en cuenta los dias que quedan en el mismo mes, asi que si cumple 18
+    // en el mismo mes en curso pero no los ha cumplido todavia, se toma en consideración.
+    
+    if (months >= 216) {
+      console.log("Es mayor de edad");
+      this.esMayorEdad = true;
+    }
+    else {
+      console.log("No es mayor de edad");
+      this.esMayorEdad = false;
+    }
   }
 }
 

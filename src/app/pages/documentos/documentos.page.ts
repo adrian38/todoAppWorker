@@ -31,7 +31,12 @@ export class DocumentosPage implements OnInit {
   }
 
   onAnadir() {
-    console.log("Anadir clicked");
+    if(this.foto == ""){
+      console.log("no hay nada seleccionado");
+    }
+    else{
+      console.log("hay seleccionado algo");
+      }
   }
 
   async presentPopover(evento) {

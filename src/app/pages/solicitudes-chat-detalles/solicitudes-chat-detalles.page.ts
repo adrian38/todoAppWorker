@@ -29,7 +29,6 @@ export class SolicitudesChatDetallesPage implements OnInit {
   messagesList: MessageModel[];
 
   messagesList$: Observable<MessageModel[]>;
-  
   messageSendOk$: Observable<MessageModel>;
   notificationNewMessg$: Observable<number[]>;
 
@@ -88,6 +87,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('entre a la detalles');
     this.presupuesto = this.task.materials + this.task.work_force;
     this.categoria = this.task.type;
     this.descripcion = this.task.title;

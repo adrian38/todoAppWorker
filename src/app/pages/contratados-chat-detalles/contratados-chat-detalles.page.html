@@ -44,6 +44,9 @@
     style="height: 100%; width: 100%"
   >
     <div style="width: 100%; height: 100%; display: flex; flex-direction: row">
+
+    
+      
       <div class="div_chat" #target *ngIf="!chat_vacia">
         <ion-row
           class="chat_bubble"
@@ -86,6 +89,41 @@
 
       <div style="height: 100%; width: 5%"></div>
     </div>
+    <!-- ************************************************** -->
+    
+    <!-- <ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
+      <div style="display: flex; justify-content: center; ">
+        <div class="flex_row chat_container">
+          <ion-textarea
+            class="text_area"
+            auto-grow
+            cols="1"
+            rows="1"
+            inputmode="text"
+            placeholder="Escriba un mensaje..."
+            autofocus
+            [(ngModel)]="message.message"
+          >
+          </ion-textarea>
+  
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+            "
+          >
+            <ion-button fill="clear" class="send_btn" (click)="pushToChat()">
+              <ion-icon
+                name="send"
+                color="greenblue"
+                style="min-width: 25px; min-height: 30px"
+              ></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-footer> -->
   </div>
 
   <div
@@ -311,7 +349,7 @@
   </div>
 
   <p-dialog
-    header=""
+   
     [closeIcon]="send"
     [closable]="true"
     [(visible)]="display"
@@ -405,7 +443,7 @@
     <div class="flex_row" style="margin-bottom: 25px"></div>
   </p-dialog>
 
-  <ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
+   <ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
     <div style="display: flex; justify-content: center; ">
       <div class="flex_row chat_container">
         <ion-textarea
@@ -437,7 +475,7 @@
         </div>
       </div>
     </div>
-  </ion-footer>
+  </ion-footer> 
   
 </ion-content>
 

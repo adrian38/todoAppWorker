@@ -1,12 +1,6 @@
 import { Component, NgZone, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import {
-  NavController,
-  Platform,
-  IonContent,
-  ModalController,
-  LoadingController,
-} from '@ionic/angular';
+import { NavController,Platform,IonContent,ModalController,LoadingController} from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { MessageModel } from 'src/app/models/message.model';
@@ -16,6 +10,7 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { ChatOdooService } from 'src/app/services/chat-odoo.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-solicitudes-chat-detalles',
@@ -76,7 +71,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
     private _authOdoo: AuthOdooService,
     private modalCtrl: ModalController,
     private subServ: ObtSubSService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private screenOrientation: ScreenOrientation
   ) {
     this.task = new TaskModel();
     this.task = this._taskOdoo.getTaskCesar();
@@ -87,6 +83,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   ngOnInit() {
+    this.screenOrientation.lock('portrait');
+    
     console.log('entre a la detalles');
     this.presupuesto = this.task.materials + this.task.work_force;
     this.categoria = this.task.type;

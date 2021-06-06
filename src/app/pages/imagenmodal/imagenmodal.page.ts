@@ -26,18 +26,18 @@ export class ImagenmodalPage implements OnInit {
   ngOnInit() {
     
   
-   // this.screenOrientation.unlock();
+    this.screenOrientation.unlock();
   
   //  this.screenOrientation.lock('landscape');
   }
 
-  // ngOnDestroy(): void {
-	// 	this.screenOrientation.lock('portrait');
-	// }
+  ngOnDestroy(): void {
+		this.screenOrientation.lock('portrait');
+	}
 
-/*   cerrar() {
+ cerrar() {
 	  this.screenOrientation.lock('portrait');
 		this.modalCtrl.dismiss();
-	} */
+	} 
 
 }

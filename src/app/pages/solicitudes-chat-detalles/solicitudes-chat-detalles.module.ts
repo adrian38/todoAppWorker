@@ -8,6 +8,7 @@ import { SolicitudesChatDetallesPageRoutingModule } from './solicitudes-chat-det
 
 import { SolicitudesChatDetallesPage } from './solicitudes-chat-detalles.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     SolicitudesChatDetallesPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [SolicitudesChatDetallesPage]
+  declarations: [SolicitudesChatDetallesPage],
+  providers: [
+    ScreenOrientation
+ ]
 })
 export class SolicitudesChatDetallesPageModule {}

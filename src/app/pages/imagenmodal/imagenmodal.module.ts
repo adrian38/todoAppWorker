@@ -21,6 +21,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
   declarations: [ImagenmodalPage],
   providers: [
     ScreenOrientation
- ],
+ ]
 })
 export class ImagenmodalPageModule {}

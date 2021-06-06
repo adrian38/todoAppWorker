@@ -13,6 +13,7 @@ import { Observable, Subscription } from 'rxjs';
 import { PhotoService } from 'src/app/services/photo.service';
 import { Photo } from 'src/app/Interfaces/interfaces';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 
 
@@ -78,7 +79,8 @@ export class ContratadosChatDetallesPage implements OnInit {
               private ngZone     : NgZone,
               public loadingController: LoadingController,
               private alertCtrl: AlertController,
-              public photoService: PhotoService) {
+              public photoService: PhotoService,
+              private screenOrientation: ScreenOrientation) {
 
 
                 this.task = new TaskModel();
@@ -90,7 +92,7 @@ export class ContratadosChatDetallesPage implements OnInit {
                }
 
   ngOnInit() {
-
+    this.screenOrientation.lock('portrait');
 
     this.ruta = this.datos.getruta();
     console.log('la ruta',this.ruta);

@@ -26,89 +26,91 @@
   <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10">
-          <div
-            style="
-              width: 100%;
-              border-bottom: 1px solid var(--ion-color-orange);
-              margin-top: 20px;
-            "
+      <div
+        style=" width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;"
+        (click)="clickCategoria()"  >
+        <div class="flex_row" style="justify-content: space-between">
+          <ion-label
+            class="flex_row"
+            style=" margin-top: 0 !important;
+                    margin-bottom: 0 !important ;
+                    min-width: 178px !important;
+                    padding-left: 9px;
+                    padding-bottom: 5px;">
+                    
+                    Categoría de trabajador</ion-label
           >
-            <div class="flex_row" style="justify-content: space-between">
-              <ion-label
-                class="flex_row"
-                style="
-                  margin-top: 0 !important;
-                  margin-bottom: 0 !important ;
-                  min-width: 175px !important;
-                "
-                >Categoría de trabajador</ion-label
-              >
 
-              <div class="flex_row" style="justify-content: flex-end">
-                <ion-label
-                  style="margin-top: 0 !important; margin-bottom: 0 !important"
-                  (click)="clickCategoria()"
-                  >{{categoria}}</ion-label
-                >
-                <ion-icon
-                  style="width: 11px; height: 11px; margin-top: 3px !important"
-                  name="caret-down-outline"
-                  (click)="clickCategoria()"
-                ></ion-icon>
-              </div>
-            </div>
-          
-        <ion-label
-          *ngIf="entJuridicaSelected == '' && isEntTouched === true"
-          class="mandatory"
-        >
-          Campo obligatorio
-        </ion-label>
+          <div class="flex_row" style="justify-content: flex-end">
+            <ion-label
+              style="margin-top: 0 !important; margin-bottom: 0 !important"
+              >{{categoria}}</ion-label
+            >
+            <ion-icon
+              style="
+                width: 11px;
+                height: 11px;
+                margin-top: 3px !important;
+                margin-left: 4px;
+              "
+              name="caret-down-outline"
+            ></ion-icon>
+          </div>
+        </div>
       </div>
-
+      <small *ngIf="isCatTouched == true" id="link">Campo obligatorio </small>
 
       <div
-            style="
-              width: 100%;
-              border-bottom: 1px solid var(--ion-color-orange);
-              margin-top: 22px;
-            "
-          >
-            <div class="flex_row" style="justify-content: space-between">
-              <ion-label
-                class="flex_row"
-                style="
-                  margin-top: 0 !important;
-                  margin-bottom: 0 !important ;
-                  min-width: 175px !important;
-                "
-                >Entidad juridica</ion-label
-              >
-
-              <div class="flex_row" style="justify-content: flex-end">
-                <ion-label
-                  style="margin-top: 0 !important; margin-bottom: 0 !important"
-                  (click)="clickCategoria()"
-                  >{{entidad}}</ion-label
-                >
-                <ion-icon
-                  style="width: 11px; height: 11px; margin-top: 3px !important"
-                  name="caret-down-outline"
-                  (click)="clickEntidad()"
-                ></ion-icon>
-              </div>
-            </div>
+        style="
+          width: 100%;
+          border-bottom: 1px solid var(--ion-color-orange);
+          margin-top: 22px;
+        "
+        (click)="clickEntidad()"
+      >
+        <div
+          class="flex_row"
+          style="justify-content: space-between"
           
-        <ion-label
-          *ngIf="entJuridicaSelected == '' && isEntTouched === true"
-          class="mandatory"
         >
-          Campo obligatorio
-        </ion-label>
+          <ion-label
+            class="flex_row"
+            style="
+              margin-top: 0 !important;
+              margin-bottom: 0 !important ;
+              min-width: 178px !important;
+              padding-left: 9px;
+              padding-bottom: 5px;
+            "
+            >Entidad juridica</ion-label
+          >
+
+          <div class="flex_row" style="justify-content: flex-end">
+            <ion-label
+              style="margin-top: 0 !important; margin-bottom: 0 !important"
+              
+              >{{entidad}}</ion-label
+            >
+            <ion-icon
+              style="
+                width: 11px;
+                height: 11px;
+                margin-top: 3px !important;
+                margin-left: 4px;
+              "
+              name="caret-down-outline"
+            ></ion-icon>
+          </div>
+        </div>
       </div>
+      <small *ngIf="isEntTouched == true" id="link">Campo obligatorio </small>
 
       <div
-        style="width: 100%; margin-top: 20px;border-bottom: 1px solid var(--ion-color-orange)"
+        style="
+          width: 100%;
+          margin-top: 20px;
+          border-bottom: 1px solid var(--ion-color-orange);
+        "
       >
         <ion-input
           class="custom_input"
@@ -124,7 +126,7 @@
       <div id="item"></div>
       <div id="link">
         <small
-          *ngIf="nom_apell.invalid && nom_apell.touched"
+          *ngIf="(nom_apell.invalid && nom_apell.touched) || nombreVacio"
           class="text-danger"
           >Debe escribir su nombre completo</small
         >
@@ -144,6 +146,8 @@
           name="calendario"
           cancelText="Cancelar"
           doneText="Cambiar"
+          min="1920"
+          max="2030"
           [(ngModel)]="fecha"
           placeholder="{{this.placeholderFecha}}"
           #fech="ngModel"
@@ -154,8 +158,8 @@
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="fech.invalid && fech.touched" class="text-danger"
-          >Debe escribir su nombre completo</small
+        <small *ngIf="(fech.invalid && fech.touched) || fecha_nacimiento  || !esMayorEdad" class="text-danger"
+          >Necesita ser mayor a 18 años</small
         >
       </div>
 
@@ -175,14 +179,15 @@
           [(ngModel)]="correo"
           placeholder="{{this.placeholderUser}}"
           #corr="ngModel"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+       
+          pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
+        <small *ngIf="(corr.invalid && corr.touched) || correo_bool" class="text-danger"
           >Debe escribir su correo</small
         >
       </div>
@@ -200,17 +205,18 @@
           class="custom_input"
           type="text"
           name="CIF"
-          [(ngModel)]="correo"
+          [(ngModel)]="CIF_NIF"
           placeholder="CIF/NIF"
-          #corr="ngModel"
+          pattern="[a-zA-Z][0-9]{7}[a-zA-Z0-9]"
+          #cif="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(cif.invalid && cif.touched) || cifNif" class="text-danger"
+          >Campo obligatorio</small
         >
       </div>
 
@@ -226,18 +232,20 @@
         <ion-input
           class="custom_input"
           type="text"
-          name="CIF"
-          [(ngModel)]="correo"
+          name="ss"
+          [(ngModel)]="segSocial"
+          minlength=12
+          maxlength=12
           placeholder="Numero de seguridad social"
-          #corr="ngModel"
+          #seg="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(seg.invalid && seg.touched) || segSoc" class="text-danger"
+          >Debe escribir su numero de seguridad social</small
         >
       </div>
 
@@ -253,18 +261,18 @@
         <ion-input
           class="custom_input"
           type="text"
-          name="CIF"
-          [(ngModel)]="correo"
+          name="iafname"
+          [(ngModel)]="iaf_string"
           placeholder="IAF"
-          #corr="ngModel"
+          #ia="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(ia.invalid && ia.touched) || iaf_bool" class="text-danger"
+          >Debe escribir su IAF correctamente</small
         >
       </div>
 
@@ -280,18 +288,19 @@
         <ion-input
           class="custom_input"
           type="text"
-          name="CIF"
-          [(ngModel)]="correo"
+          name="DNIname"
+          [(ngModel)]="dni_string"
           placeholder="DNI"
-          #corr="ngModel"
+          pattern="[0-9]{8}[a-zA-Z]"
+          #dn="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(dn.invalid && dn.touched) || dni_bool" class="text-danger"
+          >Debe escribir su DNI correctamente</small
         >
       </div>
 
@@ -308,18 +317,20 @@
         <ion-input
           class="custom_input"
           type="text"
-          name="CIF"
-          [(ngModel)]="correo"
+          name="cbname"
+          [(ngModel)]="cuenta_bancaria"
           placeholder="Cuenta bancaria"
-          #corr="ngModel"
+          minlength=24
+          maxlength=24
+          #cb="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(cb.invalid && cb.touched) || cuentaBancaria" class="text-danger"
+          >Debe escribir su cuenta bancaria correctamente</small
         >
       </div>
       <!-- 
@@ -335,18 +346,20 @@
         <ion-input
           class="custom_input"
           type="text"
-          name="CIF"
-          [(ngModel)]="correo"
+          name="phone"
+          [(ngModel)]="phone"
           placeholder="Telefono"
-          #corr="ngModel"
+          minlength=6
+          maxlength=9
+          #tele="ngModel"
           required
         >
         </ion-input>
       </div>
       <div id="item"></div>
       <div id="link">
-        <small *ngIf="corr.invalid && corr.touched" class="text-danger"
-          >Debe escribir su correo</small
+        <small *ngIf="(tele.invalid && tele.touched) || phone_bool" class="text-danger"
+          >Debe escribir su número telefónico correctamente </small
         >
       </div>
 
@@ -354,18 +367,17 @@
         <ion-col></ion-col>
         <ion-col>
           <ion-button
-            [disabled]=" corr.invalid || fech.invalid || nom_apell.invalid "
             type="submit"
             color="orange"
             style="
               min-width: 150px;
               height: 30px !important;
-              font: normal 16px 'Helvetica-Roman', sans-serif;
+              font: normal 16px 'Helvetica-Roman', sans-serif !important;
               --border-radius: 7px;
             "
             (click)="editar()"
           >
-            GUARDAR
+            <span style="padding-top: 5px">GUARDAR</span>
           </ion-button>
         </ion-col>
 

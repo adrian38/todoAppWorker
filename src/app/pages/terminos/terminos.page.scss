@@ -1,6 +1,6 @@
 .container {
   width: 100% !important;
-  padding: 0 50px !important;
+  padding: 0 35px !important;
 }
 
 .div_title {
@@ -50,5 +50,6 @@ ion-checkbox::part(container) {
   width: 140px;
   min-width: 140px;
   border-radius: 5px;
-  font: normal 14px 'Helvetica-Md', sans-serif;
+  font: normal 14px 'Helvetica-Roman', sans-serif !important;
+  //font: normal 14px 'Helvetica-Bd', sans-serif;
 }

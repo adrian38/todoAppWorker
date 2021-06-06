@@ -44,12 +44,13 @@
           <div class="flex_row" style="justify-content: space-between">
             <ion-label
               class="flex_row"
+              (click)="clickCategoria()"
               style="
                 margin-top: 0 !important;
                 margin-bottom: 0 !important ;
                 min-width: 155px !important;
               "
-              >Oficio del trabajador</ion-label
+              >Categoría de trabajador</ion-label
             >
 
             <div class="flex_row" style="justify-content: flex-end">
@@ -59,29 +60,17 @@
                 >{{categoria}}</ion-label
               >
               <ion-icon
-                style="width: 11px; height: 11px; margin-top: 3px !important"
+                style="
+                  width: 11px;
+                  height: 11px;
+                  margin-top: 3px !important;
+                  margin-left: 4px;
+                "
                 name="caret-down-outline"
                 (click)="clickCategoria()"
               ></ion-icon>
             </div>
           </div>
-
-          <!-- <ion-select
-            interface="action-sheet"
-            [(ngModel)]="categoriaSelected"
-            name="categoria"
-            mode="ios"
-           
-            (ionFocus)="onCatFocusChange()"
-          >
-            <ion-select-option
-            
-              *ngFor="let categoria of categorias"
-              [value]="categoria"
-             
-              >{{ categoria }}</ion-select-option
-            >
-          </ion-select> -->
         </ion-item>
         <ion-label
           *ngIf="categoriaSelected == '' && isCatTouched === true"
@@ -100,6 +89,7 @@
               <ion-label
                 class="flex_row"
                 style="margin-top: 0 !important; margin-bottom: 0 !important"
+                (click)="clickEntidad()"
                 >Entidad jurídica</ion-label
               >
 
@@ -113,27 +103,17 @@
                   >{{entidad}}</ion-label
                 >
                 <ion-icon
-                  style="width: 11px; height: 11px; margin-top: 3px !important"
+                  style="
+                    width: 11px;
+                    height: 11px;
+                    margin-top: 3px !important;
+                    margin-left: 4px;
+                  "
                   name="caret-down-outline"
                   (click)="clickEntidad()"
                 ></ion-icon>
               </div>
             </div>
-
-            <!-- <ion-select
-              interface="action-sheet"
-              mode="ios"
-              [(ngModel)]="entJuridicaSelected"
-              name="entidad"
-        
-              (ionFocus)="onEntFocusChange()"
-            >
-              <ion-select-option
-                *ngFor="let entidad of entJuridica"
-                [value]="entidad"
-                >{{ entidad }}</ion-select-option
-              >
-            </ion-select> -->
           </ion-item>
           <ion-label
             *ngIf="entJuridicaSelected == '' && isEntTouched === true"
@@ -169,7 +149,7 @@
             class="date"
             [ngClass]="((fecha_nac.invalid && fecha_nac.touched) || esMayorEdad===false || fecha_nacimiento ) ? 'green_border':'no_border'"
             displayFormat="DDDD MMM D, YYYY"
-            min="1900"
+            min="1920"
             max="2030"
             placeholder="FECHA DE NACIMIENTO"
             [(ngModel)]="usuario.date"
@@ -282,6 +262,8 @@
             type="text"
             [(ngModel)]="usuario.social_security"
             name="segSocialNumber"
+            minlength=12
+            maxlength=12
             required
             placeholder="NÚMERO DE SEGURIDAD SOCIAL"
             #segSocial="ngModel"
@@ -324,6 +306,8 @@
             [(ngModel)]="usuario.bank_ids"
             name="cuentaBancaria"
             placeholder="CUENTA BANCARIA"
+            minlength=24
+            maxlength=24
             required
             #cBancaria="ngModel"
           >
@@ -345,6 +329,8 @@
             name="phone"
             placeholder="TELÉFONO"
             required
+            minlength=6
+            maxlength=9
             #telefono="ngModel"
           >
           </ion-input>
@@ -501,7 +487,7 @@
             color="orange"
             (click)="onNextClick( $event )"
           >
-            CREAR
+            <span style="padding-top: 5px">CREAR</span>
           </ion-button>
         </div>
       </form>

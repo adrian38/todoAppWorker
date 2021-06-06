@@ -252,8 +252,7 @@ export class Tab1Page {
         }
       );
 
-    this.notificationPoAcepted$ =
-      this._taskOdoo.getRequestedNotificationPoAcepted$();
+    this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
     this.subscriptionPoAcepted = this.notificationPoAcepted$.subscribe(
       (notificationPoAcepted) => {
         this.ngZone.run(() => {

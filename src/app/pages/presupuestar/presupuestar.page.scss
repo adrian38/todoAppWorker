@@ -40,8 +40,8 @@ ion-input {
 ion-button {
   margin-top: 70px;
   width: 80%;
-  font: normal 16px "Helvetica-Md", sans-serif;
-  
+  //font: normal 16px "Helvetica-Bd", sans-serif;
+  font: normal 16px 'Helvetica-Roman', sans-serif !important;
 }
 
 .item {

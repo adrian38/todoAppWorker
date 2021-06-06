@@ -40,6 +40,9 @@ export class Tab3Page implements OnInit {
   promociones() {
     this.navCtrl.navigateRoot('/promociones', {animated: true, animationDirection: 'forward' }) ;  
   }
+  somos(){
+    this.navCtrl.navigateRoot('/somos', {animated: true, animationDirection: 'forward' }) ;  
+  }
 
   
 }

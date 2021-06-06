@@ -3,7 +3,9 @@
   width: 50px;
   height: 50px;
   --border-radius: 50%;
-  --background: linear-gradient(to bottom, #0099ff, #0000cc);
+  --background: var(--ion-color-light, rgb(255, 255, 255)); 
+  --color: var(--ion-color-light-contrast, #fff);
+  // --background: linear-gradient(to bottom, #0099ff, #0000cc);
   --padding-top: auto;
   --padding-bottom: auto;
   --padding-start: auto;
@@ -41,8 +43,10 @@
   width: 50px;
   height: 50px;
   --border-radius: 50%;
-  --background-activated: linear-gradient(to bottom, #ff0000, #dd5884);
-  --background: linear-gradient(to bottom, #dd5884, #ff0000);
+ /*  --background-activated: linear-gradient(to bottom, #ff0000, #dd5884);
+  --background: linear-gradient(to bottom, #dd5884, #ff0000); */
+  --background: var(--ion-color-light, rgb(255, 255, 255)); 
+  --color: var(--ion-color-light-contrast, #fff);
   --padding-top: auto;
   --padding-bottom: auto;
   --padding-start: auto;

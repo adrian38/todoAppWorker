@@ -58,8 +58,9 @@
 .next_btn {
   --border-radius: 5px !important;
   width          : 140px;
+  font: normal 16px 'Helvetica-Roman', sans-serif !important;
   height         : 30px;
-  font           : normal 16px 'Helvetica-Md', sans-serif !important;
+ // font           : normal 16px 'Helvetica-Bd', sans-serif !important;
 }
 
 .custom_input {
@@ -81,8 +82,8 @@
   font    : normal 8px 'Helvetica-Roman', sans-serif;
   color   : rgb(101, 173, 172);
   display : block;
-  height  : 12px !important;
-  position: absolute;
+  height  : 10px !important;
+  // position: absolute;
 }
 
 .date {

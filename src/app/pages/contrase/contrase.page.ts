@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, ToastController } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
+
 
 @Component({
   selector: 'app-contrase',
@@ -11,9 +12,10 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 })
 export class ContrasePage implements OnInit {
 
-  actual    :string="";
+ // actual    :string="";
   cambiada  :string="";
   confirmada:string="";
+
 
   error_actual:boolean=true;
   error_confirmacion:boolean=true;
@@ -23,6 +25,7 @@ export class ContrasePage implements OnInit {
   constructor(private _authOdoo:AuthOdooService,
                private platform: Platform,
               public navCtrl: NavController,
+              private toastController: ToastController,
               private subServ: ObtSubSService) { }
 
   ngOnInit() {
@@ -54,17 +57,33 @@ export class ContrasePage implements OnInit {
               console.log("contraseña actual mal");
     } */
 
-    if(this.cambiada == this.confirmada){
+if(this.cambiada == "" || this.confirmada == "" ){
+  this.presentToast();
+}
+else{
+  if(this.cambiada == this.confirmada){
              
-             this.error_confirmacion=true;
-            
-            }
-            else{
-              this.error_confirmacion=false;
-            }
+    this.error_confirmacion=true;
+   
+   }
+   else{
+     this.error_confirmacion=false;
 
+   } 
+}
 
+    
 
+    
+         
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Debe rellenar los campos',
+      duration: 2000
+    });
+    toast.present();
+
+}
 }

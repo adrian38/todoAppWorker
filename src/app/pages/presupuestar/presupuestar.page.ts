@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { AlertController, NavController, ToastController,ModalController,Platform } from '@ionic/angular';
+import { AlertController, NavController, ToastController,ModalController,Platform, LoadingController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -32,6 +32,8 @@ export class PresupuestarPage implements OnInit {
   imagen_1:string="";
   imagen_2:string="";
 
+  loading_presupuesto: any;
+
   task: TaskModel;
 
   notificationSendOffertOk$ = new Observable<number>();
@@ -45,7 +47,8 @@ export class PresupuestarPage implements OnInit {
               private modalCtrl       :ModalController,
               private ngZone          :NgZone,
               private platform        :Platform,
-              private subServ         :ObtSubSService) { }
+              private subServ         :ObtSubSService,
+              public loadingController: LoadingController) { }
 
   ngOnInit() {
  
@@ -80,6 +83,7 @@ export class PresupuestarPage implements OnInit {
       this.ngZone.run(() => {
         console.log('Se envio la oferta correctamente');
         this._taskOdoo.solicitudeListEditBudget(this.task);
+        this.loading_presupuesto.dismiss();
         this.presentAlert();///////////
              
       });
@@ -166,6 +170,7 @@ export class PresupuestarPage implements OnInit {
       this._taskOdoo.sendOffer(this.task);
 
      ////////////////////////////Poner cargando en espera de respuesta
+     this.presentLoadingPresupuestar();
     }
     else
     this.toast_campos_vacio();
@@ -274,4 +279,14 @@ export class PresupuestarPage implements OnInit {
         }
   }
 
+
+  async presentLoadingPresupuestar() {
+    this.loading_presupuesto = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Presupuestando...'
+      //duration: 2000
+    });
+
+    return this.loading_presupuesto.present();
+  }
 }

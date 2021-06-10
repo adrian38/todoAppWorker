@@ -1,0 +1,45 @@
+<div class="flex_row" style="width: 100%" (click)="in(i)">
+  <img class="image" src="../../../assets/fontaneria.png" />
+  <div class="flex_column" style="width: 100%; margin-left: 20px">
+   
+ <ion-label class="cat_title">{{tituloSolicitud()}}</ion-label> 
+    
+    <div class="flex_row">
+      <ion-img
+        class="icon_calendar"
+        src="/assets/icons/calendario.svg"
+      ></ion-img>
+      <ion-label class="h5_label"
+        >{{ solicitud.date_planned | date: "EEE d MMM y" | lowercase
+        }}</ion-label
+      >
+    </div>
+    <div class="flex_row">
+      <ion-img
+        class="icon_horario"
+        src="/assets/icons/hora.svg"
+      ></ion-img>
+      <ion-label class="h5_label"
+        >{{ solicitud.time | date: "h:mm a" }}</ion-label
+      >
+    </div>
+  </div>
+  <div
+    class="flex_column"
+    style="
+      min-height: 100% !important;
+      width: 20px !important;
+      justify-content: flex-end;
+    "
+  >
+    <div
+      style="display: flex; margin-bottom: 5px"
+      *ngIf="solicitud.notificationChat"
+    >
+      <ion-img
+        class="icon_noti_chat"
+        src="/assets/icons/noti_chat.svg"
+      ></ion-img>
+    </div>
+  </div>
+</div>

@@ -27,5 +27,11 @@ ion-input.ng-invalid.ng-touched {
 
 ion-button {
  //font: normal 16px "Helvetica-Md", sans-serif;
-  font: normal 15px 'Helvetica-Bd', sans-serif;
+  //font: normal 15px 'Helvetica-Bd', sans-serif;
+  font: normal 15px 'Helvetica-Roman', sans-serif !important;
+
+}
+
+.text-danger{
+  color:  rgb(101, 173, 172) !important;
 }

@@ -1,0 +1,50 @@
+.div_title {
+    display        : flex;
+    align-items    : flex-end;
+    justify-content: center;
+    height         : 60px !important;
+   
+}
+
+  .title {
+    font : normal 28px 'Helvetica-Md', sans-serif;
+    color: var(--ion-color-orange);
+  
+   
+  }
+
+  .parrafo{
+      margin-top: 0.5px !important;
+      margin-bottom: 0.5px !important;
+      margin-left: 50px !important;
+      margin-right: 30px !important;
+
+  }
+
+  .iae_btn {
+    width           : 31px;
+    height          : 31px;
+    --padding-top   : 0;
+    --padding-bottom: 0;
+    --padding-start : 0;
+    --padding-end   : 0;
+    margin          : 0;
+    --border-radius : 20% !important;
+    margin-left: 50px !important;
+  }
+
+
+  .iae_label {
+    font      : normal 16px 'Helvetica-Roman', sans-serif !important;
+    text-align: center;
+    padding   : 6px 0px 6px 20px;
+  }
+
+  .next_btn {
+    --border-radius: 5px !important;
+    width          : 140px;
+    height         : 30px;
+    font: normal 16px 'Helvetica-Roman', sans-serif !important;
+    //font           : normal 16px 'Helvetica-Bd', sans-serif !important;
+  
+  }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController,Platform } from '@ionic/angular';
+import { NavController,Platform, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recuperarcontrase',
@@ -11,7 +11,8 @@ export class RecuperarcontrasePage implements OnInit {
   actual:string='';
 
   constructor( private navController : NavController,
-               private platform      : Platform) { }
+               private platform      : Platform,
+               private toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -30,9 +31,17 @@ export class RecuperarcontrasePage implements OnInit {
       console.log('ca1',caso1);
       console.log('ca2',caso2);
       console.log('algo es mal');
-      
+      this.presentToast();
 
     }
+
+  }
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Debe rellenar los campos',
+      duration: 2000
+    });
+    toast.present();
 
   }
 

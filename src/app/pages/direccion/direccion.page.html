@@ -1,6 +1,5 @@
 <ion-header class="ion-no-border">
-
-  <div style="background: var(--ion-color-orange);">
+  <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
   </div>
 
@@ -9,11 +8,9 @@
       <span class="page_subheader_title">Dirección</span>
     </div>
   </div>
-
 </ion-header>
 
 <ion-content>
-
   <!-- <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
     <div class="address">
 
@@ -29,170 +26,231 @@
   <!-- Direccion -->
 
   <ion-row>
-    <ion-col size=1></ion-col>
-    <ion-col size=10>
-      <ion-row style="margin-top: 50px;">
-        <ion-col style="padding: 0; margin-right: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="calle" 
-                        placeholder={{this.placeholderCalle}} 
-                        #call="ngModel" 
-                        required>
-            </ion-input>
-
-          </div>
-          <div id="item"></div>
-          <div id="link">
-            <small *ngIf="call.invalid && call.touched" class="text-danger">Campo obligatorio</small>
-          </div>
-
-        </ion-col>
-        
-        <ion-col style="padding: 0; margin-left: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="piso" 
-                        placeholder={{this.placeholderPiso}}
-                        #pis="ngModel" 
-                        required>
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+      <ion-row style="margin-top: 50px">
+        <ion-col style="padding: 0; margin-right: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="calle"
+              placeholder="{{this.placeholderCalle}}"
+              #call="ngModel"
+              required
+            >
             </ion-input>
           </div>
           <div id="item"></div>
           <div id="link">
-            <small *ngIf="pis.invalid && pis.touched" class="text-danger">Campo obligatorio</small>
+            <small *ngIf="(call.invalid && call.touched) || vacio_calle" class="text-danger"
+              >Campo obligatorio</small
+            >
           </div>
-
         </ion-col>
-      </ion-row> 
- 
+
+        <ion-col style="padding: 0; margin-left: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="piso"
+              placeholder="{{this.placeholderPiso}}"
+              #pis="ngModel"
+              
+            >
+            </ion-input>
+          </div>
+          <div id="item"></div>
+          <!-- <div id="link">
+            <small *ngIf="pis.invalid && pis.touched" class="text-danger"
+              >Campo obligatorio</small
+            >
+          </div> -->
+        </ion-col>
+      </ion-row>
+
       <ion-row>
-        <ion-col style="padding: 0; margin-right: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="numero" 
-                        placeholder={{this.placeholderNumero}}
-                        #num="ngModel" 
-                        required>
+        <ion-col style="padding: 0; margin-right: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="numero"
+              placeholder="{{this.placeholderNumero}}"
+              #num="ngModel"
+              required
+            >
             </ion-input>
           </div>
           <div id="item"></div>
           <div id="link">
-            <small *ngIf="num.invalid && num.touched" class="text-danger">Campo obligatorio</small>
+            <small *ngIf="(num.invalid && num.touched) || vacio_numero" class="text-danger"
+              >Campo obligatorio</small
+            >
           </div>
         </ion-col>
 
-        <ion-col  style="padding: 0; margin-left: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="puerta" 
-                        placeholder={{this.placeholderPuerta}} 
-                        #pue="ngModel" 
-                        required>
-            </ion-input>
-
-          </div>
-          <div id="item"></div>
-          <div id="link">
-            <small *ngIf="pue.invalid && pue.touched" class="text-danger">Campo obligatorio</small>
-          </div>
-        </ion-col>
-      </ion-row> 
-
-     <ion-row>
-        <ion-col style="padding: 0; margin-right: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="portal" 
-                        placeholder={{this.placeholderPortal}} 
-                        #port="ngModel" 
-                        required>
+        <ion-col style="padding: 0; margin-left: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="puerta"
+              placeholder="{{this.placeholderPuerta}}"
+              #pue="ngModel"
+           
+            >
             </ion-input>
           </div>
           <div id="item"></div>
-          <div id="link">
-            <small *ngIf="port.invalid && port.touched" class="text-danger">Campo obligatorio</small>
-          </div>
+          <!-- <div id="link">
+            <small *ngIf="pue.invalid && pue.touched" class="text-danger"
+              >Campo obligatorio</small
+            >
+          </div> -->
         </ion-col>
+      </ion-row>
 
-        <ion-col style="padding: 0; margin-left: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="nombre" 
-                        [(ngModel)]="cpostal" 
-                        placeholder={{this.placeholderCp}} 
-                        #c_post="ngModel"
-                        required>
-            </ion-input>
-
-          </div>
-          <div id="item"></div>
-          <div id="link">
-            <small *ngIf="c_post.invalid && c_post.touched" class="text-danger">Campo obligatorio</small>
-          </div>
-        </ion-col>
-      </ion-row> 
-
-       <ion-row>
-        <ion-col style="padding: 0; margin-right: 10px;">
-          <div style="width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;">
-            <ion-input  class="custom_input" 
-                        type="text" 
-                        name="escalera" 
-                        [(ngModel)]="escalera" 
-                        placeholder={{this.placeholderEscalera}} 
-                        #esc="ngModel" 
-                        required>
+      <ion-row>
+        <ion-col style="padding: 0; margin-right: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="portal"
+              placeholder="{{this.placeholderPortal}}"
+              #port="ngModel"
+            
+            >
             </ion-input>
           </div>
           <div id="item"></div>
-          <div id="link">
-            <small *ngIf="esc.invalid && esc.touched" class="text-danger">Campo obligatorio</small>
-          </div>
+          <!-- <div id="link">
+            <small *ngIf="port.invalid && port.touched" class="text-danger"
+              >Campo obligatorio</small
+            >
+          </div> -->
         </ion-col>
 
-        <ion-col style="text-align: end; margin-top: 15px;">
+        <ion-col style="padding: 0; margin-left: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="nombre"
+              [(ngModel)]="cpostal"
+              placeholder="{{this.placeholderCp}}"
+              #c_post="ngModel"
+             
+            >
+            </ion-input>
+          </div>
+          <div id="item"></div>
+          <!-- <div id="link">
+            <small *ngIf="c_post.invalid && c_post.touched" class="text-danger"
+              >Campo obligatorio</small
+            >
+          </div> -->
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col style="padding: 0; margin-right: 10px">
+          <div
+            style="
+              width: 100%;
+              border-bottom: 1px solid var(--ion-color-orange);
+              margin-top: 20px;
+            "
+          >
+            <ion-input
+              class="custom_input"
+              type="text"
+              name="escalera"
+              [(ngModel)]="escalera"
+              placeholder="{{this.placeholderEscalera}}"
+              #esc="ngModel"
+            
+            >
+            </ion-input>
+          </div>
+          <div id="item"></div>
+          <!-- <div id="link">
+            <small *ngIf="esc.invalid && esc.touched" class="text-danger"
+              >Campo obligatorio</small
+            >
+          </div> -->
+        </ion-col>
+
+        <ion-col style="text-align: end; margin-top: 15px">
           <div (click)="ubicacion()">
-            <img id="imgGPS" src="../../../assets/icons/ubicacion.svg">
+            <img id="imgGPS" src="../../../assets/icons/ubicacion.svg" />
           </div>
         </ion-col>
+      </ion-row>
 
-      </ion-row> 
-
-
-      <ion-row style="margin-top: 50px;">
+      <ion-row style="margin-top: 50px">
         <ion-col></ion-col>
         <ion-col>
           <ion-button
-                      type="submit" 
-                      color="orange"
-                      style="min-width: 150px; height: 30px !important; font: normal 16px 'Helvetica-Roman', sans-serif; --border-radius: 7px"
-                      (click)="editar()">
-            GUARDAR
+            type="submit"
+            color="orange"
+            style="
+              min-width: 150px;
+              height: 30px !important;
+              font: normal 16px 'Helvetica-Roman', sans-serif !important;
+              --border-radius: 7px;"
+            (click)="editarDireccion()"
+          >
+            <span style="padding-top: 5px">GUARDAR</span>
           </ion-button>
         </ion-col>
-  
+
         <ion-col></ion-col>
       </ion-row>
-
     </ion-col>
-    <ion-col size=1></ion-col>
-
-    
+    <ion-col size="1"></ion-col>
   </ion-row>
-
-     
-
 </ion-content>

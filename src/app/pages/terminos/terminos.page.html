@@ -15,10 +15,13 @@
 
           <ion-item class="ion-no-padding" lines="none" (click)="onChecked( $event )">
             <ion-label style="font: normal 12px verdana, sans-serif;">Acepto los términos y condiciones</ion-label>
-            <ion-checkbox   mode="ios"
+             <ion-checkbox   mode="ios"
                             color="orange" 
-                            slot="start" >
-            </ion-checkbox>
+                            slot="start"
+                            value="select"
+                        style="width: 15px; height: 15px;" >
+            </ion-checkbox> 
+           
           </ion-item>
 
         </ion-list>
@@ -30,7 +33,7 @@
                     color="orange" 
                     [disabled]="btnDisabled" 
                     (click)="onAccept()">
-          Aceptar
+                    <span style="padding-top: 5px">ACEPTAR</span>
         </ion-button>
       </div>
 

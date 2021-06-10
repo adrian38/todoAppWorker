@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
@@ -6,9 +6,11 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service'
 import { Photo } from 'src/app/interfaces/interfaces'
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import { Address } from 'src/app/models/usuario.model';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { DropdownModule } from 'primeng/dropdown'
 import { SelectItem } from 'primeng/api';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-account',
@@ -17,40 +19,75 @@ import { SelectItem } from 'primeng/api';
 })
 export class CreateAccountPage implements OnInit {
 
-  usuario:UsuarioModel;
+  customActionSheetOptions: any = {
+    header: 'Colors',
+    subHeader: 'Select your favorite color'
+  };
 
+  usuario:UsuarioModel;
+  categoria:string="";
   categorias: string [] = ['Electricista', 'Fontanero'];
   categoriaSelected: string = '';
   isCatTouched: boolean = false;
 
+  entidad:string="";
   entJuridica: string [] = ['Empresa', 'Autónomo'];
   entJuridicaSelected: string = '';
   isEntTouched: boolean = false;
   
-  nombre = '';
+  confirmPass = '';
+  /* nombre = '';
   date = '';
   user = '';
   password = '';
-  confirmPass = '';
+  
   cifNif = '';
   segSocialNumber = '';
   IAE = ''; 
   DNI = '';
   cuentaBancaria = '';
   phone = '';
+  */
+  
+  
   streetNumber = '';
   number = '';
   floor = '';
   portal = '';
   stair = '';
   door = '';
-  postalCode = '';
+  postalCode = ''; 
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
+
+ punto_naranja = '../../assets/icons/punto_naranja.svg';
+ punto_gris = '../../assets/icons/punto_gris.svg';
+
 
   selectFoto = true;
   coordenadas = true;
   esMayorEdad = true;
+
+  nombreVacio          :boolean=false;
+  fecha_nacimiento     :boolean=false;
+  user_vacio           :boolean=false;
+  password_vacio       :boolean=false;
+  confirmPass_vacia    :boolean=false;
+  cifNif_vacio         :boolean=false;
+  segSocialNumber_vacio:boolean=false; 
+  //IAE_vacio            :boolean=false; 
+  DNI_vacio            :boolean=false;
+  cuentaBancaria_vacio :boolean=false;
+  phone_vacio          :boolean=false;
+  streetNumber_vacio   :boolean=false;
+  number_vacio         :boolean=false;
+  
+
+  notificationOK$: Observable<boolean>;
+	notificationError$: Observable<boolean>;
+
+	subscriptionError: Subscription;
+	subscriptionOk: Subscription;
 
   constructor(private toastCtrl: ToastController,
               private alertCtrl: AlertController,
@@ -58,22 +95,55 @@ export class CreateAccountPage implements OnInit {
               public navCtrl: NavController,
               private _signupOdoo: SignUpOdooService,
               public photoService: PhotoService,
-              public _authOdoo: AuthOdooService,
               private actionSheetCtrl: ActionSheetController,
               private popoverCtrl: PopoverController,
               public navController:NavController,
-              private platform: Platform) { }
+              private platform: Platform,
+              private ngZone: NgZone,) { 
+
+                this.usuario = new UsuarioModel();
+                this.usuario.address = new Address();
+              }
 
   ngOnInit() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
-      
-        
-        this.navController.navigateRoot('/inicio', {animated: true, animationDirection: 'back' }) ;
-        
-      
-      
+
+        this.navController.navigateRoot('/terminos', {animated: true, animationDirection: 'back' }) ;
+ 
       });
+
+      
+		this.notificationError$ = this._signupOdoo.getNotificationError$();
+		this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
+			this.ngZone.run(() => {
+				if (notificationError) {
+				/* 	this.loading.dismiss();
+					this.messageService.add({ severity: 'error', detail: 'Registro incompletado' }); */
+					//error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
+          
+          console.log("Error creando el usuario");
+      
+        }
+			});
+		});
+		this.notificationOK$ = this._signupOdoo.getNotificationOK$();
+		this.subscriptionOk = this.notificationOK$.subscribe((notificationOK) => {
+			this.ngZone.run(() => {
+				if (notificationOK) {
+					//quitar cargado e ir a la pagina de logguearse
+
+				/* 	this.loading.dismiss();
+					this.messageService.add({ severity: 'success', detail: 'Registro completado' }); */
+
+          console.log("Usuario creado exitosamente");
+
+					setTimeout(() => {
+            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+					}, 2000);
+				}
+			});
+		});
 
       
 
@@ -229,7 +299,165 @@ export class CreateAccountPage implements OnInit {
   }
 
   onNextClick(event) {
-    console.log('Siguiente clicked');
+
+
+    this._signupOdoo.show(this.usuario);
+   
+    //this.validarCamposVacio();
+
+    
+     
+    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
+    //   this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // }
+  }
+
+  validarCamposVacio(){
+
+    if(this.avatarUsuario == '../../assets/icons/registro.svg'){
+      console.log( 'vacio foto')
+      this.selectFoto=false;
+      
+    }
+    else{
+      this.selectFoto=true;
+    }
+
+    if(this.categoria == ""){
+      console.log( 'vacio foto')
+      
+      this.isCatTouched=true;
+      
+    }
+    else{
+      this.isCatTouched=false;
+    }
+
+    if(this.entidad == ""){
+      console.log( 'vacio foto')
+      
+      this.isEntTouched=true;
+      
+    }
+    else{
+      this.isEntTouched=false;
+    }
+
+
+    if(this.usuario.realname == ""){
+      console.log( 'vacio')
+      this.nombreVacio=true;
+      //  nombre1.touched
+    }
+    else{
+      this.nombreVacio=false;
+    }
+
+    if(this.usuario.date == ""){
+      console.log( 'vacio fecha de nacimiento')
+      this.fecha_nacimiento=true;
+     
+    }
+    else{
+      this.fecha_nacimiento=false;
+    }
+
+    if(this.usuario.username == ""){
+      console.log( 'vacio user')
+      this.user_vacio=true;
+     
+    }
+    else{
+      this.user_vacio=false;
+    }
+
+    if(this.usuario.password == ""){
+      console.log( 'vacio user')
+      this.password_vacio=true;
+     
+    }
+    else{
+      this.password_vacio=false;
+    }
+
+    if(this.confirmPass == ""){
+      console.log( 'vacio user')
+      this.confirmPass_vacia=true;
+     
+    }
+    else{
+      this.confirmPass_vacia=false;
+    }
+
+    if(this.usuario.vat == ""){
+      console.log( 'vacio cifnif')
+      this.cifNif_vacio=true;
+     
+    }
+    else{
+      this.cifNif_vacio=false;
+    }
+
+    if(this.usuario.social_security == ""){
+      console.log( 'vacio seguridad')
+      this.segSocialNumber_vacio=true;
+     
+    }
+    else{
+      this.segSocialNumber_vacio=false;
+    }
+
+    if(this.usuario.dni == ""){
+      console.log( 'vacio seguridad')
+      this.DNI_vacio=true;
+    
+    }
+    else{
+      this.DNI_vacio=false;
+    }
+
+    
+
+    if(this.usuario.bank_ids == ""){
+      console.log( 'vacio seguridad')
+      this.cuentaBancaria_vacio=true;
+     
+    }
+    else{
+      this.cuentaBancaria_vacio=false;
+    }
+
+    if(this.usuario.phone == 0){
+      console.log( 'vacio seguridad')
+      this.phone_vacio=true;
+     
+    }
+    else{
+      this.phone_vacio=false;
+    }
+    
+    if(this.streetNumber == ""){
+      console.log( 'vacio seguridad')
+      this.streetNumber_vacio=true;
+     
+    }
+    else{
+      this.streetNumber_vacio=false;
+    }
+
+    if(this.number == ""){
+      console.log( 'vacio seguridad')
+      this.number_vacio=true;
+     
+    }
+    else{
+      this.number_vacio=false;
+    }
+
+
+
+
   }
 
   validarMayorDeEdad(date: string) {
@@ -273,4 +501,107 @@ export class CreateAccountPage implements OnInit {
     console.log("El valor es ", this.entJuridicaSelected);
   }
 
+  clickCategoria(){
+    console.log('sjjss')
+    this.presentActionSheet();
+  }
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Su categoria es:',
+     
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Electricista',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.categoria=this.categorias[0];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Fontanero',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.categoria=this.categorias[1];
+            this.isCatTouched=false;
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.categoria="";
+            this.isCatTouched=true;
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  clickEntidad(){
+   this.presentActionSheetEntidad()
+  }
+
+  async presentActionSheetEntidad() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header:'Tipo de entidad',
+      mode:'ios',
+      translucent: true,
+      buttons: [
+        {
+          text: 'Empresa',
+          cssClass: 'orange',
+          
+          handler: () => {
+            console.log('Destructive clicked');
+            this.entidad=this.entJuridica[0];
+            this.isEntTouched=false;
+          }
+        },{
+          text: 'Autónomo',
+          cssClass: 'orange',
+          handler: () => {
+            console.log('Archive clicked');
+            this.entidad=this.entJuridica[1];
+            this.isEntTouched=false;
+          }
+        },{
+          text: 'Cancel',
+          cssClass: 'greenblue',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            this.isEntTouched=true;
+            this.entidad="";
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  resizedataURL(datas, wantedWidth, wantedHeight, index) {
+		var img = document.createElement('img');
+		img.src = datas;
+		img.onload = () => {
+			let ratio = img.width / img.height;
+			wantedWidth = wantedHeight * ratio;
+			let canvas = document.createElement('canvas');
+			let ctx = canvas.getContext('2d');
+			canvas.width = wantedWidth;
+			canvas.height = wantedHeight;
+			ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
+			let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
+			//this.task.photoNewTaskArray[index] = temp.substring(temp.indexOf(',') + 1);
+			
+		};
+	}
 }

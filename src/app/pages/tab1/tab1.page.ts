@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import {AlertController,LoadingController,NavController, Platform} from '@ionic/angular';
+import {AlertController,LoadingController,NavController, Platform, ToastController} from '@ionic/angular';
 import { MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
@@ -24,6 +24,7 @@ export class Tab1Page {
   loading: any;
   boton_atras:boolean=false;
   solicitud_vacia: boolean = true;
+  message:string = '';
 
   tasksList$: Observable<boolean>; // servicio comunicacion
   notificationNewMessg$: Observable<number[]>;
@@ -50,11 +51,13 @@ export class Tab1Page {
     public loadingController: LoadingController,
     private _chatOdoo: ChatOdooService,
     private platform      : Platform,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit(): void {
-
+   
     console.log('en el tab1 dentro !!')
+    this.message="Solicitud eliminida"
    /*  this.platform.backButton.subscribeWithPriority(10, () => {
       this. presentAlert();
  }); */
@@ -63,7 +66,7 @@ export class Tab1Page {
     this.init();
     this._taskOdoo.setTab1In(true);
     this.subServ.setruta('tabs/tab1');
-
+   
     /*  this.cantidad_solicitudes(); */
 
 
@@ -218,7 +221,8 @@ export class Tab1Page {
               this.solicitudesList.splice(temp, 1);
             }
             this.loading.dismiss();
-            console.log('solicitud eliminada')
+            console.log('solicitud eliminada');
+            this.presentToastCancelar(this.message);
           }
         });
       }
@@ -248,8 +252,7 @@ export class Tab1Page {
         }
       );
 
-    this.notificationPoAcepted$ =
-      this._taskOdoo.getRequestedNotificationPoAcepted$();
+    this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
     this.subscriptionPoAcepted = this.notificationPoAcepted$.subscribe(
       (notificationPoAcepted) => {
         this.ngZone.run(() => {
@@ -276,7 +279,8 @@ export class Tab1Page {
             this.loading.dismiss();
             //this.subServ.setcargando(true);
           }
-          //this.solicitudEmpty();
+          this.solicitudEmpty();
+          console.log('cantidad',this.solicitudesList.length)
         });
       }
     );
@@ -287,10 +291,10 @@ export class Tab1Page {
       typeof this.solicitudesList !== 'undefined' &&
       this.solicitudesList.length > 0
     ) {
-      this.solicitud_vacia = false;
+      this.solicitud_vacia = true;
       console.log('hay solcitud');
     } else {
-      this.solicitud_vacia = true;
+      this.solicitud_vacia = false;
       console.log(' no hay solcitud');
     }
   }
@@ -318,8 +322,8 @@ export class Tab1Page {
     this.presentLoading();
   }
 
-    
-      tituloSolicitud(i){
+    //------------------------------------------------------------------bien
+     /*  tituloSolicitud(i){
         
         this.titulo_solicitud=this.solicitudesList[i].title;
         if (this.titulo_solicitud.length <16){
@@ -328,7 +332,7 @@ export class Tab1Page {
         else {
           return  this.titulo_solicitud.slice(0,15) + " ... ";
           }
-      }
+      } */
 
       async presentLoadingCargado() {
         this.loading = await this.loadingController.create({
@@ -391,4 +395,18 @@ export class Tab1Page {
         
 
       }   */
+
+
+      async presentToastCancelar(message: string) {
+        const toast = await this.toastCtrl.create(
+          {
+            message,
+            translucent:true,
+            duration: 3000,
+            mode:"ios"
+          }
+        );
+    
+        toast.present();
+      }
 }

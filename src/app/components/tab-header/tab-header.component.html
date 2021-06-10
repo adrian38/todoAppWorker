@@ -7,10 +7,11 @@
       <ion-label class="page_title">{{ titulo }}</ion-label>
     </div>
 
-    <div class="flex_centered" style="min-width: 35px">
+    <div  *ngIf="organizar" class="flex_centered" style="min-width: 35px">
       <ion-button icon-only fill="clear" (click)="on_Click()">
         <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>
       </ion-button>
+      
     </div>
     <div class="flex_centered" style="min-width: 29px">
       <ion-button icon-only fill="clear" (click)="OnClickNotificaciones()">

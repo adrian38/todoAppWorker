@@ -40,6 +40,8 @@ ion-segment .segment-button-checked {
 
 .label_presupuesto {
   font: normal 15px "Helvetica-Bd", sans-serif;
+
+  
 }
 
 .chat_container {
@@ -48,6 +50,7 @@ ion-segment .segment-button-checked {
   width: 90% !important;
   margin-bottom: 10px;
   height: auto;
+  
 }
 
 .attach_btn {
@@ -90,6 +93,7 @@ ion-segment .segment-button-checked {
   display: flex;
   flex-direction: column;
   overflow-y: auto !important;
+
 }
 
 .bubble_chat_me_old {
@@ -262,7 +266,12 @@ ion-item {
   width: 70px !important;
   height: 70px !important;
   min-width: 70px !important;
+  border-radius: 10px;
+  object-fit: cover;
+
+  
 }
+
 
 .h2_title {
   font: normal 16px "Helvetica-Bd", sans-serif !important;
@@ -273,11 +282,13 @@ ion-item {
 
 ion-button {
   text-transform: none;
-  font: normal 15px 'Helvetica-Md', sans-serif;
+  font: normal 15px 'Helvetica-Roman', sans-serif !important;
+  // font: normal 15px 'Helvetica-Md', sans-serif;
 }
 
 .btn {
-  font: bold 10px "Helvetica-Roman", sans-serif;
+  font: normal 10px 'Helvetica-Roman', sans-serif !important;
+  //font: bold 10px "Helvetica-Roman", sans-serif;
   height: 20px !important;
 }
 
@@ -295,9 +306,9 @@ ion-button {
 
 .menu_title {
   color: var(--ion-color-orange);
-  font: normal 16px "Helvetica-Md", sans-serif;
+  font: normal 20px "Helvetica-Md", sans-serif;
   text-align: center;
-  padding: 0 10px;
+  padding: 50px 10px 15px 10px;
 }
 
 .pres_input {
@@ -319,11 +330,11 @@ ion-button {
 :host ::ng-deep .p-dialog {
   .p-dialog-content {
     border-radius: 0px 0px 15px 15px;
-    background-color: rgb(250, 250, 250) !important;
+    background-color: rgb(245, 245, 245) !important;
   }
   .p-dialog-header {
-   /*  background-color: rgb(245, 245, 245) !important; */
-    background-color: rgb(250, 250, 250) !important;
+    background-color: rgb(245, 245, 245) !important; 
+    //background-color: rgb(250, 250, 250) !important;
     color: black;
      border-radius: 15px 15px 0px 0px; 
    
@@ -352,8 +363,21 @@ textarea:focus-within {
   outline: none;
 }
 .selecf{
-  width: 78px;
- height: 78px;  
+  width: 79px;
+ height: 79px;  
  object-fit: cover;
  
+}
+
+.init_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+ion-footer{
+  align-self: flex-end;
+  position: static;
 }

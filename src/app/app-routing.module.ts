@@ -102,7 +102,19 @@ const routes: Routes = [
   {
     path: 'notificaciones',
     loadChildren: () => import('./pages/notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
+  },  {
+    path: 'adjuntar',
+    loadChildren: () => import('./pages/adjuntar/adjuntar.module').then( m => m.AdjuntarPageModule)
+  },
+  {
+    path: 'stripe',
+    loadChildren: () => import('./pages/stripe/stripe.module').then( m => m.StripePageModule)
+  },
+  {
+    path: 'somos',
+    loadChildren: () => import('./pages/somos/somos.module').then( m => m.SomosPageModule)
   }
+
 
 
 

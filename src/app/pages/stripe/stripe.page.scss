@@ -1,0 +1,30 @@
+.div_title {
+    display        : flex;
+    align-items    : flex-end;
+    justify-content: center;
+    height         : 60px !important;
+   
+}
+
+  .title {
+    font : normal 28px 'Helvetica-Md', sans-serif;
+    color: var(--ion-color-orange);
+  
+   
+  }
+
+  .parrafo{
+      margin-top: 0.5px !important;
+      margin-bottom: 0.5px !important;
+      margin-left: 50px !important;
+      margin-right: 30px !important;
+
+  }
+
+  .next_btn {
+    --border-radius: 5px !important;
+    width          : 230px;
+    height         : 30px;
+    font: normal 16px 'Helvetica-Roman', sans-serif !important;
+    //font           : normal 16px 'Helvetica-Bd', sans-serif !important;
+  }

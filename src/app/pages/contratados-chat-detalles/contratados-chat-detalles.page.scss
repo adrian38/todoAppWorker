@@ -327,20 +327,44 @@ ion-button {
   height: 25px;
 }
 
-:host ::ng-deep .p-dialog {
-  .p-dialog-content {
-    border-radius: 0px 0px 15px 15px;
-    background-color: rgb(245, 245, 245) !important;
-  }
-  .p-dialog-header {
-    background-color: rgb(245, 245, 245) !important; 
-    //background-color: rgb(250, 250, 250) !important;
-    color: black;
-     border-radius: 15px 15px 0px 0px; 
+// :host ::ng-deep .p-dialog {
+//   .p-dialog-content {
+//     border-radius: 0px 0px 15px 15px;
+//     background-color: rgb(245, 245, 245) !important;
+//   }
+//   .p-dialog-header {
+//     background-color: rgb(245, 245, 245) !important; 
+//     //background-color: rgb(250, 250, 250) !important;
+//     color: black;
+//      border-radius: 15px 15px 0px 0px; 
    
-    padding: 0.5rem;
+//     padding: 0.5rem;
+//   }
+// }
+
+
+
+:host ::ng-deep .p-dialog {
+  border-radius: 15px !important;
+ //position: absolute;
+  .p-dialog-content {
+      border-radius: 0px 0px 15px 15px;
+      background-color: rgb(250, 250, 250) !important;
+      //box-shadow: 0.5px 0.5px 0.5px 0.5px black;
+     
+    
+  }
+.p-dialog-header {
+  background-color: rgb(250,250, 250) !important;
+  color: black;
+  border-radius: 15px 15px 0px 0px;
+  padding: 1rem;
+  //box-shadow: 0.5px 0.5px 0.5px 0.5px black;
+
   }
 }
+
+
 
 textarea {
   border: 1px solid var(--ion-color-orange) !important;

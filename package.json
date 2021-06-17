@@ -42,7 +42,7 @@
     "html-webpack-plugin": "^4.5.2",
     "jayson": "github:tedeh/jayson#typescript",
     "ng-packagr": "^11.0.0",
-    "node-gyp": "^8.0.0",
+    "node-gyp": "^8.1.0",
     "node-sass": "^5.0.0",
     "primeng": "^11.3.2",
     "rxjs": "~6.6.0",

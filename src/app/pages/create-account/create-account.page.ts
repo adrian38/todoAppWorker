@@ -59,7 +59,8 @@ export class CreateAccountPage implements OnInit {
 
 
   selectFoto = true;
-  coordenadas = true;
+  coordenadas :boolean;
+  coordenadas_puesta :boolean=true;
   esMayorEdad = true;
 
   nombreVacio          :boolean=false;
@@ -97,7 +98,8 @@ export class CreateAccountPage implements OnInit {
  
       });
 
-      
+      this.coordenadas=this.datos.getcoordenada();
+      console.log("co",this.coordenadas);
 
   }
 
@@ -245,7 +247,7 @@ export class CreateAccountPage implements OnInit {
   }
 
   onLocationClick(event) {
-    this.coordenadas = true;
+    //this.coordenadas = true;
     console.log('Location clicked');
     this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
   }
@@ -254,8 +256,9 @@ export class CreateAccountPage implements OnInit {
     console.log('Siguiente clicked');
     this.validarCamposVacio();
      //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != ""){   
+    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
       this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    
     }
   }
 
@@ -400,6 +403,12 @@ export class CreateAccountPage implements OnInit {
     else{
       this.number_vacio=false;
     }
+    if(this.coordenadas==true){
+      this.coordenadas_puesta=true;
+    }
+    else
+    this.coordenadas_puesta=false;
+
 
   }
 

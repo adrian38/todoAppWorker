@@ -25,10 +25,75 @@
   </div> -->
   <!-- Direccion -->
 
+  <!-- <div class="flex_row flex_centered">
+    <ion-img
+      class="icon_direction"
+      src="/assets/icons/direccion.svg"
+    ></ion-img>
+    <ion-label class="h3_title">Dirección actual</ion-label>
+  </div> -->
+
   <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10">
-      <ion-row style="margin-top: 50px">
+      <ion-row style="margin-top: 20px">
+        <ion-col size="1">
+          <ion-img
+            class="icon_direction"
+            src="/assets/icons/direccion.svg"
+          ></ion-img>
+        </ion-col>
+        <ion-col size="11">
+          <ion-label class="h3_title">Dirección actual</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="padding-left: 13px;">
+        <ion-label class="h6_title ion-text-wrap"
+          >{{ usuario.address.street}}, Numero: {{
+          usuario.address.number}},</ion-label
+        >
+      </ion-row>
+
+      <ion-row style="padding-left: 13px;">
+        <ion-label
+          style="font: normal 12px 'Helvetica-Roman', sans-serif !important"
+          *ngIf="usuario.address.floor"
+        >
+          Piso:{{usuario.address.floor }},</ion-label
+        >
+        <ion-label
+          style="font: normal 12px 'Helvetica-Roman', sans-serif !important"
+          *ngIf="usuario.address.door"
+        >
+          Puesta:{{usuario.address.door }},</ion-label
+        >
+        <ion-label
+          style="font: normal 12px 'Helvetica-Roman', sans-serif !important"
+          *ngIf="usuario.address.stair"
+        >
+          Escalera:{{usuario.address.stair }},</ion-label
+        >
+        <ion-label
+          style="font: normal 12px 'Helvetica-Roman', sans-serif !important"
+          *ngIf="usuario.address.portal"
+        >
+          Portal:{{usuario.address.portal }},</ion-label
+        >
+      </ion-row>
+
+      <ion-row style="padding-left: 13px;">
+        <ion-label
+          style="padding-top: 0px"
+          class="h6_title ion-text-wrap"
+          *ngIf=" usuario.address.cp"
+          >Codigo_Postal: {{ usuario.address.cp }}
+        </ion-label>
+      </ion-row> 
+
+      
+
+      <ion-row style="margin-top: 40px">
         <ion-col style="padding: 0; margin-right: 10px">
           <div
             style="
@@ -42,7 +107,7 @@
               type="text"
               name="nombre"
               [(ngModel)]="calle"
-              placeholder="{{this.placeholderCalle}}"
+              placeholder="Calle"
               #call="ngModel"
               required
             >
@@ -50,7 +115,9 @@
           </div>
           <div id="item"></div>
           <div id="link">
-            <small *ngIf="(call.invalid && call.touched) || vacio_calle" class="text-danger"
+            <small
+              *ngIf="(call.invalid && call.touched) || vacio_calle"
+              class="text-danger"
               >Campo obligatorio</small
             >
           </div>
@@ -69,18 +136,13 @@
               type="text"
               name="nombre"
               [(ngModel)]="piso"
-              placeholder="{{this.placeholderPiso}}"
+              placeholder="Piso"
               #pis="ngModel"
-              
             >
             </ion-input>
           </div>
           <div id="item"></div>
-          <!-- <div id="link">
-            <small *ngIf="pis.invalid && pis.touched" class="text-danger"
-              >Campo obligatorio</small
-            >
-          </div> -->
+        
         </ion-col>
       </ion-row>
 
@@ -98,7 +160,7 @@
               type="text"
               name="nombre"
               [(ngModel)]="numero"
-              placeholder="{{this.placeholderNumero}}"
+              placeholder="Número"
               #num="ngModel"
               required
             >
@@ -106,7 +168,9 @@
           </div>
           <div id="item"></div>
           <div id="link">
-            <small *ngIf="(num.invalid && num.touched) || vacio_numero" class="text-danger"
+            <small
+              *ngIf="(num.invalid && num.touched) || vacio_numero"
+              class="text-danger"
               >Campo obligatorio</small
             >
           </div>
@@ -125,18 +189,13 @@
               type="text"
               name="nombre"
               [(ngModel)]="puerta"
-              placeholder="{{this.placeholderPuerta}}"
+              placeholder="Puerta"
               #pue="ngModel"
-           
             >
             </ion-input>
           </div>
           <div id="item"></div>
-          <!-- <div id="link">
-            <small *ngIf="pue.invalid && pue.touched" class="text-danger"
-              >Campo obligatorio</small
-            >
-          </div> -->
+      
         </ion-col>
       </ion-row>
 
@@ -154,18 +213,13 @@
               type="text"
               name="nombre"
               [(ngModel)]="portal"
-              placeholder="{{this.placeholderPortal}}"
+              placeholder="Portal"
               #port="ngModel"
-            
             >
             </ion-input>
           </div>
           <div id="item"></div>
-          <!-- <div id="link">
-            <small *ngIf="port.invalid && port.touched" class="text-danger"
-              >Campo obligatorio</small
-            >
-          </div> -->
+         
         </ion-col>
 
         <ion-col style="padding: 0; margin-left: 10px">
@@ -181,18 +235,13 @@
               type="text"
               name="nombre"
               [(ngModel)]="cpostal"
-              placeholder="{{this.placeholderCp}}"
+              placeholder="C_postal"
               #c_post="ngModel"
-             
             >
             </ion-input>
           </div>
           <div id="item"></div>
-          <!-- <div id="link">
-            <small *ngIf="c_post.invalid && c_post.touched" class="text-danger"
-              >Campo obligatorio</small
-            >
-          </div> -->
+  
         </ion-col>
       </ion-row>
 
@@ -212,7 +261,6 @@
               [(ngModel)]="escalera"
               placeholder="{{this.placeholderEscalera}}"
               #esc="ngModel"
-            
             >
             </ion-input>
           </div>
@@ -241,7 +289,8 @@
               min-width: 150px;
               height: 30px !important;
               font: normal 16px 'Helvetica-Roman', sans-serif !important;
-              --border-radius: 7px;"
+              --border-radius: 7px;
+            "
             (click)="editarDireccion()"
           >
             <span style="padding-top: 5px">GUARDAR</span>

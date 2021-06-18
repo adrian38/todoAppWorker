@@ -94,7 +94,8 @@ export class MapaRegistroPage implements OnInit {
 					this.lat = results[0].geometry.location.lat();
 					this.lng = results[0].geometry.location.lng();
 					this.zoom = 18;
-
+					console.log('geo auto',this.lat);
+					console.log('geo auto',this.lng);
 				
 		   
 				} else {
@@ -114,6 +115,8 @@ export class MapaRegistroPage implements OnInit {
 		this.marcadores.push(nuevoMarcador);
 		this.presentToast();
 		this.Serv.setcoordenada(true);
+		console.log('geo auto',this.lat);
+		console.log('geo auto',this.lng);
 	}
 
 	async presentToast() {

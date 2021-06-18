@@ -55,3 +55,27 @@ img {
 #link {
   color: var(--ion-color-greenblue);
 }
+
+.icon_direction {
+  height: 19px !important;
+  width: 19px !important;
+}
+
+.h3_title {
+  font: normal 14px "Helvetica-Md", sans-serif !important;
+  margin: 8px 5px 8px 10px !important;
+  text-align: left;
+  width: 100%;
+}
+
+.ion-text-wrap {
+  white-space: normal !important;
+}
+
+.h6_title {
+  font: normal 12px 'Helvetica-Roman', sans-serif !important;
+  text-align: left;
+  width: 100%;
+  padding: 5px 20px 5px 2px !important;
+  min-width: 100px !important;
+}

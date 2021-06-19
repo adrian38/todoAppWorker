@@ -9,6 +9,7 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 })
 export class PromocionesPage implements OnInit {
 
+  
   promociones: Promociones[] = [
     {
       titulo: 'Promocion 1',

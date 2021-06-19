@@ -113,6 +113,10 @@ const routes: Routes = [
   {
     path: 'somos',
     loadChildren: () => import('./pages/somos/somos.module').then( m => m.SomosPageModule)
+  },
+  {
+    path: 'pago-promociones',
+    loadChildren: () => import('./pages/pago-promociones/pago-promociones.module').then( m => m.PagoPromocionesPageModule)
   }
 
 

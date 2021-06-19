@@ -89,7 +89,23 @@
       <h4 style="color: lightgray">Ninguna Solicitud</h4>
     </div>
   </div>
-</ion-content>
+
+
+  <p-dialog header=" " [(visible)]="display" [modal]="true" [baseZIndex]="1000"
+[draggable]="false" [resizable]="false" [closeIcon]="add" [style]="{width: '80vw'}">
+ 
+<div class="flex_column" style="padding: 15px 8% !important;" >
+  <ion-label  style="margin-top: 10px;margin-bottom: 10px;">
+    Te ofrecemos el servicio de promociones para que publiques los productos que desees poner en venta
+  </ion-label>
+
+  <div class="flex_centered" >
+    <ion-button class="btn_cancelar" color="orange" (click)="btn_continuar()">
+      <span style="padding-top: 5px">Continuar</span>
+    </ion-button>
+  </div>
+</div>
+</p-dialog>
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button
@@ -105,3 +121,9 @@
            <img class="star_add" src="../../../assets/icons/add.svg" /> 
   </ion-fab-button>
 </ion-fab>
+
+</ion-content>
+
+
+
+

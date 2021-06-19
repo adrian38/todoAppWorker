@@ -9,13 +9,18 @@ import { PromocionesPageRoutingModule } from './promociones-routing.module';
 import { PromocionesPage } from './promociones.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
+import {DialogModule} from 'primeng/dialog';
+import {LightboxModule} from 'primeng/lightbox';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     PromocionesPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    LightboxModule,
+    DialogModule
   ],
   declarations: [PromocionesPage]
 })

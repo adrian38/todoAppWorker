@@ -15,7 +15,7 @@ import { MessageModel } from 'src/app/models/message.model';
 })
 export class Tab1Page {
 
-  
+  display: boolean = false;
   id_string: string;
   titulo_solicitud: string = '';
   task: TaskModel;
@@ -384,7 +384,8 @@ export class Tab1Page {
       }
 
       onFabClick(  ){
-        this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
+        this.display=true;
+        //this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
               
       }
  /* cargandoSolicitud( c:boolean){
@@ -395,7 +396,9 @@ export class Tab1Page {
         
 
       }   */
-
+      btn_continuar(){
+        this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
+      }
 
       async presentToastCancelar(message: string) {
         const toast = await this.toastCtrl.create(

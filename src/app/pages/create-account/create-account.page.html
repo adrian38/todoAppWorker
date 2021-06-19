@@ -149,6 +149,8 @@
             class="date"
             [ngClass]="((fecha_nac.invalid && fecha_nac.touched) || esMayorEdad===false || fecha_nacimiento ) ? 'green_border':'no_border'"
             displayFormat="DDDD MMM D, YYYY"
+            cancelText="Cancelar"
+            doneText="Cambiar"
             min="1920"
             max="2030"
             placeholder="FECHA DE NACIMIENTO"

@@ -11,9 +11,12 @@ import { PhotoService } from 'src/app/services/photo.service';
 })
 export class CrearPromocionPage implements OnInit {
 
-  titulo = '';
+  titulo:string = "";
+  any_precio:boolean=false;
+  any_tittle:boolean=false;
+  any_comentario:boolean=false;
   precio: number;
-  comentario = '';
+  comentario = "";
   fotos: string [] = [];
 
   foto1:string='../../../assets/icons/fotoadd.png';
@@ -113,6 +116,48 @@ export class CrearPromocionPage implements OnInit {
 
   onclickFoto2( posicion:boolean){
     this.presentAlert( posicion);
+  }
+
+  onAnadir(){
+    this.validar_titulo();
+    this.valida_precio();
+    this.validar_comentario();
+   if(this.any_tittle != true && this.any_precio != true && this.any_comentario != true)
+      this.navCtrl.navigateRoot('/pago-promociones', {animated: true, animationDirection: 'forward' }) ;
+    
+  }
+
+  validar_titulo(){
+    if(this.titulo == ""){
+      this.any_tittle=true;
+      console.log(`s`)
+   }
+   else{
+     console.log(`ss`)
+     this.any_tittle=false;
+    
+   }
+
+  }
+
+  valida_precio(){
+    if(this.precio <= 0 || this.precio == null){
+      this.any_precio=true;
+    }
+    else
+    this.any_precio=false;
+  }
+
+  validar_comentario(){
+    if(this.comentario == ""){
+      this.any_comentario=true;
+      console.log(`s`)
+   }
+   else{
+     console.log(`ss`)
+     this.any_comentario=false;
+    
+   }
   }
 
 }

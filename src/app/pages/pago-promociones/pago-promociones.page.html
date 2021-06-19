@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border">
+
+  <div style="background: var(--ion-color-orange);">
+    <app-tab-header titulo="Perfil"></app-tab-header>
+  </div>
+
+  <div class="flex_row">
+    <div class="page_subheader">
+      <span class="page_subheader_title">Promociones</span>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content>
+
+  <div class="flex_column" style="padding: 20px 10% !important;" >
+    <ion-label  style="margin-top: 40px;">
+      Para publicar la promoción debe realizar antes un pago a la plataforma de ... La promociones tendrá una duración de ...
+    </ion-label>
+    
+    <ion-label class="label2" style="margin-top: 30px;">
+     Ingrese sus datos para efectuar el pago
+    </ion-label>
+
+    <div class="div_1">
+      <ion-input  class="custom_input" 
+                  type="number" 
+                  [(ngModel)]='number_tar'
+                  placeholder="NUMERO DE TARJETA"
+                  style="width: 80% !important;">
+      </ion-input>
+    </div>
+
+<div class=" flex_row ">
+  <div class="div_2">
+    <ion-input  class="custom_input" 
+                type="number" 
+                [(ngModel)]='month'
+                placeholder="M M"
+                style="width: 80% !important;">
+    </ion-input>
+  </div>
+
+  <div class="div_3">
+    <ion-label>/</ion-label>
+  </div>
+
+  <div class="div_1">
+    <ion-input  class="custom_input" 
+                type="number" 
+                [(ngModel)]='year'
+                placeholder="A A"
+                style="width: 23% !important;">
+    </ion-input>
+  </div>
+</div>
+
+<div class="div_1">
+  <ion-input  class="custom_input" 
+              type="number" 
+              [(ngModel)]='cvc'
+              placeholder="CVC"
+              style="width: 40% !important;">
+  </ion-input>
+</div>
+
+<div class="org" >
+  <ion-button class="btn_cancelar" color="orange" (click)="btn_cancelar()">
+    <span style="padding-top: 5px">CANCELAR</span>
+  </ion-button>
+
+  <ion-button class="btn_pagar" color="orange" (click)="btn_pagar()">
+    <span style="padding-top: 5px">PAGAR</span>
+  </ion-button>
+</div>
+    
+  </div>
+</ion-content>

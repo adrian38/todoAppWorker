@@ -13,6 +13,13 @@
     text-transform: uppercase;
 }
 
+
+
+.label2{
+    font: normal 14px "Helvetica-Md", sans-serif !important;
+    width: 100% !important;
+}
+
 .custom_input {
     border          : none;
     background-color: var(--ion-color-gray) !important;
@@ -26,60 +33,49 @@
     //font-family     : 'Helvetica-Roman', sans-serif !important;
     font-size       : 12px !important;
     outline         : none !important;
-    min-width       : 80px;
+    min-width       : 10%;
+   /// min-height      :50 ;
 }
 
 .div_1 {
     width     : 100%;
+   
     margin-top: 25px !important;
     position  : relative;
 }
-
-.comentarios {
-    border          : none;
-    background-color: var(--ion-color-gray) !important;
-    border-radius   : 5px !important;
-    width           : 100% !important;
-    --padding-top   : 8px;
-    --padding-end   : 10px;
-    --padding-bottom: 8px;
-    --padding-start : 10px;
-    text-align      : left;
-   /*  font-family     : 'Helvetica-Roman', sans-serif !important; */
-    font-size       : 13px !important;
-    margin-top      : 0;
+.div_2 {
+    width     : 30%;
+   
+    margin-top: 25px !important;
+    position  : relative;
+}
+.div_3 {
+    width     : 8%;
+   
+    margin-top: 35px !important;
+    position  : relative;
+}
+.org {
+    justify-content:space-around;
+    margin-top:70px;
+    display: flex;
 }
 
-.add_img {
-    width        : 95px !important;
-    height       : 95px !important;
-    min-width    : 95px !important;
-    margin-right : 30px;
-    border-radius: 10px;
-    object-fit: cover;
-}
 
-.btn_anadir {
-    min-width: 150px;
+.btn_cancelar {
+    min-width: 80px;
     height: 30px;
     text-transform: uppercase;
     font: normal 16px 'Helvetica-Roman', sans-serif !important;
     //font: normal 16px "Helvetica-Md", sans-serif;
-  }
-
-  .no_border {
-    border: none !important;
-  }
   
-  .green_border {
-    border       : 1px solid var(--ion-color-greenblue) !important;
-    border-radius: 5px;
   }
 
-  .mandatory {
-    font    : normal 8px 'Helvetica-Roman', sans-serif;
-    color   : rgb(101, 173, 172);
-    display : block;
-    height  : 10px !important;
-    // position: absolute;
+  .btn_pagar {
+    min-width: 70px;
+    height: 30px;
+    text-transform: uppercase;
+    font: normal 16px 'Helvetica-Roman', sans-serif !important;
+    //font: normal 16px "Helvetica-Md", sans-serif;
+  
   }

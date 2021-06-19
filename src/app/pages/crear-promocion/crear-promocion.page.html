@@ -18,30 +18,58 @@
 
     <div class="div_1">
       <ion-input  class="custom_input" 
+                  [ngClass]="((usuario.invalid && usuario.touched) || any_tittle) ? 'green_border':'no_border'"
                   type="text" 
+                  required
                   [(ngModel)]='titulo' 
                   autofocus 
-                  placeholder="TÍTULO">
+                  placeholder="TÍTULO"
+                   #usuario="ngModel">
       </ion-input>
+      <ion-label
+            *ngIf="(usuario.invalid && usuario.touched) || any_tittle"
+            class="mandatory"
+          >
+            Debe escribir un título
+          </ion-label>
     </div>
 
     <div class="div_1">
       <ion-input  class="custom_input" 
+      [ngClass]="((pre.invalid && pre.touched) || any_precio) ? 'green_border':'no_border'"
                   type="number" 
                   [(ngModel)]='precio'
+                  required
                   placeholder="PRECIO"
+                  #pre="ngModel"
                   style="width: 40% !important;">
       </ion-input>
+      <ion-label
+            *ngIf="(pre.invalid && pre.touched) || any_precio"
+            class="mandatory"
+          >
+            Debe escribir un precio
+          </ion-label>
     </div>
 
     <div class="div_1">
       <ion-textarea class="comentarios"
+                    [ngClass]="((coment.invalid && coment.touched) || any_comentario) ? 'green_border':'no_border'"
                     placeholder="Escriba los comentarios..."
                     rows="6"
                     autocapitalize="true"
                     inputmode="text"
+                    [(ngModel)]='comentario'
+                    #coment="ngModel"
+                    required
                     wrap="soft">
       </ion-textarea>
+      <ion-label
+            *ngIf="(coment.invalid && coment.touched) || any_comentario"
+            class="mandatory"
+          >
+            Debe escribir un comentario
+          </ion-label>
     </div>
 
     <div class="flex_row" style="margin-top: 25px;">

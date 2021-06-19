@@ -6,6 +6,7 @@ import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     Tab1PageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    DialogModule
   ],
   declarations: [Tab1Page]
 })

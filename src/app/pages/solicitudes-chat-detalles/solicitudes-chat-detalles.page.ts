@@ -103,6 +103,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
     
   }
+ 
  scrollToBottom(){
 
     if(this.valor_segment === "chat"){

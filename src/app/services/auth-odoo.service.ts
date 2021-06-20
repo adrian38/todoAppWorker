@@ -4,8 +4,8 @@ import { Observable, Subject } from 'rxjs';
 let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
-	//host: '192.168.0.106',
-	host: 'todoenunapp.com',
+	host: '192.168.0.106',
+	//host: 'todoenunapp.com',
 	//host: '192.168.1.2',
    //host: '192.168.1.4',
 	
@@ -41,6 +41,9 @@ export class AuthOdooService {
 	//Login desde la apk de cliente
 
 	loginClientApk(usuario: UsuarioModel): void {
+
+		
+
 		jaysonServer.username = usuario.username;
 		jaysonServer.password = usuario.password;
 
@@ -80,17 +83,17 @@ export class AuthOdooService {
 			) {
 				if (err) {
 				} else {
-					usuario.address = new Address(
-						value[0].address_street,
-						value[0].address_number,
-						value[0].address_portal,
-						value[0].address_stairs,
-						value[0].address_floor,
-						value[0].address_door,
-						value[0].address_zip_code,
-						value[0].address_latitude,
-						value[0].address_longitude
-					);
+					
+					usuario.address.street=value[0].address_street,
+					usuario.address.number=value[0].address_number,
+					usuario.address.portal=value[0].address_portal,
+					usuario.address.stair=value[0].address_stairs,
+					usuario.address.floor=value[0].address_floor,
+					usuario.address.door=value[0].address_door,
+					usuario.address.cp=value[0].address_zip_code,
+					usuario.address.latitude=value[0].address_latitude,
+					usuario.address.longitude=value[0].address_longitude
+					
 
 						userInfo=usuario;
 						user$.next(usuario);

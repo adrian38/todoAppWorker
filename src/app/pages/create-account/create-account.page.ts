@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
@@ -6,9 +6,11 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service'
 import { Photo } from 'src/app/interfaces/interfaces'
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import { Address } from 'src/app/models/usuario.model';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { DropdownModule } from 'primeng/dropdown'
 import { SelectItem } from 'primeng/api';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-account',
@@ -33,24 +35,28 @@ export class CreateAccountPage implements OnInit {
   entJuridicaSelected: string = '';
   isEntTouched: boolean = false;
   
-  nombre = '';
+  confirmPass = '';
+  /* nombre = '';
   date = '';
   user = '';
   password = '';
-  confirmPass = '';
+  
   cifNif = '';
   segSocialNumber = '';
   IAE = ''; 
   DNI = '';
   cuentaBancaria = '';
   phone = '';
+  */
+  
+  
   streetNumber = '';
   number = '';
   floor = '';
   portal = '';
   stair = '';
   door = '';
-  postalCode = '';
+  postalCode = ''; 
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
 
@@ -73,10 +79,16 @@ export class CreateAccountPage implements OnInit {
   //IAE_vacio            :boolean=false; 
   DNI_vacio            :boolean=false;
   cuentaBancaria_vacio :boolean=false;
-  phone_vocio          :boolean=false;
+  phone_vacio          :boolean=false;
   streetNumber_vacio   :boolean=false;
   number_vacio         :boolean=false;
   
+
+  notificationOK$: Observable<boolean>;
+	notificationError$: Observable<boolean>;
+
+	subscriptionError: Subscription;
+	subscriptionOk: Subscription;
 
   constructor(private toastCtrl: ToastController,
               private alertCtrl: AlertController,
@@ -84,11 +96,15 @@ export class CreateAccountPage implements OnInit {
               public navCtrl: NavController,
               private _signupOdoo: SignUpOdooService,
               public photoService: PhotoService,
-              public _authOdoo: AuthOdooService,
               private actionSheetCtrl: ActionSheetController,
               private popoverCtrl: PopoverController,
               public navController:NavController,
-              private platform: Platform) { }
+              private platform: Platform,
+              private ngZone: NgZone,) { 
+
+                this.usuario = new UsuarioModel();
+                this.usuario.address = new Address();
+              }
 
   ngOnInit() {
 
@@ -100,6 +116,20 @@ export class CreateAccountPage implements OnInit {
 
       this.coordenadas=this.datos.getcoordenada();
       console.log("co",this.coordenadas);
+
+				/* 	this.loading.dismiss();
+					this.messageService.add({ severity: 'success', detail: 'Registro completado' }); */
+
+          console.log("Usuario creado exitosamente");
+
+					setTimeout(() => {
+            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+					}, 2000);
+				}
+			});
+		});
+
+      
 
   }
 
@@ -294,7 +324,7 @@ export class CreateAccountPage implements OnInit {
     }
 
 
-    if(this.nombre == ""){
+    if(this.usuario.realname == ""){
       console.log( 'vacio')
       this.nombreVacio=true;
       //  nombre1.touched
@@ -303,7 +333,7 @@ export class CreateAccountPage implements OnInit {
       this.nombreVacio=false;
     }
 
-    if(this.date == ""){
+    if(this.usuario.date == ""){
       console.log( 'vacio fecha de nacimiento')
       this.fecha_nacimiento=true;
      
@@ -312,7 +342,7 @@ export class CreateAccountPage implements OnInit {
       this.fecha_nacimiento=false;
     }
 
-    if(this.user == ""){
+    if(this.usuario.username == ""){
       console.log( 'vacio user')
       this.user_vacio=true;
      
@@ -321,7 +351,7 @@ export class CreateAccountPage implements OnInit {
       this.user_vacio=false;
     }
 
-    if(this.password == ""){
+    if(this.usuario.password == ""){
       console.log( 'vacio user')
       this.password_vacio=true;
      
@@ -339,7 +369,7 @@ export class CreateAccountPage implements OnInit {
       this.confirmPass_vacia=false;
     }
 
-    if(this.cifNif == ""){
+    if(this.usuario.vat == ""){
       console.log( 'vacio cifnif')
       this.cifNif_vacio=true;
      
@@ -348,7 +378,7 @@ export class CreateAccountPage implements OnInit {
       this.cifNif_vacio=false;
     }
 
-    if(this.segSocialNumber == ""){
+    if(this.usuario.social_security == ""){
       console.log( 'vacio seguridad')
       this.segSocialNumber_vacio=true;
      
@@ -357,7 +387,7 @@ export class CreateAccountPage implements OnInit {
       this.segSocialNumber_vacio=false;
     }
 
-    if(this.DNI == ""){
+    if(this.usuario.dni == ""){
       console.log( 'vacio seguridad')
       this.DNI_vacio=true;
     
@@ -368,7 +398,7 @@ export class CreateAccountPage implements OnInit {
 
     
 
-    if(this.cuentaBancaria == ""){
+    if(this.usuario.bank_ids == ""){
       console.log( 'vacio seguridad')
       this.cuentaBancaria_vacio=true;
      
@@ -377,13 +407,13 @@ export class CreateAccountPage implements OnInit {
       this.cuentaBancaria_vacio=false;
     }
 
-    if(this.phone == ""){
+    if(this.usuario.phone == 0){
       console.log( 'vacio seguridad')
-      this.phone_vocio=true;
+      this.phone_vacio=true;
      
     }
     else{
-      this.phone_vocio=false;
+      this.phone_vacio=false;
     }
     
     if(this.streetNumber == ""){
@@ -539,4 +569,21 @@ export class CreateAccountPage implements OnInit {
     });
     actionSheet.present();
   }
+
+  resizedataURL(datas, wantedWidth, wantedHeight, index) {
+		var img = document.createElement('img');
+		img.src = datas;
+		img.onload = () => {
+			let ratio = img.width / img.height;
+			wantedWidth = wantedHeight * ratio;
+			let canvas = document.createElement('canvas');
+			let ctx = canvas.getContext('2d');
+			canvas.width = wantedWidth;
+			canvas.height = wantedHeight;
+			ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
+			let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
+			//this.task.photoNewTaskArray[index] = temp.substring(temp.indexOf(',') + 1);
+			
+		};
+	}
 }

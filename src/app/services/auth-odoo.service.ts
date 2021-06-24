@@ -17,6 +17,7 @@ let jaysonServer = {
 };
 
 
+
 let knownTypes = {
 	'/': 'data:image/jpg;base64,',
 	i: 'data:image/png;base64,'

@@ -36,7 +36,7 @@ export class CreateAccountPage implements OnInit {
   isEntTouched: boolean = false;
   
   confirmPass = '';
-  /* nombre = '';
+   nombre = '';
   date = '';
   user = '';
   password = '';
@@ -47,7 +47,7 @@ export class CreateAccountPage implements OnInit {
   DNI = '';
   cuentaBancaria = '';
   phone = '';
-  */
+  
   
   
   streetNumber = '';
@@ -125,13 +125,16 @@ export class CreateAccountPage implements OnInit {
 					setTimeout(() => {
             this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
 					}, 2000);
-				}
-			});
-		});
-
-      
+				
+			
+		
 
   }
+
+
+
+
+
 
   async presentPopover(evento) {
     const popover = await this.popoverCtrl.create({

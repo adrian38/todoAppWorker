@@ -154,7 +154,7 @@ export class SignUpOdooService {
     };
 
     let path = '/jsonrpc';
-    let client = jayson.http('http://' + host + ':' + port + path);
+    let client = jayson.https('https://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(user_to_create);

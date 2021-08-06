@@ -104,6 +104,14 @@ export class SolicitudesChatDetallesPage implements OnInit {
     
   }
  
+
+  testOnScroll(event: any): void {
+
+    console.log('scroll');
+
+
+  }
+
  scrollToBottom(){
 
     if(this.valor_segment === "chat"){

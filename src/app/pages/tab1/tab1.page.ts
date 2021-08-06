@@ -85,6 +85,7 @@ export class Tab1Page {
   }
 
   init() {
+
     if (!this._taskOdoo.getInitTab()) {
       this._taskOdoo.setInitTab(true);
       this._taskOdoo.requestTaskListProvider();
@@ -96,8 +97,6 @@ export class Tab1Page {
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
       ///////////preguntar si no hay solicitudes cuando se arregle
-      console.log('rnnnn')
-
       if (!this._taskOdoo.getPilaEmpthy()) {
         let temp = this._taskOdoo.getPilaSolicitud();
         let tempChat: number[] = [];

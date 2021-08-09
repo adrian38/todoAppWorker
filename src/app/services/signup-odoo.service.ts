@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuario.model';
 import { Observable, Subject } from 'rxjs';
-let jayson = require('../../../node_modules/jayson/lib/client/');
+const jayson = require('../../../node_modules/jayson/lib/client/');
 
 // let host = '192.168.0.106';
-let host = 'todoenunapp.com';
-let port = 8069;
-let db = 'demo';
-let user = 'root';
-let pass = 'root';
+const host = 'todoenunapp.com';
+const port = 8069;
+const db = 'demo';
+const user = 'root';
+const pass = 'root';
 
-let notificationError$ = new Subject<boolean>();
+const notificationError$ = new Subject<boolean>();
 
-let notificationOK$ = new Subject<boolean>();
+const notificationOK$ = new Subject<boolean>();
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +49,7 @@ export class SignUpOdooService {
       /* groups_id son los mismos para custumer y vendor para admin son: [2,21,36,22,26,7,1,11,17,34,3,23,6,35,20,19]*/
     };
 
-    let set_partner_update = function () {
+    const set_partner_update =  () => {
       console.log(usuario.partner_id);
 
       partner_update = {
@@ -65,13 +65,13 @@ export class SignUpOdooService {
         address_longitude: usuario.address.longitude,
         phone: usuario.phone,
         vat: usuario.vat, //NIF
-        //'comment':'',//description
-        //'function':'',//job title
-        //'mobile':'968 88 88 88',
-        is_company: usuario.is_company, //individual person or company
-        //'vat_cif':'', //CIF number
-        social_security: usuario.social_security, //Social security number
-        //'iae_code' :'', //I.A.E code
+        // 'comment':'',//description
+        // 'function':'',//job title
+        // 'mobile':'968 88 88 88',
+        is_company: usuario.is_company, // individual person or company
+        // 'vat_cif':'', //CIF number
+        social_security: usuario.social_security, // Social security number
+        // 'iae_code' :'', //I.A.E code
         dni: usuario.dni, //DNI number
         bank_ids: [[0, 0, { acc_number: usuario.bank_ids }]], //bank account with iban format
 
@@ -154,7 +154,7 @@ export class SignUpOdooService {
     };
 
     let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(user_to_create);

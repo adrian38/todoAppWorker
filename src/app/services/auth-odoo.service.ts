@@ -5,12 +5,13 @@ let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
 	//host: '192.168.0.106',
-	//host: '192.168.0.107',
-	host: 'odoo.todoenunapp.com',
+	host: '192.168.0.107',
+	//host: 'odoo.todoenunapp.com',
 	//host: '192.168.1.2',
    //host: '192.168.1.4',
 	
-	port: '443',
+	//port: '443',
+	port: '8069',
 	db: 'demo',
 	username: '',
 	password: '',
@@ -152,7 +153,7 @@ export class AuthOdooService {
 				}
 			});
 		};
-		let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
 		client.request(
 			'call',
 			{
@@ -166,7 +167,7 @@ export class AuthOdooService {
 					usuario.connected = false;
 					user$.next(usuario);
 				} else {
-					
+					console.log(client);
 					get_user(value);
 				}
 			}

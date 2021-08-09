@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
+
 import { LOCALE_ID } from '@angular/core';
 
 import localeEsAr from '@angular/common/locales/es-AR';
@@ -34,8 +35,10 @@ import { AgmCoreModule } from '@agm/core';
 /////////////////////////////////////////
 
 ////////prime
-import {ToastModule} from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+ import {ToastModule} from 'primeng/toast';
+ import { MessageService } from 'primeng/api';
+// import { DropdownModule } from 'primeng/dropdown';
+//import { ButtonModule } from 'primeng/button';
 /////////////////////////////////////////////
 
 
@@ -44,7 +47,6 @@ import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-import { DropdownModule } from 'primeng/dropdown';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
@@ -58,21 +60,24 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     AppRoutingModule,
     ToastModule,
     CommonModule,
-    DropdownModule,
+   // DropdownModule,
+  
+   //ButtonModule,
     
     AgmCoreModule.forRoot({
         apiKey: 'AIzaSyBXq33cjYMCezL6xP-vo3m-qWQ5U9gRTfQ'
     }) 
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },AuthOdooService,
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthOdooService,
     AuthGuardService,
     TaskOdooService,
     ObtSubSService,
     SignUpOdooService,
     LocationService,
     DatePipe,
-    MessageService,
     InAppBrowser,
+    MessageService,
   
   {
     provide: 

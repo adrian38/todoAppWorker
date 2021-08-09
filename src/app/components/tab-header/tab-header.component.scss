@@ -6,6 +6,53 @@
     z-index: 10000;
 }
 
+:host ::ng-deep .p-dropdown {
+
+
+    margin-top: 5px;
+    background-color: var(--ion-color-);
+    background-image: url(../../../assets/icons/orga.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 20px;
+    height: 25px;
+    border: 0;
+
+    .p-dropdown-panel {
+
+        margin-top: 50%;
+        margin-left: -100%;
+
+        
+    }
+    .p-dropdown-trigger{
+        //background-image: url(../../../assets/icons/orga.svg);
+        
+            display: none;
+            
+    }
+   
+    .p-dropdown-label.p-inputtext
+     {
+        display: none
+    }
+    
+}
+:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+    
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+:host ::ng-deep .p-dropdown:focus {
+    
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+
+
 .page_header {
     height: 60px;
     width: 100%;

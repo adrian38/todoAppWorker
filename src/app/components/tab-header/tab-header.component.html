@@ -8,19 +8,22 @@
     </div>
 
     <div  *ngIf="organizar" class="flex_centered" style="min-width: 35px">
-      <ion-button icon-only fill="clear" (click)="on_Click()">
+     <!--  <ion-button icon-only fill="clear" (click)="on_Click()">
         <ion-img class="notificaciones" src="/assets/icons/orga.svg"></ion-img>
-      </ion-button>
+      </ion-button> -->
       
+   <p-dropdown   [options]="cities" optionLabel="name">   </p-dropdown>
+ 
+
     </div>
-    <div class="flex_centered" style="min-width: 29px">
+     <div class="flex_centered" style="min-width: 29px">
       <ion-button icon-only fill="clear" (click)="OnClickNotificaciones()">
         <ion-img
           class="notificaciones_campana"
           src="/assets/icons/campana.svg"
         ></ion-img>
       </ion-button>
-    </div>
+    </div> 
     <div  style="min-width: 10px;" *ngIf="notification ">
       <ion-img class="notificaciones_punto" src="/assets/icons/punto_noti.svg"></ion-img>
     </div>

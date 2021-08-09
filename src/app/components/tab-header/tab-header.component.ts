@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, NavController  } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
+import { City } from 'src/app/Interfaces/interfaces';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 
@@ -15,6 +16,10 @@ export class TabHeaderComponent implements OnInit {
   @Input() backgroundColor: string = '';
   @Input() organizar: boolean=false;
 
+
+  cities: City[];
+
+  
   notification: boolean = false;
   notification$: Observable<boolean>;
   subscriptionNotification:Subscription;
@@ -28,6 +33,13 @@ export class TabHeaderComponent implements OnInit {
               private ngZone: NgZone,
               private subServ: ObtSubSService,
               public actionSheetCtrl: ActionSheetController) {
+
+
+                this.cities = [
+                  {name: 'Fecha'},
+                  {name: 'Cercania'},
+                  
+              ];
 
               }
 

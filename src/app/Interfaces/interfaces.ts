@@ -29,3 +29,8 @@ export interface Photo {
     webviewPath: string;
 } 
 
+export interface City {
+    name: string,
+    //code: string
+}
+

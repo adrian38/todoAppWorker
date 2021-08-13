@@ -36,90 +36,40 @@
       </div>
 
       <form #formulario="ngForm">
-        <ion-item
-          class="select"
-          lines="none"
-          [ngClass]="(categoriaSelected == '' && isCatTouched === true) ? 'green_border':'no_border'"
-        >
-          <div class="flex_row" style="justify-content: space-between">
-            <ion-label
-              class="flex_row"
-              (click)="clickCategoria()"
-              style="
-                margin-top: 0 !important;
-                margin-bottom: 0 !important ;
-                min-width: 155px !important;
-              "
-              >Categoría de trabajador</ion-label
-            >
+        <p-dropdown
+          (onClick)="emitOficio()"
+          [(ngModel)]="selectedOficio"
+          [ngClass]="((isCatTouched) || nombreVacio) ? 'green_test':'no_border_test'"
 
-            <div class="flex_row" style="justify-content: flex-end">
-              <ion-label
-                style="margin-top: 0 !important; margin-bottom: 0 !important"
-                (click)="clickCategoria()"
-                >{{categoria}}</ion-label
-              >
-              <ion-icon
-                style="
-                  width: 11px;
-                  height: 11px;
-                  margin-top: 3px !important;
-                  margin-left: 4px;
-                "
-                name="caret-down-outline"
-                (click)="clickCategoria()"
-              ></ion-icon>
-            </div>
-          </div>
-        </ion-item>
+          name="something"
+          [options]="oficio"
+          placeholder="SELECCIONE SU OFICIO"
+          optionLabel="name"
+        ></p-dropdown>
+
         <ion-label
-          *ngIf="categoriaSelected == '' && isCatTouched === true"
+          *ngIf=" isCatTouched "
           class="mandatory"
         >
           Campo obligatorio
         </ion-label>
 
         <div class="div_1">
-          <ion-item
-            class="select"
-            lines="none"
-            [ngClass]="(entJuridicaSelected == '' && isEntTouched === true) ? 'green_border':'no_border'"
-          >
-            <div class="flex_row" style="justify-content: space-between">
-              <ion-label
-                class="flex_row"
-                style="margin-top: 0 !important; margin-bottom: 0 !important"
-                (click)="clickEntidad()"
-                >Entidad jurídica</ion-label
-              >
+          <p-dropdown
+          (onClick)="emitEmpresa()"
+            [options]="empresa"
+            [ngClass]="((isEntTouched) || nombreVacio) ? 'green_test':'no_border_test'"
+            [(ngModel)]="selectedEmpresa"
+            name="something1"
+            placeholder="TIPO DE CUENTA"
+            optionLabel="name"
+          ></p-dropdown>
 
-              <div
-                class="flex_row"
-                style="justify-content: flex-end; min-width: 130px"
-              >
-                <ion-label
-                  style="margin-top: 0 !important; margin-bottom: 0 !important"
-                  (click)="clickEntidad()"
-                  >{{entidad}}</ion-label
-                >
-                <ion-icon
-                  style="
-                    width: 11px;
-                    height: 11px;
-                    margin-top: 3px !important;
-                    margin-left: 4px;
-                  "
-                  name="caret-down-outline"
-                  (click)="clickEntidad()"
-                ></ion-icon>
-              </div>
-            </div>
-          </ion-item>
           <ion-label
-            *ngIf="entJuridicaSelected == '' && isEntTouched === true"
+            *ngIf="isEntTouched"
             class="mandatory"
           >
-            Campo obligatorio
+             Campo obligatorio
           </ion-label>
         </div>
 
@@ -264,8 +214,8 @@
             type="text"
             [(ngModel)]="usuario.social_security"
             name="segSocialNumber"
-            minlength=12
-            maxlength=12
+            minlength="12"
+            maxlength="12"
             required
             placeholder="NÚMERO DE SEGURIDAD SOCIAL"
             #segSocial="ngModel"
@@ -308,8 +258,8 @@
             [(ngModel)]="usuario.bank_ids"
             name="cuentaBancaria"
             placeholder="CUENTA BANCARIA"
-            minlength=24
-            maxlength=24
+            minlength="24"
+            maxlength="24"
             required
             #cBancaria="ngModel"
           >
@@ -331,8 +281,8 @@
             name="phone"
             placeholder="TELÉFONO"
             required
-            minlength=6
-            maxlength=9
+            minlength="6"
+            maxlength="9"
             #telefono="ngModel"
           >
           </ion-input>
@@ -468,17 +418,7 @@
                 flex-direction: row;
                 justify-content: flex-end;
               "
-            >
-              <!-- <ion-label class="iae_label">IAE</ion-label>
-              <ion-button
-                class="iae_btn"
-                slot="icon-only"
-                color="orange"
-                (click)="presentPopover( $event )"
-              >
-                <ion-icon name="attach" style="color: white"></ion-icon>
-              </ion-button> -->
-            </div>
+            ></div>
           </div>
         </div>
 
@@ -487,7 +427,7 @@
             type="submit"
             class="next_btn"
             color="orange"
-            (click)="onNextClick( $event )"
+            (click)="onNextClick()"
           >
             <span style="padding-top: 5px">CREAR</span>
           </ion-button>

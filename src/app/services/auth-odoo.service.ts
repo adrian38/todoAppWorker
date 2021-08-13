@@ -161,7 +161,7 @@ export class AuthOdooService {
 				method: 'login',
 				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
 			},
-			function(err, error, value) {
+			(err, error, value)=> {
 				if (err || !value) {
 					console.log(err,'Login Failed');
 					usuario.connected = false;

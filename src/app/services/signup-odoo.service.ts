@@ -4,8 +4,9 @@ import { Observable, Subject } from 'rxjs';
 const jayson = require('../../../node_modules/jayson/lib/client/');
 
 // let host = '192.168.0.106';
-const host = 'todoenunapp.com';
-const port = 8069;
+const host = 'odoo.todoenunapp.com';
+//const port = 8069;
+const port = 443;
 const db = 'demo';
 const user = 'root';
 const pass = 'root';
@@ -37,6 +38,11 @@ export class SignUpOdooService {
 
     let user_to_create;
     let partner_update;
+    let id_job;
+
+    if (usuario.type === "fontanero"){
+      id_job = 39
+    }
 
     user_to_create = {
       name: usuario.realname,
@@ -49,8 +55,10 @@ export class SignUpOdooService {
       /* groups_id son los mismos para custumer y vendor para admin son: [2,21,36,22,26,7,1,11,17,34,3,23,6,35,20,19]*/
     };
 
-    const set_partner_update =  () => {
-      console.log(usuario.partner_id);
+    console.log(user_to_create);
+
+     let set_partner_update = function (partner_id) {
+      //console.log(usuario.partner_id);
 
       partner_update = {
         date: usuario.date, //birthdate
@@ -65,13 +73,13 @@ export class SignUpOdooService {
         address_longitude: usuario.address.longitude,
         phone: usuario.phone,
         vat: usuario.vat, //NIF
-        // 'comment':'',//description
-        // 'function':'',//job title
-        // 'mobile':'968 88 88 88',
-        is_company: usuario.is_company, // individual person or company
-        // 'vat_cif':'', //CIF number
-        social_security: usuario.social_security, // Social security number
-        // 'iae_code' :'', //I.A.E code
+        //'comment':'',//description
+        //'function':'',//job title
+        //'mobile':'968 88 88 88',
+        is_company: usuario.is_company, //individual person or company
+        //'vat_cif':'', //CIF number
+        social_security: usuario.social_security, //Social security number
+        //'iae_code' :'', //I.A.E code
         dni: usuario.dni, //DNI number
         bank_ids: [[0, 0, { acc_number: usuario.bank_ids }]], //bank account with iban format
 
@@ -82,14 +90,14 @@ export class SignUpOdooService {
             0,
             {
               name: usuario.partner_id,
-              product_tmpl_id: 39, //template_id optenido del servicio del que va a ser supplier
+              product_tmpl_id: id_job, //template_id optenido del servicio del que va a ser supplier
             },
           ],
         ],
       };
 
       let inParams = [];
-      inParams.push([usuario.partner_id]); //id to update
+      inParams.push([partner_id]); //id to update
       inParams.push(partner_update);
       let params = [];
       params.push(inParams);
@@ -120,41 +128,10 @@ export class SignUpOdooService {
       );
     };
 
-    let get_user = function (id: number) {
-      let inParams = [];
-      inParams.push([['id', '=', id]]);
-      inParams.push(['partner_id']);
-      let params = [];
-      params.push(inParams);
-
-      let fparams = [];
-      fparams.push(db);
-      fparams.push(id);
-      fparams.push(usuario.password);
-      fparams.push('res.users'); //model
-      fparams.push('search_read'); //method
-
-      for (let i = 0; i < params.length; i++) {
-        fparams.push(params[i]);
-      }
-
-      client.request(
-        'call',
-        { service: 'object', method: 'execute_kw', args: fparams },
-        function (err, error, value) {
-          if (err || !value) {
-            console.log(err, 'Error get_user');
-            notificationError$.next(true);
-          } else {
-            usuario.partner_id = value[0].partner_id[0];
-            set_partner_update();
-          }
-        }
-      );
-    };
+    
 
     let path = '/jsonrpc';
-    let client = jayson.http('http://' + host + ':' + port + path);
+    let client = jayson.https('https://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(user_to_create);
@@ -181,7 +158,7 @@ export class SignUpOdooService {
           notificationError$.next(true);
         } else {
           console.log(value, 'Exito creando el usuario');
-          get_user(value);
+          set_partner_update(value);
         }
       }
     );

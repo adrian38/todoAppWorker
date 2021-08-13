@@ -30,7 +30,7 @@ export class UsuarioModel {
   partner_id: number
   type: string;
   connected: boolean;
-  phone: number;
+  phone: string;
   id: number;
   realname: string;
   address: Address;
@@ -57,7 +57,7 @@ export class UsuarioModel {
     this.partner_id = 0;
     this.type = "";
     this.connected = false;
-    this.phone = 0;
+    this.phone = "";
     this.id = 0;
     this.realname = "";
     this.date = "";

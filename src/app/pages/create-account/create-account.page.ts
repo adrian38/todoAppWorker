@@ -3,13 +3,9 @@ import { ActionSheetController, AlertController, NavController, PopoverControlle
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
-import { AuthOdooService } from 'src/app/services/auth-odoo.service'
-import { Photo } from 'src/app/interfaces/interfaces'
+import { City, Photo } from 'src/app/interfaces/interfaces'
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { Address } from 'src/app/models/usuario.model';
-import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
-import { DropdownModule } from 'primeng/dropdown'
-import { SelectItem } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -25,18 +21,15 @@ export class CreateAccountPage implements OnInit {
   };
 
   usuario:UsuarioModel;
-  categoria:string="";
-  categorias: string [] = ['Electricista', 'Fontanero'];
-  categoriaSelected: string = '';
+  ;
+  
   isCatTouched: boolean = false;
 
-  entidad:string="";
-  entJuridica: string [] = ['Empresa', 'Autónomo'];
-  entJuridicaSelected: string = '';
+  
   isEntTouched: boolean = false;
   
   confirmPass = '';
-   nombre = '';
+  nombre = '';
   date = '';
   user = '';
   password = '';
@@ -64,6 +57,8 @@ export class CreateAccountPage implements OnInit {
  punto_gris = '../../assets/icons/punto_gris.svg';
 
 
+ 
+
   selectFoto = true;
   coordenadas :boolean;
   coordenadas_puesta :boolean=true;
@@ -82,6 +77,16 @@ export class CreateAccountPage implements OnInit {
   phone_vacio          :boolean=false;
   streetNumber_vacio   :boolean=false;
   number_vacio         :boolean=false;
+
+
+
+  oficio: City[];
+  empresa: City[];
+
+  selectedOficio:City;
+  selectedEmpresa:City;
+
+
   
 
   notificationOK$: Observable<boolean>;
@@ -97,13 +102,27 @@ export class CreateAccountPage implements OnInit {
               private _signupOdoo: SignUpOdooService,
               public photoService: PhotoService,
               private actionSheetCtrl: ActionSheetController,
-              private popoverCtrl: PopoverController,
               public navController:NavController,
               private platform: Platform,
               private ngZone: NgZone,) { 
 
                 this.usuario = new UsuarioModel();
                 this.usuario.address = new Address();
+
+
+
+                this.oficio = [
+                  {name: 'Fontanero'},
+                  {name: 'Electricista'},
+                  
+              ];
+
+              this.empresa = [
+                {name: 'Autónomo'},
+                {name: 'Empresarial'},
+                
+            ];
+
               }
 
   ngOnInit() {
@@ -117,50 +136,58 @@ export class CreateAccountPage implements OnInit {
       this.coordenadas=this.datos.getcoordenada();
       console.log("co",this.coordenadas);
 
-				/* 	this.loading.dismiss();
-					this.messageService.add({ severity: 'success', detail: 'Registro completado' }); */
-
-          console.log("Usuario creado exitosamente");
-
-					setTimeout(() => {
-            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-					}, 2000);
-				
-			
+      this.notificationError$ = this._signupOdoo.getNotificationError$();
+      this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
+        this.ngZone.run(() => {
+          if (notificationError) {
+        
+            console.log("error creando usuario")
+            //error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
+          }
+        });
+      });
+      this.notificationOK$ = this._signupOdoo.getNotificationOK$();
+      this.subscriptionOk = this.notificationOK$.subscribe((notificationOK) => {
+        this.ngZone.run(() => {
+          if (notificationOK) {
+            //quitar cargado e ir a la pagina de logguearse
+            console.log("exito creando usuario")
+  
+          
+          }
+        });
+      });
 		
 
   }
 
+  ngOnDestroy(): void {
+		//Called once, before the instance is destroyed.
+		//Add 'implements OnDestroy' to the class.
+		this.subscriptionOk.unsubscribe();
+		this.subscriptionError.unsubscribe();
+	}
 
+  emitOficio(){
 
+    if(!this.selectedOficio){
+      this.isCatTouched = true
+    }else
+    this.isCatTouched = false;
+    console.log("oficio" ,this.selectedOficio)
 
-
-
-  async presentPopover(evento) {
-    const popover = await this.popoverCtrl.create({
-      component: PopoverIaeComponent,
-      cssClass: 'iaePop',
-      event: evento,
-      mode: 'ios', 
-      translucent: true,
-      animated: true
-    });
-  
-    await popover.present();
-
-    const { data } = await popover.onWillDismiss();
-
-    console.log("Item: ", data);
-    // this.subir();
   }
-/* 
-  subir(){
-   console.log('estoy en la funcion subir')
-    
+
+  emitEmpresa(){
+
+    if(!this.selectedEmpresa){
+      this.isEntTouched = true
+    }else
+    this.isEntTouched = false
+    console.log("empresa" ,this.selectedEmpresa)
+
+  }
   
-  
-  
-  } */
 
   async presentAlert() {
     const alert = await this.alertCtrl.create({
@@ -256,23 +283,7 @@ export class CreateAccountPage implements OnInit {
   }
 
  
-
-  entrar_campos(){
-    // this.datos.setnombre(this.nombre);
-    // /* console.log("registronombre",this.nombre); */
-    //   this.datos.setcorreo(this.user);
-    //  this.datos.setcontraseña(this.password);
- 
-     
-    //  this.datos.setcalle(this.streetNumber);
-    //  this.datos.setpiso(this.floor);
-    //  this.datos.setnumero(this.number);
-    //  this.datos.setpuerta(this.door);
-    //  this.datos.setportal(this.portal);
-    //  this.datos.setescalera(this.stair);
-    //  this.datos.setcod_postal(this.postalCode); 
-    //  this.datos.setfoto0(this.avatarUsuario64);
-  }
+  
 
   onPictureClick(event) {
     this.selectFoto = true;
@@ -285,19 +296,15 @@ export class CreateAccountPage implements OnInit {
     this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
   }
 
-  onNextClick(event) {
+  onNextClick() {
     console.log('Siguiente clicked');
     this.validarCamposVacio();
-     //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
-      this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    
-    }
+     
   }
 
   validarCamposVacio(){
 
-    if(this.avatarUsuario == '../../assets/icons/registro.svg'){
+   /*  if(this.avatarUsuario == '../../assets/icons/registro.svg'){
       console.log( 'vacio foto')
       this.selectFoto=false;
       
@@ -306,7 +313,7 @@ export class CreateAccountPage implements OnInit {
       this.selectFoto=true;
     }
 
-    if(this.categoria == ""){
+    if(!this.selectedOficio){
       console.log( 'vacio foto')
       
       this.isCatTouched=true;
@@ -316,7 +323,7 @@ export class CreateAccountPage implements OnInit {
       this.isCatTouched=false;
     }
 
-    if(this.entidad == ""){
+    if(!this.selectedEmpresa){
       console.log( 'vacio foto')
       
       this.isEntTouched=true;
@@ -440,8 +447,49 @@ export class CreateAccountPage implements OnInit {
       this.coordenadas_puesta=true;
     }
     else
-    this.coordenadas_puesta=false;
+    this.coordenadas_puesta=false; */
 
+
+    /////*****Si todo esta bien */
+
+
+    
+    let testUser = new UsuarioModel();
+    testUser.address = new Address();
+
+    testUser.type = "fontanero";
+    testUser.is_company = true;
+
+    testUser.avatar = "";
+
+    testUser.realname = "Adrian Nieves";
+    testUser.username = "sintecho5@example.com"
+    testUser.dni = "30065089H";
+    testUser.password = "epicentro";
+    testUser.date = "1992-08-10";
+    testUser.phone = "968 88 88 88";
+    testUser.bank_ids = "ES2000817353989593312425";
+    testUser.social_security = "";
+    testUser.vat="";
+
+    
+
+    testUser.address.street = '36',
+    testUser.address.number = '7814',
+    testUser.address.latitude = "40,47558";
+    testUser.address.longitude = "-3,68992";
+
+    this._signupOdoo.newUser(testUser);
+    
+    console.log("User info", testUser);
+
+    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
+    //   entrar_campos
+    
+    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    
+    // }
 
   }
 
@@ -476,102 +524,9 @@ export class CreateAccountPage implements OnInit {
     }
   }
 
-  onCatFocusChange() {
-    this.isCatTouched = true;
-    console.log("El valor es ", this.categoriaSelected);
-  }
+ 
 
-  onEntFocusChange() {
-    this.isEntTouched = true;
-    console.log("El valor es ", this.entJuridicaSelected);
-  }
-
-  clickCategoria(){
-    console.log('sjjss')
-    this.presentActionSheet();
-  }
-
-
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header:'Su categoria es:',
-     
-      mode:'ios',
-      translucent: true,
-      buttons: [
-        {
-          text: 'Electricista',
-          cssClass: 'orange',
-          
-          handler: () => {
-            console.log('Destructive clicked');
-            this.categoria=this.categorias[0];
-            this.isCatTouched=false;
-          }
-        },{
-          text: 'Fontanero',
-          cssClass: 'orange',
-          handler: () => {
-            console.log('Archive clicked');
-            this.categoria=this.categorias[1];
-            this.isCatTouched=false;
-          }
-        },{
-          text: 'Cancel',
-          cssClass: 'greenblue',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-            this.categoria="";
-            this.isCatTouched=true;
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
-
-  clickEntidad(){
-   this.presentActionSheetEntidad()
-  }
-
-  async presentActionSheetEntidad() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header:'Tipo de entidad',
-      mode:'ios',
-      translucent: true,
-      buttons: [
-        {
-          text: 'Empresa',
-          cssClass: 'orange',
-          
-          handler: () => {
-            console.log('Destructive clicked');
-            this.entidad=this.entJuridica[0];
-            this.isEntTouched=false;
-          }
-        },{
-          text: 'Autónomo',
-          cssClass: 'orange',
-          handler: () => {
-            console.log('Archive clicked');
-            this.entidad=this.entJuridica[1];
-            this.isEntTouched=false;
-          }
-        },{
-          text: 'Cancel',
-          cssClass: 'greenblue',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-            this.isEntTouched=true;
-            this.entidad="";
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
+ 
 
   resizedataURL(datas, wantedWidth, wantedHeight, index) {
 		var img = document.createElement('img');

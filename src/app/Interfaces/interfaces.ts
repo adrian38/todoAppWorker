@@ -34,3 +34,10 @@ export interface City {
     //code: string
 }
 
+export interface Empresa {
+    name: string,
+    //code: string
+}
+
+
+

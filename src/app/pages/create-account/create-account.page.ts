@@ -152,6 +152,8 @@ export class CreateAccountPage implements OnInit {
           if (notificationOK) {
             //quitar cargado e ir a la pagina de logguearse
             console.log("exito creando usuario")
+            let test = this._signupOdoo.getUserInfo();
+            console.log("usuario creado", test);
   
           
           }
@@ -463,7 +465,7 @@ export class CreateAccountPage implements OnInit {
     testUser.avatar = "";
 
     testUser.realname = "Adrian Nieves";
-    testUser.username = "sintecho5@example.com"
+    testUser.username = "sintecho10@example.com"
     testUser.dni = "30065089H";
     testUser.password = "epicentro";
     testUser.date = "1992-08-10";
@@ -480,8 +482,10 @@ export class CreateAccountPage implements OnInit {
     testUser.address.longitude = "-3,68992";
 
     this._signupOdoo.newUser(testUser);
+
     
-    console.log("User info", testUser);
+    
+    
 
     //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   

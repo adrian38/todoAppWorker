@@ -15,6 +15,8 @@ const notificationError$ = new Subject<boolean>();
 
 const notificationOK$ = new Subject<boolean>();
 
+let newUser:UsuarioModel = new UsuarioModel;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -35,6 +37,10 @@ export class SignUpOdooService {
 
   newUser(usuario: UsuarioModel) {
     console.log(usuario, 'sigupClient');
+
+
+    newUser.username = usuario.username;
+    newUser.password = usuario.password;
 
     let user_to_create;
     let partner_update;
@@ -57,8 +63,11 @@ export class SignUpOdooService {
 
     console.log(user_to_create);
 
-     let set_partner_update = function (partner_id) {
+     let set_partner_update =  (partner_id) => {
       //console.log(usuario.partner_id);
+      newUser.partner_id = partner_id;
+
+      console.log(newUser,"variable de salida");
 
       partner_update = {
         date: usuario.date, //birthdate
@@ -89,7 +98,7 @@ export class SignUpOdooService {
             0,
             0,
             {
-              name: usuario.partner_id,
+              name: partner_id,
               product_tmpl_id: id_job, //template_id optenido del servicio del que va a ser supplier
             },
           ],
@@ -163,4 +172,10 @@ export class SignUpOdooService {
       }
     );
   }
+
+
+  getUserInfo (){
+    return newUser;
+  }
+
 }

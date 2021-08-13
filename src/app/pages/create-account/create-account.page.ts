@@ -38,6 +38,7 @@ export class CreateAccountPage implements OnInit {
   segSocialNumber = '';
   IAE = ''; 
   DNI = '';
+  dni_correcto:string = '';
   cuentaBancaria = '';
   phone = '';
   
@@ -176,7 +177,7 @@ export class CreateAccountPage implements OnInit {
       this.isCatTouched = true
     }else
     this.isCatTouched = false;
-    console.log("oficio" ,this.selectedOficio)
+    console.log("oficio" ,this.selectedOficio.name)
 
   }
 
@@ -306,70 +307,76 @@ export class CreateAccountPage implements OnInit {
 
   validarCamposVacio(){
 
-   /*  if(this.avatarUsuario == '../../assets/icons/registro.svg'){
-      console.log( 'vacio foto')
-      this.selectFoto=false;
+    //  if(this.avatarUsuario == '../../assets/icons/registro.svg'){
+    //   console.log( 'vacio foto')
+    //   this.selectFoto=false;
       
-    }
-    else{
-      this.selectFoto=true;
-    }
+    // }
+    // else{
+    //   this.selectFoto=true;
+    // }
 
     if(!this.selectedOficio){
-      console.log( 'vacio foto')
+      console.log( 'no oficio seleccionado')
       
       this.isCatTouched=true;
       
     }
     else{
       this.isCatTouched=false;
+      console.log( ' oficio seleccionado')
     }
 
     if(!this.selectedEmpresa){
-      console.log( 'vacio foto')
+      console.log( 'no empresa')
       
       this.isEntTouched=true;
       
     }
     else{
       this.isEntTouched=false;
+      console.log( 'si empresa')
     }
 
 
-    if(this.usuario.realname == ""){
-      console.log( 'vacio')
+    if(this.nombre == ""){
+      console.log( 'vacio',this.nombre)
       this.nombreVacio=true;
-      //  nombre1.touched
+   
     }
     else{
       this.nombreVacio=false;
+      console.log( 'lleno',this.nombre)
     }
 
-    if(this.usuario.date == ""){
+    if(this.date == ""){
       console.log( 'vacio fecha de nacimiento')
       this.fecha_nacimiento=true;
      
     }
     else{
       this.fecha_nacimiento=false;
+      console.log( ' fecha de nacimiento',this.date.slice(0,10))
     }
 
-    if(this.usuario.username == ""){
+    if(this.user == ""){
       console.log( 'vacio user')
       this.user_vacio=true;
      
     }
     else{
       this.user_vacio=false;
+      console.log( 'user',this.user)
     }
 
-    if(this.usuario.password == ""){
+    if(this.password == ""){
       console.log( 'vacio user')
       this.password_vacio=true;
      
     }
     else{
       this.password_vacio=false;
+      console.log( 'vacio user',this.password)
     }
 
     if(this.confirmPass == ""){
@@ -381,16 +388,16 @@ export class CreateAccountPage implements OnInit {
       this.confirmPass_vacia=false;
     }
 
-    if(this.usuario.vat == ""){
-      console.log( 'vacio cifnif')
-      this.cifNif_vacio=true;
+    // if(this.usuario.vat == ""){
+    //   console.log( 'vacio cifnif')
+    //   this.cifNif_vacio=true;
      
-    }
-    else{
-      this.cifNif_vacio=false;
-    }
+    // }
+    // else{
+    //   this.cifNif_vacio=false;
+    // }
 
-    if(this.usuario.social_security == ""){
+    if(this.segSocialNumber == ""){
       console.log( 'vacio seguridad')
       this.segSocialNumber_vacio=true;
      
@@ -399,7 +406,7 @@ export class CreateAccountPage implements OnInit {
       this.segSocialNumber_vacio=false;
     }
 
-    if(this.usuario.dni == ""){
+    if(this.dni_correcto == ""){
       console.log( 'vacio seguridad')
       this.DNI_vacio=true;
     
@@ -410,7 +417,7 @@ export class CreateAccountPage implements OnInit {
 
     
 
-    if(this.usuario.bank_ids == ""){
+    if(this.cuentaBancaria == ""){
       console.log( 'vacio seguridad')
       this.cuentaBancaria_vacio=true;
      
@@ -419,13 +426,15 @@ export class CreateAccountPage implements OnInit {
       this.cuentaBancaria_vacio=false;
     }
 
-    if(this.usuario.phone == 0){
+    if(this.phone == ""){
       console.log( 'vacio seguridad')
       this.phone_vacio=true;
-     
+      
     }
     else{
       this.phone_vacio=false;
+      console.log( 'tele',this.phone)
+
     }
     
     if(this.streetNumber == ""){
@@ -437,51 +446,52 @@ export class CreateAccountPage implements OnInit {
       this.streetNumber_vacio=false;
     }
 
-    if(this.number == ""){
-      console.log( 'vacio seguridad')
-      this.number_vacio=true;
+    // if(this.number == ""){
+    //   console.log( 'vacio seguridad')
+    //   this.number_vacio=true;
      
-    }
-    else{
-      this.number_vacio=false;
-    }
-    if(this.coordenadas==true){
-      this.coordenadas_puesta=true;
-    }
-    else
-    this.coordenadas_puesta=false; */
+    // }
+    // else{
+    //   this.number_vacio=false;
+    // }
+    // if(this.coordenadas==true){
+    //   this.coordenadas_puesta=true;
+    // }
+    // else
+    // this.coordenadas_puesta=false; 
 
 
     /////*****Si todo esta bien */
 
+     this.validar_DNI(this.DNI);
+    
+      let testUser = new UsuarioModel();
+      testUser.address = new Address();
+
+    // testUser.type = this.selectedOficio.name;
+     //testUser.is_company = this.isEntTouched;
+     //testUser.realname = this.nombre;
+     //testUser.date = this.date.slice(0,10);
+     ///testUser.username = this.user;
+     //testUser.password = this.password;
+     // testUser.dni = this.dni_correcto;
+     //testUser.phone = this.phone;
+     //testUser.social_security = this.segSocialNumber;
+
+     
+    // testUser.avatar = "";
+
+    // testUser.bank_ids = "ES2000817353989593312425";
+    // testUser.vat="";
 
     
-    let testUser = new UsuarioModel();
-    testUser.address = new Address();
 
-    testUser.type = "fontanero";
-    testUser.is_company = true;
+    // testUser.address.street = '36',
+    // testUser.address.number = '7814',
+    // testUser.address.latitude = "40,47558";
+    // testUser.address.longitude = "-3,68992";
 
-    testUser.avatar = "";
-
-    testUser.realname = "Adrian Nieves";
-    testUser.username = "sintecho10@example.com"
-    testUser.dni = "30065089H";
-    testUser.password = "epicentro";
-    testUser.date = "1992-08-10";
-    testUser.phone = "968 88 88 88";
-    testUser.bank_ids = "ES2000817353989593312425";
-    testUser.social_security = "";
-    testUser.vat="";
-
-    
-
-    testUser.address.street = '36',
-    testUser.address.number = '7814',
-    testUser.address.latitude = "40,47558";
-    testUser.address.longitude = "-3,68992";
-
-    this._signupOdoo.newUser(testUser);
+    // this._signupOdoo.newUser(testUser);
 
     
     
@@ -548,4 +558,131 @@ export class CreateAccountPage implements OnInit {
 			
 		};
 	}
+
+  validar_DNI(temp_dni){
+
+    let letra:string;
+    let digito_letra=temp_dni.slice(8,9);
+    console.log('letra final ',digito_letra);
+    let digito1=temp_dni.slice(0,1);
+    console.log('d1',digito1);
+
+    let digito_total=temp_dni.slice(0,8);
+    console.log('dt',digito_total);
+    
+    if(digito1 != 0){
+      let resto=digito_total % 23
+      console.log('resto',resto);
+
+      switch(resto) {
+        case 0:
+          letra='T'
+        break;
+        
+        case 1:
+          letra='R'
+        break;
+
+        case 2:
+          letra='W'
+        break;
+
+        case 3:
+           letra='A'
+        break;
+
+        case 4:
+            letra='G'
+        break;
+                
+        case 5:
+            letra='M'
+        break;
+                
+        case 6:
+            letra='Y'
+        break;
+
+        case 7:
+            letra='F'
+        break;
+
+        case 8:
+            letra='P'
+        break;
+
+        case 9:
+            letra='D'
+        break;
+
+        case 10:
+            letra='X'
+        break;
+
+        case 11:
+            letra='B'
+        break;
+
+        case 12:
+            letra='N'
+        break;
+
+        case 13:
+            letra='J'
+        break;
+
+        case 14:
+            letra='Z'
+        break;
+
+        case 15:
+            letra='S'
+        break;
+
+        case 16:
+          letra='S'
+      break;
+
+      case 17:
+        letra='V'
+     break;
+
+      case 18:
+        letra='H'
+     break;
+
+    case 19:
+     letra='L'
+    break;
+
+    case 20:
+     letra='C'
+       break;
+
+    case 21:
+       letra='K'
+    break;
+
+    case 22:
+      letra='E'
+    break;
+
+        default:
+          // code block
+      }
+
+     console.log('letra a comparar',letra);
+      if(letra == digito_letra){
+        console.log('el dni esta bien es',temp_dni)
+        this.dni_correcto=temp_dni
+      }
+      else{
+        console.log('el dni esta mal es')
+        this.dni_correcto="";
+      }
+    }
+    else{
+      return
+    }
+  }
 }

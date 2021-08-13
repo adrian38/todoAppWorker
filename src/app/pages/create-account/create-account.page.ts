@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform} from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, PopoverController, ToastController ,Platform, LoadingController} from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -25,7 +25,7 @@ export class CreateAccountPage implements OnInit {
   
   isCatTouched: boolean = false;
 
-  
+  loading: HTMLIonLoadingElement = null;
   isEntTouched: boolean = false;
   
   confirmPass = '';
@@ -36,7 +36,7 @@ export class CreateAccountPage implements OnInit {
   
   cifNif = '';
   segSocialNumber = '';
-  IAE = ''; 
+  vat = ''; 
   DNI = '';
   dni_correcto:string = '';
   cuentaBancaria = '';
@@ -105,7 +105,8 @@ export class CreateAccountPage implements OnInit {
               private actionSheetCtrl: ActionSheetController,
               public navController:NavController,
               private platform: Platform,
-              private ngZone: NgZone,) { 
+              private ngZone: NgZone,
+              public loadingController: LoadingController) { 
 
                 this.usuario = new UsuarioModel();
                 this.usuario.address = new Address();
@@ -143,6 +144,8 @@ export class CreateAccountPage implements OnInit {
           if (notificationError) {
         
             console.log("error creando usuario")
+            this.loading.dismiss();
+            this.presentToast("Error por usuario ya creado o conectividad")
             //error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
           }
         });
@@ -152,9 +155,12 @@ export class CreateAccountPage implements OnInit {
         this.ngZone.run(() => {
           if (notificationOK) {
             //quitar cargado e ir a la pagina de logguearse
+            this.loading.dismiss();
             console.log("exito creando usuario")
             let test = this._signupOdoo.getUserInfo();
             console.log("usuario creado", test);
+            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    
   
           
           }
@@ -230,7 +236,8 @@ export class CreateAccountPage implements OnInit {
           handler: (event) => {
             this.selectFoto = false;
             if(this.usuario.avatar.length == 0){
-              this.avatarUsuario =  '../../../assets/fotoadd.png'
+              //this.avatarUsuario =  '../../../assets/fotoadd.png'
+             this.avatarUsuario = '../../assets/icons/registro.svg';
             }
             else{
               this.avatarUsuario = this.usuario.avatar;
@@ -277,8 +284,8 @@ export class CreateAccountPage implements OnInit {
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create(
       {
-        message,
-        duration: 2000
+        message:message,
+        duration: 3000
       }
     );
 
@@ -306,15 +313,15 @@ export class CreateAccountPage implements OnInit {
   }
 
   validarCamposVacio(){
-
-    //  if(this.avatarUsuario == '../../assets/icons/registro.svg'){
-    //   console.log( 'vacio foto')
-    //   this.selectFoto=false;
+    
+     if(this.avatarUsuario == '../../assets/icons/registro.svg'){
+      console.log( 'vacio foto')
+      this.selectFoto=false;
       
-    // }
-    // else{
-    //   this.selectFoto=true;
-    // }
+    }
+    else{
+      this.selectFoto=true;
+    }
 
     if(!this.selectedOficio){
       console.log( 'no oficio seleccionado')
@@ -388,14 +395,14 @@ export class CreateAccountPage implements OnInit {
       this.confirmPass_vacia=false;
     }
 
-    // if(this.usuario.vat == ""){
-    //   console.log( 'vacio cifnif')
-    //   this.cifNif_vacio=true;
+    if(this.vat == ""){
+      console.log( 'vacio cifnif')
+      this.cifNif_vacio=true;
      
-    // }
-    // else{
-    //   this.cifNif_vacio=false;
-    // }
+    }
+    else{
+      this.cifNif_vacio=false;
+    }
 
     if(this.segSocialNumber == ""){
       console.log( 'vacio seguridad')
@@ -444,16 +451,20 @@ export class CreateAccountPage implements OnInit {
     }
     else{
       this.streetNumber_vacio=false;
+      console.log( 'calle',this.streetNumber);
+      
     }
 
-    // if(this.number == ""){
-    //   console.log( 'vacio seguridad')
-    //   this.number_vacio=true;
+    if(this.number == ""){
+      console.log( 'vacio seguridad')
+      this.number_vacio=true;
      
-    // }
-    // else{
-    //   this.number_vacio=false;
-    // }
+    }
+    else{
+      this.number_vacio=false;
+      console.log( 'calle',this.number);
+    }
+
     // if(this.coordenadas==true){
     //   this.coordenadas_puesta=true;
     // }
@@ -468,42 +479,39 @@ export class CreateAccountPage implements OnInit {
       let testUser = new UsuarioModel();
       testUser.address = new Address();
 
-    // testUser.type = this.selectedOficio.name;
-     //testUser.is_company = this.isEntTouched;
-     //testUser.realname = this.nombre;
-     //testUser.date = this.date.slice(0,10);
-     ///testUser.username = this.user;
-     //testUser.password = this.password;
-     // testUser.dni = this.dni_correcto;
-     //testUser.phone = this.phone;
-     //testUser.social_security = this.segSocialNumber;
-
-     
-    // testUser.avatar = "";
-
-    // testUser.bank_ids = "ES2000817353989593312425";
-    // testUser.vat="";
-
+    testUser.type = this.selectedOficio.name;
+     testUser.is_company = this.isEntTouched;
+     testUser.realname = this.nombre;
+     testUser.date = this.date.slice(0,10);
+     testUser.username = this.user;
+     testUser.password = this.password;
+     testUser.dni = this.dni_correcto;
+     testUser.phone = this.phone;
+     testUser.social_security = this.segSocialNumber;
+     testUser.address.street = this.streetNumber;
+      testUser.address.number = this.number;
+    testUser.bank_ids = this.cuentaBancaria;
+     testUser.avatar = this.avatarUsuario;
+    testUser.vat=this.vat;
     
-
-    // testUser.address.street = '36',
-    // testUser.address.number = '7814',
-    // testUser.address.latitude = "40,47558";
+     // testUser.address.latitude = "40,47558";
     // testUser.address.longitude = "-3,68992";
 
-    // this._signupOdoo.newUser(testUser);
+  
 
     
     
     
 
     //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    // if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.categoria != "" && this.entidad != "" && this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
-    //   entrar_campos
+    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.selectedOficio.name != "" &&  this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
+      this._signupOdoo.newUser(testUser);
+    this.presentLoading("Creando ususario");
+   // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     
-    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+    }
+
     
-    // }
 
   }
 
@@ -684,5 +692,16 @@ export class CreateAccountPage implements OnInit {
     else{
       return
     }
+  }
+
+  async presentLoading(sms) {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: sms,
+      spinner: 'circles',
+      //duration: 2000
+    });
+
+    return this.loading.present();
   }
 }

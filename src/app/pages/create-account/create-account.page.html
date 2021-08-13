@@ -191,7 +191,7 @@
             class="custom_input"
             [ngClass]="((nif.invalid && nif.touched) || cifNif_vacio) ? 'green_border':'no_border'"
             type="text"
-            [(ngModel)]="usuario.vat"
+            [(ngModel)]="vat"
             name="cifNif"
             pattern="[a-zA-Z][0-9]{7}[a-zA-Z0-9]"
             required

@@ -129,6 +129,9 @@ export class CreateAccountPage implements OnInit {
 
   ngOnInit() {
 
+
+  
+    
     this.platform.backButton.subscribeWithPriority(10, () => {
 
         this.navController.navigateRoot('/terminos', {animated: true, animationDirection: 'back' }) ;
@@ -212,6 +215,7 @@ export class CreateAccountPage implements OnInit {
               this.avatarUsuario= photo.webviewPath;
               console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64();
+              //console.log('f64',this.avatarUsuario64.slice(22));
             }
           }
         },
@@ -227,6 +231,7 @@ export class CreateAccountPage implements OnInit {
               this.avatarUsuario= photos[0].webviewPath;
               console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64(); 
+              console.log('f64',this.avatarUsuario64.slice(22));
             }
           }
         },
@@ -479,7 +484,7 @@ export class CreateAccountPage implements OnInit {
       let testUser = new UsuarioModel();
       testUser.address = new Address();
 
-    testUser.type = this.selectedOficio.name;
+     testUser.type = this.selectedOficio.name;
      testUser.is_company = this.isEntTouched;
      testUser.realname = this.nombre;
      testUser.date = this.date.slice(0,10);
@@ -488,35 +493,35 @@ export class CreateAccountPage implements OnInit {
      testUser.dni = this.dni_correcto;
      testUser.phone = this.phone;
      testUser.social_security = this.segSocialNumber;
-    //  testUser.address.street = this.streetNumber;
-      testUser.address.number = this.number;
-    testUser.bank_ids = this.cuentaBancaria;
-    
-    //testUser.avatar = this.avatarUsuario;
-    testUser.avatar = "";
-    testUser.vat=this.vat;
+     testUser.address.street = this.streetNumber;
+     testUser.address.number = this.number;
+     testUser.bank_ids = this.cuentaBancaria;
+     testUser.avatar = this.avatarUsuario64.slice(22);
+     testUser.vat=this.vat;
+    //  testUser.address.latitude = this.datos.getlatitud().toString();
+    //  testUser.address.longitude = this.datos.getlongitud().toString();
+
+     
 
     // testUser.type = "fontanero";
     // testUser.is_company = true;
 
     // testUser.avatar = "";
 
-    // testUser.realname = "Adrian Nieves";
-    // testUser.username = "sintecho6@example.com"
-    // testUser.dni = "30065089H";
+    // testUser.realname = "Adrian Nievess";
+    // testUser.username = "ssintecho6@example.com"
+    // testUser.dni = "40065089H";
     // testUser.password = "epicentro";
     // testUser.date = "1992-08-10";
     // testUser.phone = "968 88 88 88";
-    // testUser.bank_ids = "ES2000817353989593312436";
+    // testUser.bank_ids = "ES2000817353989593312448";
     // testUser.social_security = "";
     // testUser.vat="";
     
      testUser.address.latitude = "40,47558";
     testUser.address.longitude = "-3,68992";
 
-    this._signupOdoo.newUser(testUser);
-    console.log('entre al paso de crear')
-  this.presentLoading("Creando ususario");
+  
   //   this._signupOdoo.newUser(testUser);
   //   console.log('entre al paso de crear')
   // this.presentLoading("Creando ususario");
@@ -534,9 +539,14 @@ export class CreateAccountPage implements OnInit {
   //     console.log('entre al paso de crear no es valido')
   //   }
 
-
-    
-
+  if(this.selectFoto && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
+ { this._signupOdoo.newUser(testUser);
+  console.log('entre al paso de crear')
+  this.presentLoading("Creando ususario");
+}
+else {
+  this.presentToast("vrifique los campos")
+}
   }
 
   validarMayorDeEdad(date: string) {
@@ -717,7 +727,7 @@ export class CreateAccountPage implements OnInit {
       }
     }
     else{
-      return
+      //return
     }
   }
 

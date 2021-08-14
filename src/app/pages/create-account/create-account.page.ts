@@ -479,37 +479,61 @@ export class CreateAccountPage implements OnInit {
       let testUser = new UsuarioModel();
       testUser.address = new Address();
 
-    testUser.type = this.selectedOficio.name;
-     testUser.is_company = this.isEntTouched;
-     testUser.realname = this.nombre;
-     testUser.date = this.date.slice(0,10);
-     testUser.username = this.user;
-     testUser.password = this.password;
-     testUser.dni = this.dni_correcto;
-     testUser.phone = this.phone;
-     testUser.social_security = this.segSocialNumber;
-     testUser.address.street = this.streetNumber;
-      testUser.address.number = this.number;
-    testUser.bank_ids = this.cuentaBancaria;
-     testUser.avatar = this.avatarUsuario;
-    testUser.vat=this.vat;
+    // testUser.type = this.selectedOficio.name;
+    //  testUser.is_company = this.isEntTouched;
+    //  testUser.realname = this.nombre;
+    //  testUser.date = this.date.slice(0,10);
+    //  testUser.username = this.user;
+    //  testUser.password = this.password;
+    //  testUser.dni = this.dni_correcto;
+    //  testUser.phone = this.phone;
+    //  testUser.social_security = this.segSocialNumber;
+    //  testUser.address.street = this.streetNumber;
+    //   testUser.address.number = this.number;
+    // testUser.bank_ids = this.cuentaBancaria;
     
-     // testUser.address.latitude = "40,47558";
-    // testUser.address.longitude = "-3,68992";
+    // testUser.avatar = this.avatarUsuario;
+    // testUser.avatar = "";
+    // testUser.vat=this.vat;
+
+    testUser.type = "fontanero";
+    testUser.is_company = true;
+
+    testUser.avatar = "";
+
+    testUser.realname = "Adrian Nieves";
+    testUser.username = "sintecho5@example.com"
+    testUser.dni = "30065089H";
+    testUser.password = "epicentro";
+    testUser.date = "1992-08-10";
+    testUser.phone = "968 88 88 88";
+    testUser.bank_ids = "ES2000817353989593312425";
+    testUser.social_security = "";
+    testUser.vat="";
+    
+     testUser.address.latitude = "40,47558";
+    testUser.address.longitude = "-3,68992";
 
   
-
+    this._signupOdoo.newUser(testUser);
+    console.log('entre al paso de crear')
+  this.presentLoading("Creando ususario");
     
     
-    
+    // this.avatarUsuario != '../../assets/icons/registro.svg' &&
 
     //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-    if(this.avatarUsuario != '../../assets/icons/registro.svg' && this.selectedOficio.name != "" &&  this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.DNI != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
-      this._signupOdoo.newUser(testUser);
-    this.presentLoading("Creando ususario");
+    // if( this.selectedOficio.name != "" &&  this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.dni_correcto != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
+    //   this._signupOdoo.newUser(testUser);
+    //   console.log('entre al paso de crear')
+    // this.presentLoading("Creando ususario");
    // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     
-    }
+    // }
+    // else{
+    //   console.log('entre al paso de crear no es valido')
+    // }
+
 
     
 
@@ -681,8 +705,11 @@ export class CreateAccountPage implements OnInit {
 
      console.log('letra a comparar',letra);
       if(letra == digito_letra){
-        console.log('el dni esta bien es',temp_dni)
         this.dni_correcto=temp_dni
+        console.log('el dni esta bien es',temp_dni)
+        this.DNI_vacio=false
+        console.log('el dni esta bien es boo', this.DNI_vacio)
+
       }
       else{
         console.log('el dni esta mal es')

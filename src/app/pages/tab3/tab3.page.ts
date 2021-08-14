@@ -44,5 +44,7 @@ export class Tab3Page implements OnInit {
     this.navCtrl.navigateRoot('/somos', {animated: true, animationDirection: 'forward' }) ;  
   }
 
-  
+  clasificaciones(){
+    this.navCtrl.navigateRoot('/clasificaciones', {animated: true, animationDirection: 'forward' }) ; 
+  }
 }

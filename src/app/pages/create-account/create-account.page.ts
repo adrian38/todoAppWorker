@@ -394,10 +394,17 @@ export class CreateAccountPage implements OnInit {
     if(this.confirmPass == ""){
       console.log( 'vacio user')
       this.confirmPass_vacia=true;
-     
+      
     }
     else{
-      this.confirmPass_vacia=false;
+      if(this.confirmPass == this.password){
+        this.confirmPass_vacia=false;
+        
+      }
+      else{
+        this.confirmPass_vacia=true;
+
+      }
     }
 
     if(this.vat == ""){

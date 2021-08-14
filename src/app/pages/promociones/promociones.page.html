@@ -20,7 +20,7 @@
 
       <ion-item class="item" *ngFor="let promocion of promociones, let i = index" lines="none" (click)="promo(i)">
 
-        <div class="flex_row" style="width: 100%;">
+        <div class="flex_row" style="width: 100%;" (click)=detalles();>
 
           <img  class="image" src="../../../assets/icons/bocina.svg"
                 style="width: 24px; height: 24px; margin: auto;">

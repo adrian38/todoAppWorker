@@ -121,6 +121,10 @@ const routes: Routes = [
   },  {
     path: 'clasificaciones',
     loadChildren: () => import('./pages/clasificaciones/clasificaciones.module').then( m => m.ClasificacionesPageModule)
+  },
+  {
+    path: 'promodetalles',
+    loadChildren: () => import('./pages/promodetalles/promodetalles.module').then( m => m.PromodetallesPageModule)
   }
 
 

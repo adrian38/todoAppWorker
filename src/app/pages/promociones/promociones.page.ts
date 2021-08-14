@@ -42,17 +42,21 @@ export class PromocionesPage implements OnInit {
     this.subServ.setruta('promociones');
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot('/tabs/tab3', {animated: true, animationDirection: 'back' }) ;
- });
+    });
   }
-
+  
   onFabClick() {
     console.log('Fab clicked');
   }
-
+  
   promo(i: number) {
     console.log("Promocion clicked", i);
   }
-
+  
+  detalles(){
+    this.navCtrl.navigateRoot('/promodetalles', {animated: true, animationDirection: 'back' }) ;
+    
+  }
 }
 
 interface Promociones {

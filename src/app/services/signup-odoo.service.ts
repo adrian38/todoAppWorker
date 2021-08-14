@@ -4,9 +4,10 @@ import { Observable, Subject } from 'rxjs';
 const jayson = require('../../../node_modules/jayson/lib/client/');
 
 // let host = '192.168.0.106';
-const host = 'odoo.todoenunapp.com';
-//const port = 8069;
-const port = 443;
+ let host = '192.168.1.2';
+//const host = 'odoo.todoenunapp.com';
+const port = 8069;
+//const port = 443;
 const db = 'demo';
 const user = 'root';
 const pass = 'root';
@@ -140,7 +141,7 @@ export class SignUpOdooService {
     
 
     let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(user_to_create);

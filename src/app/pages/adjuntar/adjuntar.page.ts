@@ -234,7 +234,7 @@ export class AdjuntarPage implements OnInit {
       cssClass: 'my-custom-class',
       message: sms,
       
-      duration:4000
+      //duration:4000
     });
 
     return this.loading.present();

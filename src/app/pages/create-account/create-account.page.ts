@@ -567,11 +567,6 @@ else {
     }
   }
 
- 
-
-
-  
-
   resizedataURL(datas, wantedWidth, wantedHeight) {
 		var img = document.createElement('img');
 		img.src = datas;

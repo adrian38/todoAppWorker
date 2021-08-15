@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { AlertController, LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stripe',
@@ -12,23 +14,99 @@ export class StripePage implements OnInit {
 
   punto_naranja = '../../assets/icons/punto_naranja.svg';
   punto_gris = '../../assets/icons/punto_gris.svg';
+
+  notificationLink$: Observable<string>;
+	notificationError$: Observable<boolean>;
+
+	subscriptionError: Subscription;
+	subscriptionOk: Subscription;
+
+  loading: HTMLIonLoadingElement = null;
   
   constructor( private navCtrl: NavController,
                private platform: Platform,
-               private browser  :InAppBrowser ) { }
+               private browser  :InAppBrowser,
+               private _sigupOdoo :SignUpOdooService,
+               private ngZone: NgZone, 
+               public loadingController: LoadingController,
+               private toastController: ToastController,) { }
 
   ngOnInit() {
 
+
+
     this.platform.backButton.subscribeWithPriority(10, () => {
 
-      this.navCtrl.navigateRoot('/adjuntar', {animated: true, animationDirection: 'back' }) ;
+      this.navCtrl.navigateRoot('/login-user', {animated: true, animationDirection: 'back' }) ;
 
     });
+
+
+    this.notificationError$ = this._sigupOdoo.getNotificationError$();
+      this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
+        this.ngZone.run(() => {
+          if (notificationError) {
+        
+            
+            this.loading.dismiss();
+            this.presentToast("Error generando su link, vuelva a intentarlo");
+            
+          }
+        });
+      });
+      this.notificationLink$ = this._sigupOdoo.getNotificationLink$();
+      this.subscriptionOk = this.notificationLink$.subscribe((notificationLink) => {
+        this.ngZone.run(() => {
+          
+           
+            this.loading.dismiss();
+           
+            this.browser.create(notificationLink);
+
+            
+
+           
+    
+          
+        });
+      });
+
+
+  }
+  async presentToast(message:string) {
+		const toast = await this.toastController.create({
+			message: message,
+			duration: 2000
+		});
+		toast.present();
+	}
+
+  async presentLoading(sms) {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: sms,
+      
+      //duration:4000
+    });
+
+    return this.loading.present();
+
   }
 
+
+  ngOnDestroy(): void {
+		//Called once, before the instance is destroyed.
+		//Add 'implements OnDestroy' to the class.
+		this.subscriptionOk.unsubscribe();
+		this.subscriptionError.unsubscribe();
+	}
+
   openUrl(){
-    console.log('entre a google');
-    this.browser.create('https://www.google.com/search?q=arduino&source=hp&ei=dluxYPagGOzS5NoP8fS40AM&iflsig=AINFCbYAAAAAYLFphnOy4nyuFSDKvvmUm-odqqnscknq&oq=ardui&gs_lcp=Cgdnd3Mtd2l6EAMYADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAA6BQgAELEDOgIILjoICAAQsQMQgwE6CwgAELEDEMcBEK8BOggILhCxAxCDAVCfM1iIRmDZWGgBcAB4AIAB1wGIAesHkgEFMC4yLjOYAQCgAQGqAQdnd3Mtd2l6sAEA&sclient=gws-wiz')
+    
+    this._sigupOdoo.getStripeLink();
+    this.presentLoading("Espere mientras generamos su link de stripe");
+
+   
 
   }
 

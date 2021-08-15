@@ -115,7 +115,7 @@ export class LoginUserPage implements OnInit {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Espere...',
-      spinner: 'circles',
+      //spinner: 'circles',
       //duration: 2000
     });
 

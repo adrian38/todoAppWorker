@@ -35,8 +35,8 @@ import { AgmCoreModule } from '@agm/core';
 /////////////////////////////////////////
 
 ////////prime
- import {ToastModule} from 'primeng/toast';
- import { MessageService } from 'primeng/api';
+//  import {ToastModule} from 'primeng/toast';
+//  import { MessageService } from 'primeng/api';
 // import { DropdownModule } from 'primeng/dropdown';
 //import { ButtonModule } from 'primeng/button';
 /////////////////////////////////////////////
@@ -58,8 +58,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     ComponentsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ToastModule,
+    //ToastModule,
     CommonModule,
+    //MessageService,
    // DropdownModule,
   
    //ButtonModule,
@@ -77,7 +78,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     LocationService,
     DatePipe,
     InAppBrowser,
-    MessageService,
+    //MessageService,
   
   {
     provide: 
@@ -87,5 +88,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   }],
 
   bootstrap: [AppComponent],
+  
 })
 export class AppModule {}

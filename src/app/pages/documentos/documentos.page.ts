@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform, PopoverController } from '@ionic/angular';
+import { LoadingController, NavController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { Photo } from 'src/app/Interfaces/interfaces';
@@ -13,12 +13,16 @@ import { PhotoService } from 'src/app/services/photo.service';
 export class DocumentosPage implements OnInit {
 
   foto:string="";
+  avatarUsuario64:string="";
+  loading: HTMLIonLoadingElement = null;
   
   constructor(private subServ  : ObtSubSService,
               private platform : Platform,
               private navCtrl  : NavController,
               private popoverCtrl: PopoverController,
-              private photoService: PhotoService) { }
+              private photoService: PhotoService,
+              public loadingController: LoadingController,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.subServ.setruta('documentos');
@@ -33,9 +37,11 @@ export class DocumentosPage implements OnInit {
   onAnadir() {
     if(this.foto == ""){
       console.log("no hay nada seleccionado");
+     
     }
     else{
       console.log("hay seleccionado algo");
+      this.presentLoading("Salvando documento IAE");
       }
   }
 
@@ -92,6 +98,8 @@ export class DocumentosPage implements OnInit {
                    
                    this.foto=photo.webviewPath;
                     console.log(this.foto);
+                    this.avatarUsuario64= this.photoService.devuelve64().slice(22); 
+                    console.log('f64',this.avatarUsuario64);
                     //this.foto1= this.photoService.devuelve64();
   
                   
@@ -106,6 +114,8 @@ export class DocumentosPage implements OnInit {
                   
                     this.foto= photos[0].webviewPath; 
                     console.log(this.foto);
+                    this.avatarUsuario64= this.photoService.devuelve64().slice(22); 
+                    console.log('f64',this.avatarUsuario64);
                    // this.foto164= this.photoService.devuelve64(); 
                  
              
@@ -114,6 +124,26 @@ export class DocumentosPage implements OnInit {
      }
      abrirDocumento(){
       console.log('documento abierta');
+      this.presentToast("Los documentos no estan habilitados");
       
      }
+
+     async presentLoading(sms) {
+      this.loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: sms,
+        
+        duration:4000
+      });
+  
+      return this.loading.present();
+    }
+
+    async presentToast(message:string) {
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 2000
+      });
+      toast.present();
+    }
 }

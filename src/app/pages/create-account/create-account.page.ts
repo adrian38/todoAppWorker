@@ -152,7 +152,7 @@ export class CreateAccountPage implements OnInit {
         
             //console.log("error creando usuario")
             this.loading.dismiss();
-            
+            this.presentToast("El usuario no se creo correctamente")
             //this.presentToast("Error por usuario ya creado o conectividad")
             //error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
           }
@@ -167,11 +167,12 @@ export class CreateAccountPage implements OnInit {
             //console.log("exito creando usuario")
             //let test = this._signupOdoo.getUserInfo();
             //console.log("usuario creado", test);
+            this.presentToast("Su usuario se creo correctamente");
 
             setTimeout(() => {
               this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
 
-            }, 2000);
+            }, 3000);
     
           }
         });
@@ -531,6 +532,7 @@ else {
   
   //Poner Toast q sirva
     console.log("error en los campos")
+    this.presentToast("Su informacion tiene errores");
 }
 
 

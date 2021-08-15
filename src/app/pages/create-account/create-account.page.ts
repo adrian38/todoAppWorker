@@ -40,7 +40,7 @@ export class CreateAccountPage implements OnInit {
   DNI = '';
   dni_correcto:string = '';
   cuentaBancaria = '';
-  phone = '';
+  phone = '00';
   
   
   
@@ -53,6 +53,7 @@ export class CreateAccountPage implements OnInit {
   postalCode = ''; 
   avatarUsuario = '../../assets/icons/registro.svg';
   avatarUsuario64:string="";
+  avatarUsuarioComprimida:string="";
 
  punto_naranja = '../../assets/icons/punto_naranja.svg';
  punto_gris = '../../assets/icons/punto_gris.svg';
@@ -78,6 +79,8 @@ export class CreateAccountPage implements OnInit {
   phone_vacio          :boolean=false;
   streetNumber_vacio   :boolean=false;
   number_vacio         :boolean=false;
+  dni_mal              :boolean=false;
+  confirmPassBoolean    :boolean=false;
 
 
 
@@ -129,8 +132,8 @@ export class CreateAccountPage implements OnInit {
 
   ngOnInit() {
 
+this. obtener_campos();
 
-  
     
     this.platform.backButton.subscribeWithPriority(10, () => {
 
@@ -215,7 +218,7 @@ export class CreateAccountPage implements OnInit {
               this.avatarUsuario= photo.webviewPath;
               console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64();
-              //console.log('f64',this.avatarUsuario64.slice(22));
+             // console.log('f64',this.avatarUsuario64.slice(22));
             }
           }
         },
@@ -307,6 +310,7 @@ export class CreateAccountPage implements OnInit {
 
   onLocationClick(event) {
     //this.coordenadas = true;
+    this.entrar_campos();
     console.log('Location clicked');
     this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
   }
@@ -399,10 +403,13 @@ export class CreateAccountPage implements OnInit {
     else{
       if(this.confirmPass == this.password){
         this.confirmPass_vacia=false;
+        this. confirmPassBoolean=false;
+
         
       }
       else{
-        this.confirmPass_vacia=true;
+        this.confirmPass_vacia=false;
+        this. confirmPassBoolean=true;
 
       }
     }
@@ -426,8 +433,9 @@ export class CreateAccountPage implements OnInit {
     }
 
     if(this.dni_correcto == ""){
-      console.log( 'vacio seguridad')
+      console.log( 'El dnii esta vacio')
       this.DNI_vacio=true;
+      this.dni_mal=false;
     
     }
     else{
@@ -485,8 +493,10 @@ export class CreateAccountPage implements OnInit {
 
 
     /////*****Si todo esta bien */
-
+    console.log("casi")
      this.validar_DNI(this.DNI);
+     console.log("pase")
+     console.log("dni",this.dni_mal);
     
       let testUser = new UsuarioModel();
       testUser.address = new Address();
@@ -498,13 +508,19 @@ export class CreateAccountPage implements OnInit {
      testUser.username = this.user;
      testUser.password = this.password;
      testUser.dni = this.dni_correcto;
-     testUser.phone = this.phone;
+     testUser.phone = "+34"+this.phone;
      testUser.social_security = this.segSocialNumber;
      testUser.address.street = this.streetNumber;
      testUser.address.number = this.number;
      testUser.bank_ids = this.cuentaBancaria;
-     testUser.avatar = this.avatarUsuario64.slice(22);
-     testUser.vat=this.vat;
+    testUser.vat=this.vat;
+
+     //testUser.avatar =this.avatarUsuario64.slice(22);
+     
+     //testUser.avatar = "";
+
+     let foto=this.avatarUsuario64.slice(22);
+   // testUser.avatar = foto;
     //  testUser.address.latitude = this.datos.getlatitud().toString();
     //  testUser.address.longitude = this.datos.getlongitud().toString();
 
@@ -514,9 +530,9 @@ export class CreateAccountPage implements OnInit {
     // testUser.is_company = true;
 
     // testUser.avatar = "";
-
+    // testUser.avatar =this.avatarUsuario64.slice(0,22);
     // testUser.realname = "Adrian Nievess";
-    // testUser.username = "ssintecho6@example.com"
+    // testUser.username = "5@example.com"
     // testUser.dni = "40065089H";
     // testUser.password = "epicentro";
     // testUser.date = "1992-08-10";
@@ -528,7 +544,19 @@ export class CreateAccountPage implements OnInit {
      testUser.address.latitude = "40,47558";
     testUser.address.longitude = "-3,68992";
 
-  
+    if (
+			Buffer.from(foto.substring(foto.indexOf(',') + 1)).length / 1e6 >
+			0.322216
+		) {
+			this.resizedataURL(foto, 1280, 960);
+		} else {
+			this.avatarUsuarioComprimida = foto.substring(foto.indexOf(',') + 1);
+      console.log("else de foto0",	this.avatarUsuarioComprimida )
+		}
+
+     testUser.avatar =this.avatarUsuarioComprimida ;
+     console.log("fin foto",	testUser.avatar)
+
   //   this._signupOdoo.newUser(testUser);
   //   console.log('entre al paso de crear')
   // this.presentLoading("Creando ususario");
@@ -547,12 +575,14 @@ export class CreateAccountPage implements OnInit {
   //   }
 
   if(this.selectFoto && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
- { this._signupOdoo.newUser(testUser);
+ { 
+   this._signupOdoo.newUser(testUser);
   console.log('entre al paso de crear')
   this.presentLoading("Creando ususario");
 }
 else {
   this.presentToast("vrifique los campos")
+  console.log("dni",this.dni_mal);    
 }
   }
 
@@ -591,7 +621,24 @@ else {
 
  
 
-  resizedataURL(datas, wantedWidth, wantedHeight, index) {
+  // resizedataURL(datas, wantedWidth, wantedHeight, index) {
+	// 	var img = document.createElement('img');
+	// 	img.src = datas;
+	// 	img.onload = () => {
+	// 		let ratio = img.width / img.height;
+	// 		wantedWidth = wantedHeight * ratio;
+	// 		let canvas = document.createElement('canvas');
+	// 		let ctx = canvas.getContext('2d');
+	// 		canvas.width = wantedWidth;
+	// 		canvas.height = wantedHeight;
+	// 		ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
+	// 		let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
+	// 		//this.task.photoNewTaskArray[index] = temp.substring(temp.indexOf(',') + 1);
+			
+	// 	};
+	// }
+
+  resizedataURL(datas, wantedWidth, wantedHeight) {
 		var img = document.createElement('img');
 		img.src = datas;
 		img.onload = () => {
@@ -603,8 +650,8 @@ else {
 			canvas.height = wantedHeight;
 			ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
 			let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
-			//this.task.photoNewTaskArray[index] = temp.substring(temp.indexOf(',') + 1);
-			
+      this.avatarUsuarioComprimida= temp.substring(temp.indexOf(',') + 1);
+      console.log("funcion foto",	this.avatarUsuarioComprimida)
 		};
 	}
 
@@ -726,15 +773,21 @@ else {
         console.log('el dni esta bien es',temp_dni)
         this.DNI_vacio=false
         console.log('el dni esta bien es boo', this.DNI_vacio)
+        this.dni_mal=false;
 
       }
       else{
         console.log('el dni esta mal es')
         this.dni_correcto="";
+        this.dni_mal=true;
+        this.presentToast("DNI incorrecto");
       }
     }
     else{
-      //return
+      console.log('el dni esta mal es')
+      this.dni_correcto="";
+      this.dni_mal=true;
+      //this.presentToast("DNI incorrecto");
     }
   }
 
@@ -748,4 +801,69 @@ else {
 
     return this.loading.present();
   }
+
+
+  entrar_campos() {
+
+		this.datos.setnombre(this.nombre.trim());
+		//this.datos.setoficio(this.selectedOficio.name.trim());
+
+		this.datos.setcontraseña(this.password);
+    this.datos.setcontraseñaConfirmafa(this.confirmPass.trim());
+		this.datos.setcorreo(this.user.trim().toLowerCase());
+		this.datos.settelefono("+34"+this.phone);
+		this.datos.setfecha(this.date.slice(0,10));
+		this.datos.setnumero(this.number);
+		this.datos.setcalle(this.streetNumber.trim());
+    this.datos.setdni(this.DNI);
+    this.datos.setseguridadSocial(this.segSocialNumber);
+    this.datos.setcuentaBanco(this.cuentaBancaria);
+    this.datos.setcif(this.vat);
+
+
+		//this.datos.setcontraseñaConfirmafa(this.ppass);
+	
+	
+		//this.datos.setfoto0(this.avatarsuario64);
+		this.datos.setfotoRegis(this.avatarUsuario);
+
+
+
+
+
+
+  //   testUser.dni = this.dni_correcto;
+  //   testUser.social_security = this.segSocialNumber;
+  //   testUser.bank_ids = this.cuentaBancaria;
+  //   testUser.vat=this.vat;
+	}
+
+  obtener_campos() {
+		this.nombre = this.datos.getnombre().trim();
+    this.confirmPass=this.datos.getcontraseñaConfirmafa();
+    this.user=this.datos.getcorreo();
+    this.phone=String(this.datos.gettelefono());
+    this.number=this.datos.getnumero();
+    this.streetNumber=this.datos.getcalle();
+    this.DNI=this.datos.getdni();
+    this.segSocialNumber=this.datos.getseguridadSocial();
+    this.cuentaBancaria=this.datos.getcuentaBancaria();
+    this.vat=this.datos.getcif();
+		// this.correo = this.datos.getcorreo();
+		// this.correo = this.correo.toLowerCase().trim();
+		// this.pass = this.datos.getcontraseña();
+		// this.ppass = this.datos.getcontraseñaConfirmafa();
+		// this.telefono = this.datos.gettelefono();
+		// this.calle = this.datos.getcalle().trim();
+		// this.numero = this.datos.getnumero();
+		// this.piso = this.datos.getpiso();
+		// this.puerta = this.datos.getpuerta();
+		// this.portal = this.datos.getportal();
+		// this.escalera = this.datos.getescalera();
+		// this.cod_postal = this.datos.getcod_postal();
+		// this.coordenadas = this.datos.getcoordenada();
+		this.avatarUsuario = this.datos.getfotoRegis();
+		this.date= this.datos.getfecha();
+		this.selectFoto = this.datos.getselectfoto();
+	}
 }

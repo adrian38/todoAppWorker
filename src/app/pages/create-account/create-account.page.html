@@ -84,6 +84,7 @@
             autofocus
             placeholder="NOMBRE"
             #nombre1="ngModel"
+           
           >
           </ion-input>
           <ion-label
@@ -184,6 +185,13 @@
           >
             Campo obligatorio
           </ion-label>
+          <ion-label
+            *ngIf="confirmPassBoolean"
+            class="mandatory"
+          >
+            No hay coincidencia con el password
+          </ion-label>
+
         </div>
 
         <div class="div_1">
@@ -195,6 +203,8 @@
             name="cifNif"
             pattern="[a-zA-Z][0-9]{7}[a-zA-Z0-9]"
             required
+            minlength="9"
+            maxlength="9"
             placeholder="CIF/NIF"
             #nif="ngModel"
           >
@@ -216,6 +226,7 @@
             name="segSocialNumber"
             minlength="12"
             maxlength="12"
+            pattern="[0-9]{12}"
             required
             placeholder="NÚMERO DE SEGURIDAD SOCIAL"
             #segSocial="ngModel"
@@ -225,20 +236,22 @@
             *ngIf="(segSocial.invalid && segSocial.touched) || segSocialNumber_vacio"
             class="mandatory"
           >
-            Campo obligatorio
+            Número incorrecto
           </ion-label>
         </div>
 
         <div class="div_1">
           <ion-input
             class="custom_input"
-            [ngClass]="((dni.invalid && dni.touched) || DNI_vacio) ? 'green_border':'no_border'"
+            [ngClass]="((dni.invalid && dni.touched) || DNI_vacio || dni_mal) ? 'green_border':'no_border'"
             type="text"
             [(ngModel)]="DNI"
             name="DNI"
-            pattern="[0-9]{8}[a-zA-Z]"
+            pattern="[0-9]{8}[A-Z]"
             required
             placeholder="DNI"
+            minlength="9"
+            maxlength="9"
             #dni="ngModel"
           >
           </ion-input>
@@ -246,8 +259,15 @@
             *ngIf="(dni.invalid && dni.touched) || DNI_vacio"
             class="mandatory"
           >
-            Debe escribir el DNI correctamente
+            Campo obligatorio
           </ion-label>
+          <ion-label
+          *ngIf="dni_mal && DNI_vacio == false "
+          class="mandatory"
+        >
+          Debe escribir el DNI correctamente
+        </ion-label>
+          
         </div>
 
         <div class="div_1">
@@ -260,7 +280,7 @@
             placeholder="CUENTA BANCARIA"
             minlength="24"
             maxlength="24"
-            pattern="[a-zA-Z][0-9]{23}"
+            pattern="[A-Z][0-9]{23}"
             required
             #cBancaria="ngModel"
           >
@@ -269,7 +289,7 @@
             *ngIf="(cBancaria.invalid && cBancaria.touched) || cuentaBancaria_vacio"
             class="mandatory"
           >
-            Campo obligatorio
+            Cuenta Incorrecta
           </ion-label>
         </div>
 
@@ -282,7 +302,7 @@
             name="phone"
             placeholder="TELÉFONO"
             required
-            minlength="6"
+            minlength="9"
             maxlength="9"
             #telefono="ngModel"
           >

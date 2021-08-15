@@ -32,11 +32,16 @@ export class ObtSubSService {
 	tim: Date;
 
 	nombre: string = '';
+	oficio: string = '';
 	telefono: number;
 	Fech_nacimiento: string = '';
 	correo: string = '';
 	contraseña: string = '';
 	contraseñaConfirmada: string = '';
+	dni: string = '';
+	cuenta_bancaria: string = '';
+	seguridad_social: string = '';
+    cif: string = '';
 
 	longitud: number;
 	latitud: number;
@@ -116,6 +121,31 @@ export class ObtSubSService {
 		return this.HistorialList;
 	}
 
+	setdni(n: string) {
+		this.dni = n;
+	}
+	getdni() {
+		return this.dni;
+	}
+	setcuentaBanco(n: string) {
+		this.cuenta_bancaria = n;
+	}
+	getcuentaBancaria() {
+		return this.cuenta_bancaria;
+	}
+	setseguridadSocial(n: string) {
+		this.seguridad_social = n;
+	}
+	getseguridadSocial() {
+		return this.seguridad_social;
+	}
+	setcif(n: string) {
+		this.cif = n;
+
+	}
+	getcif() {
+		return this.cif;
+	}
 	setnombre(n: string) {
 		this.nombre = n;
 	}
@@ -123,6 +153,12 @@ export class ObtSubSService {
 		return this.nombre;
 	}
 
+	setoficio(o: string) {
+		this.oficio = o;
+	}
+	getoficio() {
+		return this.oficio;
+	}
 	setcorreo(c: string) {
 		this.correo = c;
 	}

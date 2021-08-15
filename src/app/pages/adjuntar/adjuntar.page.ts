@@ -43,7 +43,7 @@ export class AdjuntarPage implements OnInit {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
 
-      ///this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
+    //this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
      this.presentAlertAtras();
     });
 
@@ -183,18 +183,9 @@ export class AdjuntarPage implements OnInit {
             if(photo){
                  
                  this.foto=photo.webviewPath;
-                  console.log(this.foto);
+                  //console.log(this.foto);
                   this.avatarUsuario64= this.photoService.devuelve64().slice(22); 
-                  console.log('f64',this.avatarUsuario64);
-
-                  //////////////////////////llamar servicio;
-                  this._sigupOdoo.updateDocuments(this.avatarUsuario64);
-                  this.presentLoading("Espere mientras guardamos su documento IAE");
-
-                  //this.presentToast("Documento Salvado");
-
-                  //this.foto1= this.photoService.devuelve64();
-
+                  //console.log('f64',this.avatarUsuario64);
                 
               
             }
@@ -263,7 +254,7 @@ export class AdjuntarPage implements OnInit {
 					text: 'Aceptar',
 					handler: (datos) => {
 						
-						this.navCtrl.navigateRoot('/inicio', { animated: true, animationDirection: 'back' });
+						this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'back' });
 					}
 				}
 			]

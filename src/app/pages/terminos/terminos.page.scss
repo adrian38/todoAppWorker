@@ -45,11 +45,10 @@ ion-checkbox::part(container) {
   margin-bottom: 45px;
 }
 
-#accept_btn {
-  height: 25px;
-  width: 140px;
-  min-width: 140px;
-  border-radius: 5px;
-  font: normal 14px 'Helvetica-Roman', sans-serif !important;
-  //font: normal 14px 'Helvetica-Bd', sans-serif;
-}
+ #accept_btn {
+--border-radius: 5px;
+  width: 100% !important;
+  min-width: 160px !important;
+  height: 32px;
+  font: normal 15px 'Helvetica-Roman', sans-serif !important;
+} 

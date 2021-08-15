@@ -25,14 +25,15 @@ export class AdjuntarPage implements OnInit {
               private platform: Platform,
               private photoService: PhotoService,
               private toastController: ToastController,
-              public loadingController: LoadingController) { }
+              public loadingController: LoadingController,
+            ) { }
 
   ngOnInit() {
 
     this.platform.backButton.subscribeWithPriority(10, () => {
 
-      this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
-
+      ///this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
+     this.presentAlertAtras();
     });
   }
 
@@ -181,4 +182,32 @@ export class AdjuntarPage implements OnInit {
 
     return this.loading.present();
   }
+
+  async presentAlertAtras() {
+		const alert = await this.alertCtrl.create({
+			cssClass: 'my-custom-class',
+			header: 'Alerta',
+			message: 'Desea salir sin adjuntar ?',
+
+			buttons: [
+				{
+					text: 'Cancelar',
+					role: 'cancel',
+					cssClass: 'secondary',
+					handler: (blah) => {
+						console.log('Confirm Cancel: blah');
+					}
+				},
+				{
+					text: 'Aceptar',
+					handler: (datos) => {
+						
+						this.navCtrl.navigateRoot('/inicio', { animated: true, animationDirection: 'back' });
+					}
+				}
+			]
+		});
+
+		await alert.present();
+	}
 }

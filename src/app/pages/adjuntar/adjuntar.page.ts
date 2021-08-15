@@ -1,4 +1,3 @@
-// import { Platform } from '@angular/cdk/platform';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
@@ -27,7 +26,8 @@ export class AdjuntarPage implements OnInit {
 	subscriptionError: Subscription;
 	subscriptionOk: Subscription;
   
-  constructor(private navCtrl: NavController,
+  constructor( 
+              private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
               private platform: Platform,
@@ -35,9 +35,9 @@ export class AdjuntarPage implements OnInit {
               private _sigupOdoo :SignUpOdooService,
               private toastController: ToastController,
               private ngZone: NgZone,
-              public loadingController: LoadingController) { }
-              public loadingController: LoadingController,
-            ) { }
+              public loadingController: LoadingController) 
+              
+             { }
 
   ngOnInit() {
 

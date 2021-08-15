@@ -33,7 +33,7 @@ export class ObtSubSService {
 
 	nombre: string = '';
 	oficio: string = '';
-	telefono: number;
+	telefono: string = '';
 	Fech_nacimiento: string = '';
 	correo: string = '';
 	contraseña: string = '';
@@ -42,12 +42,13 @@ export class ObtSubSService {
 	cuenta_bancaria: string = '';
 	seguridad_social: string = '';
     cif: string = '';
+	empresa;
 
 	longitud: number;
 	latitud: number;
 	coordenadas: boolean = false;
 	ruta: string = '';
-	selecfoto: boolean = false;
+	selecfoto: boolean = true;
 	radiobuton: boolean = false;
 
 	//-----------------------------------------------------------
@@ -119,6 +120,14 @@ export class ObtSubSService {
 
 	getHistorialList() {
 		return this.HistorialList;
+	}
+
+	setEmpresa(empresa){
+		this.empresa = empresa;
+	}
+
+	getEmpresa(){
+		return this.empresa;
 	}
 
 	setdni(n: string) {

@@ -5,9 +5,9 @@ let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
 	//host: '192.168.0.106',
-	//host: '192.168.0.107',
+	host: '192.168.0.107',
 	//host: 'odoo.todoenunapp.com',
-	host: '192.168.1.2',
+	//host: '192.168.1.2',
    //host: '192.168.1.4',
 	
 	//port: '443',
@@ -55,6 +55,7 @@ export class AuthOdooService {
 			inParams.push([ [ 'id', '=', usuario.partner_id ] ]);
 			inParams.push([
 				'name',
+				'date',
 				'address_street',
 				'address_floor',
 				'address_portal',
@@ -63,7 +64,23 @@ export class AuthOdooService {
 				'address_stairs',
 				'address_zip_code',
 				'address_latitude',
-				'address_longitude'
+				'address_longitude',
+				//'vat',
+				//'comment',
+				//'function',
+				'phone',
+				//'mobile',
+				'is_company',
+				//'vat_cif',
+				'social_security',
+				//'iae_code',
+				'dni',
+				'product_supply_ids',
+				'docs_check',
+				//'stripe_connect_account_id',
+				'stripe_connect_account_link',
+				'stripe_connect_account_state',
+				'ranking'
 			]);
 			let params = [];
 			params.push(inParams);
@@ -99,6 +116,7 @@ export class AuthOdooService {
 					
 
 						userInfo=usuario;
+						console.log(value,"ingresado" )
 						user$.next(usuario);
 				}
 			});
@@ -132,6 +150,8 @@ export class AuthOdooService {
 
 				} else {
 			
+					console.log(value, ' User_Partner');
+					
 					if (value[0].classification === 'vendor') {
 						if (knownTypes[value[0].image_1920[0]]) {
 							usuario.avatar = knownTypes[value[0].image_1920[0]] + value[0].image_1920;

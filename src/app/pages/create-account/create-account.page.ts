@@ -23,10 +23,10 @@ export class CreateAccountPage implements OnInit {
   usuario:UsuarioModel;
   ;
   
-  isCatTouched: boolean = false;
+  isCatTouched: boolean = true;
 
   loading: HTMLIonLoadingElement = null;
-  isEntTouched: boolean = false;
+  isEntTouched: boolean = true;
   
   confirmPass = '';
   nombre = '';
@@ -118,12 +118,12 @@ export class CreateAccountPage implements OnInit {
 
                 this.oficio = [
                   {name: 'Fontanero'},
-                  {name: 'Electricista'},
+                 // {name: 'Electricista'},
                   
               ];
 
               this.empresa = [
-                {name: 'Autónomo'},
+                {name: 'Autonomo'},
                 {name: 'Empresarial'},
                 
             ];
@@ -132,8 +132,9 @@ export class CreateAccountPage implements OnInit {
 
   ngOnInit() {
 
-this. obtener_campos();
+    this.obtener_campos();
 
+    
     
     this.platform.backButton.subscribeWithPriority(10, () => {
 
@@ -142,16 +143,17 @@ this. obtener_campos();
       });
 
       this.coordenadas=this.datos.getcoordenada();
-      console.log("co",this.coordenadas);
+      //console.log("co",this.coordenadas);
 
       this.notificationError$ = this._signupOdoo.getNotificationError$();
       this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
         this.ngZone.run(() => {
           if (notificationError) {
         
-            console.log("error creando usuario")
+            //console.log("error creando usuario")
             this.loading.dismiss();
-            this.presentToast("Error por usuario ya creado o conectividad")
+            
+            //this.presentToast("Error por usuario ya creado o conectividad")
             //error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
           }
         });
@@ -162,13 +164,11 @@ this. obtener_campos();
           if (notificationOK) {
             //quitar cargado e ir a la pagina de logguearse
             this.loading.dismiss();
-            console.log("exito creando usuario")
+            //console.log("exito creando usuario")
             let test = this._signupOdoo.getUserInfo();
-            console.log("usuario creado", test);
+            //console.log("usuario creado", test);
             this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
     
-  
-          
           }
         });
       });
@@ -189,7 +189,7 @@ this. obtener_campos();
       this.isCatTouched = true
     }else
     this.isCatTouched = false;
-    console.log("oficio" ,this.selectedOficio.name)
+    //console.log("oficio" ,this.selectedOficio)
 
   }
 
@@ -199,7 +199,7 @@ this. obtener_campos();
       this.isEntTouched = true
     }else
     this.isEntTouched = false
-    console.log("empresa" ,this.selectedEmpresa)
+    //console.log("empresa" ,this.selectedEmpresa)
 
   }
   
@@ -213,12 +213,12 @@ this. obtener_campos();
           text: 'Cámara',
           handler: async () => {
             let photo: Photo = await this.photoService.addNewToCamara();
-            console.log( "Foto",photo.webviewPath);
+            //console.log( "Foto",photo.webviewPath);
             if(photo){
               this.avatarUsuario= photo.webviewPath;
-              console.log(this.avatarUsuario);
+              //console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64();
-             // console.log('f64',this.avatarUsuario64.slice(22));
+             // //console.log('f64',this.avatarUsuario64.slice(22));
             }
           }
         },
@@ -227,14 +227,14 @@ this. obtener_campos();
           handler: async () => {
             this.photoService.photos = [];     
             let photos: Photo[] = await this.photoService.addNewToGallery();
-            // console.log("Fotos",JSON.stringify(this.photoService.photos));
+            // //console.log("Fotos",JSON.stringify(this.photoService.photos));
 
             if(photos.length == 1){
               
               this.avatarUsuario= photos[0].webviewPath;
-              console.log(this.avatarUsuario);
+              //console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64(); 
-              console.log('f64',this.avatarUsuario64.slice(22));
+              //console.log('f64',this.avatarUsuario64.slice(22));
             }
           }
         },
@@ -251,7 +251,7 @@ this. obtener_campos();
               this.avatarUsuario = this.usuario.avatar;
             }
             this.avatarUsuario64="";
-            console.log('Confirm Cancel');
+            //console.log('Confirm Cancel');
           }
         }
       ]
@@ -259,36 +259,7 @@ this. obtener_campos();
     await alert.present();
   }
 
-  editar(){
-    // this.usuario = new UsuarioModel;
-    // this.usuario.address=new Address('','','','','','','','','');
-    // this.usuario.realname=this.nombre;
-    // this.usuario.date=this.date;
-    // this.usuario.password=this.password;
-    
-    // this.usuario.username =this.user;
-    
-    // this.usuario.type = 'client';
-    
-    // this.usuario.address.street=this.streetNumber; 
-    // this.usuario.address.door=this.door;
-    // this.usuario.address.stair=this.stair;
-    // this.usuario.address.portal=this.portal;
-    // this.usuario.address.cp=this.postalCode;
-    // this.usuario.address.number=this.number;
-    // this.usuario.address.floor=this.floor;
-    // this.usuario.avatar = this.avatarUsuario64;
-
-    // this.usuario.address.latitude=String(this.datos.getlatitud());
-    // this.usuario.address.longitude=String(this.datos.getlongitud());
-
-
-    // /*  console.log(this.usuario,"nuevo usuario"); */
-    // this.datos.setcoordenada(false);
-
-    // this._signupOdoo.newUser(this.usuario);  
-  }
-
+ 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create(
       {
@@ -311,12 +282,12 @@ this. obtener_campos();
   onLocationClick(event) {
     //this.coordenadas = true;
     this.entrar_campos();
-    console.log('Location clicked');
+    //console.log('Location clicked');
     this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
   }
 
   onNextClick() {
-    console.log('Siguiente clicked');
+    
     this.validarCamposVacio();
      
   }
@@ -324,7 +295,7 @@ this. obtener_campos();
   validarCamposVacio(){
     
      if(this.avatarUsuario == '../../assets/icons/registro.svg'){
-      console.log( 'vacio foto')
+      //console.log( 'vacio foto')
       this.selectFoto=false;
       
     }
@@ -333,70 +304,70 @@ this. obtener_campos();
     }
 
     if(!this.selectedOficio){
-      console.log( 'no oficio seleccionado')
+      //console.log( 'no oficio seleccionado')
       
       this.isCatTouched=true;
       
     }
     else{
       this.isCatTouched=false;
-      console.log( ' oficio seleccionado')
+      //console.log( ' oficio seleccionado')
     }
 
     if(!this.selectedEmpresa){
-      console.log( 'no empresa')
+      //console.log( 'no empresa')
       
       this.isEntTouched=true;
       
     }
     else{
       this.isEntTouched=false;
-      console.log( 'si empresa')
+      //console.log( 'si empresa')
     }
 
 
     if(this.nombre == ""){
-      console.log( 'vacio',this.nombre)
+      //console.log( 'vacio',this.nombre)
       this.nombreVacio=true;
    
     }
     else{
       this.nombreVacio=false;
-      console.log( 'lleno',this.nombre)
+      //console.log( 'lleno',this.nombre)
     }
 
     if(this.date == ""){
-      console.log( 'vacio fecha de nacimiento')
+      //console.log( 'vacio fecha de nacimiento')
       this.fecha_nacimiento=true;
      
     }
     else{
       this.fecha_nacimiento=false;
-      console.log( ' fecha de nacimiento',this.date.slice(0,10))
+      //console.log( ' fecha de nacimiento',this.date.slice(0,10))
     }
 
     if(this.user == ""){
-      console.log( 'vacio user')
+      //console.log( 'vacio user')
       this.user_vacio=true;
      
     }
     else{
       this.user_vacio=false;
-      console.log( 'user',this.user)
+      //console.log( 'user',this.user)
     }
 
     if(this.password == ""){
-      console.log( 'vacio user')
+      //console.log( 'vacio user')
       this.password_vacio=true;
      
     }
     else{
       this.password_vacio=false;
-      console.log( 'vacio user',this.password)
+      //console.log( 'vacio user',this.password)
     }
 
     if(this.confirmPass == ""){
-      console.log( 'vacio user')
+      //console.log( 'vacio user')
       this.confirmPass_vacia=true;
       
     }
@@ -415,7 +386,7 @@ this. obtener_campos();
     }
 
     if(this.vat == ""){
-      console.log( 'vacio cifnif')
+      //console.log( 'vacio cifnif')
       this.cifNif_vacio=true;
      
     }
@@ -424,7 +395,7 @@ this. obtener_campos();
     }
 
     if(this.segSocialNumber == ""){
-      console.log( 'vacio seguridad')
+      //console.log( 'vacio seguridad')
       this.segSocialNumber_vacio=true;
      
     }
@@ -433,7 +404,7 @@ this. obtener_campos();
     }
 
     if(this.dni_correcto == ""){
-      console.log( 'El dnii esta vacio')
+      //console.log( 'El dnii esta vacio')
       this.DNI_vacio=true;
       this.dni_mal=false;
     
@@ -445,7 +416,7 @@ this. obtener_campos();
     
 
     if(this.cuentaBancaria == ""){
-      console.log( 'vacio seguridad')
+      //console.log( 'vacio seguridad')
       this.cuentaBancaria_vacio=true;
      
     }
@@ -454,136 +425,111 @@ this. obtener_campos();
     }
 
     if(this.phone == ""){
-      console.log( 'vacio seguridad')
+      //console.log( 'vacio seguridad')
       this.phone_vacio=true;
       
     }
     else{
       this.phone_vacio=false;
-      console.log( 'tele',this.phone)
+      //console.log( 'tele',this.phone)
 
     }
     
     if(this.streetNumber == ""){
-      console.log( 'vacio seguridad')
+      //console.log( 'vacio seguridad')
       this.streetNumber_vacio=true;
      
     }
     else{
       this.streetNumber_vacio=false;
-      console.log( 'calle',this.streetNumber);
+      //console.log( 'calle',this.streetNumber);
       
     }
 
     if(this.number == ""){
-      console.log( 'vacio seguridad')
+      //console.log( 'vacio seguridad')
       this.number_vacio=true;
      
     }
     else{
       this.number_vacio=false;
-      console.log( 'calle',this.number);
+      //console.log( 'calle',this.number);
     }
 
-    // if(this.coordenadas==true){
-    //   this.coordenadas_puesta=true;
-    // }
-    // else
-    // this.coordenadas_puesta=false; 
+    if(this.coordenadas==true){
+      this.coordenadas_puesta=true;
+    }
+    else
+    this.coordenadas_puesta=false; 
 
 
     /////*****Si todo esta bien */
-    console.log("casi")
-     this.validar_DNI(this.DNI);
-     console.log("pase")
-     console.log("dni",this.dni_mal);
-    
-      let testUser = new UsuarioModel();
-      testUser.address = new Address();
-
-     testUser.type = this.selectedOficio.name;
-     testUser.is_company = this.isEntTouched;
-     testUser.realname = this.nombre;
-     testUser.date = this.date.slice(0,10);
-     testUser.username = this.user;
-     testUser.password = this.password;
-     testUser.dni = this.dni_correcto;
-     testUser.phone = "+34"+this.phone;
-     testUser.social_security = this.segSocialNumber;
-     testUser.address.street = this.streetNumber;
-     testUser.address.number = this.number;
-     testUser.bank_ids = this.cuentaBancaria;
-    testUser.vat=this.vat;
-
-     //testUser.avatar =this.avatarUsuario64.slice(22);
-     
-     //testUser.avatar = "";
-
-     let foto=this.avatarUsuario64.slice(22);
-   // testUser.avatar = foto;
-    //  testUser.address.latitude = this.datos.getlatitud().toString();
-    //  testUser.address.longitude = this.datos.getlongitud().toString();
-
-     
-
-    // testUser.type = "fontanero";
-    // testUser.is_company = true;
-
-    // testUser.avatar = "";
-    // testUser.avatar =this.avatarUsuario64.slice(0,22);
-    // testUser.realname = "Adrian Nievess";
-    // testUser.username = "5@example.com"
-    // testUser.dni = "40065089H";
-    // testUser.password = "epicentro";
-    // testUser.date = "1992-08-10";
-    // testUser.phone = "968 88 88 88";
-    // testUser.bank_ids = "ES2000817353989593312448";
-    // testUser.social_security = "";
-    // testUser.vat="";
-    
-     testUser.address.latitude = "40,47558";
-    testUser.address.longitude = "-3,68992";
-
-    if (
-			Buffer.from(foto.substring(foto.indexOf(',') + 1)).length / 1e6 >
-			0.322216
-		) {
-			this.resizedataURL(foto, 1280, 960);
-		} else {
-			this.avatarUsuarioComprimida = foto.substring(foto.indexOf(',') + 1);
-      console.log("else de foto0",	this.avatarUsuarioComprimida )
-		}
-
-     testUser.avatar =this.avatarUsuarioComprimida ;
-     console.log("fin foto",	testUser.avatar)
-
-  //   this._signupOdoo.newUser(testUser);
-  //   console.log('entre al paso de crear')
-  // this.presentLoading("Creando ususario");
-    
-    
-    // this.avatarUsuario != '../../assets/icons/registro.svg' &&
-
-    //this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
-  //   if( this.selectedOficio.name != "" &&  this.nombre != "" && this.date != "" && this.user != "" && this.password != "" && this.confirmPass != "" && this.cifNif != "" &&  this.segSocialNumber != "" && this.dni_correcto != "" && this.cuentaBancaria != "" && this.phone != "" && this.streetNumber != "" && this.number != "" &&  this.coordenadas_puesta==true){   
    
-  // // this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+     this.validar_DNI(this.DNI);
+        
     
-  //   }
-  //   else{
-  //     console.log('entre al paso de crear no es valido')
-  //   }
 
-  if(this.selectFoto && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
+  if(this.selectFoto && this.coordenadas_puesta && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
  { 
-   this._signupOdoo.newUser(testUser);
-  console.log('entre al paso de crear')
+
+  let testUser = new UsuarioModel();
+  testUser.address = new Address();
+
+ testUser.type = this.selectedOficio.name;
+ if(this.selectedEmpresa.name === 'Empresarial')
+ {testUser.is_company =true ;}
+ else{
+ testUser.is_company =false ;
+}
+ testUser.realname = this.nombre;
+ testUser.date = this.date.slice(0,10);
+ testUser.username = this.user;
+ testUser.password = this.password;
+ testUser.dni = this.dni_correcto;
+ testUser.phone = this.phone;
+ testUser.social_security = this.segSocialNumber;
+ testUser.bank_ids = this.cuentaBancaria;
+ testUser.vat=this.vat;
+
+ testUser.address.street = this.streetNumber;
+ testUser.address.number = this.number;
+ testUser.address.floor = this.floor;
+ testUser.address.portal = this.portal;
+ testUser.address.door = this.door;
+ testUser.address.stair = this.stair;
+ testUser.address.cp = this.postalCode;
+
+ testUser.address.latitude = this.datos.getlatitud().toString();
+ testUser.address.longitude = this.datos.getlongitud().toString();
+
+ let foto =this.avatarUsuario64.slice(22);
+
+if (
+  Buffer.from(foto.substring(foto.indexOf(',') + 1)).length / 1e6 >
+  0.322216
+) {
+  this.resizedataURL(foto, 1280, 960);
+} else {
+  this.avatarUsuarioComprimida = foto.substring(foto.indexOf(',') + 1);
+  //console.log("else de foto0",	this.avatarUsuarioComprimida )
+}
+
+ testUser.avatar =this.avatarUsuarioComprimida ;
+ //console.log("fin foto",	testUser.avatar)
+   
   this.presentLoading("Creando ususario");
+  console.log('entre al paso de crear',testUser)
+  this._signupOdoo.newUser(testUser);
+  
+  
 }
 else {
-  this.presentToast("vrifique los campos")
-  console.log("dni",this.dni_mal);    
+  
+  //Poner Toast q sirva
+    console.log("error en los campos")
 }
+
+
   }
 
   validarMayorDeEdad(date: string) {
@@ -608,35 +554,19 @@ else {
     // en el mismo mes en curso pero no los ha cumplido todavia, se toma en consideración.
     
     if (months >= 216) {
-      console.log("Es mayor de edad");
+      //console.log("Es mayor de edad");
       this.esMayorEdad = true;
     }
     else {
-      console.log("No es mayor de edad");
+      //console.log("No es mayor de edad");
       this.esMayorEdad = false;
     }
   }
 
  
 
- 
 
-  // resizedataURL(datas, wantedWidth, wantedHeight, index) {
-	// 	var img = document.createElement('img');
-	// 	img.src = datas;
-	// 	img.onload = () => {
-	// 		let ratio = img.width / img.height;
-	// 		wantedWidth = wantedHeight * ratio;
-	// 		let canvas = document.createElement('canvas');
-	// 		let ctx = canvas.getContext('2d');
-	// 		canvas.width = wantedWidth;
-	// 		canvas.height = wantedHeight;
-	// 		ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
-	// 		let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
-	// 		//this.task.photoNewTaskArray[index] = temp.substring(temp.indexOf(',') + 1);
-			
-	// 	};
-	// }
+  
 
   resizedataURL(datas, wantedWidth, wantedHeight) {
 		var img = document.createElement('img');
@@ -651,7 +581,7 @@ else {
 			ctx.drawImage(img, 0, 0, wantedWidth, wantedHeight);
 			let temp = canvas.toDataURL('image/jpeg', [ 0.0, 1.0 ]);
       this.avatarUsuarioComprimida= temp.substring(temp.indexOf(',') + 1);
-      console.log("funcion foto",	this.avatarUsuarioComprimida)
+      //console.log("funcion foto",	this.avatarUsuarioComprimida)
 		};
 	}
 
@@ -659,16 +589,16 @@ else {
 
     let letra:string;
     let digito_letra=temp_dni.slice(8,9);
-    console.log('letra final ',digito_letra);
+    //console.log('letra final ',digito_letra);
     let digito1=temp_dni.slice(0,1);
-    console.log('d1',digito1);
+    //console.log('d1',digito1);
 
     let digito_total=temp_dni.slice(0,8);
-    console.log('dt',digito_total);
+    //console.log('dt',digito_total);
     
     if(digito1 != 0){
       let resto=digito_total % 23
-      console.log('resto',resto);
+      //console.log('resto',resto);
 
       switch(resto) {
         case 0:
@@ -767,24 +697,24 @@ else {
           // code block
       }
 
-     console.log('letra a comparar',letra);
+     //console.log('letra a comparar',letra);
       if(letra == digito_letra){
         this.dni_correcto=temp_dni
-        console.log('el dni esta bien es',temp_dni)
+        //console.log('el dni esta bien es',temp_dni)
         this.DNI_vacio=false
-        console.log('el dni esta bien es boo', this.DNI_vacio)
+        //console.log('el dni esta bien es boo', this.DNI_vacio)
         this.dni_mal=false;
 
       }
       else{
-        console.log('el dni esta mal es')
+        //console.log('el dni esta mal es')
         this.dni_correcto="";
         this.dni_mal=true;
         this.presentToast("DNI incorrecto");
       }
     }
     else{
-      console.log('el dni esta mal es')
+      //console.log('el dni esta mal es')
       this.dni_correcto="";
       this.dni_mal=true;
       //this.presentToast("DNI incorrecto");
@@ -795,7 +725,7 @@ else {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: sms,
-      spinner: 'circles',
+      //spinner: 'circles',
       //duration: 2000
     });
 
@@ -806,12 +736,12 @@ else {
   entrar_campos() {
 
 		this.datos.setnombre(this.nombre.trim());
-		//this.datos.setoficio(this.selectedOficio.name.trim());
-
+		this.datos.setoficio(this.selectedOficio.name);
+    this.datos.setEmpresa(this.selectedEmpresa.name);
 		this.datos.setcontraseña(this.password);
     this.datos.setcontraseñaConfirmafa(this.confirmPass.trim());
 		this.datos.setcorreo(this.user.trim().toLowerCase());
-		this.datos.settelefono("+34"+this.phone);
+		this.datos.settelefono(this.phone);
 		this.datos.setfecha(this.date.slice(0,10));
 		this.datos.setnumero(this.number);
 		this.datos.setcalle(this.streetNumber.trim());
@@ -819,23 +749,18 @@ else {
     this.datos.setseguridadSocial(this.segSocialNumber);
     this.datos.setcuentaBanco(this.cuentaBancaria);
     this.datos.setcif(this.vat);
+    
+    this.datos.setselectfoto(this.selectFoto);
+    this.datos.setfoto22(this.avatarUsuario)
+		this.datos.setfotoRegis(this.avatarUsuario64);
+    
+    
+    this.datos.setpiso(this.floor);
+    this.datos.setportal(this.portal);
+    this.datos.setpuerta(this.door);
+    this.datos.setescalera(this.stair);
+    this.datos.setcod_postal(this.postalCode);
 
-
-		//this.datos.setcontraseñaConfirmafa(this.ppass);
-	
-	
-		//this.datos.setfoto0(this.avatarsuario64);
-		this.datos.setfotoRegis(this.avatarUsuario);
-
-
-
-
-
-
-  //   testUser.dni = this.dni_correcto;
-  //   testUser.social_security = this.segSocialNumber;
-  //   testUser.bank_ids = this.cuentaBancaria;
-  //   testUser.vat=this.vat;
 	}
 
   obtener_campos() {
@@ -849,21 +774,29 @@ else {
     this.segSocialNumber=this.datos.getseguridadSocial();
     this.cuentaBancaria=this.datos.getcuentaBancaria();
     this.vat=this.datos.getcif();
+    this.floor = this.datos.getpiso();
+		this.door = this.datos.getpuerta();
+		this.portal = this.datos.getportal();
+		this.stair = this.datos.getescalera();
+		this.postalCode = this.datos.getcod_postal();
+		this.date= this.datos.getfecha();
+
+		this.selectFoto = this.datos.getselectfoto();
+    
+    this.avatarUsuario = this.datos.getfotoRegis();
+    this.avatarUsuario64 = this.datos.getfotoRegis();
+    
+    this.selectedOficio = {name:this.datos.getoficio()};
+    this.selectedEmpresa = {name:this.datos.getEmpresa()}
+
+
 		// this.correo = this.datos.getcorreo();
 		// this.correo = this.correo.toLowerCase().trim();
 		// this.pass = this.datos.getcontraseña();
 		// this.ppass = this.datos.getcontraseñaConfirmafa();
 		// this.telefono = this.datos.gettelefono();
-		// this.calle = this.datos.getcalle().trim();
-		// this.numero = this.datos.getnumero();
-		// this.piso = this.datos.getpiso();
-		// this.puerta = this.datos.getpuerta();
-		// this.portal = this.datos.getportal();
-		// this.escalera = this.datos.getescalera();
-		// this.cod_postal = this.datos.getcod_postal();
 		// this.coordenadas = this.datos.getcoordenada();
-		this.avatarUsuario = this.datos.getfotoRegis();
-		this.date= this.datos.getfecha();
-		this.selectFoto = this.datos.getselectfoto();
+		
+		
 	}
 }

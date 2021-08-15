@@ -1,3 +1,4 @@
+
 <ion-content>
   <div class="container">
     <div class="flex_column">
@@ -24,7 +25,7 @@
       <div class="image_div" style="height: 160px !important">
         <ion-card
           id="card_pic"
-          [ngClass]="(selectFoto == true) ? 'no_border':'green_border_bold'"
+          [ngClass]="(selectFoto) ? 'no_border':'green_border_bold'"
         >
           <ion-img
             class="selecf"
@@ -39,7 +40,7 @@
         <p-dropdown
           (onClick)="emitOficio()"
           [(ngModel)]="selectedOficio"
-          [ngClass]="((isCatTouched) || nombreVacio) ? 'green_test':'no_border_test'"
+          [ngClass]="((isCatTouched) || selectedOficio.name ) ? 'no_border_test':'green_test'"
 
           name="something"
           [options]="oficio"
@@ -48,17 +49,18 @@
         ></p-dropdown>
 
         <ion-label
-          *ngIf=" isCatTouched "
+          *ngIf=" !isCatTouched && !selectedOficio.name "
           class="mandatory"
         >
           Campo obligatorio
         </ion-label>
 
+        
         <div class="div_1">
           <p-dropdown
           (onClick)="emitEmpresa()"
             [options]="empresa"
-            [ngClass]="((isEntTouched) || nombreVacio) ? 'green_test':'no_border_test'"
+            [ngClass]="((isEntTouched) || selectedEmpresa.name) ? 'no_border_test':'green_test'"
             [(ngModel)]="selectedEmpresa"
             name="something1"
             placeholder="TIPO DE CUENTA"
@@ -66,7 +68,7 @@
           ></p-dropdown>
 
           <ion-label
-            *ngIf="isEntTouched"
+            *ngIf="!isEntTouched && (!selectedEmpresa.name )"
             class="mandatory"
           >
              Campo obligatorio
@@ -311,7 +313,7 @@
             *ngIf="(telefono.invalid && telefono.touched) || phone_vacio"
             class="mandatory"
           >
-            Campo obligatorio
+            Numero incorrecto
           </ion-label>
         </div>
 

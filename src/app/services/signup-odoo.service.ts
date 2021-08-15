@@ -3,8 +3,8 @@ import { UsuarioModel } from '../models/usuario.model';
 import { Observable, Subject } from 'rxjs';
 const jayson = require('../../../node_modules/jayson/lib/client/');
 
-// let host = '192.168.0.106';
- let host = '192.168.1.2';
+ let host = '192.168.0.107';
+// let host = '192.168.1.2';
 //const host = 'odoo.todoenunapp.com';
 const port = 8069;
 //const port = 443;
@@ -15,6 +15,8 @@ const pass = 'root';
 const notificationError$ = new Subject<boolean>();
 
 const notificationOK$ = new Subject<boolean>();
+
+const notificationLink$ = new Subject<string>();
 
 let newUser:UsuarioModel = new UsuarioModel;
 
@@ -32,10 +34,11 @@ export class SignUpOdooService {
     return notificationOK$.asObservable();
   }
 
-  show(usuario: UsuarioModel) {
-    console.log(usuario, 'sigupClient');
+  getNotificationLink$(): Observable<string> {
+    return notificationLink$.asObservable();
   }
 
+  
   newUser(usuario: UsuarioModel) {
     console.log(usuario, 'sigupClient');
 
@@ -44,11 +47,10 @@ export class SignUpOdooService {
     newUser.password = usuario.password;
 
     let user_to_create;
-    let partner_update;
     let id_job;
 
-    if (usuario.type === "fontanero"){
-      id_job = 39
+    if (usuario.type === "Fontanero"){
+      id_job = 29
     }
 
     user_to_create = {
@@ -62,15 +64,11 @@ export class SignUpOdooService {
       /* groups_id son los mismos para custumer y vendor para admin son: [2,21,36,22,26,7,1,11,17,34,3,23,6,35,20,19]*/
     };
 
-    console.log(user_to_create);
+    
+    let updateUser= function (new_usuario: UsuarioModel){
 
-     let set_partner_update =  (partner_id) => {
-      //console.log(usuario.partner_id);
-      newUser.partner_id = partner_id;
+      let partner_update = {
 
-      console.log(newUser,"variable de salida");
-
-      partner_update = {
         date: usuario.date, //birthdate
         address_street: usuario.address.street,
         address_floor: usuario.address.floor,
@@ -83,41 +81,82 @@ export class SignUpOdooService {
         address_longitude: usuario.address.longitude,
         phone: usuario.phone,
         vat: usuario.vat, //NIF
-        //'comment':'',//description
-        //'function':'',//job title
-        //'mobile':'968 88 88 88',
         is_company: usuario.is_company, //individual person or company
         //'vat_cif':'', //CIF number
         social_security: usuario.social_security, //Social security number
         //'iae_code' :'', //I.A.E code
         dni: usuario.dni, //DNI number
         bank_ids: [[0, 0, { acc_number: usuario.bank_ids }]], //bank account with iban format
-
-        product_supply_ids: [
-          //subscripciones para ser supplier
-          [
-            0,
-            0,
-            {
-              name: partner_id,
-              product_tmpl_id: id_job, //template_id optenido del servicio del que va a ser supplier
-            },
-          ],
-        ],
-      };
-
+        product_supply_ids:[//subscripciones para ser supplier 
+      
+             [0,0,
+            
+                {
+                    name: new_usuario,
+                    product_tmpl_id:id_job,//template_id optenido del servicio del que va a ser supplier
+                }
+            ]
+            ]
+    }
+      
+           
+     /*  let path = '/jsonrpc';
+      let client = jayson.http('http://' + host + ':' + port + path); */
+  
       let inParams = [];
-      inParams.push([partner_id]); //id to update
+      inParams.push(new_usuario.partner_id);
       inParams.push(partner_update);
-      let params = [];
-      params.push(inParams);
-
+      let params = []
+      params.push(inParams)
+  
       let fparams = [];
       fparams.push(db);
       fparams.push(1);
       fparams.push(pass);
       fparams.push('res.partner'); //model
       fparams.push('write'); //method
+  
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+  
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err ) {
+            console.log(err, 'Error update partner');
+            notificationError$.next(true);
+
+          } else {
+            console.log('Exito update partner');
+            notificationOK$.next(true);
+          }
+        }
+      );
+  
+        
+  
+  
+    }
+
+    
+
+    let get_user = function (id: number) {
+
+
+      let inParams = [];
+      inParams.push([['id', '=', id]]);
+      inParams.push(['partner_id']);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(db);
+      fparams.push(id);
+      fparams.push(usuario.password);
+      fparams.push('res.users'); //model
+      fparams.push('search_read'); //method
 
       for (let i = 0; i < params.length; i++) {
         fparams.push(params[i]);
@@ -127,12 +166,13 @@ export class SignUpOdooService {
         'call',
         { service: 'object', method: 'execute_kw', args: fparams },
         function (err, error, value) {
-          if (err) {
-            console.log(err, 'Error actualizando campos usuario');
+          if (err || !value) {
+            console.log(err, 'Error get_user');
             notificationError$.next(true);
           } else {
-            console.log('actualizando campos usuario exito');
-            notificationOK$.next(true);
+            usuario.partner_id = value[0].partner_id[0];
+            newUser.partner_id = value[0].partner_id[0];
+            updateUser(usuario);
           }
         }
       );
@@ -168,13 +208,215 @@ export class SignUpOdooService {
           notificationError$.next(true);
         } else {
           console.log(value, 'Exito creando el usuario');
-          set_partner_update(value);
+          get_user(value);
         }
       }
     );
   }
 
 
+  updateUser(usuario: UsuarioModel){
+     // let id_job;
+   
+      /* if (usuario.type === "fontanero"){
+         id_job = 29
+    } */
+
+    let user_to_update = {
+      //'name':'michel morales ',
+      //'classification':'vendor',// puede ser 'custumer','vendor' o 'admin'
+      //'login':'michel@example.com',
+      //'email':'michel@example.com',
+      password:usuario.password,
+      //'groups_id':[22,1,11,17,34,23,6,35,20,19],
+      /* groups_id son los mismos para custumer y vendor para admin son: [2,21,36,22,26,7,1,11,17,34,3,23,6,35,20,19]*/
+      image_1920:usuario.avatar,
+  }
+
+    let partner_update = {
+      //date: usuario.date, //birthdate
+      address_street: usuario.address.street,
+      address_floor: usuario.address.floor,
+      address_portal: usuario.address.portal,
+      address_number: usuario.address.number,
+      address_door: usuario.address.door,
+      address_stairs: usuario.address.stair,
+      address_zip_code: usuario.address.cp,
+      address_latitude: usuario.address.latitude,
+      address_longitude: usuario.address.longitude,
+      phone: usuario.phone,
+      //vat: usuario.vat, 
+      //is_company: usuario.is_company, //individual person or company
+      //social_security: usuario.social_security, //Social security number
+      //dni: usuario.dni, //DNI number
+      //bank_ids: [[0, 0, { acc_number: usuario.bank_ids }]], //bank account with iban format
+      /* product_supply_ids:[//subscripciones para ser supplier 
+     
+           [0,0,
+          
+              {
+                  name:usuario.partner_id,
+                  product_tmpl_id:id_job,//template_id optenido del servicio del que va a ser supplier
+              }
+          ]
+        ] */
+  }
+    
+    console.log(partner_update, "info a actualizar");
+    
+    let updatePatner= function (){
+    
+    /* let path = '/jsonrpc';
+    let client = jayson.http('http://' + host + ':' + port + path); */
+
+    let inParams = [];
+    inParams.push(usuario.partner_id);
+    inParams.push(partner_update);
+    let params = []
+    params.push(inParams)
+
+    let fparams = [];
+    fparams.push(db);
+    fparams.push(1);
+    fparams.push(pass);
+    fparams.push('res.partner'); //model
+    fparams.push('write'); //method
+
+    for (let i = 0; i < params.length; i++) {
+      fparams.push(params[i]);
+    }
+
+    client.request(
+      'call',
+      { service: 'object', method: 'execute_kw', args: fparams },
+      function (err, error, value) {
+        if (err ) {
+          console.log(err, 'Error update partner');
+          notificationError$.next(true);
+        } else {
+          console.log('Exito update partner');
+          notificationOK$.next(true);
+         
+        }
+      }
+    );
+  }
+    let path = '/jsonrpc';
+    let client = jayson.http('http://' + host + ':' + port + path);
+
+    let inParams = [];
+    inParams.push(usuario.id);
+    inParams.push(user_to_update);
+    let params = [];
+    params.push(inParams);
+
+    let fparams = [];
+    fparams.push(db);
+    fparams.push(1);
+    fparams.push(pass);
+    fparams.push('res.users'); //model
+    fparams.push('write'); //method
+
+    for (let i = 0; i < params.length; i++) {
+      fparams.push(params[i]);
+    }
+
+    client.request(
+      'call',
+      { service: 'object', method: 'execute_kw', args: fparams },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error actualizando usuario o el usuario ya existe');
+          notificationError$.next(true);
+        } else {
+          console.log(value, 'Exito actualizando el usuario');
+          updatePatner();
+        }
+      }
+    );
+
+   
+  }
+
+  updateDocuments(document:any){
+
+    let path = '/jsonrpc';
+    let client = jayson.http('http://' + host + ':' + port + path);
+
+    let inParams = []
+    inParams.push([newUser.partner_id]); //id to update
+    inParams.push({'document':document});
+    let params = []
+    params.push(inParams)
+
+    let fparams = [];
+    fparams.push(db);
+    fparams.push(1);
+    fparams.push(pass);
+    fparams.push('res.partner'); //model
+    fparams.push('write'); //method
+
+
+    for (let i = 0; i < params.length; i++) {
+      fparams.push(params[i]);
+    }
+
+    client.request(
+      'call',
+      { service: 'object', method: 'execute_kw', args: fparams },
+      function (err, error, value) {
+        if (err ) {
+          console.log(err, 'Error update Document');
+          notificationError$.next(true);
+        } else {
+          console.log('Exito update Document');
+          notificationOK$.next(true);
+         
+        }
+      }
+    );
+
+
+  }
+
+  getStripeLink(){
+
+    let reauth_url = 'https://odoo.todoenunapp.com/payment/stripe/reauth'
+    let return_url = 'https://odoo.todoenunapp.com/payment/stripe/return'
+    let path = '/jsonrpc'
+    let client = jayson.http('http://' + host + ':' + port + path);
+
+    
+    let inParams = []
+    inParams.push([newUser.partner_id]);
+    inParams.push(reauth_url);
+    inParams.push(return_url);
+    let params = []
+    params.push(inParams)
+    
+    let fparams = [];
+    fparams.push(db);
+    fparams.push(1);
+    fparams.push(pass);
+    fparams.push('res.partner');//model
+    fparams.push('stripe_express_connect_account');//method
+    
+    for(let i = 0; i <params.length; i++){
+        fparams.push(params[i]);
+    }
+
+    client.request('call', {service:'object', method:'execute_kw', args:fparams}, function(err, error, result) {
+        if(err){
+          console.log(err, 'Error generando link');
+          notificationError$.next(true); 
+        } else {
+            console.log(err, 'Exito generando link');
+            notificationLink$.next(result.account_id)
+        }
+    })
+}
+
+  
   getUserInfo (){
     return newUser;
   }

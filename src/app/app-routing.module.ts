@@ -118,7 +118,8 @@ const routes: Routes = [
   {
     path: 'pago-promociones',
     loadChildren: () => import('./pages/pago-promociones/pago-promociones.module').then( m => m.PagoPromocionesPageModule)
-  },  {
+  },
+  {
     path: 'clasificaciones',
     loadChildren: () => import('./pages/clasificaciones/clasificaciones.module').then( m => m.ClasificacionesPageModule)
   },

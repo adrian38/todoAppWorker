@@ -93,8 +93,8 @@ export class PhotoService {
 
 		this.foto = base64Data;
 
-		console.log('Paso 11112', base64Data);
-		console.log('Paso 111', this.foto);
+		//console.log('Paso 11112', base64Data);
+		//console.log('Paso 111', this.foto);
 		// Write the file to the data directory
 		const fileName = new Date().getTime() + '.jpeg';
 		const savedFile = await Filesystem.writeFile({

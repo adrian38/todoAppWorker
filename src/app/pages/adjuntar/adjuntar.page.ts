@@ -1,9 +1,11 @@
 // import { Platform } from '@angular/cdk/platform';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { AlertController, LoadingController, NavController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { Photo } from 'src/app/Interfaces/interfaces';
 import { PhotoService } from 'src/app/services/photo.service';
+import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 
 @Component({
   selector: 'app-adjuntar',
@@ -18,13 +20,21 @@ export class AdjuntarPage implements OnInit {
   message:string="";
   avatarUsuario64:string="";
   loading: HTMLIonLoadingElement = null;
+
+  notificationOK$: Observable<boolean>;
+	notificationError$: Observable<boolean>;
+
+	subscriptionError: Subscription;
+	subscriptionOk: Subscription;
   
   constructor(private navCtrl: NavController,
               private popoverCtrl: PopoverController,
               private alertCtrl: AlertController,
               private platform: Platform,
               private photoService: PhotoService,
+              private _sigupOdoo :SignUpOdooService,
               private toastController: ToastController,
+              private ngZone: NgZone,
               public loadingController: LoadingController) { }
 
   ngOnInit() {
@@ -34,7 +44,45 @@ export class AdjuntarPage implements OnInit {
       this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
 
     });
+
+
+    this.notificationError$ = this._sigupOdoo.getNotificationError$();
+      this.subscriptionError = this.notificationError$.subscribe((notificationError) => {
+        this.ngZone.run(() => {
+          if (notificationError) {
+        
+            
+            this.loading.dismiss();
+            this.presentToast("Error guardando su documento");
+            
+          }
+        });
+      });
+      this.notificationOK$ = this._sigupOdoo.getNotificationOK$();
+      this.subscriptionOk = this.notificationOK$.subscribe((notificationOK) => {
+        this.ngZone.run(() => {
+          if (notificationOK) {
+           
+            this.loading.dismiss();
+            this.presentToast("Documento IAE Salvado Correctamente");
+
+            setTimeout(() => {
+              this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+
+            }, 4000);
+    
+          }
+        });
+      });
+
   }
+
+  ngOnDestroy(): void {
+		//Called once, before the instance is destroyed.
+		//Add 'implements OnDestroy' to the class.
+		this.subscriptionOk.unsubscribe();
+		this.subscriptionError.unsubscribe();
+	}
 
   onNextClick(  ){
     if(this.foto != ""){
@@ -132,6 +180,13 @@ export class AdjuntarPage implements OnInit {
                   console.log(this.foto);
                   this.avatarUsuario64= this.photoService.devuelve64().slice(22); 
                   console.log('f64',this.avatarUsuario64);
+
+                  //////////////////////////llamar servicio;
+                  this._sigupOdoo.updateDocuments(this.avatarUsuario64);
+                  this.presentLoading("Espere mientras guardamos su documento IAE");
+
+                  this.presentToast("Documento Salvado");
+
                   //this.foto1= this.photoService.devuelve64();
 
                 
@@ -154,8 +209,9 @@ export class AdjuntarPage implements OnInit {
               // }
 
    }
+
    abrirDocumento(){
-    console.log('documento abierta');
+    console.log('documento abierto');
     this.presentToast("Los documentos no estan habilitados");
     
    }

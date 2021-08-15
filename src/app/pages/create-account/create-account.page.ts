@@ -142,7 +142,7 @@ export class CreateAccountPage implements OnInit {
  
       });
 
-      this.coordenadas=this.datos.getcoordenada();
+      
       //console.log("co",this.coordenadas);
 
       this.notificationError$ = this._signupOdoo.getNotificationError$();
@@ -165,9 +165,13 @@ export class CreateAccountPage implements OnInit {
             //quitar cargado e ir a la pagina de logguearse
             this.loading.dismiss();
             //console.log("exito creando usuario")
-            let test = this._signupOdoo.getUserInfo();
+            //let test = this._signupOdoo.getUserInfo();
             //console.log("usuario creado", test);
-            this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+
+            setTimeout(() => {
+              this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
+
+            }, 2000);
     
           }
         });
@@ -788,6 +792,8 @@ else {
     
     this.selectedOficio = {name:this.datos.getoficio()};
     this.selectedEmpresa = {name:this.datos.getEmpresa()}
+    
+    this.coordenadas=this.datos.getcoordenada();
 
 
 		// this.correo = this.datos.getcorreo();

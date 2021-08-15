@@ -88,8 +88,12 @@ export class AdjuntarPage implements OnInit {
 
   onNextClick(  ){
     if(this.foto != ""){
-      this.presentLoading("Salvando documento IAE");
-      this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+      this._sigupOdoo.updateDocuments(this.avatarUsuario64);
+      this.presentLoading("Espere mientras guardamos su documento IAE");
+
+      //this.presentToast("Documento Salvado");
+      //this.presentLoading("Salvando documento IAE");
+      //this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
       
     }
     else{
@@ -187,7 +191,7 @@ export class AdjuntarPage implements OnInit {
                   this._sigupOdoo.updateDocuments(this.avatarUsuario64);
                   this.presentLoading("Espere mientras guardamos su documento IAE");
 
-                  this.presentToast("Documento Salvado");
+                  //this.presentToast("Documento Salvado");
 
                   //this.foto1= this.photoService.devuelve64();
 
@@ -234,7 +238,7 @@ export class AdjuntarPage implements OnInit {
       cssClass: 'my-custom-class',
       message: sms,
       
-      duration:4000
+     // duration:4000
     });
 
     return this.loading.present();

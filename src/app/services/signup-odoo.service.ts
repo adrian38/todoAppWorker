@@ -3,8 +3,8 @@ import { UsuarioModel } from '../models/usuario.model';
 import { Observable, Subject } from 'rxjs';
 const jayson = require('../../../node_modules/jayson/lib/client/');
 
- let host = '192.168.0.107';
-// let host = '192.168.1.2';
+// let host = '192.168.0.107';
+ let host = '192.168.1.2';
 //const host = 'odoo.todoenunapp.com';
 const port = 8069;
 //const port = 443;

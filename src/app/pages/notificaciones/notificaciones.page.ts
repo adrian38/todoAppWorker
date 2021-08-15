@@ -161,4 +161,9 @@ export class NotificacionesPage implements OnInit {
       }
     );
   } 
+
+  detalles(){
+    this.navCtrl.navigateRoot('/promodetalles', {animated: true, animationDirection: 'back' }) ;
+    
+  }
 }

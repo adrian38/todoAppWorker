@@ -26,7 +26,8 @@ export class NotificacionesPage implements OnInit {
   subscriptionPoAcepted: Subscription;
   subscriptioNewPoSuplier: Subscription;
   subscriptioPoCancelled: Subscription; */
-
+ 
+  notificaciones:TaskOdooService[]=[];
   
   constructor(
     private _taskOdoo: TaskOdooService,
@@ -41,6 +42,8 @@ export class NotificacionesPage implements OnInit {
   ngOnInit() {
 
     this._taskOdoo.setNotificationOff();
+
+    this.notificaciones = this._taskOdoo.getpilaNotificaciones();
 
 
     this.platform.backButton.subscribeWithPriority(10, () => {

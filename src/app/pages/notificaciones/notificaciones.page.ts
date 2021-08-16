@@ -27,7 +27,7 @@ export class NotificacionesPage implements OnInit {
   subscriptioNewPoSuplier: Subscription;
   subscriptioPoCancelled: Subscription; */
  
-  notificaciones:any[]=[];
+  notificaciones:TaskModel[]=[];
   
   constructor(
     private _taskOdoo: TaskOdooService,
@@ -44,8 +44,11 @@ export class NotificacionesPage implements OnInit {
     this._taskOdoo.setNotificationOff();
 
     this.notificaciones = this._taskOdoo.getpilaNotificaciones();
+    console.log("todas las notificacionesk",this.notificaciones);
 
     console.log(this.notificaciones);
+  
+    console.log(this.notificaciones[0].notificationType);
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot(this.subServ.getruta(), {animated: true, animationDirection: 'back' }) ;
@@ -56,7 +59,7 @@ export class NotificacionesPage implements OnInit {
     
   }
   ngOnDestroy() {
-    /* this.subscriptionNotificationMess.unsubscribe();
+    /*this.subscriptionNotificationMess.unsubscribe();
     this.subscriptionNotificationMessgOrigin.unsubscribe();
     this.subscriptionOffertCancelled.unsubscribe();
     this.subscriptionPoAcepted.unsubscribe();

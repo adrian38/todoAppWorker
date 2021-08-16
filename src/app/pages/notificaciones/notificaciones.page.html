@@ -15,8 +15,91 @@
 </ion-header>
 
 <ion-content> 
+  <ion-row style="margin-top:80px;">
+<ion-label ></ion-label>
+  </ion-row>
 
-  <ion-row style="margin-top: 100px" (click)=detalles()>
+  <ion-row style="margin-top: 10px"  *ngFor="let notificacion of notificaciones, let i = index">
+
+    <ion-col size="1"></ion-col>
+    <ion-col
+      size="1"
+      style="
+        padding: 0px;
+        justify-content: center !important;
+        align-items: center !important;
+      "
+    >
+    <div *ngIf = "notificacion.notificationType == 1">
+      <ion-img
+        
+      src="../../../assets/icons/notificacion¡.svg"
+      style="
+        width: 20px;
+        height: 20px;
+        margin: 5px auto;
+        color: var(--ion-color-orange);
+      "
+    ></ion-img>
+    </div>
+
+    <div *ngIf = "notificacion.notificationType == 3">
+      <ion-img
+        
+      src="../../../assets/icons/notificacion¡.svg"
+      style="
+        width: 20px;
+        height: 20px;
+        margin: 5px auto;
+        color: var(--ion-color-orange);
+      "
+    ></ion-img>
+    </div>
+
+    <div *ngIf = "notificacion.notificationType == 4">
+      <ion-img
+      (click)=detalles()
+      src="../../../assets/icons/bocina.svg"
+      style="
+        width: 20px;
+        height: 20px;
+        margin: 5px auto;
+        color: var(--ion-color-orange);
+      "
+    ></ion-img>
+    </div>
+    
+    </ion-col>
+    <ion-col size="8" style="margin-top: 5px; margin-left: 15px; padding: 0px">
+      <ion-list style="padding: 0px">
+        <ion-label  *ngIf = "notificacion.notificationType == 1"
+          
+          style="color: var(--ion-color-black); margin-left: 11px"
+        >
+          Nueva solicitud
+        </ion-label>
+
+        <ion-label  *ngIf = "notificacion.notificationType == 3"
+          
+        style="color: var(--ion-color-black); margin-left: 11px"
+      >
+        Nuevo mensaje
+      </ion-label>
+
+      <ion-label  *ngIf = "notificacion.notificationType == 4"
+      (click)=detalles() 
+      style="color: var(--ion-color-black); margin-left: 11px"
+    >
+      Promociones
+    </ion-label>
+        <div id="item"></div>
+      </ion-list>
+    </ion-col>
+
+    <ion-col size="1"></ion-col>
+  </ion-row>
+
+  <!-- <ion-row style="margin-top: 100px" (click)=detalles()>
     <ion-col size="1"></ion-col>
     <ion-col
       size="1"
@@ -230,5 +313,5 @@
     </ion-col>
 
     <ion-col size="1"></ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-content>

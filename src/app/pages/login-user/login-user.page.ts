@@ -122,7 +122,7 @@ export class LoginUserPage implements OnInit {
         break;
 
         case 3:
-          this.presentAlertConfirm("Su solicitud esta siendo verificada",'Aministracion');
+          this.presentAlertConfirm("Su solicitud esta siendo verificada",'La Administracion');
         break;
 
         case 4:

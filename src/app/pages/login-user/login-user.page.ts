@@ -45,6 +45,7 @@ export class LoginUserPage implements OnInit {
   ngOnInit() {
     this._taskOdoo.setInitTab(false);
     this.usuario = new UsuarioModel();
+    console.log("el ususario",this.usuario);
     this.subscriptions();
 
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -101,7 +102,37 @@ export class LoginUserPage implements OnInit {
       });
     } else {
       this.loading.dismiss();
-      this.presentAlertConfirm();
+      console.log("el ususario final",this.usuario);
+      console.log("el ususario su error",this.usuario.error);
+      switch(this.usuario.error) {
+        case 0:
+          this.presentAlertConfirm("Problema de conexión",'Intente de nuevo');
+        break;
+        
+        case 1:
+          this.Alert_documentoIAE();
+        break;
+
+        case 2:
+            this.Alert_cuentaStripe();
+        break;
+
+        case 3:
+          this.presentAlertConfirm("Su solicitud esta siendo verificada",'Aministracion');
+        break;
+
+        case 4:
+          this.presentAlertConfirm("Usuario desabilitado",'Contactar con la administracion');
+        break;
+                
+      
+                
+        default:
+         
+      }
+
+
+     // this.presentAlertConfirm();
     }
   }
 
@@ -122,12 +153,12 @@ export class LoginUserPage implements OnInit {
     return this.loading.present();
   }
 
-  async presentAlertConfirm() {
+  async presentAlertConfirm(texto1:string ,texto2:string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
 
-      header: 'Problema de conexión',
-      message: 'Intente de nuevo',
+      header: texto1,
+      message: texto2,
       buttons: [
         {
           text: 'Cancelar',
@@ -141,10 +172,57 @@ export class LoginUserPage implements OnInit {
     await alert.present();
   }
 
-  recuperar() {
-    this.navController.navigateRoot('/recuperarcontrase', {
-      animated: true,
-      animationDirection: 'forward',
+  async Alert_documentoIAE() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+
+      header: 'El documento IAE no se ha intruducido',
+      message: 'Desea hacerlo ?',
+      buttons: [
+        {
+          text: 'Siguiente',
+          handler: (datos) => {
+            this.navController.navigateRoot('/adjuntar', {animated: true,animationDirection: 'forward',});
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {},
+        },
+      ],
     });
+
+    await alert.present();
+  }
+
+  async Alert_cuentaStripe() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+
+      header: 'Debe completar su cuenta stripe',
+      message: 'Desea hacerlo ?',
+      buttons: [
+        {
+          text: 'Siguiente',
+          handler: (datos) => {
+            this.navController.navigateRoot('/stripe', {animated: true,animationDirection: 'forward',});
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {},
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  recuperar() {
+    this.navController.navigateRoot('/recuperarcontrase', {animated: true,animationDirection: 'forward',});
   }
 }

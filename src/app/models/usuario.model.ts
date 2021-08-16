@@ -46,10 +46,14 @@ export class UsuarioModel {
   //iae_code:string; //I.A.E code
   dni:string; //DNI number
   bank_ids:string;
+  error:number;
+  link:string;
 
 
 
   constructor() {
+    this.link = "";
+    this.error = 0;
     this.username = "";
     this.password = "";
     this.name = "";

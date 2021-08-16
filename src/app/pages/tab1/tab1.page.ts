@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import {AlertController,LoadingController,NavController, Platform, ToastController} from '@ionic/angular';
+import { AlertController, LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
 import { MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { TaskModel } from 'src/app/models/task.model';
@@ -22,9 +22,9 @@ export class Tab1Page {
   solicitudesList: TaskModel[];
   tab: String;
   loading: any;
-  boton_atras:boolean=false;
+  boton_atras: boolean = false;
   solicitud_vacia: boolean = true;
-  message:string = '';
+  message: string = '';
 
   tasksList$: Observable<boolean>; // servicio comunicacion
   notificationNewMessg$: Observable<number[]>;
@@ -50,23 +50,23 @@ export class Tab1Page {
     public alertCtrl: AlertController,
     public loadingController: LoadingController,
     private _chatOdoo: ChatOdooService,
-    private platform      : Platform,
+    private platform: Platform,
     private toastCtrl: ToastController
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-   
+
     console.log('en el tab1 dentro !!')
-    this.message="Solicitud eliminida"
-   /*  this.platform.backButton.subscribeWithPriority(10, () => {
-      this. presentAlert();
- }); */
-   
+    this.message = "Solicitud eliminida"
+    /*  this.platform.backButton.subscribeWithPriority(10, () => {
+       this. presentAlert();
+  }); */
+
     this.subscriptions();
     this.init();
     this._taskOdoo.setTab1In(true);
     this.subServ.setruta('tabs/tab1');
-   
+
     /*  this.cantidad_solicitudes(); */
 
 
@@ -89,11 +89,11 @@ export class Tab1Page {
     if (!this._taskOdoo.getInitTab()) {
       this._taskOdoo.setInitTab(true);
       this._taskOdoo.requestTaskListProvider();
-     // this.subServ.setcargando(false);
+      // this.subServ.setcargando(false);
       this.presentLoadingCargado();
-     
-      
-    // this.cargandoSolicitud( this.subServ.getcargando());
+
+
+      // this.cargandoSolicitud( this.subServ.getcargando());
     } else {
       this.solicitudesList = this._taskOdoo.getSolicitudeList();
       ///////////preguntar si no hay solicitudes cuando se arregle
@@ -147,9 +147,9 @@ export class Tab1Page {
 
   subscriptions() {
     /* 	this.platform.backButton.subscribeWithPriority(10, () => {
-			this.loading.dismiss();
-			this.presentAlert();
-		}); */
+      this.loading.dismiss();
+      this.presentAlert();
+    }); */
 
     this.notificationNewMessg$ =
       this._taskOdoo.getRequestedNotificationNewMessg$();
@@ -228,12 +228,12 @@ export class Tab1Page {
     );
     //////////////////////////////////////////////////////////////////////////////
 
-    this.notificationOffertCancelled$ =
-      this._taskOdoo.getRequestedNotificationOffertCancelled$();
+    this.notificationOffertCancelled$ = this._taskOdoo.getRequestedNotificationOffertCancelled$();
     this.subscriptionOffertCancelled =
       this.notificationOffertCancelled$.subscribe(
         (notificationOffertCancelled) => {
           this.ngZone.run(() => {
+
             if (
               typeof this.solicitudesList !== 'undefined' &&
               this.solicitudesList.length > 0
@@ -257,12 +257,12 @@ export class Tab1Page {
         this.ngZone.run(() => {
           console.log(notificationPoAcepted, 'notificacionaceptada');
           /*         for (let Po_id of notificationPoAcepted){
-			console.log("PO Cancelled por notificacionOffert");
-			let temp = (this.solicitudesList.findIndex(element => element.id === Po_id ));
-			if(temp !== -1){
-			this.solicitudesList.splice(temp, 1);
-			}
-			} */
+      console.log("PO Cancelled por notificacionOffert");
+      let temp = (this.solicitudesList.findIndex(element => element.id === Po_id ));
+      if(temp !== -1){
+      this.solicitudesList.splice(temp, 1);
+      }
+      } */
         });
       }
     );
@@ -272,14 +272,14 @@ export class Tab1Page {
       (tasksList: boolean) => {
         this.ngZone.run(() => {
 
-          
+
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
             this.loading.dismiss();
             //this.subServ.setcargando(true);
           }
           this.solicitudEmpty();
-          console.log('cantidad',this.solicitudesList.length)
+          //console.log('cantidad', this.solicitudesList.length)
         });
       }
     );
@@ -301,7 +301,7 @@ export class Tab1Page {
   in(i) {
     this.task = this.solicitudesList[i];
     this._taskOdoo.setTaskCesar(this.task);
-   
+
     if (this.task.offer_send == 'sent') {
       this.navCtrl.navigateRoot('/solicitudes-chat-detalles', {
         animated: true,
@@ -321,94 +321,94 @@ export class Tab1Page {
     this.presentLoading();
   }
 
-    //------------------------------------------------------------------bien
-     /*  tituloSolicitud(i){
-        
-        this.titulo_solicitud=this.solicitudesList[i].title;
-        if (this.titulo_solicitud.length <16){
-          return this.titulo_solicitud;
-        }
-        else {
-          return  this.titulo_solicitud.slice(0,15) + " ... ";
-          }
-      } */
+  //------------------------------------------------------------------bien
+  /*  tituloSolicitud(i){
+     
+     this.titulo_solicitud=this.solicitudesList[i].title;
+     if (this.titulo_solicitud.length <16){
+       return this.titulo_solicitud;
+     }
+     else {
+       return  this.titulo_solicitud.slice(0,15) + " ... ";
+       }
+   } */
 
-      async presentLoadingCargado() {
-        this.loading = await this.loadingController.create({
-          cssClass: 'my-custom-class',
-          message: 'Cargando Solicitudes...'
-          //duration: 2000
-        });
-        return this.loading.present();
-      }
-  
+  async presentLoadingCargado() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Solicitudes...'
+      //duration: 2000
+    });
+    return this.loading.present();
+  }
 
-     /*  async presentAlert() {
-		
-       // this.loading.dismiss();  //////////////////////Probar a ver si quita las anteriores cuando doy atras
-    
-    
-        const alert = await this.alertCtrl.create({
-          cssClass: 'my-custom-class',
-          header: 'Alerta',
-          message: 'Desea registrarse con otro usuario',
-    
-          buttons: [
-            {
-              text: 'Cancelar',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: (blah) => {}
-            },
-            {
-              text: 'Aceptar',
-              handler: (datos) => {
-                this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'back' });
-              }
-            }
-          ]
-        });
-    
-        await alert.present();
-      }
- */
-      async presentLoading() {
-        this.loading = await this.loadingController.create({
-          cssClass: 'my-custom-class',
-          message: 'Eliminando Solicitud...'
-          //duration: 2000
-        });
-    
-        return this.loading.present();
-      }
 
-      onFabClick(  ){
-        this.display=true;
-        //this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
-              
-      }
- /* cargandoSolicitud( c:boolean){
+  /*  async presentAlert() {
+	
+    // this.loading.dismiss();  //////////////////////Probar a ver si quita las anteriores cuando doy atras
+ 
+ 
+     const alert = await this.alertCtrl.create({
+       cssClass: 'my-custom-class',
+       header: 'Alerta',
+       message: 'Desea registrarse con otro usuario',
+ 
+       buttons: [
+         {
+           text: 'Cancelar',
+           role: 'cancel',
+           cssClass: 'secondary',
+           handler: (blah) => {}
+         },
+         {
+           text: 'Aceptar',
+           handler: (datos) => {
+             this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'back' });
+           }
+         }
+       ]
+     });
+ 
+     await alert.present();
+   }
+*/
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Eliminando Solicitud...'
+      //duration: 2000
+    });
 
-        if(c == true){
-          this.loading.dismiss();
-        }
-        
+    return this.loading.present();
+  }
 
-      }   */
-      btn_continuar(){
-        this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
-      }
+  onFabClick() {
+    this.display = true;
+    //this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
 
-      async presentToastCancelar(message: string) {
-        const toast = await this.toastCtrl.create(
-          {
-            message,
-            translucent:true,
-            duration: 3000,
-            mode:"ios"
-          }
-        );
-    
-        toast.present();
+  }
+  /* cargandoSolicitud( c:boolean){
+ 
+         if(c == true){
+           this.loading.dismiss();
+         }
+         
+ 
+       }   */
+  btn_continuar() {
+    this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
+  }
+
+  async presentToastCancelar(message: string) {
+    const toast = await this.toastCtrl.create(
+      {
+        message,
+        translucent: true,
+        duration: 3000,
+        mode: "ios"
       }
+    );
+
+    toast.present();
+  }
 }

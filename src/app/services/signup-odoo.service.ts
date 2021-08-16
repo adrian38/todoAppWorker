@@ -11,6 +11,7 @@ const port = 443;
 const db = 'demo';
 const user = 'root';
 const pass = 'root';
+const pathConnection = '/jsonrpc';
 
 const notificationError$ = new Subject<boolean>();
 
@@ -19,6 +20,12 @@ const notificationOK$ = new Subject<boolean>();
 const notificationLink$ = new Subject<string>();
 
 let newUser:UsuarioModel = new UsuarioModel;
+
+/* newUser.username = 'beatrizplomera5@example.com';
+newUser.password = 'epicentro'; 
+newUser.id = 97;
+newUser.partner_id = 175; */
+
 
 @Injectable({
   providedIn: 'root',
@@ -208,6 +215,7 @@ export class SignUpOdooService {
           notificationError$.next(true);
         } else {
           console.log(value, 'Exito creando el usuario');
+          newUser.id = value;
           get_user(value);
         }
       }
@@ -340,6 +348,38 @@ export class SignUpOdooService {
 
   updateDocuments(document:any){
 
+    let set_partner_update = function () {
+        
+      //let partner_id = flow.get('partnerID')
+      let inParams = []
+      inParams.push([newUser.partner_id]); //id to update
+      inParams.push({'docs_check': false});
+      let params = []
+      params.push(inParams)
+      
+      let fparams = [];
+      fparams.push(db);
+      fparams.push(1);
+      fparams.push(pass);
+      fparams.push('res.partner');//model
+      fparams.push('write');//method
+      
+      for(let i = 0; i <params.length; i++){
+          fparams.push(params[i]);
+      }
+  
+      client.request('call', {service:'object', method:'execute_kw', args:fparams}, function(err, error, result) {
+          if(err){
+            console.log(err, 'Error update Document mensual');
+            notificationError$.next(true); 
+          } else {
+            console.log(err, 'Exito update Document mensual');
+            notificationOK$.next(true);
+          }
+      })
+  }
+
+
     let path = '/jsonrpc';
     let client = jayson.https('https://' + host + ':' + port + path);
 
@@ -370,7 +410,8 @@ export class SignUpOdooService {
           notificationError$.next(true);
         } else {
           console.log('Exito update Document');
-          notificationOK$.next(true);
+          set_partner_update();
+          //notificationOK$.next(true);
          
         }
       }
@@ -418,6 +459,82 @@ export class SignUpOdooService {
     })
 }
 
+/*  notificationPull() {
+ 
+  let poll = function (last) {
+    let path = '/longpolling/poll';
+
+    client = jayson.https({
+      host: host,
+      port: port + path,
+    });
+
+    client.request(
+      'call',
+      {
+        context: { uid: newUser.id },
+        channels: [db + '_' + newUser.partner_id.toString()],
+        last: last,
+      },
+      { context: { lang: 'es_ES', uid: newUser.id } },
+      function (err, error, value) {
+        if (err) {
+          console.log(err, 'Error poll');
+        } else {
+          
+          if (typeof value !== 'undefined' && value.length > 0) {
+           
+            console.log(value, 'esta fue la notificacion q llego');
+
+            for (let task of value) {
+              if (
+                task['message']['type'] === 'purchase_order_notification' &&
+                task['message']['action'] === 'created'
+              ) {
+                console.log('se ha creado una nueva So');
+                
+              }
+             
+            }
+
+            poll(value[value.length - 1].id);
+          }else{
+            poll(0);
+          }
+        }
+      }
+    );
+  };
+
+  console.log(newUser.username,"usuario poll");
+  console.log(newUser.password,"usuario poll");
+
+  let client = jayson.https({
+    host: host,
+    port: port + pathConnection,
+
+
+
+  });
+  client.request(
+    'call',
+    {
+      service: 'common',
+      method: 'login',
+      args: [db, newUser.username, newUser.password],
+    },
+
+    
+
+    function (err, error, value) {
+      if (err || !value) {
+        console.log(err, 'Error cancelPOsuplier');
+      } else {
+        poll( 0);
+      }
+    }
+  );
+}  */
   
   getUserInfo (){
     return newUser;

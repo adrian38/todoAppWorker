@@ -60,6 +60,9 @@ let notificationOffertCancelled$ = new Subject<number[]>();
 
 let notifications$ = new Subject<boolean>();
 
+let notificationOff$ = new Subject<boolean>();
+
+
 let notiAlert:boolean = false;
 
 let rutaActual: boolean = true;
@@ -90,8 +93,24 @@ export class TaskOdooService {
     jaysonServer = this._authOdoo.OdooInfoJayson;
     
     pilaSolicitudes = new PilaSolicitudes<TaskModel>();
-    pilaNotificaciones = [];
+    
   
+  }
+
+  getNotificationOff$(): Observable<boolean> {
+    return notificationOff$.asObservable();
+  }
+
+  setNotificationOff(){
+    notificationOff$.next(true);
+  }
+
+  getNotificationNav$(): Observable<boolean> {
+    return notifications$.asObservable();
+  }
+
+  getpilaNotificaciones(){
+    return pilaNotificaciones;
   }
 
   setTaskPayment(task: TaskModel) {
@@ -151,9 +170,9 @@ export class TaskOdooService {
     rutaChat = temp;
   }
 
-  getNotifications$(): Observable<boolean> {
+  /* getNotifications$(): Observable<boolean> {
     return notificationError$.asObservable();
-  }
+  } */
 
   getNotificationError$(): Observable<boolean> {
     return notificationError$.asObservable();
@@ -199,7 +218,7 @@ export class TaskOdooService {
     let poll = function (uid, partner_id, last) {
       let path = '/longpolling/poll';
 
-      client = jayson.http({
+      client = jayson.https({
         host: jaysonServer.host,
         port: jaysonServer.port + path,
       });
@@ -277,12 +296,13 @@ export class TaskOdooService {
               if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
                 /* console.log(id_messg, 'nuevo mensaje id'); */
 				
-				let notifTask: TaskModel = new TaskModel();
-				notifTask.notificationType = 3;
+				          let notifTask: TaskModel = new TaskModel();
+				          notifTask.notificationType = 3;
                   for (let i = 0; i < id_messg.length; i++) {
                     notifTask.id = id_messg[i];
                     pilaNotificaciones.push(notifTask);
                   }
+                  notifications$.next(true)
 
                 if (rutaActual || rutaChat) {
                   notificationNewMessg$.next(id_messg);
@@ -302,6 +322,9 @@ export class TaskOdooService {
                     notifTask.id = id_messg[i];
                     pilaNotificaciones.push(notifTask);
                   }
+
+                  notifications$.next(true)
+
 
                 if (rutaActual) {
                   notificationNewPoSuplier$.next(id_po);
@@ -350,7 +373,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -568,6 +591,8 @@ export class TaskOdooService {
         'address_longitude',
         'origin',
         'state',
+        'distance',
+
       ]);
       let params = [];
       params.push(inParams);
@@ -582,7 +607,7 @@ export class TaskOdooService {
         fparams.push(params[i]);
       }
 
-      client = jayson.http({
+      client = jayson.https({
         host: jaysonServer.host,
         port: jaysonServer.port + jaysonServer.pathConnection,
       });
@@ -626,7 +651,8 @@ export class TaskOdooService {
                 task['address_door'],
                 task['address_zip_code'],
                 task['address_latitude'],
-                task['address_longitude']
+                task['address_longitude'],
+                task['distance']
               );
               if (rutaActual) {
                 temp.notificationNewSo = true;
@@ -644,7 +670,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -696,7 +722,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -824,7 +850,8 @@ export class TaskOdooService {
                 task['address_door'],
                 task['address_zip_code'],
                 task['address_latitude'],
-                task['address_longitude']
+                task['address_longitude'],
+                task['distance']
               );
 
               tasksList.push(temp);
@@ -836,7 +863,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -1085,6 +1112,7 @@ export class TaskOdooService {
         'address_zip_code',
         'address_latitude',
         'address_longitude',
+        'distance',
         'origin',
         'state',
         'order_line',
@@ -1145,7 +1173,8 @@ export class TaskOdooService {
                 task['address_door'],
                 task['address_zip_code'],
                 task['address_latitude'],
-                task['address_longitude']
+                task['address_longitude'],
+                task['distance']
               );
               temp.order_line = task['order_line'];
               tasksList.push(temp);
@@ -1161,7 +1190,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -1360,7 +1389,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.http({
+    let client = jayson.https({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });

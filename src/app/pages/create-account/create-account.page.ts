@@ -739,9 +739,13 @@ else {
 		this.datos.setnombre(this.nombre.trim());
 		this.datos.setoficio(this.selectedOficio.name);
     this.datos.setEmpresa(this.selectedEmpresa.name);
-		this.datos.setcontraseña(this.password);
+		
+    
+    this.datos.setcontraseña(this.password);
     this.datos.setcontraseñaConfirmafa(this.confirmPass.trim());
-		this.datos.setcorreo(this.user.trim().toLowerCase());
+		
+    
+    this.datos.setcorreo(this.user.trim().toLowerCase());
 		this.datos.settelefono(this.phone);
 		this.datos.setfecha(this.date.slice(0,10));
 		this.datos.setnumero(this.number);
@@ -766,7 +770,10 @@ else {
 
   obtener_campos() {
 		this.nombre = this.datos.getnombre().trim();
+    
+    this.password = this.datos.getcontraseña();
     this.confirmPass=this.datos.getcontraseñaConfirmafa();
+    
     this.user=this.datos.getcorreo();
     this.phone=String(this.datos.gettelefono());
     this.number=this.datos.getnumero();

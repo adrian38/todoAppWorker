@@ -150,7 +150,7 @@
             />
           </ion-col>
           <ion-col size="10.7" style="padding-top: 6px; padding-left: 0px">
-            <ion-label class="parametros_detalle">Dirección</ion-label>
+            <ion-label class="parametros_detalle">Distancia</ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -174,13 +174,13 @@
         <ion-row *ngIf="task.require_materials">
           <p
             style="margin: 5px 0px; font-size: medium"
-            *ngIf="materiales != '' "
+            *ngIf="materiales != 0 "
           >
             Materiales: {{ materiales }} €
           </p>
           <p
             style="margin: 5px 0px; font-size: medium"
-            *ngIf="materiales == '' "
+            *ngIf="materiales == 0 "
           >
             Materiales: 0 €
           </p>
@@ -189,13 +189,13 @@
           <ion-col size="8" style="padding-left: 0px">
             <p
               style="margin: 5px 0px; font-size: medium"
-              *ngIf=" manoobra != null "
+              *ngIf=" manoobra != 0 "
             >
               Mano de obra: {{ manoobra }} €
             </p>
             <p
               style="margin: 5px 0px; font-size: medium"
-              *ngIf=" manoobra == null "
+              *ngIf=" manoobra == 0 "
             >
               Mano de obra: 0 €
             </p>

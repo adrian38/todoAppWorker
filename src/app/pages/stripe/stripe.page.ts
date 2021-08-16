@@ -58,7 +58,8 @@ export class StripePage implements OnInit {
       this.subscriptionOk = this.notificationLink$.subscribe((notificationLink) => {
         this.ngZone.run(() => {
           
-           
+           //this._sigupOdoo.notificationPull();
+
             this.loading.dismiss();
            
             this.browser.create(notificationLink);

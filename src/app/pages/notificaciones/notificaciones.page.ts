@@ -3,7 +3,7 @@ import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { MessageModel } from 'src/app/models/message.model';
 import { TaskModel } from 'src/app/models/task.model';
 import { ChatOdooService } from 'src/app/services/chat-odoo.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription,Subject } from 'rxjs';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
@@ -13,7 +13,7 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
   styleUrls: ['./notificaciones.page.scss'],
 })
 export class NotificacionesPage implements OnInit {
-  notificationNewMessg$: Observable<number[]>;
+ /*  notificationNewMessg$: Observable<number[]>;
   notificationNewMessgOrigin$: Observable<MessageModel[]>;
   notificationOffertCancelled$: Observable<number[]>;
   notificationPoAcepted$: Observable<any[]>;
@@ -25,8 +25,9 @@ export class NotificacionesPage implements OnInit {
   subscriptionOffertCancelled: Subscription;
   subscriptionPoAcepted: Subscription;
   subscriptioNewPoSuplier: Subscription;
-  subscriptioPoCancelled: Subscription;
+  subscriptioPoCancelled: Subscription; */
 
+  
   constructor(
     private _taskOdoo: TaskOdooService,
     private ngZone: NgZone,
@@ -36,7 +37,11 @@ export class NotificacionesPage implements OnInit {
     private subServ: ObtSubSService
   ) {}
 
+ 
   ngOnInit() {
+
+    this._taskOdoo.setNotificationOff();
+
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot(this.subServ.getruta(), {animated: true, animationDirection: 'back' }) ;
@@ -47,17 +52,24 @@ export class NotificacionesPage implements OnInit {
     
   }
   ngOnDestroy() {
-    this.subscriptionNotificationMess.unsubscribe();
+    /* this.subscriptionNotificationMess.unsubscribe();
     this.subscriptionNotificationMessgOrigin.unsubscribe();
     this.subscriptionOffertCancelled.unsubscribe();
     this.subscriptionPoAcepted.unsubscribe();
     this.subscriptioNewPoSuplier.unsubscribe();
-    this.subscriptioPoCancelled.unsubscribe(); 
+    this.subscriptioPoCancelled.unsubscribe(); */ 
   }
 
    subscriptions() {
+
+
+
+
+
+
+
     
-    this.notificationNewMessg$ =
+    /* this.notificationNewMessg$ =
       this._taskOdoo.getRequestedNotificationNewMessg$();
     this.subscriptionNotificationMess = this.notificationNewMessg$.subscribe(
       (notificationNewMessg) => {
@@ -65,7 +77,7 @@ export class NotificacionesPage implements OnInit {
           this._chatOdoo.requestNewMessageNoti(notificationNewMessg);
         });
       }
-    );
+    ); */
 
     /* this.notificationNewMessgOrigin$ = this._chatOdoo.getMessagesOriginNotification$(); //
     this.subscriptionNotificationMessgOrigin =
@@ -151,7 +163,7 @@ export class NotificacionesPage implements OnInit {
         }
       );
  */
-    this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
+   /*  this.notificationPoAcepted$ = this._taskOdoo.getRequestedNotificationPoAcepted$();
     this.subscriptionPoAcepted = this.notificationPoAcepted$.subscribe(
       (notificationPoAcepted) => {
         this.ngZone.run(() => {
@@ -159,7 +171,7 @@ export class NotificacionesPage implements OnInit {
         
         });
       }
-    );
+    ); */
   } 
 
   detalles(){

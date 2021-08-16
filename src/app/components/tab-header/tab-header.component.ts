@@ -21,8 +21,13 @@ export class TabHeaderComponent implements OnInit {
 
   
   notification: boolean = false;
+  
   notification$: Observable<boolean>;
   subscriptionNotification:Subscription;
+
+  notificationOff$: Observable<boolean>;
+  subscriptionNotificationOff:Subscription;
+
 
   ruta:string = '';
 
@@ -56,12 +61,30 @@ export class TabHeaderComponent implements OnInit {
 
   ngOnDestroy(){
     this.subscriptionNotification.unsubscribe();
+    this.subscriptionNotificationOff.unsubscribe();
 
   }
   
 
   subscriptions() {
-  this.notification$ = this._taskOdoo.getNotifications$();
+
+
+    this.notificationOff$ = this._taskOdoo.getNotificationOff$();
+    this.subscriptionNotificationOff = this.notificationOff$.subscribe(
+      (notiAlert: boolean) => {
+        this.ngZone.run(() => {
+
+          if (notiAlert) {
+           this.notification=false;
+          }
+       
+        });
+      }
+    );
+
+
+
+  this.notification$ = this._taskOdoo.getNotificationNav$();
     this.subscriptionNotification = this.notification$.subscribe(
       (notiAlert: boolean) => {
         this.ngZone.run(() => {

@@ -6,12 +6,12 @@ let jaysonServer = {
 	//host: '192.168.0.102',
 	//host: '192.168.0.106',
 	//host: '192.168.0.107',
-	//host: 'odoo.todoenunapp.com',
-	host: '192.168.1.2',
+	host: 'odoo.todoenunapp.com',
+	//host: '192.168.1.2',
    //host: '192.168.1.4',
 	
-	//port: '443',
-	port: '8069',
+	port: '443',
+	//port: '8069',
 	db: 'demo',
 	username: '',
 	password: '',
@@ -70,17 +70,19 @@ export class AuthOdooService {
 				//'function',
 				'phone',
 				//'mobile',
-				'is_company',
+				//'is_company',
 				//'vat_cif',
-				'social_security',
+				//'social_security',
 				//'iae_code',
-				'dni',
-				'product_supply_ids',
+				//'dni',
+				//'product_supply_ids',
 				'docs_check',
 				//'stripe_connect_account_id',
 				'stripe_connect_account_link',
 				'stripe_connect_account_state',
-				'ranking'
+				'ranking',
+				'initial',
+
 			]);
 			let params = [];
 			params.push(inParams);
@@ -103,7 +105,8 @@ export class AuthOdooService {
 			) {
 				if (err) {
 				} else {
-					
+					console.log(value,"ingresado" )
+
 					usuario.address.street=value[0].address_street,
 					usuario.address.number=value[0].address_number,
 					usuario.address.portal=value[0].address_portal,
@@ -113,10 +116,30 @@ export class AuthOdooService {
 					usuario.address.cp=value[0].address_zip_code,
 					usuario.address.latitude=value[0].address_latitude,
 					usuario.address.longitude=value[0].address_longitude
+
+					/* if(value[0].docs_check){
+						usuario.connected = false;
+						usuario.error = 1;
+						user$.next(usuario);
+						return;
+					} else if(value[0].stripe_connect_account_state !== "verified")
+					{
+						usuario.connected = false;
+						usuario.error = 2;
+						usuario.link = value[0].stripe_connect_account_link;
+						user$.next(usuario);
+						return;
+					}
+					else if(!value[0].initial )
+					{
+						usuario.connected = false;
+						usuario.error = 3;
+						user$.next(usuario);
+						return;
+					} */
 					
 
 						userInfo=usuario;
-						console.log(value,"ingresado" )
 						user$.next(usuario);
 				}
 			});
@@ -147,6 +170,8 @@ export class AuthOdooService {
 			) {
 				if (err || !value) {
 					console.log(err, 'Error get_user');
+					usuario.connected = false;
+					user$.next(usuario);
 
 				} else {
 			
@@ -173,7 +198,7 @@ export class AuthOdooService {
 				}
 			});
 		};
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+		let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
 		client.request(
 			'call',
 			{
@@ -185,9 +210,10 @@ export class AuthOdooService {
 				if (err || !value) {
 					console.log(err,'Login Failed');
 					usuario.connected = false;
+					usuario.error = 4;
 					user$.next(usuario);
 				} else {
-					console.log(client);
+					//console.log(client);
 					get_user(value);
 				}
 			}

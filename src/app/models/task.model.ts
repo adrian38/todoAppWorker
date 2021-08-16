@@ -8,6 +8,7 @@ export class Address {
 	cp: string;
 	latitude: string;
 	longitude: string;
+	distance:number;
 
 	constructor(
 		street: '',
@@ -18,7 +19,8 @@ export class Address {
 		door: '',
 		cp: '',
 		latitude: '',
-		longitude: ''
+		longitude: '',
+		distance:0,
 	) {
 		this.street = street;
 		this.number = number;
@@ -29,6 +31,7 @@ export class Address {
 		this.cp = cp;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.distance = distance;
 	}
 }
 

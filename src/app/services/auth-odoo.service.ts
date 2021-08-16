@@ -117,7 +117,7 @@ export class AuthOdooService {
 					usuario.address.latitude=value[0].address_latitude,
 					usuario.address.longitude=value[0].address_longitude
 
-					/* if(value[0].docs_check){
+					 if(value[0].docs_check){
 						usuario.connected = false;
 						usuario.error = 1;
 						user$.next(usuario);
@@ -136,7 +136,7 @@ export class AuthOdooService {
 						usuario.error = 3;
 						user$.next(usuario);
 						return;
-					} */
+					} 
 					
 
 						userInfo=usuario;

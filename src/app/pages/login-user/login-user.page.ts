@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { ChatOdooService } from 'src/app/services/chat-odoo.service';
+import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import {
   AlertController,
@@ -34,6 +35,7 @@ export class LoginUserPage implements OnInit {
     private ngZone: NgZone,
     private _authOdoo: AuthOdooService,
     private _taskOdoo: TaskOdooService,
+    private _signOdoo: SignUpOdooService,
     private _chatOdoo: ChatOdooService,
     public loadingController: LoadingController,
     public alertController: AlertController,
@@ -104,6 +106,8 @@ export class LoginUserPage implements OnInit {
       this.loading.dismiss();
       console.log("el ususario final",this.usuario);
       console.log("el ususario su error",this.usuario.error);
+      
+      this._signOdoo.setUser(this.usuario);
       switch(this.usuario.error) {
         case 0:
           this.presentAlertConfirm("Problema de conexión",'Intente de nuevo');

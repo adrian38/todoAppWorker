@@ -45,6 +45,13 @@ export class SignUpOdooService {
     return notificationLink$.asObservable();
   }
 
+
+  setUser(user: UsuarioModel){
+
+    newUser = user;
+
+  }
+
   
   newUser(usuario: UsuarioModel) {
     console.log(usuario, 'sigupClient');

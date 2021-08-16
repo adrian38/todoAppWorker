@@ -117,7 +117,7 @@ export class AuthOdooService {
 					usuario.address.latitude=value[0].address_latitude,
 					usuario.address.longitude=value[0].address_longitude
 
-					/* if(value[0].docs_check){
+				   if(value[0].docs_check){
 						usuario.connected = false;
 						usuario.error = 1;
 						user$.next(usuario);
@@ -136,7 +136,7 @@ export class AuthOdooService {
 						usuario.error = 3;
 						user$.next(usuario);
 						return;
-					} */
+					} 
 					
 
 						userInfo=usuario;
@@ -183,7 +183,6 @@ export class AuthOdooService {
 						}
 						usuario.type = 'provider';
 						usuario.connected = true;
-						usuario.id = id;
 						usuario.partner_id = value[0].partner_id[0];
 						usuario.realname = value[0].name;
 
@@ -211,9 +210,11 @@ export class AuthOdooService {
 					console.log(err,'Login Failed');
 					usuario.connected = false;
 					usuario.error = 4;
+					
 					user$.next(usuario);
 				} else {
 					//console.log(client);
+					usuario.id = value;
 					get_user(value);
 				}
 			}

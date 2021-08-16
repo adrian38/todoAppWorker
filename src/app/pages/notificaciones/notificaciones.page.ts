@@ -27,7 +27,7 @@ export class NotificacionesPage implements OnInit {
   subscriptioNewPoSuplier: Subscription;
   subscriptioPoCancelled: Subscription; */
  
-  notificaciones:TaskOdooService[]=[];
+  notificaciones:any[]=[];
   
   constructor(
     private _taskOdoo: TaskOdooService,
@@ -45,6 +45,7 @@ export class NotificacionesPage implements OnInit {
 
     this.notificaciones = this._taskOdoo.getpilaNotificaciones();
 
+    console.log(this.notificaciones);
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot(this.subServ.getruta(), {animated: true, animationDirection: 'back' }) ;

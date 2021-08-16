@@ -26,7 +26,7 @@ let tasksList$ = new Subject<boolean>();
 
 let tasksList: TaskModel[];
 
-let pilaNotificaciones: any[];
+let pilaNotificaciones: TaskModel[] =[];
 
 let solicitudesList: TaskModel[];
 let historialList: TaskModel[];
@@ -302,6 +302,7 @@ export class TaskOdooService {
                     notifTask.id = id_messg[i];
                     pilaNotificaciones.push(notifTask);
                   }
+                  console.log(pilaNotificaciones);
                   notifications$.next(true)
 
                 if (rutaActual || rutaChat) {
@@ -318,18 +319,19 @@ export class TaskOdooService {
 
                 let notifTask: TaskModel = new TaskModel();
 				          notifTask.notificationType = 1; 
-                  for (let i = 0; i < id_messg.length; i++) {
+                  
+                  for (let i = 0; i < id_po.length; i++) {
                     notifTask.id = id_messg[i];
                     pilaNotificaciones.push(notifTask);
                   }
-
+                  console.log(pilaNotificaciones);
                   notifications$.next(true)
 
 
                 if (rutaActual) {
                   notificationNewPoSuplier$.next(id_po);
                 } else {
-                  let notifTaskNew: TaskModel = new TaskModel();
+                  let notifTaskNew: TaskModel;
                   notifTaskNew.notificationType = 1;
                   for (let i = 0; i < id_po.length; i++) {
                     notifTaskNew.id = id_po[i];

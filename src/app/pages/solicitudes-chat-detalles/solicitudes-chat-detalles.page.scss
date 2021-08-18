@@ -180,6 +180,10 @@ ion-segment .segment-button-checked {
   width: 19px !important;
 }
 
+.icon_distancia{
+  height: 30% !important;
+  width: 70% !important;
+}
 .icon_price {
   height: 19px !important;
   width: 19px !important;
@@ -199,8 +203,8 @@ ion-segment .segment-button-checked {
 
 .h6_title {
   font: normal 12px 'Helvetica-Roman', sans-serif !important;
-  text-align: left;
-  width: 100%;
+  text-align: center;
+  width: 70%;
   padding: 5px 20px 5px 2px !important;
   min-width: 100px !important;
 }

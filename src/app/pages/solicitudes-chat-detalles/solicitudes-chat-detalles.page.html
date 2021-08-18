@@ -179,21 +179,21 @@
           </div>
 
           <ion-row>
-            <ion-label class="h6_title ion-text-wrap"
-              > Distancia aproximada: {{task.address.distance}} km,
-            </ion-label>
-           <!--  <ion-label *ngIf="task.address.door" class="h6_title ion-text-wrap"
-              >Piso: {{task.address.floor}},
-            </ion-label>
-            <ion-label *ngIf="task.address.stair" class="h6_title ion-text-wrap"
-              >Escalera: {{task.address.stair}},
-            </ion-label>
-            <ion-label
-              *ngIf="task.address.portal"
-              class="h6_title ion-text-wrap"
-              >Portal: {{task.address.portal}}
-            </ion-label> -->
+             <ion-label class="h6_title ion-text-wrap"
+              >{{task.address.distance}} km
+            </ion-label> 
+
+            <ion-img
+            class="icon_distancia"
+            src="/assets/icons/distancia.svg"
+          ></ion-img>
+                
+          
+
+          
+       
           </ion-row>
+
           <ion-row>
             <ion-label *ngIf="task.address.cp" class="h6_title ion-text-wrap">
               Codigo_postal: {{task.address.cp}}

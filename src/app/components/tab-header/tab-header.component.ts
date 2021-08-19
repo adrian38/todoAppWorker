@@ -50,6 +50,7 @@ export class TabHeaderComponent implements OnInit {
 
   ngOnInit() {
     const elemento = document.getElementById('div_back');
+    
     this.subscriptions();
 
     if (this.backgroundColor !== '') {

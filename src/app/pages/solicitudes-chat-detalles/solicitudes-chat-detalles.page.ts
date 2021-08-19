@@ -84,7 +84,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
   ngOnInit() {
     this.screenOrientation.lock('portrait');
-    
+    this._taskOdoo.setTaskNewOff(this.task.id)
     console.log('entre a la detalles');
     this.presupuesto = this.task.materials + this.task.work_force;
     this.categoria = this.task.type;
@@ -144,11 +144,17 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   scrollToElement(): void {
+
+    if(this.myScrollContainer){
+
     this.myScrollContainer.nativeElement.scroll({
       top: this.myScrollContainer.nativeElement.scrollHeight,
       left: 0,
       behavior: 'smooth'
     });
+
+  }
+
   }
 
   subscriptions() {

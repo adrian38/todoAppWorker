@@ -54,6 +54,7 @@ export class PresupuestarPage implements OnInit {
  
     this.subServ.setruta('presupuestar');
     this.task=this._taskOdoo.getTaskCesar();
+    this._taskOdoo.setTaskNewOff(this.task.id)
     console.log('tarea actual',this.task);
     this._taskOdoo.solicitudeListEdit(this.task.id,2);
     this.requieremateriales=this.task.require_materials;
@@ -83,6 +84,7 @@ export class PresupuestarPage implements OnInit {
       this.ngZone.run(() => {
         console.log('Se envio la oferta correctamente');
         this._taskOdoo.solicitudeListEditBudget(this.task);
+        this._taskOdoo.solicitudeListEdit(this.task.id,3);
         this.loading_presupuesto.dismiss();
         this.presentAlert();///////////
              

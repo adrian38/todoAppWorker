@@ -218,7 +218,7 @@ export class TaskOdooService {
     let poll = function (uid, partner_id, last) {
       let path = '/longpolling/poll';
 
-      client = jayson.https({
+      client = jayson.http({
         host: jaysonServer.host,
         port: jaysonServer.port + path,
       });
@@ -303,12 +303,21 @@ export class TaskOdooService {
                     pilaNotificaciones.push(notifTask);
                   }
                   console.log(pilaNotificaciones);
-                  notifications$.next(true)
+                  
 
                 if (rutaActual || rutaChat) {
                   notificationNewMessg$.next(id_messg);
                 } else if (!rutaActual && !rutaChat) {
-                          
+
+                  let notifTask: TaskModel = new TaskModel();
+				          notifTask.notificationType = 3;
+                  for (let i = 0; i < id_messg.length; i++) {
+                    notifTask.id = id_messg[i];
+                    pilaNotificaciones.push(notifTask);
+                  }
+                  console.log(pilaNotificaciones);
+
+                    notifications$.next(true)      
                     pilaSolicitudes.insertar(notifTask);
                   
                 }
@@ -375,7 +384,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -609,7 +618,7 @@ export class TaskOdooService {
         fparams.push(params[i]);
       }
 
-      client = jayson.https({
+      client = jayson.http({
         host: jaysonServer.host,
         port: jaysonServer.port + jaysonServer.pathConnection,
       });
@@ -672,7 +681,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -724,7 +733,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -865,7 +874,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -1118,6 +1127,8 @@ export class TaskOdooService {
         'origin',
         'state',
         'order_line',
+        'new_created',
+        'new_chat',
       ]);
       let params = [];
       params.push(inParams);
@@ -1166,6 +1177,8 @@ export class TaskOdooService {
               temp.date_planned = String(task['commitment_date']).slice(0, 10);
               temp.time = String(task['commitment_date']);
               temp.title = task['title'];
+              temp.notificationNewSo = task['new_created'];
+              temp.notificationChat = task['new_chat'];
               temp.address = new Address(
                 task['address_street'],
                 task['address_number'],
@@ -1192,7 +1205,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });
@@ -1211,6 +1224,48 @@ export class TaskOdooService {
         }
       }
     );
+  }
+
+  setTaskNewOff(po_id:number){
+
+    
+      let client = jayson.http({
+        host: jaysonServer.host,
+        port: jaysonServer.port + jaysonServer.pathConnection,
+      });
+  
+      let inParams = [];
+      inParams.push(po_id);
+      inParams.push({'new_created': false,'new_chat':false});
+      let params = [];
+      params.push(inParams);
+  
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('write'); //method
+  
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+  
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err, 'Error actualizando Po');
+            notificationError$.next(true);
+          } else {
+            console.log(value, 'Exito actualizando Po');
+            
+          }
+        }
+      );
+    
+
   }
 
   getRequestedTaskList$(): Observable<boolean> {
@@ -1248,6 +1303,13 @@ export class TaskOdooService {
           solicitudesList[temp].notificationOffert = false;
           solicitudesList[temp].notificationChat = false;
         }
+      case 3:
+        temp = solicitudesList.findIndex((element) => element.id === id);
+        if (temp != -1) {
+          solicitudesList[temp].offer_send = 'sent';
+         
+        }
+        
 
         break;
     }
@@ -1263,6 +1325,24 @@ export class TaskOdooService {
         solicitudesList[temp].work_force = taskEdit.work_force;
       }
     }
+  }
+
+  getChatsolicitud(origin: string[])   {
+    
+    let temporal :TaskModel ;
+    let arregloTemp :TaskModel [] = [];
+
+    for (let i = 0; i < origin.length; i++) {
+      let temp = solicitudesList.findIndex(
+        (element) => element.id_string === origin[i]
+      );
+      if (temp != -1) {
+        temporal.title = solicitudesList[temp].title;
+        temporal.id= solicitudesList[temp].id;
+        arregloTemp.push(temporal);
+      }
+    }
+    return arregloTemp;
   }
 
   getContratadosList() {
@@ -1391,7 +1471,7 @@ export class TaskOdooService {
       );
     };
 
-    let client = jayson.https({
+    let client = jayson.http({
       host: jaysonServer.host,
       port: jaysonServer.port + jaysonServer.pathConnection,
     });

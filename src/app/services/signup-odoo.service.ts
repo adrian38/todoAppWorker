@@ -3,11 +3,11 @@ import { UsuarioModel } from '../models/usuario.model';
 import { Observable, Subject } from 'rxjs';
 const jayson = require('../../../node_modules/jayson/lib/client/');
 
-// let host = '192.168.0.107';
+ let host = '192.168.0.107';
 // let host = '192.168.1.2';
-const host = 'odoo.todoenunapp.com';
-//const port = 8069;
-const port = 443;
+//const host = 'odoo.todoenunapp.com';
+const port = 8069;
+//const port = 443;
 const db = 'demo';
 const user = 'root';
 const pass = 'root';
@@ -115,7 +115,7 @@ export class SignUpOdooService {
       
            
      /*  let path = '/jsonrpc';
-      let client = jayson.https('https://' + host + ':' + port + path); */
+      let client = jayson.http('http://' + host + ':' + port + path); */
   
       let inParams = [];
       inParams.push(new_usuario.partner_id);
@@ -195,7 +195,7 @@ export class SignUpOdooService {
     
 
     let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(user_to_create);
@@ -282,7 +282,7 @@ export class SignUpOdooService {
     let updatePatner= function (){
     
     /* let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path); */
+    let client = jayson.http('http://' + host + ':' + port + path); */
 
     let inParams = [];
     inParams.push(usuario.partner_id);
@@ -317,7 +317,7 @@ export class SignUpOdooService {
     );
   }
     let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     let inParams = [];
     inParams.push(usuario.id);
@@ -388,7 +388,7 @@ export class SignUpOdooService {
 
 
     let path = '/jsonrpc';
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     let inParams = []
     inParams.push([newUser.partner_id]); //id to update
@@ -429,10 +429,10 @@ export class SignUpOdooService {
 
   getStripeLink(){
 
-    let reauth_url = 'https://odoo.todoenunapp.com/payment/stripe/reauth'
-    let return_url = 'https://odoo.todoenunapp.com/payment/stripe/return'
+    let reauth_url = 'http://odoo.todoenunapp.com/payment/stripe/reauth'
+    let return_url = 'http://odoo.todoenunapp.com/payment/stripe/return'
     let path = '/jsonrpc'
-    let client = jayson.https('https://' + host + ':' + port + path);
+    let client = jayson.http('http://' + host + ':' + port + path);
 
     //console.log(newUser.partner_id, "partner id link")
     
@@ -471,7 +471,7 @@ export class SignUpOdooService {
   let poll = function (last) {
     let path = '/longpolling/poll';
 
-    client = jayson.https({
+    client = jayson.http({
       host: host,
       port: port + path,
     });
@@ -516,7 +516,7 @@ export class SignUpOdooService {
   console.log(newUser.username,"usuario poll");
   console.log(newUser.password,"usuario poll");
 
-  let client = jayson.https({
+  let client = jayson.http({
     host: host,
     port: port + pathConnection,
 

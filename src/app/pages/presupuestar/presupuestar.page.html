@@ -41,6 +41,7 @@
           <ion-col size="3"></ion-col>
           <ion-col size="3" style="text-align: end">
             <ion-input
+              placeholder = 0
               name="mano_obra"
               type="number"
               required
@@ -57,6 +58,7 @@
           <ion-col size="3"></ion-col>
           <ion-col size="3" style="text-align: end">
             <ion-input
+              placeholder= 0
               name="materiales"
               type="number"
               required
@@ -154,10 +156,15 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <!--  <p style="margin: 5px 0px;font-size: medium; ">10 KM</p> -->
+          <ion-label class="h6_title ion-text-wrap"
+           >{{task.address.distance}} km
+         </ion-label> 
 
-          <ion-icon name="remove-outline"></ion-icon>
-        </ion-row>
+         <ion-img
+         class="icon_distancia"
+         src="/assets/icons/distancia.svg"
+       ></ion-img>
+       </ion-row>
         <div class="item"></div>
 
         <ion-row style="margin-top: 12px">

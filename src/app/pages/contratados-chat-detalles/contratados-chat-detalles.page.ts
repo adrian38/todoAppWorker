@@ -137,7 +137,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   subscriptions() {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateRoot('/tabs/tab1', {animated: true,animationDirection: 'back',});
+      this.navCtrl.navigateRoot('/tabs/tab2', {animated: true,animationDirection: 'back',});
     });
 
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();

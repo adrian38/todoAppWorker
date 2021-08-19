@@ -62,6 +62,8 @@ export class ContratadosChatDetallesPage implements OnInit {
   sms_cliente:string="";
   chat_vacia: boolean = false;
   ruta:string = '';
+  mano_obra:string="";
+  materiales:string="";
 
   loading: HTMLIonLoadingElement = null;
 
@@ -135,7 +137,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   subscriptions() {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateRoot('/tabs/tab1', {animated: true,animationDirection: 'back',});
+      this.navCtrl.navigateRoot('/tabs/tab2', {animated: true,animationDirection: 'back',});
     });
 
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();
@@ -458,4 +460,88 @@ this.chat_vacia=true;
       });
       await alert.present();
     }
+
+    actualizarPresupesto(){
+      this.alertaPresupuesto();
+      console.log('editar')
+        }
+      
+        async alertaPresupuesto() {
+          const prompt =await this.alertCtrl.create({
+           
+            header: 'Presupuesto',
+            message: "Menu de cambio",
+            inputs: [
+           {
+            name: 'mano',
+            type: 'number',
+            placeholder: 'Mano de obra',
+            label:'cesar',
+          
+           },
+      
+           {
+            name: 'materiales',
+            type: 'number',
+            placeholder: 'Materiales',
+            label:'marlyn',
+            
+           },
+      
+           
+            ],
+      
+            
+            buttons: [
+              {
+                text: 'Cancelar',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: 'Actualizar',
+                handler: data => {
+      
+      
+                  if(data.mano == "" || data.materiales == ""){
+                     console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+                     this.alertaSinPresupuesto();
+                  }
+                  else{
+                    this.mano_obra=data.mano;
+                    this.materiales=data.materiales;
+                  }
+                
+                  // console.log('c2',this.materiales);
+                  
+      
+                }
+              }
+            ]
+          });
+          prompt.present();
+        }
+      
+      
+        async alertaSinPresupuesto() {
+          const prompt =await this.alertCtrl.create({
+           
+            header: 'No se ha actualizado el presupuesto',
+            message: "Debe llenar los campos",
+           
+      
+            
+            buttons: [
+              {
+                text: 'Cancelar',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              },
+      
+            ]
+          });
+          prompt.present();
+        }
 }

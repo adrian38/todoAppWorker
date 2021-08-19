@@ -14,8 +14,12 @@
   </ion-segment>
 
   <div *ngIf="(segment.value === 'chat')" class="flex_row pres_container">
+
+    
     <div class="flex_row div_presupuesto">
+      <ion-icon name="pencil-outline" style="margin-right: 10px;" (click)="actualizarPresupesto()"></ion-icon>
       <ion-label class="label_presupuesto"
+        (click)="actualizarPresupesto()"
         >PRESUPUESTO: {{ presupuesto }} €</ion-label
       >
     </div>

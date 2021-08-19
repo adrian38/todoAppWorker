@@ -1,6 +1,6 @@
-import { Component, NgZone, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { NavController,Platform,IonContent,ModalController,LoadingController} from '@ionic/angular';
+import { NavController,Platform,IonContent,ModalController,LoadingController, AlertController} from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { MessageModel } from 'src/app/models/message.model';
@@ -44,6 +44,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
   ultimo_sms: string = '';
   sms_cliente: string = '';
   chat_vacia: boolean = false;
+  mano_obra:string="";
+  materiales:string="";
 
   //-------------------------------------------------------
  
@@ -72,7 +74,8 @@ export class SolicitudesChatDetallesPage implements OnInit {
     private modalCtrl: ModalController,
     private subServ: ObtSubSService,
     public loadingController: LoadingController,
-    private screenOrientation: ScreenOrientation
+    private screenOrientation: ScreenOrientation,
+    public alertCtrl: AlertController
   ) {
     this.task = new TaskModel();
     this.task = this._taskOdoo.getTaskCesar();
@@ -310,5 +313,59 @@ this.chat_vacia=true;
     else{
       this.chat_vacia=false;
     }
+  }
+
+
+  actualizarPresupesto(){
+this.alertaPresupuesto();
+  }
+
+  async alertaPresupuesto() {
+    const prompt =await this.alertCtrl.create({
+     
+      header: 'Presupuesto',
+      message: "Menu de cambio",
+      inputs: [
+     {
+      name: 'mano',
+      type: 'number',
+      placeholder: 'Mano de obra',
+      label:'cesar',
+    
+     },
+
+     {
+      name: 'materiales',
+      type: 'number',
+      placeholder: 'Materiales',
+      label:'marlyn',
+      
+     },
+
+     
+      ],
+
+      
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Actualizar',
+          handler: data => {
+            this.mano_obra=data.mano;
+            this.materiales=data.materiales;
+            console.log('c1',this.mano_obra);
+            console.log('c2',this.materiales);
+            
+
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 }

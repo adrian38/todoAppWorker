@@ -356,14 +356,44 @@ this.alertaPresupuesto();
         {
           text: 'Actualizar',
           handler: data => {
-            this.mano_obra=data.mano;
-            this.materiales=data.materiales;
-            console.log('c1',this.mano_obra);
-            console.log('c2',this.materiales);
+
+
+            if(data.mano == "" || data.materiales == ""){
+               console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+               this.alertaSinPresupuesto();
+            }
+            else{
+              this.mano_obra=data.mano;
+              this.materiales=data.materiales;
+            }
+          
+            // console.log('c2',this.materiales);
             
 
           }
         }
+      ]
+    });
+    prompt.present();
+  }
+
+
+  async alertaSinPresupuesto() {
+    const prompt =await this.alertCtrl.create({
+     
+      header: 'No se ha actualizado el presupuesto',
+      message: "Debe llenar los campos",
+     
+
+      
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+
       ]
     });
     prompt.present();

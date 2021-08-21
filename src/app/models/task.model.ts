@@ -8,7 +8,7 @@ export class Address {
 	cp: string;
 	latitude: string;
 	longitude: string;
-	distance:number;
+	distance: number;
 
 	constructor(
 		street: '',
@@ -20,7 +20,7 @@ export class Address {
 		cp: '',
 		latitude: '',
 		longitude: '',
-		distance:0,
+		distance: 0,
 	) {
 		this.street = street;
 		this.number = number;
@@ -47,6 +47,10 @@ export class TaskModel {
 	budget: number;
 	materials: number;
 	work_force: number;
+
+	temp_materials: number;
+	temp_work_force: number;
+
 	materials_extra: number;
 	work_force_extra: number;
 	origin: string;
@@ -60,16 +64,16 @@ export class TaskModel {
 	offer_send: String;
 	product_id: number;
 	photoNewTaskArray: Array<any>;
-	notificationType:number;
+	notificationType: number;
 	origin_id: number;
 	photoProvider: any;
 	comment: string;
 	ranking: number;
 	id_Po: number;
 	id_string_Po: string;
-	notificationOffert:boolean;
-	notificationChat:boolean;
-	notificationNewSo:boolean;
+	notificationOffert: boolean;
+	notificationChat: boolean;
+	notificationNewSo: boolean;
 	order_line: Array<any>;
 
 	constructor(
@@ -97,11 +101,13 @@ export class TaskModel {
 		id_Po = 0,
 		id_string_Po = '',
 		notificationType = 0,
-		notificationOffert=false,
-		notificationChat=false,
-		notificationNewSo=false,
+		notificationOffert = false,
+		notificationChat = false,
+		notificationNewSo = false,
 		materials = 0,
-		work_force= 0,
+		work_force = 0,
+		temp_materials = 0,
+		temp_work_force = 0,
 		materials_extra = 0,
 		work_force_extra = 0,
 	) {
@@ -134,9 +140,11 @@ export class TaskModel {
 		this.notificationOffert = notificationOffert;
 		this.notificationChat = notificationChat;
 		this.work_force = work_force;
-		this.materials =materials;
+		this.materials = materials;
+		this.temp_work_force = temp_work_force;
+		this.temp_materials = temp_materials;
 		this.work_force_extra = work_force;
-		this.materials_extra =materials_extra;
+		this.materials_extra = materials_extra;
 		this.order_line = [];
 	}
 }

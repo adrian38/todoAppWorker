@@ -26,7 +26,7 @@ let tasksList$ = new Subject<boolean>();
 
 let tasksList: TaskModel[];
 
-let pilaNotificaciones: TaskModel[] =[];
+let pilaNotificaciones: TaskModel[] = [];
 
 let solicitudesList: TaskModel[];
 let historialList: TaskModel[];
@@ -63,7 +63,7 @@ let notifications$ = new Subject<boolean>();
 let notificationOff$ = new Subject<boolean>();
 
 
-let notiAlert:boolean = false;
+let notiAlert: boolean = false;
 
 let rutaActual: boolean = true;
 let rutaChat: boolean = false;
@@ -91,17 +91,17 @@ export class TaskOdooService {
 
   constructor(private _authOdoo: AuthOdooService, private router: Router) {
     jaysonServer = this._authOdoo.OdooInfoJayson;
-    
+
     pilaSolicitudes = new PilaSolicitudes<TaskModel>();
-    
-  
+
+
   }
 
   getNotificationOff$(): Observable<boolean> {
     return notificationOff$.asObservable();
   }
 
-  setNotificationOff(){
+  setNotificationOff() {
     notificationOff$.next(true);
   }
 
@@ -109,7 +109,7 @@ export class TaskOdooService {
     return notifications$.asObservable();
   }
 
-  getpilaNotificaciones(){
+  getpilaNotificaciones() {
     return pilaNotificaciones;
   }
 
@@ -198,15 +198,15 @@ export class TaskOdooService {
     return notificationList;
   }
   setNotificationListEdit(notiList: any[]) {
-   /*  for (let i = 0; i < messagesList.length; i++) {
-      let temp = solicitudesList.findIndex(
-        (element) => element.id === messagesList[i].offer_id
-      );
-      if (temp != -1) {
-        solicitudesList[temp].notificationChat = true;
-      }
-    }*/
-  } 
+    /*  for (let i = 0; i < messagesList.length; i++) {
+       let temp = solicitudesList.findIndex(
+         (element) => element.id === messagesList[i].offer_id
+       );
+       if (temp != -1) {
+         solicitudesList[temp].notificationChat = true;
+       }
+     }*/
+  }
 
   notificationPull() {
     let id_po = [];
@@ -295,31 +295,31 @@ export class TaskOdooService {
 
               if (typeof id_messg !== 'undefined' && id_messg.length > 0) {
                 /* console.log(id_messg, 'nuevo mensaje id'); */
-				
-				          let notifTask: TaskModel = new TaskModel();
-				          notifTask.notificationType = 3;
-                  for (let i = 0; i < id_messg.length; i++) {
-                    notifTask.id = id_messg[i];
-                    pilaNotificaciones.push(notifTask);
-                  }
-                  console.log(pilaNotificaciones);
-                  
+
+                let notifTask: TaskModel = new TaskModel();
+                notifTask.notificationType = 3;
+                for (let i = 0; i < id_messg.length; i++) {
+                  notifTask.id = id_messg[i];
+                  pilaNotificaciones.push(notifTask);
+                }
+                console.log(pilaNotificaciones);
+
 
                 if (rutaActual || rutaChat) {
                   notificationNewMessg$.next(id_messg);
                 } else if (!rutaActual && !rutaChat) {
 
                   let notifTask: TaskModel = new TaskModel();
-				          notifTask.notificationType = 3;
+                  notifTask.notificationType = 3;
                   for (let i = 0; i < id_messg.length; i++) {
                     notifTask.id = id_messg[i];
                     pilaNotificaciones.push(notifTask);
                   }
                   console.log(pilaNotificaciones);
 
-                    notifications$.next(true)      
-                    pilaSolicitudes.insertar(notifTask);
-                  
+                  notifications$.next(true)
+                  pilaSolicitudes.insertar(notifTask);
+
                 }
               }
 
@@ -327,14 +327,14 @@ export class TaskOdooService {
 
 
                 let notifTask: TaskModel = new TaskModel();
-				          notifTask.notificationType = 1; 
-                  
-                  for (let i = 0; i < id_po.length; i++) {
-                    notifTask.id = id_messg[i];
-                    pilaNotificaciones.push(notifTask);
-                  }
-                  console.log(pilaNotificaciones);
-                  notifications$.next(true)
+                notifTask.notificationType = 1;
+
+                for (let i = 0; i < id_po.length; i++) {
+                  notifTask.id = id_messg[i];
+                  pilaNotificaciones.push(notifTask);
+                }
+                console.log(pilaNotificaciones);
+                notifications$.next(true)
 
 
                 if (rutaActual) {
@@ -408,58 +408,58 @@ export class TaskOdooService {
   requestTaskPoUpdate(id_po: number[]) {
     let SO_origin = [];
     let SO_id = [];
-	  let PO_id = [];
+    let PO_id = [];
     let tasksUpdate: TaskModel[];
 
-	let get_order_line = function () {
-		let inParams = [];
-		inParams.push([['order_id', 'in', PO_id]]);
-		inParams.push(['product_id', 'product_qty', 'price_unit']);
-		let params = [];
-		params.push(inParams);
-  
-		let fparams = [];
-		fparams.push(jaysonServer.db);
-		fparams.push(user.id);
-		fparams.push(jaysonServer.password);
-		fparams.push('purchase.order.line'); //model
-		fparams.push('search_read'); //method
-  
-		for (let i = 0; i < params.length; i++) {
-		  fparams.push(params[i]);
-		}
-  
-		client.request(
-		  'call',
-		  { service: 'object', method: 'execute_kw', args: fparams },
-		  function (err, error, value) {
-			if (err || !value) {
-			  console.log(err, 'get_po_list');
-			} else {
-			  for (let orderLine of value) {
-				for (let task of tasksList) {
-				  for (let line of task.order_line) {
-					if (line === orderLine.id) {
-					  switch (orderLine.product_id[0]) {
-						case 40:
-						  task.work_force = orderLine.price_unit;
-						  break;
-  
-						case 41:
-						  task.materials = orderLine.price_unit;
-						  break;
-					  }
-					}
-				  }
-				}
-			  }
-  
-			  console.log(tasksList, 'con presupuesto');
-			  get_photo_so();
-			}
-		  }
-		);
-	  };
+    let get_order_line = function () {
+      let inParams = [];
+      inParams.push([['order_id', 'in', PO_id]]);
+      inParams.push(['product_id', 'product_qty', 'price_unit']);
+      let params = [];
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('search_read'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'get_po_list');
+          } else {
+            for (let orderLine of value) {
+              for (let task of tasksList) {
+                for (let line of task.order_line) {
+                  if (line === orderLine.id) {
+                    switch (orderLine.product_id[0]) {
+                      case 40:
+                        task.work_force = orderLine.price_unit;
+                        break;
+
+                      case 41:
+                        task.materials = orderLine.price_unit;
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+
+            console.log(tasksList, 'con presupuesto');
+            get_photo_so();
+          }
+        }
+      );
+    };
 
     let get_photo_so = function () {
       let inParams = [];
@@ -513,7 +513,7 @@ export class TaskOdooService {
                 typeof solicitudesList !== 'undefined' &&
                 solicitudesList.length > 0
               ) {
-              	Array.prototype.unshift.apply(solicitudesList, tasksUpdate);
+                Array.prototype.unshift.apply(solicitudesList, tasksUpdate);
               } else {
                 solicitudesList = tasksUpdate;
               }
@@ -561,13 +561,13 @@ export class TaskOdooService {
               }
             }
 
-			if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
-				get_order_line();
-			   
-			  } else {
-		
-				get_photo_so();
-			  }
+            if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
+              get_order_line();
+
+            } else {
+
+              get_photo_so();
+            }
           }
         }
       );
@@ -636,7 +636,7 @@ export class TaskOdooService {
               temp.offer_send = task['state'];
               temp.origin = task['origin'];
               SO_origin.push(task['origin']);
-			  if (task['state'] == 'sent') {
+              if (task['state'] == 'sent') {
                 PO_id.push(task['id']);
               }
               temp.type = task['product_id'][1];
@@ -975,11 +975,11 @@ export class TaskOdooService {
                   if (line === orderLine.id) {
                     switch (orderLine.product_id[0]) {
                       case 40:
-                        task.work_force = orderLine.price_unit;
+                        task.work_force += orderLine.price_unit;
                         break;
 
                       case 41:
-                        task.materials = orderLine.price_unit;
+                        task.materials += orderLine.price_unit;
                         break;
                     }
                   }
@@ -1084,9 +1084,9 @@ export class TaskOdooService {
 
             if (typeof PO_id !== 'undefined' && PO_id.length > 0) {
               get_order_line();
-             
+
             } else {
-              
+
               get_photo_so();
             }
           }
@@ -1226,45 +1226,45 @@ export class TaskOdooService {
     );
   }
 
-  setTaskNewOff(po_id:number){
+  setTaskNewOff(po_id: number) {
 
-    
-      let client = jayson.http({
-        host: jaysonServer.host,
-        port: jaysonServer.port + jaysonServer.pathConnection,
-      });
-  
-      let inParams = [];
-      inParams.push(po_id);
-      inParams.push({'new_created': false,'new_chat':false});
-      let params = [];
-      params.push(inParams);
-  
-      let fparams = [];
-      fparams.push(jaysonServer.db);
-      fparams.push(user.id);
-      fparams.push(jaysonServer.password);
-      fparams.push('purchase.order'); //model
-      fparams.push('write'); //method
-  
-      for (let i = 0; i < params.length; i++) {
-        fparams.push(params[i]);
-      }
-  
-      client.request(
-        'call',
-        { service: 'object', method: 'execute_kw', args: fparams },
-        function (err, error, value) {
-          if (err) {
-            console.log(err, 'Error actualizando Po');
-            notificationError$.next(true);
-          } else {
-            console.log(value, 'Exito actualizando Po');
-            
-          }
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+
+    let inParams = [];
+    inParams.push(po_id);
+    inParams.push({ 'new_created': false, 'new_chat': false });
+    let params = [];
+    params.push(inParams);
+
+    let fparams = [];
+    fparams.push(jaysonServer.db);
+    fparams.push(user.id);
+    fparams.push(jaysonServer.password);
+    fparams.push('purchase.order'); //model
+    fparams.push('write'); //method
+
+    for (let i = 0; i < params.length; i++) {
+      fparams.push(params[i]);
+    }
+
+    client.request(
+      'call',
+      { service: 'object', method: 'execute_kw', args: fparams },
+      function (err, error, value) {
+        if (err) {
+          console.log(err, 'Error actualizando Po');
+          notificationError$.next(true);
+        } else {
+          console.log(value, 'Exito actualizando Po');
+
         }
-      );
-    
+      }
+    );
+
 
   }
 
@@ -1307,9 +1307,9 @@ export class TaskOdooService {
         temp = solicitudesList.findIndex((element) => element.id === id);
         if (temp != -1) {
           solicitudesList[temp].offer_send = 'sent';
-         
+
         }
-        
+
 
         break;
     }
@@ -1327,10 +1327,10 @@ export class TaskOdooService {
     }
   }
 
-  getChatsolicitud(origin: string[])   {
-    
-    let temporal :TaskModel ;
-    let arregloTemp :TaskModel [] = [];
+  getChatsolicitud(origin: string[]) {
+
+    let temporal: TaskModel;
+    let arregloTemp: TaskModel[] = [];
 
     for (let i = 0; i < origin.length; i++) {
       let temp = solicitudesList.findIndex(
@@ -1338,7 +1338,7 @@ export class TaskOdooService {
       );
       if (temp != -1) {
         temporal.title = solicitudesList[temp].title;
-        temporal.id= solicitudesList[temp].id;
+        temporal.id = solicitudesList[temp].id;
         arregloTemp.push(temporal);
       }
     }
@@ -1353,6 +1353,144 @@ export class TaskOdooService {
   getHistorialList() {
     //return historialList;  esto esta bien
     return solicitudesList; //temporal se puede borrar es para que se vea los contratados
+  }
+
+  sendNewOffer(offer: TaskModel) {
+    console.log(offer);
+
+    let POlineMaterials = {
+      name: 'Materiales',
+      product_id: 41,
+      product_uom: 1,
+      product_qty: 1,
+      price_unit: offer.temp_materials,
+      date_planned: offer.date_planned,
+      order_id: offer.id,
+    };
+
+    let POline = {
+      name: 'Mano de Obra',
+      product_id: 40,
+      product_uom: 1,
+      product_qty: 1,
+      price_unit: offer.temp_work_force,
+      date_planned: offer.date_planned,
+      order_id: offer.id,
+    };
+
+    let acept_PO = function () {
+      let inParams = [];
+      let params = [];
+      inParams.push(offer.id);
+      params.push(inParams);
+
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order'); //model
+      fparams.push('set_state_sent'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(value);
+            notificationSendOffertOk$.next(offer.id);
+          }
+        }
+      );
+    };
+
+    let addLinePOMaterials = function () {
+      let inParams = [];
+      inParams.push(POlineMaterials);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('create'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error addPOlineMaterials');
+          } else {
+            console.log('añadiendo materiales');
+            acept_PO();
+          }
+        }
+      );
+    };
+
+    let addLinePO = function () {
+      console.log(POline);
+
+      let inParams = [];
+      inParams.push(POline);
+      let params = [];
+      params.push(inParams);
+      let fparams = [];
+      fparams.push(jaysonServer.db);
+      fparams.push(user.id);
+      fparams.push(jaysonServer.password);
+      fparams.push('purchase.order.line'); //model
+      fparams.push('create'); //method
+
+      for (let i = 0; i < params.length; i++) {
+        fparams.push(params[i]);
+      }
+      client.request(
+        'call',
+        { service: 'object', method: 'execute_kw', args: fparams },
+        function (err, error, value) {
+          if (err || !value) {
+            console.log(err, 'Error addLinePO');
+          } else {
+            if (offer.materials) {
+              addLinePOMaterials();
+            } else {
+              acept_PO();
+            }
+          }
+        }
+      );
+    };
+
+    let client = jayson.http({
+      host: jaysonServer.host,
+      port: jaysonServer.port + jaysonServer.pathConnection,
+    });
+    client.request(
+      'call',
+      {
+        service: 'common',
+        method: 'login',
+        args: [jaysonServer.db, jaysonServer.username, jaysonServer.password],
+      },
+      function (err, error, value) {
+        if (err || !value) {
+          console.log(err, 'Error sendOffer');
+        } else {
+          console.log(value);
+          addLinePO();
+        }
+      }
+    );
   }
 
   sendOffer(offer: TaskModel) {

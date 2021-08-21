@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { ImagenmodalPage } from '../imagenmodal/imagenmodal.page';
-import { NavController,Platform,IonContent,ModalController,LoadingController, AlertController} from '@ionic/angular';
+import { NavController, Platform, IonContent, ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ChatDetails } from 'src/app/Interfaces/interfaces';
 import { MessageModel } from 'src/app/models/message.model';
@@ -30,10 +30,10 @@ export class SolicitudesChatDetallesPage implements OnInit {
   subscriptionMessList: Subscription;
   subscriptionNewMsg: Subscription;
   subscriptionNotification: Subscription;
-  
+
 
   user: UsuarioModel;
- 
+
   habilitar_0: boolean;
   habilitar_1: boolean;
   habilitar_2: boolean;
@@ -44,11 +44,14 @@ export class SolicitudesChatDetallesPage implements OnInit {
   ultimo_sms: string = '';
   sms_cliente: string = '';
   chat_vacia: boolean = false;
-  mano_obra:string="";
-  materiales:string="";
+  mano_obra: string = "";
+  materiales: string = "";
+
+  temp_mano_obra: number = 0;
+  temp_materiales: number = 0;
 
   //-------------------------------------------------------
- 
+
 
   categoria: string;
   presupuesto: number;
@@ -59,6 +62,11 @@ export class SolicitudesChatDetallesPage implements OnInit {
   newMessage: string;
   loading: HTMLIonLoadingElement = null;
   isLastMessage: boolean = true;
+
+
+  notificationSendOffertOk$ = new Observable<number>();
+
+  subscriptioSendOffertOk: Subscription;
 
 
   @ViewChild(IonContent) content: IonContent;
@@ -82,31 +90,31 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.user = this._authOdoo.getUser();
     this.message = new MessageModel();
     this.messagesList = [];
-    
+
   }
 
   ngOnInit() {
     this.screenOrientation.lock('portrait');
     this._taskOdoo.setTaskNewOff(this.task.id)
-    console.log('entre a la detalles');
+    console.log(this.task, 'entre a la detalles');
     this.presupuesto = this.task.materials + this.task.work_force;
     this.categoria = this.task.type;
     this.descripcion = this.task.title;
 
     this.valorSegment(this.subServ.getruta());
-   
+
     this.subServ.setruta('solicitudes-chat-detalles');
 
     this.presentLoading();
     this._chatOdoo.requestAllMessages(this.task.id);
 
     this.subscriptions();
-  
+
     this.ver_imagenes();
 
-    
+
   }
- 
+
 
   testOnScroll(event: any): void {
 
@@ -115,15 +123,15 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
   }
 
- scrollToBottom(){
+  scrollToBottom() {
 
-    if(this.valor_segment === "chat"){
-    
-    setTimeout(() => {
+    if (this.valor_segment === "chat") {
+
+      setTimeout(() => {
         this.scrollToElement();
-    }, 400);
-  }
-    
+      }, 400);
+    }
+
   }
 
   ngOnDestroy(): void {
@@ -131,15 +139,16 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.subscriptionMessList.unsubscribe();
     this.subscriptionNewMsg.unsubscribe();
     this.subscriptionNotification.unsubscribe();
-    
-  
+    this.subscriptioSendOffertOk.unsubscribe();
+
+
   }
 
   pushToChat() {
     if (this.message.message.length > 0) {
       this.message.offer_id = this.task.id;
       this._chatOdoo.sendMessageClient(this.message);
-      
+
       this.ultimo_sms = this.message.message;
       this.message = new MessageModel();
       this.coger();
@@ -148,19 +157,34 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
   scrollToElement(): void {
 
-    if(this.myScrollContainer){
+    if (this.myScrollContainer) {
 
-    this.myScrollContainer.nativeElement.scroll({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
+      this.myScrollContainer.nativeElement.scroll({
+        top: this.myScrollContainer.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
 
-  }
+    }
 
   }
 
   subscriptions() {
+
+
+    this.notificationSendOffertOk$ = this._taskOdoo.getnotificationSendOffertOk$();
+    this.subscriptioSendOffertOk = this.notificationSendOffertOk$.subscribe((PoId) => {
+      this.ngZone.run(() => {
+        console.log('Se envio la oferta correctamente');
+
+        // this.loading_presupuesto.dismiss();
+        // this.presentAlert();///////////
+
+      });
+    });
+
+
+
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot('/tabs/tab1', {
         animated: true,
@@ -171,11 +195,11 @@ export class SolicitudesChatDetallesPage implements OnInit {
     this.messageSendOk$ = this._chatOdoo.getRequestedNotificationSendMessage$();
     this.subscriptionNewMsg = this.messageSendOk$.subscribe((messageSendOk) => {
       this.ngZone.run(() => {
-        
-          messageSendOk.author = this.user.realname;
-          messageSendOk.author_id = this.user.partner_id;
-          this.messagesList.push(messageSendOk);
-        
+
+        messageSendOk.author = this.user.realname;
+        messageSendOk.author_id = this.user.partner_id;
+        this.messagesList.push(messageSendOk);
+
       });
     });
 
@@ -193,25 +217,25 @@ export class SolicitudesChatDetallesPage implements OnInit {
       this.ngZone.run(() => {
 
         let temp = messagesList.find((element) => element.offer_id);
-				if (temp) {
-					if (this.task.id === temp.offer_id) {
-						if (typeof this.messagesList !== 'undefined' && this.messagesList.length > 0) {
-							Array.prototype.push.apply(this.messagesList, messagesList);
-						} else {
-							this.messagesList = messagesList;
-						}
-					}
+        if (temp) {
+          if (this.task.id === temp.offer_id) {
+            if (typeof this.messagesList !== 'undefined' && this.messagesList.length > 0) {
+              Array.prototype.push.apply(this.messagesList, messagesList);
+            } else {
+              this.messagesList = messagesList;
+            }
+          }
 
           this.coger();
-          
-				}
-        this.chatVacia(this.messagesList.length);   
+
+        }
+        this.chatVacia(this.messagesList.length);
         this.loading.dismiss();
 
-        
-          });
-         });
-    
+
+      });
+    });
+
 
     this._taskOdoo.setChat(true);
   }
@@ -275,7 +299,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
       .then((modal) => modal.present());
   }
   coger() {
-   
+
     for (let i = 0; i < this.messagesList.length; i++) {
       if (this.messagesList[i].author_id != this.user.partner_id) {
         this.sms_cliente = this.messagesList[i].message;
@@ -284,9 +308,9 @@ export class SolicitudesChatDetallesPage implements OnInit {
         console.log('nooooo');
       }
 
-      
+
     }
-   
+
     this.scrollToBottom();
     //this.scrollToElement();
     //this.scrollToElement();
@@ -302,56 +326,56 @@ export class SolicitudesChatDetallesPage implements OnInit {
   }
 
   async presentLoading() {
-		this.loading = await this.loadingController.create({
-			cssClass: 'my-custom-class',
-			message: 'Cargado chat'
-			//duration: 2000
-		});
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargado chat'
+      //duration: 2000
+    });
 
     return this.loading.present();
   }
 
-  chatVacia( cant : number){
+  chatVacia(cant: number) {
 
-    if ( cant == 0){
-this.chat_vacia=true;
+    if (cant == 0) {
+      this.chat_vacia = true;
     }
-    else{
-      this.chat_vacia=false;
+    else {
+      this.chat_vacia = false;
     }
   }
 
 
-  actualizarPresupesto(){
-this.alertaPresupuesto();
+  actualizarPresupesto() {
+    this.alertaPresupuesto();
   }
 
   async alertaPresupuesto() {
-    const prompt =await this.alertCtrl.create({
-     
+    const prompt = await this.alertCtrl.create({
+
       header: 'Presupuesto',
       message: "Menu de cambio",
       inputs: [
-     {
-      name: 'mano',
-      type: 'number',
-      placeholder: 'Mano de obra',
-      label:'cesar',
-    
-     },
+        {
+          name: 'mano',
+          type: 'number',
+          placeholder: 'Mano de obra',
+          label: 'cesar',
 
-     {
-      name: 'materiales',
-      type: 'number',
-      placeholder: 'Materiales',
-      label:'marlyn',
-      
-     },
+        },
 
-     
+        {
+          name: 'materiales',
+          type: 'number',
+          placeholder: 'Materiales',
+          label: 'marlyn',
+
+        },
+
+
       ],
 
-      
+
       buttons: [
         {
           text: 'Cancelar',
@@ -364,20 +388,65 @@ this.alertaPresupuesto();
           handler: data => {
 
 
-            if(data.mano == "" || data.materiales == ""){
-               console.log('los campos estan vacios .Debo sacar un cartel para avisar');
-               this.alertaSinPresupuesto();
+            if (data.mano == "" && data.materiales == "") {
+              console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+              this.alertaSinPresupuesto();
             }
-            else{
-              this.mano_obra=data.mano;
-              this.materiales=data.materiales;
-            }
-          
-            // console.log('c2',this.materiales);
-            
+            else {
 
+              if (data.materiales) {
+
+                if (this.task.materials < parseFloat(data.materiales)) {
+                  this.temp_materiales = this.task.materials - parseFloat(data.materiales);
+
+                } else {
+                  this.temp_materiales = parseFloat(data.materiales);
+                }
+                this.task.materials = parseFloat(data.materiales);
+              }
+
+              if (data.mano) {
+
+                if (this.task.work_force < parseFloat(data.mano)) {
+
+                  this.temp_mano_obra = this.task.work_force - parseFloat(data.mano);
+
+                }
+
+                else {
+                  this.temp_mano_obra = parseFloat(data.mano);
+                }
+
+                this.task.work_force = parseFloat(data.mano);
+              }
+
+
+              this.presupuesto = this.task.materials + this.task.work_force;
+
+
+
+              if (this.temp_materiales !== null && this.temp_mano_obra !== null) {
+                this.task.temp_materials = this.temp_materiales;
+                this.task.temp_work_force = this.temp_mano_obra;
+              } else if (this.temp_mano_obra !== null) {
+
+                this.task.temp_work_force = this.temp_mano_obra;
+              } else if (this.temp_materiales !== null) {
+
+                this.task.temp_materials = this.temp_materiales;
+              }
+
+              this._taskOdoo.sendNewOffer(this.task);
+
+
+
+              // console.log('c2',this.materiales);
+
+
+            }
           }
         }
+
       ]
     });
     prompt.present();
@@ -385,13 +454,13 @@ this.alertaPresupuesto();
 
 
   async alertaSinPresupuesto() {
-    const prompt =await this.alertCtrl.create({
-     
+    const prompt = await this.alertCtrl.create({
+
       header: 'No se ha actualizado el presupuesto',
       message: "Debe llenar los campos",
-     
 
-      
+
+
       buttons: [
         {
           text: 'Cancelar',

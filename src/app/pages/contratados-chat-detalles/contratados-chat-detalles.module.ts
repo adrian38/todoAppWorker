@@ -8,9 +8,9 @@ import { ContratadosChatDetallesPageRoutingModule } from './contratados-chat-det
 
 import { ContratadosChatDetallesPage } from './contratados-chat-detalles.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import {DialogModule} from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 
-import {SidebarModule} from 'primeng/sidebar';
+import { SidebarModule } from 'primeng/sidebar';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @NgModule({
@@ -26,6 +26,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
   declarations: [ContratadosChatDetallesPage],
   providers: [
     ScreenOrientation
- ]
+  ]
 })
-export class ContratadosChatDetallesPageModule {}
+export class ContratadosChatDetallesPageModule { }

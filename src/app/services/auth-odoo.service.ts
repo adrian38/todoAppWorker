@@ -117,26 +117,24 @@ export class AuthOdooService {
 						usuario.address.latitude = value[0].address_latitude,
 						usuario.address.longitude = value[0].address_longitude
 
-					/* if(value[0].docs_check){
-						 usuario.connected = false;
-						 usuario.error = 1;
-						 user$.next(usuario);
-						 return;
-					 } else if(value[0].stripe_connect_account_state !== "verified")
-					 {
-						 usuario.connected = false;
-						 usuario.error = 2;
-						 usuario.link = value[0].stripe_connect_account_link;
-						 user$.next(usuario);
-						 return;
-					 }
-					 else if(!value[0].initial )
-					 {
-						 usuario.connected = false;
-						 usuario.error = 3;
-						 user$.next(usuario);
-						 return;
-					 }  */
+					if (value[0].docs_check) {
+						usuario.connected = false;
+						usuario.error = 1;
+						user$.next(usuario);
+						return;
+					} else if (value[0].stripe_connect_account_state !== "verified") {
+						usuario.connected = false;
+						usuario.error = 2;
+						usuario.link = value[0].stripe_connect_account_link;
+						user$.next(usuario);
+						return;
+					}
+					else if (!value[0].initial) {
+						usuario.connected = false;
+						usuario.error = 3;
+						user$.next(usuario);
+						return;
+					}
 
 
 					userInfo = usuario;

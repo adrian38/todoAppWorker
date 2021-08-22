@@ -5,13 +5,13 @@ let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
 	//host: '192.168.0.106',
-	host: '192.168.0.107',
-	//host: 'odoo.todoenunapp.com',
+	//host: '192.168.0.107',
+	host: 'odoo.todoenunapp.com',
 	//host: '192.168.1.2',
-   //host: '192.168.1.4',
-	
-	//port: '443',
-	port: '8069',
+	//host: '192.168.1.4',
+
+	port: '443',
+	//port: '8069',
 	db: 'demo',
 	username: '',
 	password: '',
@@ -37,22 +37,22 @@ export class AuthOdooService {
 
 	public OdooInfoJayson = jaysonServer;
 
-	constructor() {}
+	constructor() { }
 
 	///////////////login desde la web
-	
+
 	//Login desde la apk de cliente
 
 	loginClientApk(usuario: UsuarioModel): void {
 
-		
+
 
 		jaysonServer.username = usuario.username;
 		jaysonServer.password = usuario.password;
 
-		let search_partner_fields = function(id: number) {
+		let search_partner_fields = function (id: number) {
 			let inParams = [];
-			inParams.push([ [ 'id', '=', usuario.partner_id ] ]);
+			inParams.push([['id', '=', usuario.partner_id]]);
 			inParams.push([
 				'name',
 				'date',
@@ -98,57 +98,57 @@ export class AuthOdooService {
 				fparams.push(params[i]);
 			}
 
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function (
 				err,
 				error,
 				value
 			) {
 				if (err) {
 				} else {
-					console.log(value,"ingresado" )
+					console.log(value, "ingresado")
 
-					usuario.address.street=value[0].address_street,
-					usuario.address.number=value[0].address_number,
-					usuario.address.portal=value[0].address_portal,
-					usuario.address.stair=value[0].address_stairs,
-					usuario.address.floor=value[0].address_floor,
-					usuario.address.door=value[0].address_door,
-					usuario.address.cp=value[0].address_zip_code,
-					usuario.address.latitude=value[0].address_latitude,
-					usuario.address.longitude=value[0].address_longitude
+					usuario.address.street = value[0].address_street,
+						usuario.address.number = value[0].address_number,
+						usuario.address.portal = value[0].address_portal,
+						usuario.address.stair = value[0].address_stairs,
+						usuario.address.floor = value[0].address_floor,
+						usuario.address.door = value[0].address_door,
+						usuario.address.cp = value[0].address_zip_code,
+						usuario.address.latitude = value[0].address_latitude,
+						usuario.address.longitude = value[0].address_longitude
 
-				   /* if(value[0].docs_check){
-						usuario.connected = false;
-						usuario.error = 1;
-						user$.next(usuario);
-						return;
-					} else if(value[0].stripe_connect_account_state !== "verified")
-					{
-						usuario.connected = false;
-						usuario.error = 2;
-						usuario.link = value[0].stripe_connect_account_link;
-						user$.next(usuario);
-						return;
-					}
-					else if(!value[0].initial )
-					{
-						usuario.connected = false;
-						usuario.error = 3;
-						user$.next(usuario);
-						return;
-					}  */
-					
+					/* if(value[0].docs_check){
+						 usuario.connected = false;
+						 usuario.error = 1;
+						 user$.next(usuario);
+						 return;
+					 } else if(value[0].stripe_connect_account_state !== "verified")
+					 {
+						 usuario.connected = false;
+						 usuario.error = 2;
+						 usuario.link = value[0].stripe_connect_account_link;
+						 user$.next(usuario);
+						 return;
+					 }
+					 else if(!value[0].initial )
+					 {
+						 usuario.connected = false;
+						 usuario.error = 3;
+						 user$.next(usuario);
+						 return;
+					 }  */
 
-						userInfo=usuario;
-						user$.next(usuario);
+
+					userInfo = usuario;
+					user$.next(usuario);
 				}
 			});
 		};
 
-		let get_user = function(id: number) {
+		let get_user = function (id: number) {
 			let inParams = [];
-			inParams.push([ [ 'id', '=', id ] ]);
-			inParams.push([ 'name', 'login', 'email', 'partner_id', 'image_1920', 'classification' ]);
+			inParams.push([['id', '=', id]]);
+			inParams.push(['name', 'login', 'email', 'partner_id', 'image_1920', 'classification']);
 			let params = [];
 			params.push(inParams);
 
@@ -163,7 +163,7 @@ export class AuthOdooService {
 				fparams.push(params[i]);
 			}
 
-			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function(
+			client.request('call', { service: 'object', method: 'execute_kw', args: fparams }, function (
 				err,
 				error,
 				value
@@ -174,9 +174,9 @@ export class AuthOdooService {
 					user$.next(usuario);
 
 				} else {
-			
+
 					console.log(value, ' User_Partner');
-					
+
 					if (value[0].classification === 'vendor') {
 						if (knownTypes[value[0].image_1920[0]]) {
 							usuario.avatar = knownTypes[value[0].image_1920[0]] + value[0].image_1920;
@@ -187,30 +187,30 @@ export class AuthOdooService {
 						usuario.realname = value[0].name;
 
 						search_partner_fields(usuario.id);
-						
+
 					} else {
 						usuario.connected = false;
 						user$.next(usuario);
-						
+
 					}
-						
+
 				}
 			});
 		};
-		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+		let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
 		client.request(
 			'call',
 			{
 				service: 'common',
 				method: 'login',
-				args: [ jaysonServer.db, jaysonServer.username, jaysonServer.password ]
+				args: [jaysonServer.db, jaysonServer.username, jaysonServer.password]
 			},
-			(err, error, value)=> {
+			(err, error, value) => {
 				if (err || !value) {
-					console.log(err,'Login Failed');
+					console.log(err, 'Login Failed');
 					usuario.connected = false;
 					usuario.error = 4;
-					
+
 					user$.next(usuario);
 				} else {
 					//console.log(client);
@@ -228,7 +228,7 @@ export class AuthOdooService {
 		return user$.asObservable();
 	}
 
-	getUser(){
+	getUser() {
 		return userInfo;
 	}
 

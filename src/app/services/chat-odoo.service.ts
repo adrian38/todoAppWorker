@@ -14,7 +14,7 @@ let messagesList$ = new Subject<MessageModel[]>();
 let messageSendOk$ = new Subject<MessageModel>();
 let messageOriginNotification$ = new Subject<MessageModel[]>();
 
-let id:number;
+let id: number;
 
 @Injectable({
     providedIn: 'root'
@@ -27,11 +27,11 @@ export class ChatOdooService {
 
     constructor(private _authOdoo: AuthOdooService) { }
 
-  
-    getRequestedNotificationSendMessage$(): Observable<MessageModel>{
+
+    getRequestedNotificationSendMessage$(): Observable<MessageModel> {
         return messageSendOk$.asObservable();
     }
-    
+
     setUser(usuario: UsuarioModel) {
         user = usuario;
         jaysonServer = this._authOdoo.OdooInfoJayson;
@@ -39,7 +39,7 @@ export class ChatOdooService {
 
     sendMessageClient(message: MessageModel) {
 
-            let send_msg_PO = function () {
+        let send_msg_PO = function () {
             let inParams = []
             inParams.push([message.offer_id])
             let params = []
@@ -67,7 +67,7 @@ export class ChatOdooService {
             })
         }
 
-        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
             if (err || !value) {
                 console.log(err, "Error sendMessageClient");
@@ -105,7 +105,7 @@ export class ChatOdooService {
                 if (err || !value) {
                     console.log(err, "Error NewMessage");
                 } else {
-                    
+
                     value = value.filter(messages => {
                         return messages.subtype_id === false;
                     });
@@ -113,21 +113,21 @@ export class ChatOdooService {
                     messagesList = [];
                     for (let message of value) {
 
-                        let temp: MessageModel = 
-                        new MessageModel(message['body'].slice(3, message['body'].length - 4),
-                            message['author_id'][1],
-                            message['author_id'][0], 
-                            message['res_id']);
+                        let temp: MessageModel =
+                            new MessageModel(message['body'].slice(3, message['body'].length - 4),
+                                message['author_id'][1],
+                                message['author_id'][0],
+                                message['res_id']);
                         messagesList.push(temp);
                     }
                     messagesList$.next(messagesList);
-                                                        
+
                 }
             });
 
         }
 
-        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {
@@ -140,7 +140,7 @@ export class ChatOdooService {
     }
 
 
-       
+
 
     requestAllMessages(idPurchaseOrder: number) {
         let list_msg_ids = function () {
@@ -168,7 +168,7 @@ export class ChatOdooService {
                 if (err || !value) {
                     console.log(err, "Error list_msg_ids");
                 } else {
-                    
+
                     value = value.filter(messages => {
                         return messages.subtype_id === false;
                     });
@@ -176,11 +176,11 @@ export class ChatOdooService {
                     messagesList = [];
                     for (let message of value) {
 
-                        let temp: MessageModel = 
-                        new MessageModel(message['body'].slice(3, message['body'].length - 4),
-                            message['author_id'][1],
-                            message['author_id'][0], 
-                            message['res_id']);
+                        let temp: MessageModel =
+                            new MessageModel(message['body'].slice(3, message['body'].length - 4),
+                                message['author_id'][1],
+                                message['author_id'][0],
+                                message['res_id']);
                         messagesList.push(temp);
                     }
                     messagesList$.next(messagesList);
@@ -189,13 +189,13 @@ export class ChatOdooService {
             })
         }
 
-        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {
                 console.log(err, "Error requestAllMessages ");
             } else {
-                 list_msg_ids()
+                list_msg_ids()
             }
         });
     }
@@ -208,13 +208,13 @@ export class ChatOdooService {
 
     requestNewMessageNoti(idNewMessage: number[]) {
 
-        let messagesList:MessageModel[] = [];
-        
-         let NewMessage = function () {
+        let messagesList: MessageModel[] = [];
+
+        let NewMessage = function () {
             let inParams = []
             inParams.push([idNewMessage])
             inParams.push([['id', 'in', idNewMessage]])
-            inParams.push(['res_id','subtype_id'])
+            inParams.push(['res_id', 'subtype_id'])
             let params = []
             params.push(inParams)
 
@@ -237,33 +237,33 @@ export class ChatOdooService {
                     value = value.filter(messages => {
                         return messages.subtype_id === false;
                     });
-                    
-                    
+
+
                     for (let message of value) {
 
-                        let temp: MessageModel = new MessageModel("","",0,message['res_id']);
+                        let temp: MessageModel = new MessageModel("", "", 0, message['res_id']);
                         messagesList.push(temp);
-                        
+
                     }
-                                       
+
                     messageOriginNotification$.next(messagesList);
-                                                                           
+
                 }
             });
 
         }
 
-        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {
                 console.log(err, "Error requestAllMessages ");
             } else {
-                
+
                 NewMessage();
             }
         });
-  
+
     }
 
     getMessagesOriginNotification$(): Observable<MessageModel[]> {

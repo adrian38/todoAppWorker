@@ -63,7 +63,7 @@ export class AdjuntarPage implements OnInit {
             
             this.loading.dismiss();
             this.presentToast("Error guardando su documento");
-            //this.messageService.add({ severity: 'error', detail: 'No se creo la tarea' });
+            this.messageService.add({ severity: 'error', detail: 'No se creo la tarea' });
             
           }
         });
@@ -75,7 +75,7 @@ export class AdjuntarPage implements OnInit {
            
             this.loading.dismiss();
             this.presentToast("Documento IAE Salvado Correctamente");
-            //this.messageService.add({ severity: 'success', detail: 'Tarea creada correctamente' });
+            this.messageService.add({ severity: 'success', detail: 'Tarea creada correctamente' });
 
             if(this.ruta == "/login-user"){
               console.log('login')

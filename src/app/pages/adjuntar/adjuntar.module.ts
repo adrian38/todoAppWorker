@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { AdjuntarPageRoutingModule } from './adjuntar-routing.module';
 
 import { AdjuntarPage } from './adjuntar.page';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ToastModule,
     AdjuntarPageRoutingModule
   ],
   declarations: [AdjuntarPage]

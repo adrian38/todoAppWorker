@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { domainToASCII } from 'node:url';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
   selector: 'app-login-user',
@@ -41,6 +42,7 @@ export class LoginUserPage implements OnInit {
     public alertController: AlertController,
     public navController: NavController,
     private platform: Platform,
+    private datos     :ObtSubSService,
     private _location: Location
   ) {}
 
@@ -186,6 +188,7 @@ export class LoginUserPage implements OnInit {
         {
           text: 'Siguiente',
           handler: (datos) => {
+            this.datos.setruta('/login-user');
             this.navController.navigateRoot('/adjuntar', {animated: true,animationDirection: 'forward',});
           }
         },

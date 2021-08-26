@@ -3,8 +3,10 @@ import { AlertController, LoadingController, NavController, Platform, PopoverCon
 import { Observable, Subscription } from 'rxjs';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { Photo } from 'src/app/Interfaces/interfaces';
+import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-adjuntar',
@@ -19,6 +21,7 @@ export class AdjuntarPage implements OnInit {
   message:string="";
   avatarUsuario64:string="";
   loading: HTMLIonLoadingElement = null;
+  ruta:string="";
 
   notificationOK$: Observable<boolean>;
 	notificationError$: Observable<boolean>;
@@ -35,12 +38,16 @@ export class AdjuntarPage implements OnInit {
               private _sigupOdoo :SignUpOdooService,
               private toastController: ToastController,
               private ngZone: NgZone,
+              private datos     :ObtSubSService,
+              private messageService: MessageService,
               public loadingController: LoadingController) 
               
              { }
 
   ngOnInit() {
 
+    this.ruta=this.datos.getruta();
+    console.log(this.ruta);
     this.platform.backButton.subscribeWithPriority(10, () => {
 
     //this.navCtrl.navigateRoot('/create-account', {animated: true, animationDirection: 'back' }) ;
@@ -56,6 +63,7 @@ export class AdjuntarPage implements OnInit {
             
             this.loading.dismiss();
             this.presentToast("Error guardando su documento");
+            //this.messageService.add({ severity: 'error', detail: 'No se creo la tarea' });
             
           }
         });
@@ -67,11 +75,25 @@ export class AdjuntarPage implements OnInit {
            
             this.loading.dismiss();
             this.presentToast("Documento IAE Salvado Correctamente");
+            //this.messageService.add({ severity: 'success', detail: 'Tarea creada correctamente' });
 
-            setTimeout(() => {
-              this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+            if(this.ruta == "/login-user"){
+              console.log('login')
+              setTimeout(() => {
+                this.navCtrl.navigateRoot('/login-user', { animated: true, animationDirection: 'forward' }); 
+  
+              }, 3000);
+            }
+            else {
+              console.log('stripe')
+              setTimeout(() => {
+                this.navCtrl.navigateRoot('/stripe', { animated: true, animationDirection: 'forward' }); 
+  
+              }, 3000);
+              
+            }
 
-            }, 4000);
+         
     
           }
         });

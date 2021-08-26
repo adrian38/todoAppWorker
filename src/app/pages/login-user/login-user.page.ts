@@ -12,7 +12,7 @@ import {
   Platform,
 } from '@ionic/angular';
 import { Location } from '@angular/common';
-import { domainToASCII } from 'node:url';
+//import { domainToASCII } from 'node:url';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 
 @Component({
@@ -42,14 +42,14 @@ export class LoginUserPage implements OnInit {
     public alertController: AlertController,
     public navController: NavController,
     private platform: Platform,
-    private datos     :ObtSubSService,
+    private datos: ObtSubSService,
     private _location: Location
-  ) {}
+  ) { }
 
   ngOnInit() {
     this._taskOdoo.setInitTab(false);
     this.usuario = new UsuarioModel();
-    console.log("el ususario",this.usuario);
+    console.log("el ususario", this.usuario);
     this.subscriptions();
 
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -90,7 +90,7 @@ export class LoginUserPage implements OnInit {
   }
 
   checkUser() {
-    
+
     if (this.usuario.connected) {
       this._taskOdoo.setUser(this.usuario);
       this._chatOdoo.setUser(this.usuario);
@@ -106,39 +106,39 @@ export class LoginUserPage implements OnInit {
       });
     } else {
       this.loading.dismiss();
-      console.log("el ususario final",this.usuario);
-      console.log("el ususario su error",this.usuario.error);
-      
+      console.log("el ususario final", this.usuario);
+      console.log("el ususario su error", this.usuario.error);
+
       this._signOdoo.setUser(this.usuario);
-      switch(this.usuario.error) {
+      switch (this.usuario.error) {
         case 0:
-          this.presentAlertConfirm("Problema de conexión",'Intente de nuevo');
-        break;
-        
+          this.presentAlertConfirm("Problema de conexión", 'Intente de nuevo');
+          break;
+
         case 1:
           this.Alert_documentoIAE();
-        break;
+          break;
 
         case 2:
-            this.Alert_cuentaStripe();
-        break;
+          this.Alert_cuentaStripe();
+          break;
 
         case 3:
-          this.presentAlertConfirm("Su solicitud esta siendo verificada",'La Administracion');
-        break;
+          this.presentAlertConfirm("Su solicitud esta siendo verificada", 'La Administracion');
+          break;
 
         case 4:
-          this.presentAlertConfirm("Usuario desabilitado",'Contactar con la administracion');
-        break;
-                
-      
-                
+          this.presentAlertConfirm("Usuario desabilitado", 'Contactar con la administracion');
+          break;
+
+
+
         default:
-         
+
       }
 
 
-     // this.presentAlertConfirm();
+      // this.presentAlertConfirm();
     }
   }
 
@@ -159,7 +159,7 @@ export class LoginUserPage implements OnInit {
     return this.loading.present();
   }
 
-  async presentAlertConfirm(texto1:string ,texto2:string) {
+  async presentAlertConfirm(texto1: string, texto2: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
 
@@ -170,7 +170,7 @@ export class LoginUserPage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {},
+          handler: (blah) => { },
         },
       ],
     });
@@ -189,14 +189,14 @@ export class LoginUserPage implements OnInit {
           text: 'Siguiente',
           handler: (datos) => {
             this.datos.setruta('/login-user');
-            this.navController.navigateRoot('/adjuntar', {animated: true,animationDirection: 'forward',});
+            this.navController.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward', });
           }
         },
         {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {},
+          handler: (blah) => { },
         },
       ],
     });
@@ -214,14 +214,14 @@ export class LoginUserPage implements OnInit {
         {
           text: 'Siguiente',
           handler: (datos) => {
-            this.navController.navigateRoot('/stripe', {animated: true,animationDirection: 'forward',});
+            this.navController.navigateRoot('/stripe', { animated: true, animationDirection: 'forward', });
           }
         },
         {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {},
+          handler: (blah) => { },
         },
       ],
     });
@@ -230,6 +230,6 @@ export class LoginUserPage implements OnInit {
   }
 
   recuperar() {
-    this.navController.navigateRoot('/recuperarcontrase', {animated: true,animationDirection: 'forward',});
+    this.navController.navigateRoot('/recuperarcontrase', { animated: true, animationDirection: 'forward', });
   }
 }

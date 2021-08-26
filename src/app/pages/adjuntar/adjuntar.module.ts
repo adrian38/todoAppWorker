@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { AdjuntarPageRoutingModule } from './adjuntar-routing.module';
 
 import { AdjuntarPage } from './adjuntar.page';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -19,4 +19,4 @@ import {ToastModule} from 'primeng/toast';
   ],
   declarations: [AdjuntarPage]
 })
-export class AdjuntarPageModule {}
+export class AdjuntarPageModule { }

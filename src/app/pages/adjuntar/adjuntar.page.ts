@@ -23,6 +23,7 @@ export class AdjuntarPage implements OnInit {
   avatarUsuario64: string = "";
   loading: HTMLIonLoadingElement = null;
   ruta: string = "";
+  btn_deshabilitar:boolean=false;
 
   notificationOK$: Observable<boolean>;
   notificationError$: Observable<boolean>;
@@ -61,8 +62,9 @@ export class AdjuntarPage implements OnInit {
 
 
           this.loading.dismiss();
-          this.presentToast("Error guardando su documento");
-          //this.messageService.add({ severity: 'error', detail: 'No se creo la tarea' });
+          //this.presentToast("Error guardando su documento");
+          this.btn_deshabilitar=false;
+          this.messageService.add({ severity: 'error', detail: 'Error guardando su documento' });
 
         }
       });
@@ -73,8 +75,9 @@ export class AdjuntarPage implements OnInit {
         if (notificationOK) {
 
           this.loading.dismiss();
-          this.presentToast("Documento IAE Salvado Correctamente");
-          //this.messageService.add({ severity: 'success', detail: 'Tarea creada correctamente' });
+          //this.presentToast("Documento IAE Salvado Correctamente");
+          this.btn_deshabilitar=true;
+          this.messageService.add({ severity: 'success', detail: 'Documento IAE Salvado Correctamente' });
 
           if (this.ruta == "/login-user") {
             console.log('login')
@@ -108,7 +111,9 @@ export class AdjuntarPage implements OnInit {
   }
 
   onNextClick() {
+
     if (this.foto != "") {
+      this.btn_deshabilitar=true;
       this._sigupOdoo.updateDocuments(this.avatarUsuario64);
       this.presentLoading("Espere mientras guardamos su documento IAE");
 
@@ -118,6 +123,7 @@ export class AdjuntarPage implements OnInit {
 
     }
     else {
+      this.btn_deshabilitar=false;
       this.presentAlert();
     }
 
@@ -230,7 +236,8 @@ export class AdjuntarPage implements OnInit {
 
   abrirDocumento() {
     console.log('documento abierto');
-    this.presentToast("Los documentos no estan habilitados");
+    this.messageService.add({ severity: 'error', detail: 'Los documentos no estan habilitados' });
+    //this.presentToast("Los documentos no estan habilitados");
 
   }
 

@@ -3,11 +3,13 @@ import { AlertController, LoadingController, NavController, Platform, ToastContr
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SignUpOdooService } from 'src/app/services/signup-odoo.service';
 import { Observable, Subscription } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-stripe',
   templateUrl: './stripe.page.html',
   styleUrls: ['./stripe.page.scss'],
+  providers: [MessageService]
 })
 export class StripePage implements OnInit {
 
@@ -28,6 +30,7 @@ export class StripePage implements OnInit {
                private browser  :InAppBrowser,
                private _sigupOdoo :SignUpOdooService,
                private ngZone: NgZone, 
+               private messageService: MessageService,
                public loadingController: LoadingController,
                private toastController: ToastController,) { }
 
@@ -49,7 +52,8 @@ export class StripePage implements OnInit {
         
             
             this.loading.dismiss();
-            this.presentToast("Error generando su link, vuelva a intentarlo");
+            //this.presentToast("Error generando su link, vuelva a intentarlo");
+            this.messageService.add({ severity: 'error', detail: 'Error generando su link, vuelva a intentarlo' });
             
           }
         });
@@ -74,13 +78,13 @@ export class StripePage implements OnInit {
 
 
   }
-  async presentToast(message:string) {
-		const toast = await this.toastController.create({
-			message: message,
-			duration: 2000
-		});
-		toast.present();
-	}
+  // async presentToast(message:string) {
+	// 	const toast = await this.toastController.create({
+	// 		message: message,
+	// 		duration: 2000
+	// 	});
+	// 	toast.present();
+	// }
 
   async presentLoading(sms) {
     this.loading = await this.loadingController.create({

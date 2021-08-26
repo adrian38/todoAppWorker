@@ -7,11 +7,13 @@ import { City, Photo } from 'src/app/interfaces/interfaces'
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { Address } from 'src/app/models/usuario.model';
 import { Observable, Subscription } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
   styleUrls: ['./create-account.page.scss'],
+  providers: [MessageService]
 })
 export class CreateAccountPage implements OnInit {
 
@@ -81,7 +83,7 @@ export class CreateAccountPage implements OnInit {
   number_vacio         :boolean=false;
   dni_mal              :boolean=false;
   confirmPassBoolean    :boolean=false;
-
+  btn_deshabilitar:boolean=false;
 
 
   oficio: City[];
@@ -109,6 +111,7 @@ export class CreateAccountPage implements OnInit {
               public navController:NavController,
               private platform: Platform,
               private ngZone: NgZone,
+              private messageService: MessageService,
               public loadingController: LoadingController) { 
 
                 this.usuario = new UsuarioModel();
@@ -152,7 +155,9 @@ export class CreateAccountPage implements OnInit {
         
             //console.log("error creando usuario")
             this.loading.dismiss();
-            this.presentToast("El usuario no se creo correctamente")
+            //this.presentToast("El usuario no se creo correctamente")
+            this.btn_deshabilitar=false;
+            this.messageService.add({ severity: 'error', detail: 'El usuario no se creo correctamente' });
             //this.presentToast("Error por usuario ya creado o conectividad")
             //error por usuario ya creado o conectividad o datos ingreados///////esto lo vamos a definir despues
           }
@@ -164,10 +169,13 @@ export class CreateAccountPage implements OnInit {
           if (notificationOK) {
             //quitar cargado e ir a la pagina de logguearse
             this.loading.dismiss();
+            this.btn_deshabilitar=true;
             //console.log("exito creando usuario")
             //let test = this._signupOdoo.getUserInfo();
             //console.log("usuario creado", test);
-            this.presentToast("Su usuario se creo correctamente");
+            //this.presentToast("Su usuario se creo correctamente");
+            this.messageService.add({ severity: 'success', detail: 'Su usuario se creo correctamente' });
+
 
             setTimeout(() => {
               this.navCtrl.navigateRoot('/adjuntar', { animated: true, animationDirection: 'forward' }); 
@@ -265,16 +273,16 @@ export class CreateAccountPage implements OnInit {
   }
 
  
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create(
-      {
-        message:message,
-        duration: 3000
-      }
-    );
+  // async presentToast(message: string) {
+  //   const toast = await this.toastCtrl.create(
+  //     {
+  //       message:message,
+  //       duration: 3000
+  //     }
+  //   );
 
-    toast.present();
-  }
+  //   toast.present();
+  // }
 
  
   
@@ -476,6 +484,7 @@ export class CreateAccountPage implements OnInit {
 
   if(this.selectFoto && this.coordenadas_puesta && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
  { 
+  this.btn_deshabilitar=true;
 
   let testUser = new UsuarioModel();
   testUser.address = new Address();
@@ -532,7 +541,9 @@ else {
   
   //Poner Toast q sirva
     console.log("error en los campos")
-    this.presentToast("Su informacion tiene errores");
+   //this.presentToast("Su informacion tiene errores");
+   this.btn_deshabilitar=false;
+    this.messageService.add({ severity: 'error', detail: 'Su informacion tiene errores' });
 }
 
 
@@ -711,7 +722,7 @@ else {
         //console.log('el dni esta mal es')
         this.dni_correcto="";
         this.dni_mal=true;
-        this.presentToast("DNI incorrecto");
+        //this.presentToast("DNI incorrecto");
       }
     }
     else{

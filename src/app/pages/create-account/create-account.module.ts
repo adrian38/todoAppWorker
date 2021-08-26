@@ -8,6 +8,7 @@ import { CreateAccountPageRoutingModule } from './create-account-routing.module'
 
 import { CreateAccountPage } from './create-account.page';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 //import { MessageService } from 'primeng/api';
 //import {ToastModule} from 'primeng/toast';
 //import {TableModule} from 'primeng/table';
@@ -19,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
     IonicModule,
     CreateAccountPageRoutingModule,
     DropdownModule,
+    ToastModule,
     //MessageService,
     //ToastModule,
     //TableModule

@@ -416,4 +416,24 @@ export class Tab1Page {
 
   //   toast.present();
   // }
+
+
+  loadData(event){
+//     console.log("cargando ...")
+// event.target.complete();
+setTimeout(() => {
+  if (this.solicitudesList.length >8 ) {
+    event.target.disabled = true;
+    return;
+  }
+
+  console.log('Done');
+  event.target.complete();
+
+  // App logic to determine if all data is loaded
+  // and disable the infinite scroll
+
+}, 2000);
+
+  }
 }

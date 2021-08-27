@@ -1,7 +1,18 @@
+<p-toast
+[baseZIndex]="8000"
+[style]="{width: '250px', height: '25px' , minWidth: '200px'}"
+></p-toast>
+
 <ion-header class="ion-no-border">
-  <div style="background: var(--ion-color-orange)">
+  <div style="background: var(--ion-color-orange);">
     <app-tab-header titulo="Perfil"></app-tab-header>
   </div>
+
+  
+</ion-header>
+
+
+<ion-content>
 
   <div class="flex_row">
     <div style="background: var(--ion-color-orange)"></div>
@@ -10,9 +21,7 @@
       <span class="page_subheader_title">CONTRASEÑA</span>
     </div>
   </div>
-</ion-header>
 
-<ion-content>
   <ion-row style="margin-top: 30px">
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10">
@@ -28,49 +37,6 @@
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
 
-  <!-- <ion-row style="margin-top: 5px; padding: 0px">
-    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
-    <ion-col size="10" style="padding-bottom: 0px">
-      <ion-label style="font-size: small">Contraseña actual</ion-label></ion-col
-    >
-    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
-  </ion-row> -->
-
-  <!--   <ion-row>
-    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
-    <ion-col size="10">
-      <div *ngIf="error_actual ">
-        <ion-input
-          name="contraseña_actual"
-          type="text"
-          required
-          [(ngModel)]="actual"
-          #nom_apell="ngModel"
-        ></ion-input>
-        <div id="link">
-          <small
-            *ngIf="nom_apell.invalid && nom_apell.touched"
-            class="text-danger"
-            >No es su contraseña actual</small
-          >
-        </div>
-      </div>
-
-      <div *ngIf=" !error_actual ">
-        <ion-input
-          style="border: 2px solid rgb(101, 173, 172) !important"
-          name="contraseña_actual"
-          type="text"
-          [(ngModel)]="actual"
-        ></ion-input>
-        <div id="link">
-          <small class="text-danger">No es su contraseña actual</small>
-        </div>
-      </div>
-    </ion-col>
-    <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
-  </ion-row> -->
-
   <ion-row style="margin-top: 5px; padding: 0px">
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10" style="padding-bottom: 0px">
@@ -82,18 +48,18 @@
   <ion-row>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10">
-      <ion-input
+      <ion-input 
         name="contraseña_cambiar"
         type="text"
+        [ngClass]="((nom_apell.invalid && nom_apell.touched) || campo_vacio) ? 'green_border':'no_border'"
         required
         [(ngModel)]="cambiada"
         #nom_apell="ngModel"
       ></ion-input>
-      <!-- <div id="link"> -->
-      <small *ngIf="nom_apell.invalid && nom_apell.touched" class="text-danger"
+
+      <small *ngIf="(nom_apell.invalid && nom_apell.touched) || campo_vacio" class="text-danger"
         >Debe escribir una contraseña segura</small
       >
-      <!-- </div> -->
     </ion-col>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
   </ion-row>
@@ -102,7 +68,7 @@
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
     <ion-col size="10" style="padding-bottom: 0px">
       <ion-label style="font-size: small"
-        >Confirmar contraseña</ion-label
+        >Confirmacion contraseña</ion-label
       ></ion-col
     >
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
@@ -114,18 +80,18 @@
       <div *ngIf="error_confirmacion ">
         <ion-input
           name="contraseña"
+          [ngClass]="((nom_apell.invalid && nom_apell.touched) || campo_vacio) ? 'green_border':'no_border'"
           type="text"
           required
           [(ngModel)]="confirmada"
           #nom_apell="ngModel"
         ></ion-input>
-        <!-- <div id="link"> -->
+
         <small
-          *ngIf="nom_apell.invalid && nom_apell.touched"
+          *ngIf="(nom_apell.invalid && nom_apell.touched) || campo_vacio"
           class="text-danger"
           >Debe escribir contraeña valida</small
         >
-        <!-- </div> -->
       </div>
 
       <div *ngIf=" !error_confirmacion ">
@@ -135,9 +101,8 @@
           type="text"
           [(ngModel)]="confirmada"
         ></ion-input>
-        <!-- <div id="link"> -->
+
         <small class="text-danger">No coinciden las contraseñas</small>
-        <!-- </div> -->
       </div>
     </ion-col>
     <ion-col size="1" style="background: rgb(255, 255, 255)"></ion-col>
@@ -150,4 +115,7 @@
       </ion-button>
     </ion-col>
   </ion-row>
+
+
+
 </ion-content>

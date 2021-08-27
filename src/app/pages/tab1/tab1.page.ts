@@ -8,10 +8,12 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { TaskOdooService } from 'src/app/services/task-odoo.service';
 import { MessageModel } from 'src/app/models/message.model';
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
+  providers: [MessageService]
 })
 export class Tab1Page {
 
@@ -51,7 +53,8 @@ export class Tab1Page {
     public loadingController: LoadingController,
     private _chatOdoo: ChatOdooService,
     private platform: Platform,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -221,7 +224,9 @@ export class Tab1Page {
             }
             this.loading.dismiss();
             console.log('solicitud eliminada');
-            this.presentToastCancelar(this.message);
+            this.messageService.add({ severity: 'success', detail: 'Solicitud cancelada' });
+
+           // this.presentToastCancelar(this.message);
           }
         });
       }
@@ -399,16 +404,16 @@ export class Tab1Page {
     this.navCtrl.navigateRoot('/crear-promocion', { animated: true, animationDirection: 'back' });
   }
 
-  async presentToastCancelar(message: string) {
-    const toast = await this.toastCtrl.create(
-      {
-        message,
-        translucent: true,
-        duration: 3000,
-        mode: "ios"
-      }
-    );
+  // async presentToastCancelar(message: string) {
+  //   const toast = await this.toastCtrl.create(
+  //     {
+  //       message,
+  //       translucent: true,
+  //       duration: 3000,
+  //       mode: "ios"
+  //     }
+  //   );
 
-    toast.present();
-  }
+  //   toast.present();
+  // }
 }

@@ -8,7 +8,7 @@ import { ContrasePageRoutingModule } from './contrase-routing.module';
 
 import { ContrasePage } from './contrase.page';
 import { ComponentsModule } from '../../components/components.module';
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -17,6 +17,7 @@ import { ComponentsModule } from '../../components/components.module';
     IonicModule,
     ContrasePageRoutingModule,
     ComponentsModule,
+    ToastModule
    
  
   ],

@@ -4,11 +4,13 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { PopoverIaeComponent } from 'src/app/components/popover-iae/popover-iae.component';
 import { Photo } from 'src/app/Interfaces/interfaces';
 import { PhotoService } from 'src/app/services/photo.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-documentos',
   templateUrl: './documentos.page.html',
   styleUrls: ['./documentos.page.scss'],
+  providers: [MessageService]
 })
 export class DocumentosPage implements OnInit {
 
@@ -22,7 +24,8 @@ export class DocumentosPage implements OnInit {
               private popoverCtrl: PopoverController,
               private photoService: PhotoService,
               public loadingController: LoadingController,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.subServ.setruta('documentos');
@@ -37,11 +40,14 @@ export class DocumentosPage implements OnInit {
   onAnadir() {
     if(this.foto == ""){
       console.log("no hay nada seleccionado");
+      this.messageService.add({ severity: 'error', detail: 'Seleccione un documento' });
      
     }
     else{
       console.log("hay seleccionado algo");
       this.presentLoading("Salvando documento IAE");
+      this.messageService.add({ severity: 'success', detail: 'Documento IAE Salvado Correctamente' });
+
       }
   }
 
@@ -124,7 +130,7 @@ export class DocumentosPage implements OnInit {
      }
      abrirDocumento(){
       console.log('documento abierta');
-      this.presentToast("Los documentos no estan habilitados");
+      //this.presentToast("Los documentos no estan habilitados");
       
      }
 
@@ -139,11 +145,11 @@ export class DocumentosPage implements OnInit {
       return this.loading.present();
     }
 
-    async presentToast(message:string) {
-      const toast = await this.toastController.create({
-        message: message,
-        duration: 2000
-      });
-      toast.present();
-    }
+    // async presentToast(message:string) {
+    //   const toast = await this.toastController.create({
+    //     message: message,
+    //     duration: 2000
+    //   });
+    //   toast.present();
+    // }
 }

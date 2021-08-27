@@ -1,10 +1,11 @@
+
 .page_subheader {
   background: var(--ion-color-orange) !important;
   height: 50px !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  z-index: 1 !important;
+  z-index: 0 !important;
   width: 100% !important;
 }
 
@@ -34,4 +35,37 @@ ion-button {
 
 .text-danger{
   color:  rgb(101, 173, 172) !important;
+}
+
+.no_border {
+  border: none !important;
+}
+
+
+.green_border {
+  border       : 2px solid var(--ion-color-greenblue) !important;
+  border-radius: 5px;
+}
+
+.green_border_bold {
+  border       : 2px solid var(--ion-color-greenblue) !important;
+  border-radius: 5px;
+}
+
+
+
+:host ::ng-deep {
+
+  .p-toast-message-custom {
+      background-color: rgb(246, 183, 118);
+      border: solid rgb(246, 183, 118);;
+      border-width: 0 0 0 6px;
+      width: 10px;
+      color: #2c1e30;
+      
+      .p-toast-icon-close {
+          color: #2c1e30;
+         
+      }
+  }
 }

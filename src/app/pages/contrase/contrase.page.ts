@@ -3,22 +3,25 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { NavController, Platform, ToastController } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-contrase',
   templateUrl: './contrase.page.html',
   styleUrls: ['./contrase.page.scss'],
+  providers: [MessageService]
 })
 export class ContrasePage implements OnInit {
 
- // actual    :string="";
+
   cambiada  :string="";
   confirmada:string="";
 
 
   error_actual:boolean=true;
   error_confirmacion:boolean=true;
+  campo_vacio:boolean=false;
 
   usuario:UsuarioModel;
 
@@ -26,6 +29,7 @@ export class ContrasePage implements OnInit {
                private platform: Platform,
               public navCtrl: NavController,
               private toastController: ToastController,
+              private messageService: MessageService,
               private subServ: ObtSubSService) { }
 
   ngOnInit() {
@@ -47,27 +51,24 @@ export class ContrasePage implements OnInit {
 
   guardar(){
 
-    /* if( this.usuario.password == this.actual ) {
 
-            console.log("contraseña actual bien");
-            this.error_actual=true;
-    }
-            else{
-               this.error_actual=false;
-              console.log("contraseña actual mal");
-    } */
 
 if(this.cambiada == "" || this.confirmada == "" ){
-  this.presentToast();
+ // this.presentToast();
+ this.campo_vacio=true;
 }
 else{
   if(this.cambiada == this.confirmada){
              
     this.error_confirmacion=true;
+    this.campo_vacio=false;
+    this.messageService.add({ severity: 'success', detail: 'Cambio completado' });
+
    
    }
    else{
      this.error_confirmacion=false;
+     this.campo_vacio=true;
 
    } 
 }
@@ -78,12 +79,12 @@ else{
          
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Debe rellenar los campos',
-      duration: 2000
-    });
-    toast.present();
+//   async presentToast() {
+//     const toast = await this.toastController.create({
+//       message: 'Debe rellenar los campos',
+//       duration: 2000
+//     });
+//     toast.present();
 
-}
+// }
 }

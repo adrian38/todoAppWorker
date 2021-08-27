@@ -8,6 +8,7 @@ import { DocumentosPageRoutingModule } from './documentos-routing.module';
 
 import { DocumentosPage } from './documentos.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     DocumentosPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    ToastModule
   ],
   declarations: [DocumentosPage]
 })

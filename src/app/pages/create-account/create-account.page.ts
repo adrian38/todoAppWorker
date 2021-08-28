@@ -229,7 +229,7 @@ export class CreateAccountPage implements OnInit {
             //console.log( "Foto",photo.webviewPath);
             if(photo){
               this.avatarUsuario= photo.webviewPath;
-              //console.log(this.avatarUsuario);
+              console.log(this.avatarUsuario);
               this.avatarUsuario64= this.photoService.devuelve64();
              // //console.log('f64',this.avatarUsuario64.slice(22));
             }

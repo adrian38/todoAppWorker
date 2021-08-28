@@ -1,3 +1,64 @@
+<p-dialog
+  header=" "
+  [closable] ="false"
+  [(visible)]="display_presupuesto"
+  [modal]="true"
+  [baseZIndex]="1000"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '80vw'}"
+>
+  <div class="flex_column" style="padding: 0px 0px !important">
+    <ion-label style="text-align: start; margin-bottom: 5px;font-size: 20px;font-weight: bold;">
+      Costos Extras
+    </ion-label>
+    <ion-label style="margin-top: 3px; margin-bottom: 10px;font-weight: bold;">
+    Menu de Cambio
+    </ion-label>
+
+    <div class="flex_row" style="margin-top: 25px;">
+      <ion-input
+      class="custom_input"
+      type="number"
+      name="mobra"
+      [(ngModel)]="mano_obra"
+      placeholder="Mano de obra"
+      required
+    >
+    </ion-input>
+    </div>
+
+    <div class="flex_row" style="margin-top: 15px;">
+      <ion-input
+      class="custom_input"
+      type="number"
+      name="mate"
+      [(ngModel)]="materiales"
+      placeholder="materiales"
+      required
+    >
+    </ion-input>
+    </div>
+    
+    <div class="flex_row" style="margin-top: 20px;">
+      <div class="flex_column">
+       
+        <span style="padding-top: 5px;color:  var(--ion-color-orange) ;"
+              (click)="cancelar()"
+              >Cancelar</span>
+      
+      </div>
+
+      <div class="flex_column">
+        <span style="padding-top: 5px;color:  var(--ion-color-orange) ;"
+              (click)="actualizar()"
+              >Actualizar</span>
+      </div>
+      
+    </div>
+  </div>
+</p-dialog>
+
 <ion-header class="ion-no-border">
   <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Contratados"></app-tab-header>
@@ -376,6 +437,10 @@
       </div>
     </div>
   </ion-footer>  -->
+
+
+  
+
 </ion-content>
 
 <!-- Se agrega el menu lateral -->

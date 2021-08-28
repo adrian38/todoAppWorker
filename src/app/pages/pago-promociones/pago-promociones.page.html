@@ -25,11 +25,20 @@
 
     <div class="div_1">
       <ion-input  class="custom_input" 
-                  type="number" 
-                  [(ngModel)]='number_tar'
+                  type="text" 
+                  required
+                  [ngClass]="((t.invalid && t.touched) || error ) ? 'green_border':'no_border'"
+                  [(ngModel)]="numero_tarjeta"
                   placeholder="NUMERO DE TARJETA"
+                  maxlength="16" 
+                  minlength="13"
+                  #t="ngModel"
                   style="width: 80% !important;">
       </ion-input>
+      <ion-label  *ngIf="(t.invalid && t.touched) || error"
+                 class="mandatory">
+            *
+</ion-label>
     </div>
 
 <div class=" flex_row ">
@@ -37,9 +46,19 @@
     <ion-input  class="custom_input" 
                 type="number" 
                 [(ngModel)]='month'
+                [ngClass]="((m.invalid && m.touched) || mes_correcto ) ? 'green_border':'no_border'"
                 placeholder="M M"
+                required
+                maxlength="2" 
+                minlength="2"
+                #m="ngModel"
                 style="width: 80% !important;">
     </ion-input>
+
+    <ion-label  *ngIf="(m.invalid && m.touched) ||  mes_correcto"
+                 class="mandatory">
+            *
+</ion-label>
   </div>
 
   <div class="div_3">
@@ -50,9 +69,18 @@
     <ion-input  class="custom_input" 
                 type="number" 
                 [(ngModel)]='year'
+                [ngClass]="((y.invalid && y.touched) || year_correcto ) ? 'green_border':'no_border'"
+                required
+                maxlength="4" 
+                minlength="4"
                 placeholder="A A"
+                #y="ngModel"
                 style="width: 23% !important;">
     </ion-input>
+    <ion-label  *ngIf="(y.invalid && y.touched) ||  year_correcto"
+                 class="mandatory">
+             *
+    </ion-label>
   </div>
 </div>
 
@@ -60,9 +88,19 @@
   <ion-input  class="custom_input" 
               type="number" 
               [(ngModel)]='cvc'
+              [ngClass]="((c.invalid && c.touched) || cvc_correcto ) ? 'green_border':'no_border'"
               placeholder="CVC"
+              required
+              pattern="[1-9]{3}"
+              maxlength="3" 
+              minlength="2"
+              #c="ngModel"
               style="width: 40% !important;">
   </ion-input>
+  <ion-label  *ngIf="(c.invalid && c.touched) ||  cvc_correcto"
+  class="mandatory">
+*
+</ion-label>
 </div>
 
 <div class="org" >

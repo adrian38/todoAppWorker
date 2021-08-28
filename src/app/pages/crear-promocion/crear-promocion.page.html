@@ -1,3 +1,9 @@
+
+  <p-toast
+  [baseZIndex]="3000"
+  [style]="{width: '250px', height: '25px' , minWidth: '200px'}"
+></p-toast>
+
 <ion-header class="ion-no-border">
 
   <div style="background: var(--ion-color-orange);">
@@ -73,8 +79,8 @@
     </div>
 
     <div class="flex_row" style="margin-top: 25px;">
-      <img class="add_img" src={{foto1}} (click)="onclickFoto1( true)">
-      <img class="add_img" src={{foto2}} (click)="onclickFoto2( false)">
+      <ion-img class="add_img" [src]="foto1" (click)="onclickFoto1( true)"></ion-img>
+      <ion-img class="add_img" [src]="foto2" (click)="onclickFoto2( false)"></ion-img>
     </div>
 
     <div style="display: flex; justify-content: center; width: 100%; height: 30%; padding-top: 80px;">

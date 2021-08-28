@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { CrearPromocionPageRoutingModule } from './crear-promocion-routing.module';
-
+import { ToastModule } from 'primeng/toast';
 import { CrearPromocionPage } from './crear-promocion.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
@@ -14,6 +14,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
+    ToastModule,
     CrearPromocionPageRoutingModule,
     ComponentsModule
   ],

@@ -29,6 +29,7 @@ export class ContratadosChatDetallesPage implements OnInit {
   pre: number;
   presupuesto: number;
   display: boolean = false;
+  display_presupuesto: boolean = false;
   task: TaskModel;
   message: MessageModel;
   messagesList: MessageModel[];
@@ -461,67 +462,87 @@ export class ContratadosChatDetallesPage implements OnInit {
   }
 
   actualizarPresupesto() {
-    this.alertaPresupuesto();
+    this.display_presupuesto = true;
+    //this.alertaPresupuesto();
     console.log('editar')
   }
 
-  async alertaPresupuesto() {
-    const prompt = await this.alertCtrl.create({
-
-      header: 'Costos Extras',
-      message: "Menu de cambio",
-      inputs: [
-        {
-          name: 'mano',
-          type: 'number',
-          placeholder: 'Mano de obra',
-          label: 'cesar',
-
-        },
-
-        {
-          name: 'materiales',
-          type: 'number',
-          placeholder: 'Materiales',
-          label: 'marlyn',
-
-        },
-
-
-      ],
-
-
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Actualizar',
-          handler: data => {
-
-
-            if (data.mano == "" || data.materiales == "") {
-              console.log('los campos estan vacios .Debo sacar un cartel para avisar');
-              this.alertaSinPresupuesto();
-            }
-            else {
-              this.mano_obra = data.mano;
-              this.materiales = data.materiales;
-            }
-
-            // console.log('c2',this.materiales);
-
-
-          }
-        }
-      ]
-    });
-    prompt.present();
+  cancelar(){
+    this.display_presupuesto = false; 
   }
 
+  // async alertaPresupuesto() {
+  //   const prompt = await this.alertCtrl.create({
+
+  //     header: 'Costos Extras',
+  //     message: "Menu de cambio",
+  //     inputs: [
+  //       {
+  //         name: 'mano',
+  //         type: 'number',
+  //         placeholder: 'Mano de obra',
+  //         label: 'cesar',
+
+  //       },
+
+  //       {
+  //         name: 'materiales',
+  //         type: 'number',
+  //         placeholder: 'Materiales',
+  //         label: 'marlyn',
+
+  //       },
+
+
+  //     ],
+
+
+  //     buttons: [
+  //       {
+  //         text: 'Cancelar',
+  //         handler: data => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       {
+  //         text: 'Actualizar',
+  //         handler: data => {
+
+
+  //           if (data.mano == "" || data.materiales == "") {
+  //             console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+  //             this.alertaSinPresupuesto();
+  //           }
+  //           else {
+  //             this.mano_obra = data.mano;
+  //             this.materiales = data.materiales;
+  //           }
+
+  //           // console.log('c2',this.materiales);
+
+
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   prompt.present();
+  // }
+
+  actualizar(){
+    if (this.mano_obra == "" || this.materiales == "") {
+                  console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+                  this.display_presupuesto = false; 
+                  this.alertaSinPresupuesto();
+                }
+                else {
+                  console.log('mano', this.mano_obra);
+                  console.log('mater',this.materiales);
+                  this.display_presupuesto = false; 
+                 
+                  
+
+                }
+  }
 
   async alertaSinPresupuesto() {
     const prompt = await this.alertCtrl.create({

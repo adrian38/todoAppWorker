@@ -14,6 +14,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 import { Photo } from 'src/app/Interfaces/interfaces';
 import { IonInfiniteScroll } from '@ionic/angular';
 //import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -21,6 +22,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
   selector: 'app-contratados-chat-detalles',
   templateUrl: './contratados-chat-detalles.page.html',
   styleUrls: ['./contratados-chat-detalles.page.scss'],
+  providers: [MessageService]
 })
 export class ContratadosChatDetallesPage implements OnInit {
 
@@ -52,12 +54,17 @@ export class ContratadosChatDetallesPage implements OnInit {
   imagen_0: string = "";
   imagen_1: string = "";
   imagen_2: string = "";
+  comentario: string = "";
   foto1: string = '../../../assets/icons/fotoadd.png';
   foto2: string = '../../../assets/icons/fotoadd.png';
   foto3: string = '../../../assets/icons/fotoadd.png';
-  foto164: string = '../../../assets/icons/fotoadd.png';
-  foto264: string = '../../../assets/icons/fotoadd.png';
-  foto364: string = '../../../assets/icons/fotoadd.png';
+  // foto164: string = '../../../assets/icons/fotoadd.png';
+  // foto264: string = '../../../assets/icons/fotoadd.png';
+  // foto364: string = '../../../assets/icons/fotoadd.png';
+  foto164: string = '';
+  foto264: string = '';
+  foto364: string = '';
+  photoProvider: string ='';
   valor_segment: string = "";
   ultimo_sms: string = "";
   sms_cliente: string = "";
@@ -83,6 +90,7 @@ export class ContratadosChatDetallesPage implements OnInit {
     public loadingController: LoadingController,
     private alertCtrl: AlertController,
     public photoService: PhotoService,
+    private messageService: MessageService,
     //private screenOrientation: ScreenOrientation
   ) {
 
@@ -96,6 +104,15 @@ export class ContratadosChatDetallesPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('tarea',this.task);
+    this.photoProvider=this.task.photoProvider;
+    if(this.photoProvider == ""){
+      this.photoProvider="/assets/icons/noImage.svg";
+    }
+    else{
+      this.photoProvider=this.task.photoProvider;
+    }
+    
     //this.screenOrientation.lock('portrait');
 
     this.ruta = this.datos.getruta();
@@ -388,18 +405,18 @@ export class ContratadosChatDetallesPage implements OnInit {
               if (posicion == 0) {
                 this.foto1 = photo.webviewPath;
                 console.log(this.foto1);
-                //this.foto1= this.photoService.devuelve64();
+                this.foto164= this.photoService.devuelve64().slice(22);
 
               }
               if (posicion == 1) {
                 this.foto2 = photo.webviewPath;
                 console.log(this.foto2);
-                // this.foto2= this.photoService.devuelve64();
+                this.foto264= this.photoService.devuelve64().slice(22);
               }
               if (posicion == 2) {
                 this.foto3 = photo.webviewPath;
                 console.log(this.foto3);
-                // this.foto3= this.photoService.devuelve64();
+                this.foto364= this.photoService.devuelve64().slice(22);
               }
 
             }
@@ -417,17 +434,17 @@ export class ContratadosChatDetallesPage implements OnInit {
               if (posicion == 0) {
                 this.foto1 = photos[0].webviewPath;
                 console.log(this.foto1);
-                // this.foto164= this.photoService.devuelve64(); 
+                this.foto164= this.photoService.devuelve64().slice(22); 
               }
               if (posicion == 1) {
                 this.foto2 = photos[0].webviewPath;
                 //console.log(this.foto1);
-                //this.foto264= this.photoService.devuelve64(); 
+                this.foto264= this.photoService.devuelve64().slice(22);
               }
               if (posicion == 2) {
                 this.foto3 = photos[0].webviewPath;
                 //console.log(this.foto1);
-                this.foto364 = this.photoService.devuelve64();
+                this.foto364 = this.photoService.devuelve64().slice(22);
               }
 
 
@@ -440,15 +457,18 @@ export class ContratadosChatDetallesPage implements OnInit {
           handler: (event) => {
             if (posicion == 0) {
 
-              this.foto1 = '../../../assets/icons/fotoadd.png'
+              this.foto1 = '../../../assets/icons/fotoadd.png';
+              this.foto164="";
             }
             if (posicion == 1) {
 
-              this.foto2 = '../../../assets/icons/fotoadd.png'
+              this.foto2 = '../../../assets/icons/fotoadd.png';
+              this.foto264="";
             }
             if (posicion == 2) {
 
-              this.foto3 = '../../../assets/icons/fotoadd.png'
+              this.foto3 = '../../../assets/icons/fotoadd.png';
+              this.foto364="";
             }
 
 
@@ -563,5 +583,20 @@ export class ContratadosChatDetallesPage implements OnInit {
       ]
     });
     prompt.present();
+  }
+
+  denunciar(){
+
+         if ((this.foto164 == "" || this.foto264 == "" || this.foto364 == "") && this.comentario == ""  ) {
+            
+                 this.display=true;
+                 this.messageService.add({ severity: 'error', detail: 'Seleccione la evidencia' });
+
+         }  
+         else{
+               
+                   this.display=false;
+         }
+
   }
 }

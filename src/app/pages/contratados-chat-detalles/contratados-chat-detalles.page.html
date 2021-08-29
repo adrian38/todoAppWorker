@@ -1,3 +1,9 @@
+<p-toast
+[baseZIndex]="3000"
+[style]="{width: '250px', height: '25px' , minWidth: '200px'}"
+></p-toast>
+
+<!-- Pantalla del presupuesto -->
 <p-dialog
   header=" "
   [closable] ="false"
@@ -59,6 +65,10 @@
   </div>
 </p-dialog>
 
+
+
+
+
 <ion-header class="ion-no-border">
   <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Contratados"></app-tab-header>
@@ -89,26 +99,8 @@
         src="../../../assets/icons/lapiz_chat.svg" />
       <img style="width: 20px;height: 20px;margin-left: 8px;" (click)="onClose()"
         src="../../../assets/icons/cerrar_chat.svg" />
-      <!-- <ion-icon
-      name="close-circle-outline"
-      style="height: 25px; width: 25px"
-      (click)="onClose()"
-    ></ion-icon> -->
     </div>
-    <!-- <div
-      style="
-        width: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-      "
-    >
-      <ion-icon
-        name="close-circle-outline"
-        style="height: 25px; width: 25px"
-        (click)="onClose()"
-      ></ion-icon>
-    </div> -->
+   
   </div>
 </ion-header>
 
@@ -339,7 +331,7 @@
       <div class="flex_row"></div>
       <div class="flex_row" style="justify-content: space-evenly">
         <div class="flex_col">
-          <ion-img class="img" src="/assets/icons/noImage.svg"></ion-img>
+          <ion-img class="img" src="{{photoProvider}}"></ion-img>
         </div>
         <div class="flex_col" style="justify-content: start">
           <div style="display: flex">
@@ -375,9 +367,9 @@
       </div>
 
       <div class="flex_row" style="justify-content: space-evenly; margin-top: 8px">
-        <img class="imgtocar" src="{{foto1}}" (click)="onclickFoto1(0)" />
-        <img class="imgtocar" src="{{foto2}}" (click)="onclickFoto1(1)" />
-        <img class="imgtocar" src="{{foto3}}" (click)="onclickFoto1(2)" />
+        <ion-img class="imgtocar" [src]="foto1" (click)="onclickFoto1(0)" ></ion-img>
+        <ion-img class="imgtocar" [src]="foto2" (click)="onclickFoto1(1)" ></ion-img>
+        <ion-img class="imgtocar" [src]="foto3" (click)="onclickFoto1(2)" ></ion-img>
       </div>
       <div class="flex_row" style="justify-content: space-evenly; margin-top: 20px">
         <textarea name="Text1" cols="10" rows="3" [(ngModel)]="comentario" placeholder="Escriba su comentario"
@@ -389,7 +381,7 @@
           height: 30px !important;
           font: normal 16px 'Helvetica-Roman', sans-serif;
           --border-radius: 7px;
-        " (click)="editar()">
+        " (click)="denunciar()">
           <span style="padding-top: 5px">ENVIAR</span>
         </ion-button>
       </div>
@@ -443,62 +435,4 @@
 
 </ion-content>
 
-<!-- Se agrega el menu lateral -->
 
-<!-- <ion-menu
-  contentId="principal"
-  menuId="menu-content"
-  side="start"
-  style="margin-top: 145px !important; --width: 60%"
->
-  <ion-header class="ion-no-border">
-    <ion-toolbar>
-      <ion-title class="menu_title">Menú de cambios</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <div class="flex_row" style="width: 100%">
-      <div style="width: 10%"></div>
-      <div class="flex_row" style="width: 80%; margin: 20px 0">
-        <ion-label
-          style="
-            font: normal 14px 'Helvetica-Roman', sans-serif;
-            text-align: left;
-            width: 60%;
-          "
-          >Presupuesto</ion-label
-        >
-        <ion-input
-          class="pres_input ion-tappable"
-          name="password"
-          type="text"
-          placeholder="5555"
-          [(ngModel)]="pre"
-        ></ion-input>
-      </div>
-      <div style="width: 10%"></div>
-    </div>
-
-    <div
-      style="
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        padding-top: 60px;
-      "
-    >
-      <ion-button
-        color="orange"
-        (click)="onClickEnviar()"
-        style="
-          font: bold 15px 'Helvetica-Roman', sans-serif;
-          height: 30px !important;
-          text-transform: uppercase;
-        "
-      >
-        Enviar
-      </ion-button>
-    </div>
-  </ion-content>
-</ion-menu>
-<ion-router-outlet id="principal"></ion-router-outlet> -->

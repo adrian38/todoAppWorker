@@ -1,3 +1,8 @@
+<p-toast
+[baseZIndex]="3000"
+[style]="{width: '250px', height: '25px' , minWidth: '200px'}"
+></p-toast>
+
 <ion-header class="ion-no-border">
 
   <div style="background: var(--ion-color-orange);">
@@ -25,10 +30,10 @@
 
     <div class="div_1">
       <ion-input  class="custom_input" 
-                  type="text" 
+                  type="number" 
                   required
                   [ngClass]="((t.invalid && t.touched) || error ) ? 'green_border':'no_border'"
-                  [(ngModel)]="numero_tarjeta"
+                  [(ngModel)]="numero_tarjetan"
                   placeholder="NUMERO DE TARJETA"
                   maxlength="16" 
                   minlength="13"
@@ -87,7 +92,7 @@
 <div class="div_1">
   <ion-input  class="custom_input" 
               type="number" 
-              [(ngModel)]='cvc'
+              [(ngModel)]='cvcn'
               [ngClass]="((c.invalid && c.touched) || cvc_correcto ) ? 'green_border':'no_border'"
               placeholder="CVC"
               required
@@ -108,7 +113,7 @@
     <span style="padding-top: 5px">CANCELAR</span>
   </ion-button>
 
-  <ion-button class="btn_pagar" color="orange" (click)="btn_pagar()">
+  <ion-button class="btn_pagar" color="orange" disabled={{btn_habilitado}}  (click)="btn_pagar()">
     <span style="padding-top: 5px">PAGAR</span>
   </ion-button>
 </div>

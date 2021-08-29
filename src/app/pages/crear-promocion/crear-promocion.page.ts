@@ -27,6 +27,7 @@ export class CrearPromocionPage implements OnInit {
   foto164:string='';
   foto264:string='';
   fComprimida:string=''
+  btn_habilitado:boolean=false;
 
   constructor(private platform : Platform,
               private navCtrl  : NavController,
@@ -138,9 +139,17 @@ export class CrearPromocionPage implements OnInit {
     this.validar_comentario();
     this.validar_foto();
    if(this.any_tittle != true && this.any_precio != true && this.any_comentario != true && this.any_foto == false){
+   this.btn_habilitado=true;
+    this.messageService.add({ severity: 'success', detail: 'Datos añadidos' });
+    setTimeout(() => {
      
-     this.navCtrl.navigateRoot('/pago-promociones', {animated: true, animationDirection: 'forward' }) ;
-   }
+ this.navCtrl.navigateRoot('/pago-promociones', {animated: true, animationDirection: 'forward' }) ;
+  
+    }, 3000);
+     }
+     else{
+      this.btn_habilitado=false;
+     }
  
  
       

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { PagoPromocionesPageRoutingModule } from './pago-promociones-routing.module';
-
+import { ToastModule } from 'primeng/toast';
 import { PagoPromocionesPage } from './pago-promociones.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
@@ -15,6 +15,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     PagoPromocionesPageRoutingModule,
+    ToastModule,
     ComponentsModule
   ],
   declarations: [PagoPromocionesPage]

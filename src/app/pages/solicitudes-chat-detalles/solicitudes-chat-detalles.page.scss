@@ -239,3 +239,40 @@ ion-footer{
   align-self: flex-end;
   position: static;
 }
+
+
+.custom_input {
+  border: none;
+  border-radius: 8px !important;
+  background-color: var(--ion-color-gray);
+  width: 100% !important;
+  // --padding-top: 15px;
+  // --padding-start: 15px;
+  // --padding-bottom: 8px;
+  // --padding-end: 15px;
+  text-align: left;
+ // font-family: "Helvetica-Md", sans-serif;
+   font-size: 12px !important;
+  outline: none !important;
+}
+
+
+:host ::ng-deep .p-dialog {
+  border-radius: 15px !important;
+ //position: absolute;
+  .p-dialog-content {
+      border-radius: 0px 0px 15px 15px;
+      background-color: rgb(250, 250, 250) !important;
+      //box-shadow: 0.5px 0.5px 0.5px 0.5px black;
+     
+    
+  }
+.p-dialog-header {
+  background-color: rgb(250,250, 250) !important;
+  color: black;
+  border-radius: 15px 15px 0px 0px;
+  padding: 1rem;
+  //box-shadow: 0.5px 0.5px 0.5px 0.5px black;
+
+  }
+}

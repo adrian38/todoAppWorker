@@ -31,7 +31,7 @@ export class SolicitudesChatDetallesPage implements OnInit {
   subscriptionNewMsg: Subscription;
   subscriptionNotification: Subscription;
 
-
+  display_presupuesto: boolean = false;
   user: UsuarioModel;
 
   habilitar_0: boolean;
@@ -347,111 +347,132 @@ export class SolicitudesChatDetallesPage implements OnInit {
 
 
   actualizarPresupesto() {
-    this.alertaPresupuesto();
+  
+    this.display_presupuesto = true; 
   }
 
-  async alertaPresupuesto() {
-    const prompt = await this.alertCtrl.create({
+  cancelar(){
+    this.display_presupuesto = false; 
+  }
 
-      header: 'Presupuesto',
-      message: "Menu de cambio",
-      inputs: [
-        {
-          name: 'mano',
-          type: 'number',
-          placeholder: 'Mano de obra',
-          label: 'cesar',
+  // async alertaPresupuesto() {
+  //   const prompt = await this.alertCtrl.create({
 
-        },
+  //     header: 'Presupuesto',
+  //     message: "Menu de cambio",
+  //     inputs: [
+  //       {
+  //         name: 'mano',
+  //         type: 'number',
+  //         placeholder: 'Mano de obra',
+  //         label: 'cesar',
 
-        {
-          name: 'materiales',
-          type: 'number',
-          placeholder: 'Materiales',
-          label: 'marlyn',
+  //       },
 
-        },
+  //       {
+  //         name: 'materiales',
+  //         type: 'number',
+  //         placeholder: 'Materiales',
+  //         label: 'marlyn',
 
-
-      ],
-
-
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Actualizar',
-          handler: data => {
+  //       },
 
 
-            if (data.mano == "" && data.materiales == "") {
-              console.log('los campos estan vacios .Debo sacar un cartel para avisar');
-              this.alertaSinPresupuesto();
-            }
-            else {
+  //     ],
 
-              if (data.materiales) {
 
-                if (this.task.materials < parseFloat(data.materiales)) {
-                  this.temp_materiales = this.task.materials - parseFloat(data.materiales);
+  //     buttons: [
+  //       {
+  //         text: 'Cancelar',
+  //         handler: data => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       {
+  //         text: 'Actualizar',
+  //         handler: data => {
 
-                } else {
-                  this.temp_materiales = parseFloat(data.materiales);
+
+  //           if (data.mano == "" && data.materiales == "") {
+  //             console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+  //             this.alertaSinPresupuesto();
+  //           }
+  //           else {
+
+  //             if (data.materiales) {
+
+  //               if (this.task.materials < parseFloat(data.materiales)) {
+  //                 this.temp_materiales = this.task.materials - parseFloat(data.materiales);
+
+  //               } else {
+  //                 this.temp_materiales = parseFloat(data.materiales);
+  //               }
+  //               this.task.materials = parseFloat(data.materiales);
+  //             }
+
+  //             if (data.mano) {
+
+  //               if (this.task.work_force < parseFloat(data.mano)) {
+
+  //                 this.temp_mano_obra = this.task.work_force - parseFloat(data.mano);
+
+  //               }
+
+  //               else {
+  //                 this.temp_mano_obra = parseFloat(data.mano);
+  //               }
+
+  //               this.task.work_force = parseFloat(data.mano);
+  //             }
+
+
+  //             this.presupuesto = this.task.materials + this.task.work_force;
+
+
+
+  //             if (this.temp_materiales !== null && this.temp_mano_obra !== null) {
+  //               this.task.temp_materials = this.temp_materiales;
+  //               this.task.temp_work_force = this.temp_mano_obra;
+  //             } else if (this.temp_mano_obra !== null) {
+
+  //               this.task.temp_work_force = this.temp_mano_obra;
+  //             } else if (this.temp_materiales !== null) {
+
+  //               this.task.temp_materials = this.temp_materiales;
+  //             }
+
+  //             this._taskOdoo.sendNewOffer(this.task);
+
+
+
+  //             // console.log('c2',this.materiales);
+
+
+  //           }
+  //         }
+  //       }
+
+  //     ]
+  //   });
+  //   prompt.present();
+  // }
+
+
+  actualizar(){
+    if (this.mano_obra == "" || this.materiales == "") {
+                  console.log('los campos estan vacios .Debo sacar un cartel para avisar');
+                  this.display_presupuesto = false; 
+                  this.alertaSinPresupuesto();
                 }
-                this.task.materials = parseFloat(data.materiales);
-              }
-
-              if (data.mano) {
-
-                if (this.task.work_force < parseFloat(data.mano)) {
-
-                  this.temp_mano_obra = this.task.work_force - parseFloat(data.mano);
-
-                }
-
                 else {
-                  this.temp_mano_obra = parseFloat(data.mano);
+                  console.log('mano', this.mano_obra);
+                  console.log('mater',this.materiales);
+                  this.display_presupuesto = false; 
+                 
+                  
+
                 }
-
-                this.task.work_force = parseFloat(data.mano);
-              }
-
-
-              this.presupuesto = this.task.materials + this.task.work_force;
-
-
-
-              if (this.temp_materiales !== null && this.temp_mano_obra !== null) {
-                this.task.temp_materials = this.temp_materiales;
-                this.task.temp_work_force = this.temp_mano_obra;
-              } else if (this.temp_mano_obra !== null) {
-
-                this.task.temp_work_force = this.temp_mano_obra;
-              } else if (this.temp_materiales !== null) {
-
-                this.task.temp_materials = this.temp_materiales;
-              }
-
-              this._taskOdoo.sendNewOffer(this.task);
-
-
-
-              // console.log('c2',this.materiales);
-
-
-            }
-          }
-        }
-
-      ]
-    });
-    prompt.present();
   }
-
 
   async alertaSinPresupuesto() {
     const prompt = await this.alertCtrl.create({

@@ -110,9 +110,6 @@ export class StripePage implements OnInit {
     
     this._sigupOdoo.getStripeLink();
     this.presentLoading("Espere mientras generamos su link de stripe");
-
-   
-
-  }
+}
 
 }

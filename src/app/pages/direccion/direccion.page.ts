@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { LoadingController, NavController, Platform } from '@ionic/angular';
+import { MessageService } from 'primeng/api';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
@@ -8,6 +9,7 @@ import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
   selector: 'app-direccion',
   templateUrl: './direccion.page.html',
   styleUrls: ['./direccion.page.scss'],
+  providers: [MessageService]
 })
 export class DireccionPage implements OnInit {
 
@@ -30,13 +32,24 @@ export class DireccionPage implements OnInit {
 	usuario: UsuarioModel;
   vacio_calle:boolean = false;
   vacio_numero:boolean = false;
+  coordenadas_puesta:boolean = true;
+  coordenadas_puestainicial:boolean = true;
+  lat:number;
+  lon:number;
+  loading: any;
+  btn_habilitado:boolean=false;
 
   constructor(private platform: Platform,
               private navCtrl: NavController,
               private _authOdoo: AuthOdooService,
-              private subServ: ObtSubSService) { }
+              private subServ: ObtSubSService,
+              public loadingController: LoadingController,
+              private messageService: MessageService) { }
 
   ngOnInit() {
+    this.coordenadas_puestainicial=this.subServ.getcoordenada();
+    console.log('cooo',this.coordenadas_puesta)
+    this.obtenerDatos();
     this.subServ.setruta('direccion');
     this.usuario = this._authOdoo.getUser();
 	  console.log('usuario actual',this.usuario);
@@ -100,12 +113,38 @@ export class DireccionPage implements OnInit {
   }
 
    ubicacion(){
+     this.guardarDatos();
 	this.navCtrl.navigateRoot('/mapa-registro', { animated: true, animationDirection: 'forward' }); 
 } 
 
 editarDireccion(){
 console.log('editando')
 this.validar();
+if(this.coordenadas_puestainicial){
+  this.coordenadas_puesta=true;
+}
+else{
+  this.coordenadas_puesta=false;
+}
+
+if(this.vacio_calle == false && this.vacio_numero==false &&  this.coordenadas_puesta==true ){
+  this.btn_habilitado=true;
+  this.limpiarDatos();
+  this.presentLoading();
+  setTimeout(() => {
+       
+    this.messageService.add({ severity: 'success', detail: 'Actualizando la dirección'});
+       
+       }, 3000);  
+
+}
+else
+{
+  this.btn_habilitado=false;
+  this.messageService.add({ severity: 'error', detail: 'Los campos son obligatorios ' });
+}
+
+
 
 }
 validar(){
@@ -124,4 +163,52 @@ validar(){
     
   }
 }
+
+obtenerDatos()
+{
+  this.calle=this.subServ.getcalle();
+	this.piso=this.subServ.getpiso();
+	this.numero=this.subServ.getnumero();
+	this.puerta=this.subServ.getpuerta();
+	this.portal=this.subServ.getportal();
+	this.cpostal=this.subServ.getcod_postal();
+	this.escalera=this.subServ.getescalera();
+  this.lon=this.subServ.getlongitud();
+  this.lat=this.subServ.getlatitud();
+
+
+}
+
+guardarDatos()
+{
+   this.subServ.setcalle(this.calle);
+   this.subServ.setpiso(this.piso);
+   this.subServ.setnumero(this.numero);
+   this.subServ.setpuerta(this.puerta);
+   this.subServ.setportal(this.portal);
+   this.subServ.setcod_postal(this.cpostal);
+   this.subServ.setescalera(this.escalera);
+}
+
+limpiarDatos()
+{
+   this.subServ.setcalle("");
+   this.subServ.setpiso("");
+   this.subServ.setnumero("");
+   this.subServ.setpuerta("");
+   this.subServ.setportal("");
+   this.subServ.setcod_postal("");
+   this.subServ.setescalera("");
+}
+
+async presentLoading() {
+  this.loading = await this.loadingController.create({
+    cssClass: 'my-custom-class',
+    message: 'Realizando pago...',
+    duration: 2000
+  });
+
+  return this.loading.present();
+  }
+
 }

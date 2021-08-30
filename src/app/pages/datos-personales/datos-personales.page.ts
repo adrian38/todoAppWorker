@@ -6,7 +6,7 @@ import { AuthOdooService } from 'src/app/services/auth-odoo.service';
 import {DropdownModule} from 'primeng/dropdown';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { PhotoService } from 'src/app/services/photo.service';
-import { Photo } from 'src/app/interfaces/interfaces'
+import { City, Photo } from 'src/app/interfaces/interfaces'
 
 
 @Component({
@@ -64,13 +64,17 @@ export class DatosPersonalesPage implements OnInit {
   correo_bool:boolean= false;
   esMayorEdad:boolean= true;
 
+  oficio: City[];
+
+  selectedOficio:City;
+
   constructor(private platform: Platform,
-	          private navCtrl: NavController,
-	          private _authOdoo: AuthOdooService,
-			  private subServ: ObtSubSService,
-			  public photoService: PhotoService,
-			  private alertCtrl: AlertController,
-			  private actionSheetCtrl: ActionSheetController) {
+	            private navCtrl: NavController,
+	            private _authOdoo: AuthOdooService,
+			        private subServ: ObtSubSService,
+			        public photoService: PhotoService,
+			        private alertCtrl: AlertController,
+			        private actionSheetCtrl: ActionSheetController) {
 				
 				
 			

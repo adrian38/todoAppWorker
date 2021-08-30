@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+ <ion-header class="ion-no-border">
   <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
   </div>
@@ -7,6 +7,13 @@
     <span class="page_subheader_title">Datos Personales</span>
   </div>
 </ion-header>
+
+
+
+
+
+
+
 
 <ion-content>
   <ion-row style="margin-top: 25px">
@@ -26,6 +33,9 @@
   <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10">
+
+
+    
       <div
         style=" width: 100%; border-bottom: 1px solid var(--ion-color-orange); margin-top: 20px;"
         (click)="clickCategoria()"  >
@@ -58,7 +68,7 @@
           </div>
         </div>
       </div>
-      <small *ngIf="isCatTouched == true" id="link">Campo obligatorio </small>
+      <small *ngIf="isCatTouched == true" id="link">Campo obligatorio </small> 
 
       <div
         style="
@@ -132,7 +142,6 @@
         >
       </div>
 
-      <!-- Fecha de nacimiento -->
 
       <div
         style="
@@ -163,7 +172,7 @@
         >
       </div>
 
-      <!-- Correo -->
+    
 
       <div
         style="
@@ -192,7 +201,6 @@
         >
       </div>
 
-      <!-- **************************   -->
 
       <div
         style="
@@ -220,7 +228,7 @@
         >
       </div>
 
-      <!-- --------------------------------- -->
+   
 
       <div
         style="
@@ -249,7 +257,7 @@
         >
       </div>
 
-      <!-- -------------------------------------------- -->
+
 
       <div
         style="
@@ -276,7 +284,6 @@
         >
       </div>
 
-      <!-- ------------------------------------------------------- -->
 
       <div
         style="
@@ -304,8 +311,6 @@
         >
       </div>
 
-      <!-- 
-      ------------------------------------------------------ -->
 
       <div
         style="
@@ -333,8 +338,7 @@
           >Debe escribir su cuenta bancaria correctamente</small
         >
       </div>
-      <!-- 
-      ----------------------------------------------------- -->
+
 
       <div
         style="
@@ -388,5 +392,5 @@
     <ion-col size="1"></ion-col>
   </ion-row>
 
-  <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
-</ion-content>
+  
+</ion-content> 

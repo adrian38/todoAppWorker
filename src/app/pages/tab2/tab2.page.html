@@ -82,7 +82,16 @@
             </div>
           </div>
         </ion-item>
+
+        <ion-infinite-scroll threshold="150px"
+        (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
       </ion-list>
+
     </div>
     <!-- //********************************************************************************* -->
 
@@ -97,6 +106,9 @@
         <h4 style="color: lightgray">Ningun Contratado</h4>
       </div>
     </div>
+
+    
+
   </div>
 
   <div
@@ -171,4 +183,7 @@
       </div>
     </div>
   </div>
+
+
+
 </ion-content>

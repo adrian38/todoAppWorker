@@ -1,3 +1,8 @@
+<p-toast
+[baseZIndex]="3000"
+[style]="{width: '250px', height: '25px' , minWidth: '200px'}"
+></p-toast>
+
 <ion-header class="ion-no-border">
   <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
@@ -11,28 +16,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
-    <div class="address">
-
-      <div class="flex_row" style="align-items: center;">
-        <ion-img class="image" src="/assets/icons/ubicacion.svg"></ion-img>
-        <ion-label class="ion-text-wrap"
-          style="padding: 5px 10px !important; font: normal 14px 'Helvetica-Roman', sans-serif;">{{ direccion }}
-        </ion-label>
-      </div>
-
-    </div>
-  </div> -->
-  <!-- Direccion -->
-
-  <!-- <div class="flex_row flex_centered">
-    <ion-img
-      class="icon_direction"
-      src="/assets/icons/direccion.svg"
-    ></ion-img>
-    <ion-label class="h3_title">Dirección actual</ion-label>
-  </div> -->
-
   <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10">
@@ -48,14 +31,14 @@
         </ion-col>
       </ion-row>
 
-      <ion-row style="padding-left: 13px;">
+      <ion-row style="padding-left: 13px">
         <ion-label class="h6_title ion-text-wrap"
           >{{ usuario.address.street}}, Numero: {{
           usuario.address.number}},</ion-label
         >
       </ion-row>
 
-      <ion-row style="padding-left: 13px;">
+      <ion-row style="padding-left: 13px">
         <ion-label
           style="font: normal 12px 'Helvetica-Roman', sans-serif !important"
           *ngIf="usuario.address.floor"
@@ -82,16 +65,14 @@
         >
       </ion-row>
 
-      <ion-row style="padding-left: 13px;">
+      <ion-row style="padding-left: 13px">
         <ion-label
           style="padding-top: 0px"
           class="h6_title ion-text-wrap"
           *ngIf=" usuario.address.cp"
           >Codigo_Postal: {{ usuario.address.cp }}
         </ion-label>
-      </ion-row> 
-
-      
+      </ion-row>
 
       <ion-row style="margin-top: 40px">
         <ion-col style="padding: 0; margin-right: 10px">
@@ -142,7 +123,6 @@
             </ion-input>
           </div>
           <div id="item"></div>
-        
         </ion-col>
       </ion-row>
 
@@ -195,7 +175,6 @@
             </ion-input>
           </div>
           <div id="item"></div>
-      
         </ion-col>
       </ion-row>
 
@@ -219,7 +198,6 @@
             </ion-input>
           </div>
           <div id="item"></div>
-         
         </ion-col>
 
         <ion-col style="padding: 0; margin-left: 10px">
@@ -241,7 +219,6 @@
             </ion-input>
           </div>
           <div id="item"></div>
-  
         </ion-col>
       </ion-row>
 
@@ -265,17 +242,21 @@
             </ion-input>
           </div>
           <div id="item"></div>
-          <!-- <div id="link">
-            <small *ngIf="esc.invalid && esc.touched" class="text-danger"
-              >Campo obligatorio</small
-            >
-          </div> -->
         </ion-col>
 
         <ion-col style="text-align: end; margin-top: 15px">
-          <div (click)="ubicacion()">
+          <ion-button
+          class="location_btn"
+          
+          [ngClass]="(coordenadas_puesta == true) ? 'no_border':'green_border_bold'"
+          color="orange"
+          (click)="ubicacion()"
+        >
+          <ion-img id="imgGPS" src="../../../assets/icons/ubicacion.svg"></ion-img>
+        </ion-button>
+          <!-- <div (click)="ubicacion()">
             <img id="imgGPS" src="../../../assets/icons/ubicacion.svg" />
-          </div>
+          </div> -->
         </ion-col>
       </ion-row>
 
@@ -292,6 +273,7 @@
               --border-radius: 7px;
             "
             (click)="editarDireccion()"
+            disabled={{btn_habilitado}}
           >
             <span style="padding-top: 5px">GUARDAR</span>
           </ion-button>

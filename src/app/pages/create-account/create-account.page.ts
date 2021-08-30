@@ -23,7 +23,7 @@ export class CreateAccountPage implements OnInit {
   };
 
   usuario:UsuarioModel;
-  ;
+  
   
   isCatTouched: boolean = true;
 

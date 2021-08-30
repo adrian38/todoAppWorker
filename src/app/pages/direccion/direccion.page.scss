@@ -80,3 +80,44 @@ img {
   padding: 5px 20px 5px 2px !important;
   min-width: 100px !important;
 }
+
+
+.no_border {
+  border: none !important;
+}
+
+
+.green_border {
+  border       : 1px solid var(--ion-color-greenblue) !important;
+  border-radius: 5px;
+}
+
+.green_border_bold {
+  border       : 2px solid var(--ion-color-greenblue) !important;
+  border-radius: 5px;
+}
+
+.location_btn {
+  width           : 31px;
+  height          : 31px;
+  --padding-top   : 0;
+  --padding-bottom: 0;
+  --padding-start : 0;
+  --padding-end   : 0;
+  background-image: cover;
+  margin          : 0;
+  --border-radius : 3px;
+}
+
+:host ::ng-deep {
+  .p-toast-message-custom {
+      background-color: rgb(246, 183, 118);
+      border: solid rgb(246, 183, 118);;
+      border-width: 0 0 0 6px;
+      width: 10px;
+      color: #2c1e30;
+      .p-toast-icon-close {
+          color: #2c1e30;
+      }
+  }
+}

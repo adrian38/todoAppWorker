@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
-import { NavController, Platform, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { MessageService } from 'primeng/api';
 
@@ -14,9 +14,10 @@ import { MessageService } from 'primeng/api';
 })
 export class ContrasePage implements OnInit {
 
-
+  loading: any;
   cambiada  :string="";
   confirmada:string="";
+  btn_habilitado:boolean=false;
 
 
   error_actual:boolean=true;
@@ -30,6 +31,7 @@ export class ContrasePage implements OnInit {
               public navCtrl: NavController,
               private toastController: ToastController,
               private messageService: MessageService,
+              public loadingController: LoadingController,
               private subServ: ObtSubSService) { }
 
   ngOnInit() {
@@ -56,14 +58,20 @@ export class ContrasePage implements OnInit {
 if(this.cambiada == "" || this.confirmada == "" ){
  // this.presentToast();
  this.campo_vacio=true;
+ this.btn_habilitado=false;
 }
 else{
   if(this.cambiada == this.confirmada){
-             
+    this.btn_habilitado=true;      
     this.error_confirmacion=true;
     this.campo_vacio=false;
-    this.messageService.add({ severity: 'success', detail: 'Cambio completado' });
-
+    this.presentLoading();
+    setTimeout(() => {
+       
+      this.messageService.add({ severity: 'success', detail: 'Contraseña actualizada' });
+         
+         }, 3000);  
+  
    
    }
    else{
@@ -79,12 +87,14 @@ else{
          
   }
 
-//   async presentToast() {
-//     const toast = await this.toastController.create({
-//       message: 'Debe rellenar los campos',
-//       duration: 2000
-//     });
-//     toast.present();
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Actualizando...',
+      duration: 2000
+    });
+  
+    return this.loading.present();
+    }
 
-// }
 }

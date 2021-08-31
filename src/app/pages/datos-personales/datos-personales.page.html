@@ -1,36 +1,101 @@
- <ion-header class="ion-no-border">
+<ion-header class="ion-no-border">
   <div style="background: var(--ion-color-orange)">
     <app-tab-header titulo="Perfil"></app-tab-header>
   </div>
 
   <div class="page_subheader">
-    <span class="page_subheader_title">Datos Personales</span>
+    <span class="page_subheader_title">Foto Personal</span>
   </div>
 </ion-header>
 
-
-
-
-
-
-
-
 <ion-content>
-  <ion-row style="margin-top: 25px">
+  <!-- <ion-row style="margin-top: 25px">
     <ion-col size="3.5"></ion-col>
     <ion-col size="5" style="text-align: center; margin-bottom: 20px">
       <ion-card *ngIf="avatarusuario" style="margin: auto">
-        <img
-          id="selecf"
-          [src]="avatarusuario "
+        <ion-img
+        id="selecf"
+          src={{avatar_actualizado}}
           (click)="presentAlertConfirm()"
-        />
+      >
+      </ion-img>
       </ion-card>
     </ion-col>
     <ion-col size="3.5"></ion-col>
+  </ion-row> -->
+
+  <!-- src="../../../assets/noImage.svg" -->
+
+  <ion-row style="margin-top: 30px">
+    <ion-col size="1"></ion-col>
+    <ion-col size="10">
+      <ion-row>
+        <ion-col size="3">
+          <img
+            [src]="avatarusuario"
+            style="
+              width: 60px;
+              height: 60px;
+              margin-top: 0px;
+              border-radius: 8px;
+            "
+          />
+        </ion-col>
+        <ion-col size="9" style="padding-left: 20px;">
+          <ion-row>
+            <ion-label class="prom_title">Laura Martínez</ion-label>
+          </ion-row>
+
+          <ion-row>
+            <ion-label>Fontanero</ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 30px;">
+        <p style="font: bold 18px 'Helvetica-Roman', sans-serif;"> Agregue su nueva foto de perfil</p>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5">
+          <ion-card *ngIf="avatarusuario" style="margin-left: 0px;">
+            <ion-img
+              id="selecf"
+              src="{{avatar_actualizado}}"
+              (click)="presentAlertConfirm()"
+            >
+            </ion-img>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="7">
+          <div style="margin-left: 7px">
+            <ion-row>
+              <ion-label class="prom_text"
+                >Para actualizar otros datos contacte con la empresa
+                Gremio.</ion-label
+              >
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!-- disabled={{btn_deshabilitar}} -->
+      <div class="flex_centered" style="height: 160px">
+        <ion-button
+          type="submit"
+          class="next_btn"
+          color="orange"
+         
+          (click)="onNextClick()"
+        >
+          <span style="padding-top: 5px">ACTUALIZAR</span>
+        </ion-button>
+      </div>
+
+    </ion-col>
+    <ion-col size="1"></ion-col>
   </ion-row>
 
-  <ion-row>
+  <!-- <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="10">
 
@@ -390,7 +455,5 @@
     </ion-col>
 
     <ion-col size="1"></ion-col>
-  </ion-row>
-
-  
-</ion-content> 
+  </ion-row> -->
+</ion-content>

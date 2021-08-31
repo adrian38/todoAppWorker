@@ -241,7 +241,7 @@ export class ContratadosChatDetallesPage implements OnInit {
 
   }
 
-  onClickFactura(event) {
+  onClickFactura() {
 
     this.navCtrl.navigateRoot('/factura-servicios', { animated: true, animationDirection: 'forward' });
   }
@@ -260,9 +260,9 @@ export class ContratadosChatDetallesPage implements OnInit {
     this.navCtrl.navigateRoot('/tabs/tab2', { animated: true, animationDirection: 'back' });
   }
 
-  onClickEnviar() {
-    console.log("nnnnn")
-  }
+  // onClickEnviar() {
+  //   console.log("nnnnn")
+  // }
 
   pushToChat() {
 

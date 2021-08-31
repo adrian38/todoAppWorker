@@ -18,6 +18,7 @@ export class DatosPersonalesPage implements OnInit {
 	
 
 
+   avatar_actualizado:string="../../../assets/icons/fotoadd.png" ;
    avatarusuario:string =""; 
    avatarUsuario64:string="";
     
@@ -196,9 +197,10 @@ async presentAlert() {
             let photo: Photo = await this.photoService.addNewToCamara();
             console.log( "Foto",photo.webviewPath);
             if(photo){
-              this.avatarusuario =photo.webviewPath;
-              console.log(this.avatarusuario);
-              this.avatarUsuario64= this.photoService.devuelve64();
+              // this.avatarusuario =photo.webviewPath;
+              this.avatar_actualizado = photo.webviewPath;
+              //console.log(this.avatarusuario);
+              this.avatarUsuario64= this.photoService.devuelve64().slice(22);
             }
           }
         },
@@ -209,12 +211,12 @@ async presentAlert() {
             let photos: Photo[] = await this.photoService.addNewToGallery();
             // console.log("Fotos",JSON.stringify(this.photoService.photos));
 
-            if(photos.length == 1){
+            //if(photos.length == 1){
               
-              this.avatarusuario= photos[0].webviewPath;
+              this.avatar_actualizado = photos[0].webviewPath;
               console.log(this.avatarusuario);
-              this.avatarUsuario64= this.photoService.devuelve64(); 
-            }
+              this.avatarUsuario64= this.photoService.devuelve64().slice(22); 
+            //}
           }
         },
         {
@@ -222,11 +224,7 @@ async presentAlert() {
           role: 'cancel',
           handler: (event) => {
             //this.selectFoto = false;
-			if (this.usuario.avatar.length == 0) {
-				this.avatarusuario =  '../../../assets/registro.svg'
-			} else {
-				this.avatarusuario = this.usuario.avatar;
-			}
+            this.avatar_actualizado="../../../assets/icons/fotoadd.png" ;
             this.avatarUsuario64="";
             console.log('Confirm Cancel');
           }
@@ -475,6 +473,11 @@ async presentAlert() {
       console.log("No es mayor de edad");
       this.esMayorEdad = false;
     }
+  }
+
+
+  onNextClick(){
+    
   }
 }
 

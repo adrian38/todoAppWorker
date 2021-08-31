@@ -301,6 +301,8 @@ export class CreateAccountPage implements OnInit {
 
   onNextClick() {
     
+
+    
     this.validarCamposVacio();
      
   }
@@ -480,7 +482,7 @@ export class CreateAccountPage implements OnInit {
    
      this.validar_DNI(this.DNI);
         
-    
+  
 
   if(this.selectFoto && this.coordenadas_puesta && this.isCatTouched == false && this.nombreVacio == false && this.fecha_nacimiento == false && this.user_vacio == false && this.password_vacio==false && this.confirmPass_vacia == false &&  this.cifNif_vacio == false && this.segSocialNumber_vacio==false && this.cuentaBancaria_vacio==false && this.phone_vacio==false && this.streetNumber_vacio==false&&   this.number_vacio==false)   
  { 
@@ -499,11 +501,11 @@ export class CreateAccountPage implements OnInit {
  testUser.date = this.date.slice(0,10);
  testUser.username = this.user;
  testUser.password = this.password;
- testUser.dni = this.dni_correcto;
+ testUser.dni = this.dni_correcto.toUpperCase();
  testUser.phone = this.phone;
  testUser.social_security = this.segSocialNumber;
- testUser.bank_ids = this.cuentaBancaria;
- testUser.vat=this.vat;
+ testUser.bank_ids = this.cuentaBancaria.toUpperCase();
+ testUser.vat=this.vat.toUpperCase();
 
  testUser.address.street = this.streetNumber;
  testUser.address.number = this.number;
@@ -802,7 +804,7 @@ else {
 
 		this.selectFoto = this.datos.getselectfoto();
     
-    this.avatarUsuario = this.datos.getfotoRegis();
+    this.avatarUsuario = this.datos.getfoto22();
     this.avatarUsuario64 = this.datos.getfotoRegis();
     
     this.selectedOficio = {name:this.datos.getoficio()};

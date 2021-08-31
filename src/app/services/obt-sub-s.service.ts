@@ -70,7 +70,7 @@ export class ObtSubSService {
 	foto2: string = '';
 	foto00: string = '';
 	foto11: string = '';
-	foto22: string = '';
+	foto22: string = '../../../assets/registro.svg';
 	boton_atras:boolean=false;
 
 	constructor() {
@@ -80,7 +80,7 @@ export class ObtSubSService {
 
 		this.foto00 = '../../../assets/fotoadd.png';
 		this.foto11 = '../../../assets/fotoadd.png';
-		this.foto22 = '../../../assets/fotoadd.png';
+	//	this.foto22 = '../../../assets/fotoadd.png';
 	}
 
 	getNotificationSetTab$(): Observable<boolean> {

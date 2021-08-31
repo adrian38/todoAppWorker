@@ -227,7 +227,7 @@
             </div>
 
             <div class="flex_centered">
-              <img class="img_location" src="/assets/icons/ubicacion.svg" (click)="onClickUbicacion( $event)" />
+              <img class="img_location" src="/assets/icons/ubicacion.svg" (click)="onClickUbicacion()" />
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@
             <ion-img class="icon_price" src="/assets/icons/bolsa.svg"></ion-img>
             <ion-label class="h3_title">Precio</ion-label>
             <ion-button class="btn" style="min-width: 105px !important" color="orange"
-              (click)="onClickCostoEntrada( $event )">
+              (click)="onClickCostoEntrada( )">
               <span style="padding-top: 5px">COSTO EXTRA</span>
             </ion-button>
           </div>
@@ -248,7 +248,7 @@
               Total: {{ presupuesto }} €
             </ion-label>
             <ion-button class="btn" style="min-width: 105px !important" color="orange"
-              (click)="onClickFactura( $event )">
+              (click)="onClickFactura(  )">
               <span style="padding-top: 5px">VER FACTURA</span>
             </ion-button>
           </div>
@@ -317,15 +317,15 @@
         </div>
       </ion-item>
 
-      <div class="next_button_div">
+      <!-- <div class="next_button_div">
         <ion-button class="btn_finish" color="orange" (click)="onClickFinalizar( $event )">
           <span style="padding-top: 5px">FINALIZAR TAREA</span>
         </ion-button>
-      </div>
+      </div> -->
     </ion-list>
 
 
-    <p-dialog header=" " [(visible)]="display" [modal]="true" [style]="{ width: '90vw' }" [baseZIndex]="1000"
+    <p-dialog header=" " [(visible)]="display" [modal]="true" [style]="{ width: '90vw' }" [baseZIndex]="20000"
       [draggable]="false" [resizable]="false" position="bottom" [dismissableMask]="true" [autoZIndex]="false">
 
       <div class="flex_row"></div>
@@ -395,40 +395,7 @@
 
 
 
-  <!-- 
-   <ion-footer *ngIf="(segment.value === 'chat')" class="ion-no-border">
-    <div style="display: flex; justify-content: center; ">
-      <div class="flex_row chat_container">
-        <ion-textarea
-          class="text_area"
-          auto-grow
-          cols="1"
-          rows="1"
-          inputmode="text"
-          placeholder="Escriba un mensaje..."
-          autofocus
-          [(ngModel)]="message.message"
-        >
-        </ion-textarea>
 
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-          "
-        >
-          <ion-button fill="clear" class="send_btn" (click)="pushToChat()">
-            <ion-icon
-              name="send"
-              color="greenblue"
-              style="min-width: 25px; min-height: 30px"
-            ></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </div>
-  </ion-footer>  -->
 
 
   

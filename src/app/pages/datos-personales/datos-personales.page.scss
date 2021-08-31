@@ -107,3 +107,25 @@ ion-card {
   margin-top: 18px !important;
   position  : relative;
 }
+
+
+
+.prom_title {
+  font         : bold 24px 'Helvetica-Roman', sans-serif;
+  margin-bottom: 5px;
+}
+
+.prom_text {
+  font: normal 14px 'Helvetica-Roman', sans-serif;
+  margin-top: 10px;
+
+}
+
+
+.next_btn {
+  --border-radius: 5px !important;
+  width          : 160px;
+  font: normal 16px 'Helvetica-Roman', sans-serif !important;
+  height         : 30px;
+ // font           : normal 16px 'Helvetica-Bd', sans-serif !important;
+}

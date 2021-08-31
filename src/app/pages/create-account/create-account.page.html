@@ -249,7 +249,7 @@
             type="text"
             [(ngModel)]="DNI"
             name="DNI"
-            pattern="[0-9]{8}[A-Z]"
+            pattern="[0-9]{8}[[a-zA-Z]"
             required
             placeholder="DNI"
             minlength="9"
@@ -282,7 +282,7 @@
             placeholder="CUENTA BANCARIA"
             minlength="24"
             maxlength="24"
-            pattern="[A-Z][0-9]{23}"
+            pattern="[[a-zA-Z][0-9]{23}"
             required
             #cBancaria="ngModel"
           >

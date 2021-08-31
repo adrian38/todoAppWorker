@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, NavController, Platform  } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, Platform  } from '@ionic/angular';
 
 import { Address, UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthOdooService } from 'src/app/services/auth-odoo.service';
@@ -7,12 +7,14 @@ import {DropdownModule} from 'primeng/dropdown';
 import { ObtSubSService } from 'src/app/services/obt-sub-s.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { City, Photo } from 'src/app/interfaces/interfaces'
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-datos-personales',
   templateUrl: './datos-personales.page.html',
   styleUrls: ['./datos-personales.page.scss'],
+  providers: [MessageService]
 })
 export class DatosPersonalesPage implements OnInit {
 	
@@ -21,17 +23,19 @@ export class DatosPersonalesPage implements OnInit {
    avatar_actualizado:string="../../../assets/icons/fotoadd.png" ;
    avatarusuario:string =""; 
    avatarUsuario64:string="";
+   loading: HTMLIonLoadingElement = null;
+   btn_deshabilitar:boolean=false;
     
-	placeholderNombre: string = '';
-	placeholderFecha: string = '';
-	placeholderUser: string = '';
-	placeholderCalle: string = '';
-	placeholderPiso: string = '';
-	placeholderNumero: string = '';
-	placeholderPuerta: string = '';
-	placeholderPortal: string = '';
-	placeholderCp: string = '';
-	placeholderEscalera: string = '';
+	// placeholderNombre: string = '';
+	// placeholderFecha: string = '';
+	// placeholderUser: string = '';
+	// placeholderCalle: string = '';
+	// placeholderPiso: string = '';
+	// placeholderNumero: string = '';
+	// placeholderPuerta: string = '';
+	// placeholderPortal: string = '';
+	// placeholderCp: string = '';
+	// placeholderEscalera: string = '';
 	usuario: UsuarioModel;
 
 	
@@ -75,6 +79,8 @@ export class DatosPersonalesPage implements OnInit {
 			        private subServ: ObtSubSService,
 			        public photoService: PhotoService,
 			        private alertCtrl: AlertController,
+              private messageService: MessageService,
+              public loadingController: LoadingController,
 			        private actionSheetCtrl: ActionSheetController) {
 				
 				
@@ -115,23 +121,23 @@ placeholder() {
 		this.avatarusuario = this.usuario.avatar;
 	}
 
-	 if (this.usuario.realname.length == 0) {
-		this.placeholderNombre = 'Nombre y apellidos';
-	} else {
-		this.placeholderNombre = this.usuario.realname;
-	}
+	//  if (this.usuario.realname.length == 0) {
+	// 	this.placeholderNombre = 'Nombre y apellidos';
+	// } else {
+	// 	this.placeholderNombre = this.usuario.realname;
+	// }
 
-	if (this.usuario.date.length == 0) {
-		this.placeholderFecha = 'Fecha de nacimiento';
-	} else {
-		this.placeholderFecha = this.usuario.date;
-	}
+	// if (this.usuario.date.length == 0) {
+	// 	this.placeholderFecha = 'Fecha de nacimiento';
+	// } else {
+	// 	this.placeholderFecha = this.usuario.date;
+	// }
 
-	if (this.usuario.username.length == 0) {
-		this.placeholderUser = 'Usuario';
-	} else {
-		this.placeholderUser = this.usuario.username;
-	}
+	// if (this.usuario.username.length == 0) {
+	// 	this.placeholderUser = 'Usuario';
+	// } else {
+	// 	this.placeholderUser = this.usuario.username;
+	// }
 
 	/* if (this.usuario.address.street.length == 0) {
 		this.placeholderCalle = 'Calle';
@@ -234,250 +240,275 @@ async presentAlert() {
     await alert.present();
   }
 
-  clickCategoria(){
-    console.log('sjjss')
-    this.presentActionSheet();
-  }
 
+  async presentLoading(sms) {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: sms,
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header:'Su categoria es:',
-     
-      mode:'ios',
-      translucent: true,
-      buttons: [
-        {
-          text: 'Electricista',
-          cssClass: 'orange',
-          
-          handler: () => {
-            console.log('Destructive clicked');
-            this.categoria=this.categorias[0];
-            this.isCatTouched=false;
-          }
-        },{
-          text: 'Fontanero',
-          cssClass: 'orange',
-          handler: () => {
-            console.log('Archive clicked');
-            this.categoria=this.categorias[1];
-            this.isCatTouched=false;
-          }
-        },{
-          text: 'Cancel',
-          cssClass: 'greenblue',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-            this.categoria="";
-            this.isCatTouched=true;
-          }
-        }
-      ]
+      duration:3000
     });
-    actionSheet.present();
+
+    return this.loading.present();
   }
 
+  // clickCategoria(){
+  //   console.log('sjjss')
+  //   this.presentActionSheet();
+  // }
 
-  clickEntidad(){
-	this.presentActionSheetEntidad();
-  }
 
-  async presentActionSheetEntidad() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header:'Su categoria es:',
+  // async presentActionSheet() {
+  //   const actionSheet = await this.actionSheetCtrl.create({
+  //     header:'Su categoria es:',
      
-      mode:'ios',
-      translucent: true,
-      buttons: [
-        {
-          text: 'Empresa',
-          cssClass: 'orange',
+  //     mode:'ios',
+  //     translucent: true,
+  //     buttons: [
+  //       {
+  //         text: 'Electricista',
+  //         cssClass: 'orange',
           
-          handler: () => {
-            console.log('Destructive clicked');
-            this.entidad=this.entJuridica[0];
-            this.isEntTouched=false;
-          }
-        },{
-          text: 'Autónomo',
-          cssClass: 'orange',
-          handler: () => {
-            console.log('Archive clicked');
-            this.entidad=this.entJuridica[1];
-            this.isEntTouched=false;
-          }
-        },{
-          text: 'Cancel',
-          cssClass: 'greenblue',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-            this.entidad="";
-            this.isEntTouched=true;
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
-
-  validarCamposVacio(){
-
-    if(this.categoria == ""){
-      console.log( 'vacio foto')
-      
-      this.isCatTouched=true;
-      
-    }
-    else{
-      this.isCatTouched=false;
-    }
-
-    if(this.entidad == ""){
-      console.log( 'vacio entidad')
-      
-      this.isEntTouched=true;
-      
-    }
-    else{
-      this.isEntTouched=false;
-      console.log( 'lleno entidad')
-    }
+  //         handler: () => {
+  //           console.log('Destructive clicked');
+  //           this.categoria=this.categorias[0];
+  //           this.isCatTouched=false;
+  //         }
+  //       },{
+  //         text: 'Fontanero',
+  //         cssClass: 'orange',
+  //         handler: () => {
+  //           console.log('Archive clicked');
+  //           this.categoria=this.categorias[1];
+  //           this.isCatTouched=false;
+  //         }
+  //       },{
+  //         text: 'Cancel',
+  //         cssClass: 'greenblue',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           console.log('Cancel clicked');
+  //           this.categoria="";
+  //           this.isCatTouched=true;
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   actionSheet.present();
+  // }
 
 
-     if(this.nombre == ""){
-      console.log( 'vacio nombre')
-      this.nombreVacio=true;
+  // clickEntidad(){
+	// this.presentActionSheetEntidad();
+  // }
+
+  // async presentActionSheetEntidad() {
+  //   const actionSheet = await this.actionSheetCtrl.create({
+  //     header:'Su categoria es:',
      
-    }
-    else{
-      console.log( 'lleno nombre')
-      this.nombreVacio=false;
-    }
+  //     mode:'ios',
+  //     translucent: true,
+  //     buttons: [
+  //       {
+  //         text: 'Empresa',
+  //         cssClass: 'orange',
+          
+  //         handler: () => {
+  //           console.log('Destructive clicked');
+  //           this.entidad=this.entJuridica[0];
+  //           this.isEntTouched=false;
+  //         }
+  //       },{
+  //         text: 'Autónomo',
+  //         cssClass: 'orange',
+  //         handler: () => {
+  //           console.log('Archive clicked');
+  //           this.entidad=this.entJuridica[1];
+  //           this.isEntTouched=false;
+  //         }
+  //       },{
+  //         text: 'Cancel',
+  //         cssClass: 'greenblue',
+  //         role: 'cancel',
+  //         handler: () => {
+  //           console.log('Cancel clicked');
+  //           this.entidad="";
+  //           this.isEntTouched=true;
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   actionSheet.present();
+  // }
 
-    if(this.fecha == ""){
-      console.log( 'vacio fecha de nacimiento')
-      this.fecha_nacimiento=true;
-     
-    }
-    else{
-      this.fecha_nacimiento=false;
-      this.validarMayorDeEdad(this.fecha);
-    }
+  // validarCamposVacio(){
 
-    if(this.CIF_NIF == ""){
-      console.log( 'vacio fecha de nacimiento')
-      this.cifNif=true;
+  //   if(this.categoria == ""){
+  //     console.log( 'vacio foto')
+      
+  //     this.isCatTouched=true;
+      
+  //   }
+  //   else{
+  //     this.isCatTouched=false;
+  //   }
+
+  //   if(this.entidad == ""){
+  //     console.log( 'vacio entidad')
+      
+  //     this.isEntTouched=true;
+      
+  //   }
+  //   else{
+  //     this.isEntTouched=false;
+  //     console.log( 'lleno entidad')
+  //   }
+
+
+  //    if(this.nombre == ""){
+  //     console.log( 'vacio nombre')
+  //     this.nombreVacio=true;
      
-    }
-    else{
-      this.cifNif=false;
-    }
+  //   }
+  //   else{
+  //     console.log( 'lleno nombre')
+  //     this.nombreVacio=false;
+  //   }
+
+  //   if(this.fecha == ""){
+  //     console.log( 'vacio fecha de nacimiento')
+  //     this.fecha_nacimiento=true;
+     
+  //   }
+  //   else{
+  //     this.fecha_nacimiento=false;
+  //     //this.validarMayorDeEdad(this.fecha);
+  //   }
+
+  //   if(this.CIF_NIF == ""){
+  //     console.log( 'vacio fecha de nacimiento')
+  //     this.cifNif=true;
+     
+  //   }
+  //   else{
+  //     this.cifNif=false;
+  //   }
 
    
 
-    if(this.segSocial == ""){
-      console.log( 'vacio seguridad')
-      this. segSoc=true;
+  //   if(this.segSocial == ""){
+  //     console.log( 'vacio seguridad')
+  //     this. segSoc=true;
      
-    }
-    else{
-      this. segSoc=false;
-    }
+  //   }
+  //   else{
+  //     this. segSoc=false;
+  //   }
 
 
-  if(this.iaf_string == ""){
-      console.log( 'vacio user')
-      this.iaf_bool=true;
+  // if(this.iaf_string == ""){
+  //     console.log( 'vacio user')
+  //     this.iaf_bool=true;
      
-    }
-    else{
-      this.iaf_bool=false;
-    }
+  //   }
+  //   else{
+  //     this.iaf_bool=false;
+  //   }
 
-      if(this.dni_string == ""){
-      console.log( 'vacio user')
-      this.dni_bool=true;
+  //     if(this.dni_string == ""){
+  //     console.log( 'vacio user')
+  //     this.dni_bool=true;
      
-    }
-    else{
-      this.dni_bool=false;
-    }
+  //   }
+  //   else{
+  //     this.dni_bool=false;
+  //   }
 
-    if(this.cuenta_bancaria == ""){
-      console.log( 'vacio user')
-      this.cuentaBancaria=true;
+  //   if(this.cuenta_bancaria == ""){
+  //     console.log( 'vacio user')
+  //     this.cuentaBancaria=true;
      
-    }
-    else{
-      this.cuentaBancaria=false;
-    }
+  //   }
+  //   else{
+  //     this.cuentaBancaria=false;
+  //   }
 
-   if(this.phone == ""){
-      console.log( 'vacio cifnif')
-      this.phone_bool=true;
+  //  if(this.phone == ""){
+  //     console.log( 'vacio cifnif')
+  //     this.phone_bool=true;
      
-    }
-    else{
-      this.phone_bool=false;
-    }
+  //   }
+  //   else{
+  //     this.phone_bool=false;
+  //   }
 
    
 
-     if(this.correo == ""){
-      console.log( 'vacio seguridad')
-      this.correo_bool=true;
+  //    if(this.correo == ""){
+  //     console.log( 'vacio seguridad')
+  //     this.correo_bool=true;
     
-    }
-    else{
-      this.correo_bool=false;
-    }
+  //   }
+  //   else{
+  //     this.correo_bool=false;
+  //   }
 
     
 
  
-  }
+  // }
 
-  editar(){
-    this.validarCamposVacio();
-  }
+  // editar(){
+  //   this.validarCamposVacio();
+  // }
 
-  validarMayorDeEdad(date: string) {
+  // validarMayorDeEdad(date: string) {
 
-    // Ver si se puede mejorar este algoritmo
+  //   const inputDate = new Date(date);
+  //   const currentDate = new Date(Date.now());
 
-    const inputDate = new Date(date);
-    const currentDate = new Date(Date.now());
+  //   const bYears = inputDate.getFullYear();
+  //   const timeYears = currentDate.getFullYear();
 
-    const bYears = inputDate.getFullYear();
-    const timeYears = currentDate.getFullYear();
+  //   const difYears = timeYears - bYears;
 
-    const difYears = timeYears - bYears;
+  //   const months = (difYears * 12) + (currentDate.getMonth() - inputDate.getMonth());
 
-    // Cantidad de meses entre las 2 fechas
-    const months = (difYears * 12) + (currentDate.getMonth() - inputDate.getMonth());
-
-    // 18 años son 12 meses por 18 asi que son 216 meses
-    // si la diferencia de meses entre las 2 fechas es mayor que 216 meses entonces
-    // la persona es mayor de 18 años.
-    // Este algoritmo no toma en cuenta los dias que quedan en el mismo mes, asi que si cumple 18
-    // en el mismo mes en curso pero no los ha cumplido todavia, se toma en consideración.
     
-    if (months >= 216) {
-      console.log("Es mayor de edad");
-      this.esMayorEdad = true;
-    }
-    else {
-      console.log("No es mayor de edad");
-      this.esMayorEdad = false;
-    }
-  }
+  //   if (months >= 216) {
+  //     console.log("Es mayor de edad");
+  //     this.esMayorEdad = true;
+  //   }
+  //   else {
+  //     console.log("No es mayor de edad");
+  //     this.esMayorEdad = false;
+  //   }
+  // }
 
 
   onNextClick(){
     
+        if(this.avatar_actualizado == "../../../assets/icons/fotoadd.png")
+        {
+           console.log('no se ha modificado la foto')
+           this.btn_deshabilitar=false;
+           this.messageService.add({ severity: 'error', detail: 'Error al subir la foto' });
+
+        }
+        else
+        {
+          console.log('nueva foto')
+          this.btn_deshabilitar=true;
+          this.presentLoading('Subiendo foto');
+          setTimeout(() => {
+            this.messageService.add({ severity: 'success', detail: 'Foto subida correctamente' });
+            setTimeout(() => {
+              this.navCtrl.navigateRoot('/tabs/tab3', { animated: true, animationDirection: 'forward' });
+            },1000);
+            
+          }, 3000);
+         
+        }
   }
 }
 

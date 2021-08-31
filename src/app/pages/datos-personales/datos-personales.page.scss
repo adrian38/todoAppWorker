@@ -129,3 +129,17 @@ ion-card {
   height         : 30px;
  // font           : normal 16px 'Helvetica-Bd', sans-serif !important;
 }
+
+
+:host ::ng-deep {
+  .p-toast-message-custom {
+      background-color: rgb(246, 183, 118);
+      border: solid rgb(246, 183, 118);;
+      border-width: 0 0 0 6px;
+      width: 10px;
+      color: #2c1e30;
+      .p-toast-icon-close {
+          color: #2c1e30;
+      }
+  }
+}

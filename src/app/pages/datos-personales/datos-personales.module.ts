@@ -9,6 +9,7 @@ import { DatosPersonalesPageRoutingModule } from './datos-personales-routing.mod
 import { DatosPersonalesPage } from './datos-personales.page';
 import { ComponentsModule } from '../../components/components.module';
 import {DropdownModule} from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {DropdownModule} from 'primeng/dropdown';
     IonicModule,
     DatosPersonalesPageRoutingModule,
     ComponentsModule,
+    ToastModule,
     DropdownModule
   ],
   declarations: [DatosPersonalesPage]

@@ -5,13 +5,13 @@ let jayson = require('../../../node_modules/jayson/lib/client/');
 let jaysonServer = {
 	//host: '192.168.0.102',
 	//host: '192.168.0.106',
-	//host: '192.168.0.107',
-	host: 'odoo.todoenunapp.com',
+	host: '192.168.0.107',
+	//host: 'odoo.todoenunapp.com',
 	//host: '192.168.1.2',
 	//host: '192.168.1.4',
 
-	port: '443',
-	//port: '8069',
+	//port: '443',
+	port: '8069',
 	db: 'demo',
 	username: '',
 	password: '',
@@ -117,24 +117,24 @@ export class AuthOdooService {
 						usuario.address.latitude = value[0].address_latitude,
 						usuario.address.longitude = value[0].address_longitude
 
-					if (value[0].docs_check) {
-						usuario.connected = false;
-						usuario.error = 1;
-						user$.next(usuario);
-						return;
-					} else if (value[0].stripe_connect_account_state !== "verified") {
-						usuario.connected = false;
-						usuario.error = 2;
-						usuario.link = value[0].stripe_connect_account_link;
-						user$.next(usuario);
-						return;
-					}
-					else if (!value[0].initial) {
-						usuario.connected = false;
-						usuario.error = 3;
-						user$.next(usuario);
-						return;
-					}
+					// if (value[0].docs_check) {
+					// 	usuario.connected = false;
+					// 	usuario.error = 1;
+					// 	user$.next(usuario);
+					// 	return;
+					// } else if (value[0].stripe_connect_account_state !== "verified") {
+					// 	usuario.connected = false;
+					// 	usuario.error = 2;
+					// 	usuario.link = value[0].stripe_connect_account_link;
+					// 	user$.next(usuario);
+					// 	return;
+					// }
+					// else if (!value[0].initial) {
+					// 	usuario.connected = false;
+					// 	usuario.error = 3;
+					// 	user$.next(usuario);
+					// 	return;
+					// }
 
 
 					userInfo = usuario;
@@ -175,27 +175,27 @@ export class AuthOdooService {
 
 					console.log(value, ' User_Partner');
 
-					if (value[0].classification === 'vendor') {
-						if (knownTypes[value[0].image_1920[0]]) {
-							usuario.avatar = knownTypes[value[0].image_1920[0]] + value[0].image_1920;
-						}
-						usuario.type = 'provider';
-						usuario.connected = true;
-						usuario.partner_id = value[0].partner_id[0];
-						usuario.realname = value[0].name;
-
-						search_partner_fields(usuario.id);
-
-					} else {
-						usuario.connected = false;
-						user$.next(usuario);
-
+					//if (value[0].classification === 'vendor') {
+					if (knownTypes[value[0].image_1920[0]]) {
+						usuario.avatar = knownTypes[value[0].image_1920[0]] + value[0].image_1920;
 					}
+					usuario.type = 'provider';
+					usuario.connected = true;
+					usuario.partner_id = value[0].partner_id[0];
+					usuario.realname = value[0].name;
+
+					search_partner_fields(usuario.id);
+
+					// } else {
+					// 	usuario.connected = false;
+					// 	user$.next(usuario);
+
+					// }
 
 				}
 			});
 		};
-		let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+		let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
 		client.request(
 			'call',
 			{

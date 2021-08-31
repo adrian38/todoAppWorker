@@ -67,7 +67,7 @@ export class ChatOdooService {
             })
         }
 
-        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
             if (err || !value) {
                 console.log(err, "Error sendMessageClient");
@@ -127,7 +127,7 @@ export class ChatOdooService {
 
         }
 
-        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {
@@ -189,7 +189,7 @@ export class ChatOdooService {
             })
         }
 
-        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {
@@ -253,7 +253,7 @@ export class ChatOdooService {
 
         }
 
-        let client = jayson.https({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
+        let client = jayson.http({ host: jaysonServer.host, port: jaysonServer.port + jaysonServer.pathConnection });
         client.request('call', { service: 'common', method: 'login', args: [jaysonServer.db, jaysonServer.username, jaysonServer.password] }, function (err, error, value) {
 
             if (err || !value) {

@@ -340,7 +340,7 @@ export class TaskOdooService {
                 if (rutaActual) {
                   notificationNewPoSuplier$.next(id_po);
                 } else {
-                  let notifTaskNew: TaskModel;
+                  let notifTaskNew: TaskModel = new TaskModel();
                   notifTaskNew.notificationType = 1;
                   for (let i = 0; i < id_po.length; i++) {
                     notifTaskNew.id = id_po[i];

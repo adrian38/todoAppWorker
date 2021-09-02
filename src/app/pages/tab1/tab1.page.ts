@@ -226,7 +226,7 @@ export class Tab1Page {
             console.log('solicitud eliminada');
             this.messageService.add({ severity: 'success', detail: 'Solicitud cancelada' });
 
-           // this.presentToastCancelar(this.message);
+            // this.presentToastCancelar(this.message);
           }
         });
       }
@@ -280,7 +280,10 @@ export class Tab1Page {
 
           if (tasksList) {
             this.solicitudesList = this._taskOdoo.getSolicitudeList();
-            this.loading.dismiss();
+            if (this.loading) {
+              this.loading.dismiss();
+            }
+
             //this.subServ.setcargando(true);
           }
           this.solicitudEmpty();
@@ -418,22 +421,22 @@ export class Tab1Page {
   // }
 
 
-  loadData(event){
-//     console.log("cargando ...")
-// event.target.complete();
-setTimeout(() => {
-  if (this.solicitudesList.length >8 ) {
-    event.target.disabled = true;
-    return;
-  }
+  loadData(event) {
+    //     console.log("cargando ...")
+    // event.target.complete();
+    setTimeout(() => {
+      if (this.solicitudesList.length > 8) {
+        event.target.disabled = true;
+        return;
+      }
 
-  console.log('Done');
-  event.target.complete();
+      console.log('Done');
+      event.target.complete();
 
-  // App logic to determine if all data is loaded
-  // and disable the infinite scroll
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
 
-}, 2000);
+    }, 2000);
 
   }
 }

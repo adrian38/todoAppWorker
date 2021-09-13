@@ -128,7 +128,7 @@ export class LoginUserPage implements OnInit {
           break;
 
         case 4:
-          this.presentAlertConfirm("Usuario desabilitado", 'Contactar con la administracion');
+          this.presentAlertConfirm("Usuario Incorrecto o desabilitado", 'si el problema persiste contactar con la administracion');
           break;
 
 

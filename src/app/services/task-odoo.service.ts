@@ -68,7 +68,7 @@ let notiAlert: boolean = false;
 let rutaActual: boolean = true;
 let rutaChat: boolean = false;
 
-let invoiceStatus = ['no', 'invoiced'];
+//let invoiceStatus = ['no', 'invoiced', 'purchase'];
 
 //-------------------------------------------------cesar
 
@@ -920,7 +920,7 @@ export class TaskOdooService {
       }
 
       temp = tasksList.filter((task) => {
-        return task.state === 'invoiced'; //Contratadas
+        return task.offer_send === 'purchase'; //Contratadas
       });
       if (
         typeof contratadosList !== 'undefined' &&
@@ -1098,7 +1098,7 @@ export class TaskOdooService {
       let inParams = [];
       inParams.push([
         ['partner_id', '=', partnerId],
-        ['invoice_status', 'in', invoiceStatus],
+        //['invoice_status', 'in', invoiceStatus],
       ]);
       inParams.push([
         'state',
@@ -1346,8 +1346,8 @@ export class TaskOdooService {
   }
 
   getContratadosList() {
-    /* return contratadosList; */ //esto esta bien
-    return solicitudesList; //temporal se puede borrar es para que se vea los contratados
+    return contratadosList;
+    // return solicitudesList; //temporal se puede borrar es para que se vea los contratados
   }
 
   getHistorialList() {
